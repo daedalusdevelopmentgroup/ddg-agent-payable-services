@@ -3,8 +3,13 @@
   "info": {
     "title": "DDG Agent-Payable Services",
     "version": "2026-06-22-agent-discovery-distribution",
-    "description": "Machine-payable DDG services for AI agents only. Direct human traffic is not accepted unless an AI-agent identity is provided. Supports MPP, x402, direct-crypto auto-verification, and direct-crypto manual proof intake. Includes agent-scoped order status and artifact/receipt console URLs for paid operator-reviewed orders.",
-    "account_local_candidate_routes": []
+    "description": "Machine-payable DDG services for AI agents. Current public live payment rails are x402 and direct-crypto. MPP/Stripe/Tempo is installed but pending live provider env plus penny-settlement proof before any MPP-live advertisement. DDG sells bounded artifacts/results, not raw provider account access.",
+    "account_local_candidate_routes": [],
+    "contact": {
+      "name": "George Sarris / Daedalus Development Group",
+      "email": "0xcircuitbreaker@protonmail.com",
+      "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai"
+    }
   },
   "servers": [
     {
@@ -591,11 +596,13 @@
           {
             "name": "X-Agent-Id",
             "in": "header",
-            "required": false,
+            "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "minLength": 3
             },
-            "description": "Stable AI-agent identity used for policy/audit routing. Required for production traffic."
+            "description": "Stable AI-agent identity used for policy/audit routing. Required for production traffic.",
+            "example": "x402scan-probe"
           },
           {
             "name": "X-DDG-Agent-Id",
@@ -610,18 +617,20 @@
         "x-payment-info": {
           "offers": [
             {
-              "method": "stripe",
-              "intent": "charge",
-              "currency": "usd",
-              "amount": "75"
-            },
-            {
               "method": "x402",
               "intent": "charge",
               "currency": "USDC",
               "amount": "750000"
             }
-          ]
+          ],
+          "payment_protocols_current_public_live": [
+            "x402",
+            "direct_crypto_auto"
+          ],
+          "payment_protocols_pending": [
+            "mpp"
+          ],
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
         },
         "requestBody": {
           "required": true,
@@ -644,6 +653,14 @@
                     "type": "string"
                   }
                 }
+              },
+              "examples": {
+                "x402scan_probe": {
+                  "value": {
+                    "url": "https://agents.daedalusdevelopmentgroup.com",
+                    "max_tokens": 256
+                  }
+                }
               }
             }
           }
@@ -661,6 +678,9 @@
           "429": {
             "description": "Rate limited"
           }
+        },
+        "x-x402scan": {
+          "paid_probe_expected_status": 402
         }
       }
     },
@@ -672,11 +692,13 @@
           {
             "name": "X-Agent-Id",
             "in": "header",
-            "required": false,
+            "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "minLength": 3
             },
-            "description": "Stable AI-agent identity used for policy/audit routing. Required for production traffic."
+            "description": "Stable AI-agent identity used for policy/audit routing. Required for production traffic.",
+            "example": "x402scan-probe"
           },
           {
             "name": "X-DDG-Agent-Id",
@@ -700,18 +722,20 @@
         "x-payment-info": {
           "offers": [
             {
-              "method": "stripe",
-              "intent": "session",
-              "currency": "usd",
-              "amount": "25"
-            },
-            {
               "method": "x402",
               "intent": "session",
               "currency": "USDC",
               "amount": "250000"
             }
-          ]
+          ],
+          "payment_protocols_current_public_live": [
+            "x402",
+            "direct_crypto_auto"
+          ],
+          "payment_protocols_pending": [
+            "mpp"
+          ],
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
         },
         "requestBody": {
           "required": true,
@@ -862,6 +886,20 @@
                       }
                     ]
                   }
+                },
+                "x402scan_probe": {
+                  "value": {
+                    "model": "glm-5.2",
+                    "messages": [
+                      {
+                        "role": "user",
+                        "content": "Return the word pong."
+                      }
+                    ],
+                    "x_agent": {
+                      "max_charge_usd": 0.25
+                    }
+                  }
                 }
               }
             }
@@ -883,6 +921,9 @@
           "429": {
             "description": "Rate limited"
           }
+        },
+        "x-x402scan": {
+          "paid_probe_expected_status": 402
         }
       }
     },
@@ -998,7 +1039,19 @@
           "limits": "health-derived free local seats; default 24-hour per-agent lease and 100 requests per lease",
           "lease_seconds": 86400,
           "max_requests_per_lease": 100,
-          "generation_timeout_seconds": 60
+          "generation_timeout_seconds": 60,
+          "payment_protocols_current_public_live": [
+            "x402",
+            "direct_crypto_auto"
+          ],
+          "payment_protocols_pending": [
+            "mpp"
+          ],
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+        },
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
         }
       }
     },
@@ -1011,11 +1064,13 @@
           {
             "name": "X-Agent-Id",
             "in": "header",
-            "required": false,
+            "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "minLength": 3
             },
-            "description": "Preferred AI-agent identifier header."
+            "description": "Preferred AI-agent identifier header.",
+            "example": "x402scan-probe"
           },
           {
             "name": "X-DDG-Agent-Id",
@@ -1050,7 +1105,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "MPP Authorization: Payment ... after a 402 challenge."
+            "description": "Payment authorization header when a supported public rail requires it. MPP is pending until live proof."
           },
           {
             "name": "Payment-Signature",
@@ -1108,6 +1163,15 @@
                       "max_charge_usd": 0.25
                     }
                   }
+                },
+                "x402scan_probe": {
+                  "value": {
+                    "route": "kimi-code/k2.7",
+                    "task": "Return a concise JSON readiness note.",
+                    "x_agent": {
+                      "max_charge_usd": 0.25
+                    }
+                  }
                 }
               }
             }
@@ -1145,16 +1209,21 @@
               "intent": "charge",
               "currency": "USDC",
               "amount": "20000"
-            },
-            {
-              "method": "mpp",
-              "intent": "charge",
-              "currency": "usd",
-              "amount": "2"
             }
           ],
           "free_local_ollama_policy": "free local Ollama routes use the same 24-hour/100-request per-agent lease policy as /v1/micro-model-swarm-preview; provider-backed routes remain paid.",
-          "agent_run_timeout_seconds": 120
+          "agent_run_timeout_seconds": 120,
+          "payment_protocols_current_public_live": [
+            "x402",
+            "direct_crypto_auto"
+          ],
+          "payment_protocols_pending": [
+            "mpp"
+          ],
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+        },
+        "x-x402scan": {
+          "paid_probe_expected_status": 402
         }
       }
     },
@@ -1166,11 +1235,13 @@
           {
             "name": "X-Agent-Id",
             "in": "header",
-            "required": false,
+            "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "minLength": 3
             },
-            "description": "Stable AI-agent identity used for policy/audit routing."
+            "description": "Stable AI-agent identity used for policy/audit routing.",
+            "example": "x402scan-probe"
           },
           {
             "name": "X-DDG-Agent-Id",
@@ -1194,18 +1265,20 @@
         "x-payment-info": {
           "offers": [
             {
-              "method": "stripe",
-              "intent": "charge",
-              "currency": "usd",
-              "amount": "service_catalog_price"
-            },
-            {
               "method": "x402",
               "intent": "charge",
               "currency": "USDC",
               "amount": "service_catalog_price"
             }
-          ]
+          ],
+          "payment_protocols_current_public_live": [
+            "x402",
+            "direct_crypto_auto"
+          ],
+          "payment_protocols_pending": [
+            "mpp"
+          ],
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
         },
         "requestBody": {
           "required": true,
@@ -1299,6 +1372,17 @@
                     "description": "Optional machine-readable target/scope details for operator-reviewed services."
                   }
                 }
+              },
+              "examples": {
+                "x402scan_probe": {
+                  "value": {
+                    "service_id": "buyer_agent_smoke_probe",
+                    "request": {
+                      "target": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai",
+                      "notes": "x402scan prepayment probe"
+                    }
+                  }
+                }
               }
             }
           }
@@ -1322,6 +1406,9 @@
           "429": {
             "description": "Rate limited"
           }
+        },
+        "x-x402scan": {
+          "paid_probe_expected_status": 402
         }
       }
     },
@@ -1334,11 +1421,13 @@
           {
             "name": "X-Agent-Id",
             "in": "header",
-            "required": false,
+            "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "minLength": 3
             },
-            "description": "Preferred stable AI-agent identity header."
+            "description": "Preferred stable AI-agent identity header.",
+            "example": "x402scan-probe"
           },
           {
             "name": "X-DDG-Agent-Id",
@@ -1374,7 +1463,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "MPP Authorization: Payment ... or direct-crypto Authorization form after 402 challenge."
+            "description": "Payment authorization header when a supported public rail requires it. MPP is pending until live proof."
           },
           {
             "name": "Payment-Signature",
@@ -1395,18 +1484,20 @@
               "amount": "10000"
             },
             {
-              "method": "mpp",
-              "intent": "charge",
-              "currency": "usd",
-              "amount": "1"
-            },
-            {
               "method": "direct_crypto_auto_or_manual",
               "intent": "charge",
               "currency": "usd",
               "amount": "0.01"
             }
-          ]
+          ],
+          "payment_protocols_current_public_live": [
+            "x402",
+            "direct_crypto_auto"
+          ],
+          "payment_protocols_pending": [
+            "mpp"
+          ],
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
         },
         "requestBody": {
           "required": false,
@@ -1426,6 +1517,13 @@
               },
               "example": {
                 "request_label": "agent-payment-ci-smoke"
+              },
+              "examples": {
+                "x402scan_probe": {
+                  "value": {
+                    "request_label": "x402scan-probe"
+                  }
+                }
               }
             }
           }
@@ -1443,6 +1541,9 @@
           "409": {
             "description": "Idempotency conflict"
           }
+        },
+        "x-x402scan": {
+          "paid_probe_expected_status": 402
         }
       }
     },
@@ -1454,6 +1555,10 @@
           "200": {
             "description": "Downloaded model catalog, local runtime options, healthy free-seat count, 24-hour lease policy, request caps, and runtime request policy"
           }
+        },
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
         }
       }
     },
@@ -1519,7 +1624,11 @@
             "description": "Insufficient disk space for stated model size"
           }
         },
-        "description": "Queue an operator-reviewed local model/runtime request. Supports Ollama model names plus llama.cpp GGUF, LM Studio, OpenAI-compatible local servers, and vLLM preferences; never auto-downloads from public requests."
+        "description": "Queue an operator-reviewed local model/runtime request. Supports Ollama model names plus llama.cpp GGUF, LM Studio, OpenAI-compatible local servers, and vLLM preferences; never auto-downloads from public requests.",
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
+        }
       }
     },
     "/v1/ai-skill-safety-scan": {
@@ -1565,6 +1674,10 @@
           "403": {
             "description": "Missing AI-agent identity"
           }
+        },
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
         }
       }
     },
@@ -1663,6 +1776,10 @@
             "max_response_bytes": 1000000
           },
           "safety": "read-only method whitelist; blocks eth_sendRawTransaction/admin/debug/personal; raw Reth RPC must stay private behind DDG edge"
+        },
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
         }
       }
     },
@@ -1766,6 +1883,10 @@
           "404": {
             "description": "Order not found"
           }
+        },
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
         }
       }
     },
@@ -1869,6 +1990,10 @@
           "404": {
             "description": "Order not found"
           }
+        },
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
         }
       }
     },
@@ -1922,6 +2047,10 @@
           "404": {
             "description": "Order not found"
           }
+        },
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
         }
       }
     },
@@ -1933,6 +2062,10 @@
           "200": {
             "description": "Conformance profile JSON"
           }
+        },
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
         }
       }
     },
@@ -1944,6 +2077,10 @@
           "200": {
             "description": "Conformance profile JSON"
           }
+        },
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
         }
       }
     },
@@ -1955,6 +2092,10 @@
           "200": {
             "description": "Markdown activation guide"
           }
+        },
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
         }
       }
     },
@@ -1966,7 +2107,27 @@
           "200": {
             "description": "Markdown activation guide"
           }
+        },
+        "security": [],
+        "x-x402scan": {
+          "exclude_from_paid_probe": true
         }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "AgentIdentity": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Agent-Id",
+        "description": "Stable AI-agent identifier used by DDG to reject anonymous/non-agent traffic and key leases/idempotency."
+      },
+      "X402Payment": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Payment-Signature",
+        "description": "x402 payment proof/signature after a 402 challenge."
       }
     }
   }

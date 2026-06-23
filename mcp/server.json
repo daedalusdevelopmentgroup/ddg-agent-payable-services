@@ -1,0 +1,62 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
+  "title": "DDG Agent-Payable Services MCP",
+  "description": "Payment-aware MCP wrapper for DDG Agent-Payable Services: discovery, status, checkout conformance, skill safety scan, order polling, and paid-service tools that return structured 402 payment challenges.",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
+    "source": "github"
+  },
+  "homepage": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "ddg-agent-services-mcp",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "DDG_MCP_AGENT_ID",
+          "description": "Stable AI-agent identifier sent as X-Agent-Id to DDG public endpoints.",
+          "isRequired": true,
+          "isSecret": false
+        },
+        {
+          "name": "DDG_AGENT_SERVICES_BASE_URL",
+          "description": "DDG service base URL. Defaults to https://agents.daedalusdevelopmentgroup.com.",
+          "isRequired": false,
+          "isSecret": false
+        },
+        {
+          "name": "DDG_AGENT_SERVICES_ALLOWED_HOSTS",
+          "description": "Comma-separated allowlist for non-default DDG base hosts; only needed for local testing.",
+          "isRequired": false,
+          "isSecret": false
+        }
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://agents.daedalusdevelopmentgroup.com/mcp",
+      "headers": [
+        {
+          "name": "X-Agent-Id",
+          "description": "Stable AI-agent identifier for DDG agent-only gates.",
+          "isRequired": true,
+          "isSecret": false
+        }
+      ]
+    }
+  ],
+  "security": {
+    "no_arbitrary_shell": true,
+    "no_file_write_tools": true,
+    "no_provider_credential_relay": true,
+    "paid_tools_return_structured_402": true
+  }
+}

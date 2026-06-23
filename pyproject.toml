@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ddg-agent-services-mcp"
+version = "0.1.0"
+description = "Payment-aware MCP wrapper for DDG Agent-Payable Services"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "Daedalus Development Group", email = "0xcircuitbreaker@protonmail.com" }]
+keywords = ["mcp", "x402", "agent-commerce", "ai-agents", "machine-payments", "openapi"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Security",
+]
+dependencies = ["mcp>=1.23.0"]
+
+[project.urls]
+Homepage = "https://agents.daedalusdevelopmentgroup.com/.well-known/ai"
+Documentation = "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-swarm-mcp-design.md"
+Repository = "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services"
+Issues = "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services/issues"
+
+[project.scripts]
+ddg-agent-services-mcp = "ddg_agent_services_mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ddg_agent_services_mcp"]

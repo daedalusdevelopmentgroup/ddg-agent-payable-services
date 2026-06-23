@@ -39,20 +39,6 @@
       ]
     }
   ],
-  "remotes": [
-    {
-      "type": "streamable-http",
-      "url": "https://agents.daedalusdevelopmentgroup.com/mcp",
-      "headers": [
-        {
-          "name": "X-Agent-Id",
-          "description": "Stable AI-agent identifier for DDG agent-only gates.",
-          "isRequired": true,
-          "isSecret": false
-        }
-      ]
-    }
-  ],
   "security": {
     "no_arbitrary_shell": true,
     "no_file_write_tools": true,

@@ -1,0 +1,64 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://agents.daedalusdevelopmentgroup.com",
+      "service-desc": [
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/openapi.json",
+          "type": "application/json",
+          "title": "OpenAPI service description"
+        },
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai",
+          "type": "application/json",
+          "title": "AI discovery endpoint"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/llms.txt",
+          "type": "text/plain",
+          "title": "LLM-readable service summary"
+        },
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/quickstart.md",
+          "type": "text/markdown",
+          "title": "Agent quickstart"
+        },
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json",
+          "type": "application/json",
+          "title": "Checkout conformance profile"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/health",
+          "type": "application/json",
+          "title": "Public health"
+        }
+      ],
+      "pricing": [
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json",
+          "type": "application/json",
+          "title": "Pricing and payment protocols"
+        }
+      ],
+      "catalog": [
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json",
+          "type": "application/json",
+          "title": "Agent service catalog"
+        }
+      ],
+      "agent-skills": [
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/index.json",
+          "type": "application/json",
+          "title": "Agent skill index"
+        }
+      ]
+    }
+  ]
+}

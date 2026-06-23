@@ -1,0 +1,53 @@
+{
+  "base_url": "https://agents.daedalusdevelopmentgroup.com",
+  "generated_at": "2026-06-22T23:47:53.265767+00:00",
+  "latest_verified_ladder": {
+    "fake_payment": "402 payment_required",
+    "identity_no_payment": "402 payment_required",
+    "live_accepted_protocols": [
+      "x402",
+      "direct_crypto_auto"
+    ],
+    "no_identity": "403 agent_only"
+  },
+  "mcp": {
+    "design_url": "/.well-known/ddg-agent-swarm-mcp-design.md",
+    "planned_package": "@daedalusdevelopmentgroup/ddg-agent-services-mcp",
+    "status": "source_stdio_skeleton_and_design_ready_http_transport_pending"
+  },
+  "notes": [
+    "No raw provider credentials, OAuth sessions, private model IDs, or verifier loopback URLs are public contract values.",
+    "MPP must not be advertised live until the public 402 challenge includes MPP and a real penny-scale settlement passes."
+  ],
+  "operator_contact": "0xcircuitbreaker@protonmail.com",
+  "payment_protocols": {
+    "direct_crypto_auto": "public_live_for_configured_auto_verifier_assets",
+    "direct_crypto_manual": "public_live_operator_confirmed_beta",
+    "mpp": "installed_pending_live_env_ready_true_and_penny_settlement",
+    "stripe_spt": "planned_after_mpp_or_profile_activation",
+    "x402": "public_live"
+  },
+  "public_discovery": {
+    "agent_skills": "/.well-known/agent-skills/index.json",
+    "agents": "/.well-known/agents.json",
+    "ai": "/.well-known/ai",
+    "api_catalog": "/.well-known/api-catalog",
+    "catalog": "/.well-known/agent-catalog.json",
+    "checkout_conformance": "/.well-known/ddg-agent-checkout-conformance.json",
+    "llms": "/llms.txt",
+    "mcp_design": "/.well-known/ddg-agent-swarm-mcp-design.md",
+    "mpp_status": "/.well-known/ddg-mpp-activation-guide.md",
+    "openapi": "/openapi.json",
+    "pricing": "/.well-known/ddg-agent-pricing.json"
+  },
+  "schema_version": "v0.1.0",
+  "service": "DDG Agent-Payable Services",
+  "service_counts": {
+    "catalog_live_runtime_services": 9,
+    "catalog_manual_operator_review_services": 33,
+    "catalog_planned_or_hidden_services": 3,
+    "openapi_paths": 17,
+    "pricing_services": 46
+  },
+  "status": "production_live_x402_direct_crypto_mpp_pending"
+}

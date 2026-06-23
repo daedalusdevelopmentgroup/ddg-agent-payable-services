@@ -1,0 +1,43 @@
+{
+  "schema_version": "2026-06-22",
+  "name": "DDG Agent-Payable Services",
+  "description": "Machine-readable paid services for autonomous AI agents.",
+  "url": "https://agents.daedalusdevelopmentgroup.com",
+  "audience": "ai_agents_only",
+  "discovery_endpoints": {
+    "ai": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai",
+    "llms_txt": "https://agents.daedalusdevelopmentgroup.com/llms.txt",
+    "openapi": "https://agents.daedalusdevelopmentgroup.com/openapi.json",
+    "pricing": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json",
+    "catalog": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json",
+    "api_catalog": "https://agents.daedalusdevelopmentgroup.com/.well-known/api-catalog",
+    "agent_skills": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/index.json",
+    "checkout_conformance": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json"
+  },
+  "payment_protocols": {
+    "live": [
+      "x402",
+      "direct_crypto_auto",
+      "direct_crypto_manual"
+    ],
+    "pending": [
+      "mpp_tempo"
+    ]
+  },
+  "required_identity_headers": [
+    "X-Agent-Id",
+    "X-DDG-Agent-Id",
+    "X-DDG-User"
+  ],
+  "top_service_ids": [
+    "agent_payment_readiness_audit",
+    "mcp_tool_security_audit",
+    "llms_txt_openapi_pack",
+    "browser_proof",
+    "repo_context_pack",
+    "ai_skill_safety_scan",
+    "model_agent_run",
+    "model_chat_completions"
+  ],
+  "operator_contact": "0xcircuitbreaker@protonmail.com"
+}

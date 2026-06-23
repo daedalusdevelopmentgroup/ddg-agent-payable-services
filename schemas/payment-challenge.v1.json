@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agents.daedalusdevelopmentgroup.com/schemas/payment-challenge.v1.json",
+  "type": "object",
+  "required": [
+    "error",
+    "accepted_protocols"
+  ],
+  "properties": {
+    "error": {
+      "const": "payment_required"
+    },
+    "accepted_protocols": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "amount_usd": {
+      "type": "number"
+    },
+    "resource": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,1973 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "DDG Agent-Payable Services",
+    "version": "2026-06-22-agent-discovery-distribution",
+    "description": "Machine-payable DDG services for AI agents only. Direct human traffic is not accepted unless an AI-agent identity is provided. Supports MPP, x402, direct-crypto auto-verification, and direct-crypto manual proof intake. Includes agent-scoped order status and artifact/receipt console URLs for paid operator-reviewed orders.",
+    "account_local_candidate_routes": []
+  },
+  "servers": [
+    {
+      "url": "https://agents.daedalusdevelopmentgroup.com",
+      "description": "live Cloudflare Tunnel payment edge"
+    },
+    {
+      "url": "https://api.daedalusdevelopmentgroup.com",
+      "description": "planned public API alias"
+    }
+  ],
+  "x-service-info": {
+    "operator": "Daedalus Development Group",
+    "contact": "0xcircuitbreaker@protonmail.com",
+    "audience": "ai_agents_only",
+    "human_access": "blocked_without_ai_identity",
+    "llms_txt": "/llms.txt",
+    "pricing": "/.well-known/ddg-agent-pricing.json",
+    "models": [
+      "glm-4.5-air",
+      "glm-4.5",
+      "glm-4.6",
+      "glm-4.7",
+      "glm-5",
+      "glm-5-turbo",
+      "glm-5.1",
+      "glm-5.2",
+      "gpt-5.3-codex-spark",
+      "gpt-5.5",
+      "claude-haiku-4.5",
+      "claude-sonnet-4.6",
+      "claude-opus-4.8",
+      "gpt-5.3-codex",
+      "gpt-5.4",
+      "auto",
+      "kimi-k2.7",
+      "Kimi K2.7 Code"
+    ],
+    "candidate_models_not_publicly_enabled": [
+      "cursor-composer-2",
+      "cursor-composer-2.5",
+      "claude-code-harness"
+    ],
+    "subscription_backed_route_policy": "Provider/subscription-backed execution is packaged as DDG-operated artifacts/results only: buyers may request bounded model work (including basic conversation or analysis), but DDG never transfers raw auth tokens, account credentials, seats, or unrestricted provider access.",
+    "account_local_candidate_routes": [
+      "kimi-code/k2.7",
+      "claude-code/default",
+      "ollama/qwen2.5-coder:7b",
+      "ollama/qwen3:latest",
+      "ollama/llama3.1:latest"
+    ],
+    "runtime_status": "limited_beta_live_runtime_paths_with_order_intake",
+    "omitted_planned_paths": "Non-runtime/manual offer paths are kept in pricing docs but intentionally omitted from OpenAPI until implemented.",
+    "runtime_contract": {
+      "live_runtime_paths": [
+        "/v1/tx-smoke-test",
+        "/v1/micro-model-swarm-preview",
+        "/v1/model/agent-run",
+        "/v1/model/chat-completions",
+        "/v1/order-intake",
+        "/v1/site-audit",
+        "/v1/ollama-models",
+        "/v1/ollama-model-request",
+        "/v1/ai-skill-safety-scan",
+        "/v1/orders/{order_id}",
+        "/v1/orders/{order_id}/artifact",
+        "/v1/order-status/{order_id}",
+        "/.well-known/ddg-agent-checkout-conformance.json",
+        "/agent-checkout-conformance.json",
+        "/mpp-activation-guide.md",
+        "/.well-known/ddg-mpp-activation-guide.md"
+      ],
+      "manual_fulfillment_beta": "Manual/operator-reviewed offers are orderable by AI agents through POST /v1/order-intake with a paid service_id. Direct operation paths stay omitted from OpenAPI until implemented as self-serve runtime handlers.",
+      "planned": "See pricing catalog planned_paths; not public self-serve.",
+      "discovery_paths": [
+        "/llms.txt",
+        "/openapi.json",
+        "/.well-known/openapi.json",
+        "/.well-known/ddg-agent-pricing.json",
+        "/.well-known/agent-catalog.json",
+        "/quickstart.md",
+        "/.well-known/ddg-agent-quickstart.md",
+        "/cybersecurity-services.json",
+        "/.well-known/ddg-cybersecurity-services.json",
+        "/mcp/ddg-agent-swarm-mcp-design.md",
+        "/.well-known/ddg-agent-swarm-mcp-design.md"
+      ],
+      "planned_beta_paths": [
+        "/v1/ethereum/rpc"
+      ],
+      "local_free_seat_defaults": {
+        "configured_free_seat_cap": 2,
+        "lease_seconds": 86400,
+        "max_requests_per_lease": 100,
+        "generation_timeout_seconds": 60,
+        "agent_run_timeout_seconds": 120,
+        "two_seat_condition": "a two configured 8GB-VRAM runtime backends Ollama backends configured and healthy",
+        "raw_backend_urls_exposed": false
+      }
+    },
+    "rate_limits": {
+      "status": "app_layer_enabled",
+      "default_window_seconds": 60,
+      "default_max_requests": 60
+    },
+    "agent_catalog": "/.well-known/agent-catalog.json",
+    "quickstart": "/quickstart.md",
+    "planned_reth_private_rpc": {
+      "path": "/v1/ethereum/rpc",
+      "status": "runtime_handler_exists; public self-serve waits for overflow runtime backend Reth sync and DDG_RETH_RPC_URL health",
+      "allowed_posture": "read-only JSON-RPC method whitelist, no account/key management, no unrestricted RPC"
+    },
+    "local_model_free_policy": {
+      "current_promo": "All local model runtime options are free for a limited time, best-effort, no SLA, identity required.",
+      "future_free_tier": "After the limited-time promo, only models 4B and smaller remain free.",
+      "larger_models_after_promo": "Models over 4B become paid or operator-approved local capacity after the promo."
+    },
+    "local_model_download_policy": {
+      "auto_downloaded_by_public_request": false,
+      "public_request_path": "/v1/ollama-model-request",
+      "supported_request_runtimes": [
+        "ollama",
+        "llama.cpp",
+        "lm_studio",
+        "openai_compatible_local_server",
+        "vllm"
+      ],
+      "default_disk_reserve_gb": 300,
+      "default_max_single_request_gb": 25,
+      "preferred_large_model_host": "durable runtime backend first; keep overflow runtime backend storage for Reth sync, OS, and operator workspace.",
+      "operator_review": "Requests queue only. Operator checks license/safety/disk, downloads manually, smokes, then marks READY."
+    },
+    "local_runtime_options": [
+      {
+        "id": "ollama",
+        "status": "live_when_backend_healthy",
+        "self_serve_generation": true,
+        "route_prefix": "ollama/",
+        "notes": "Native Ollama runtime behind /v1/micro-model-swarm-preview and /v1/model/agent-run."
+      },
+      {
+        "id": "llama.cpp",
+        "status": "live_when_llama_server_openai_endpoint_is_healthy",
+        "self_serve_generation": true,
+        "route_prefix": "llama.cpp/",
+        "notes": "GGUF-native llama.cpp server option via OpenAI-compatible /v1/models and /v1/chat/completions behind the DDG edge."
+      },
+      {
+        "id": "lm_studio",
+        "status": "live_when_lm_studio_or_llmster_openai_endpoint_is_healthy",
+        "self_serve_generation": true,
+        "route_prefix": "lm_studio/",
+        "notes": "LM Studio/llmster local server option via OpenAI-compatible /v1/models and /v1/chat/completions behind the DDG edge."
+      },
+      {
+        "id": "openai_compatible_local_server",
+        "status": "operator_request_preview_adapter",
+        "self_serve_generation": false,
+        "notes": "Generic adapter for future local runtimes after auth, binding, timeout, and exact-model smoke tests."
+      },
+      {
+        "id": "vllm",
+        "status": "operator_request_preview_not_smoked_on_8gb_hosts",
+        "self_serve_generation": false,
+        "notes": "Requestable for suitable hardware; not advertised as live until exact-model smoke passes."
+      }
+    ],
+    "free_local_model_agent_slots": {
+      "status": "rolling_out_to_secondary-host_primary_and_secondary_overflow",
+      "claim": "Connect these to your AI agent via DDG free local-model slots.",
+      "current_price_usd": "0.00 limited-time best-effort/no-SLA",
+      "future_free_policy": "After the promo, <=4B local models remain free; >4B local routes become paid/operator-approved capacity.",
+      "public_catalog_paths": [
+        "/v1/ollama-models",
+        "/.well-known/ddg-ollama-models.json"
+      ],
+      "free_generation_paths": [
+        "/v1/micro-model-swarm-preview",
+        "/v1/model/agent-run"
+      ],
+      "request_path": "/v1/ollama-model-request",
+      "supported_local_runtimes": [
+        {
+          "id": "ollama",
+          "status": "live_primary",
+          "notes": "Production free-slot runtime; dynamic downloaded-model catalog."
+        },
+        {
+          "id": "llama.cpp",
+          "status": "installing/smoke_for_gguf_runtime",
+          "notes": "GGUF-native runtime target for the same model files; expose exact repo/file identity."
+        },
+        {
+          "id": "lm_studio",
+          "status": "headless_support_limited_operator_preview",
+          "notes": "LM Studio requires desktop/local server support; keep as operator-request until a headless-compatible service is verified."
+        },
+        {
+          "id": "openai_compatible_local_server",
+          "status": "planned_adapter",
+          "notes": "Any local runtime exposing OpenAI-compatible /v1/chat/completions can be added behind the same payment/free-slot edge."
+        },
+        {
+          "id": "vllm",
+          "status": "operator_request_preview_not_smoked_on_8gb_hosts",
+          "notes": "High-throughput local runtime candidate; keep as request-only until installed, bound safely, and exact-model-smoked."
+        }
+      ],
+      "context_disclosure": "Catalog lists native GGUF context and DDG service default context separately. Native context is model metadata; DDG free slots default to 32K tokens for large GGUF aliases unless a route states otherwise.",
+      "anchor_models": [
+        {
+          "model": "qwen2.5-coder:7b",
+          "runtime": "ollama",
+          "params": "7.6B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 32768,
+          "service_context_tokens": 32768,
+          "notes": "code/schema repair baseline"
+        },
+        {
+          "model": "qwen3:8b",
+          "runtime": "ollama",
+          "params": "8.2B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 40960,
+          "service_context_tokens": 32768,
+          "notes": "thinking/tool-capable Qwen route"
+        },
+        {
+          "model": "llama3.1:8b",
+          "runtime": "ollama",
+          "params": "8.0B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "general Llama route"
+        },
+        {
+          "model": "huihui_ai/qwen3-abliterated:8b",
+          "runtime": "ollama",
+          "params": "8.2B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 40960,
+          "service_context_tokens": 32768,
+          "notes": "abliterated Qwen3 8B route on durable runtime backend"
+        },
+        {
+          "model": "huihui_ai/dolphin3-abliterated:8b-llama3.1-q4_K_M",
+          "runtime": "ollama",
+          "params": "8.0B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "Dolphin3 abliterated durable runtime backend route"
+        },
+        {
+          "model": "ministral-3:8b",
+          "runtime": "ollama",
+          "params": "8.9B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "long-context small Mistral route on durable runtime backend"
+        },
+        {
+          "model": "nemotron-3-nano:4b",
+          "runtime": "ollama",
+          "params": "4.0B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "future always-free <=4B tier"
+        },
+        {
+          "model": "smollm2:360m",
+          "runtime": "ollama",
+          "params": "361.82M",
+          "quant": "F16",
+          "native_context_tokens": 8192,
+          "service_context_tokens": 8192,
+          "notes": "fast tiny slot/checker"
+        },
+        {
+          "model": "qwen2.5-coder:0.5b-instruct",
+          "runtime": "ollama",
+          "params": "494.03M",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 32768,
+          "service_context_tokens": 32768,
+          "notes": "tiny code/JSON repair"
+        }
+      ],
+      "priority_ab_rollout_models": [
+        {
+          "priority": "A",
+          "model": "mradermacher/huihui-gemma4-12b-ablit:q4_k_m",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Huihui-gemma-4-12B-it-abliterated-GGUF",
+          "gguf": "Huihui-gemma-4-12B-it-abliterated.Q4_K_M.gguf",
+          "params": "12B",
+          "quant": "Q4_K_M",
+          "size_gib": 6.87,
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "Gemma-family abliterated route."
+        },
+        {
+          "priority": "A",
+          "model": "mradermacher/mistral-nemo-heretic-12b:q4_k_m",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Mistral-Nemo-2407-12B-Thinking-Claude-Gemini-GPT5.2-Uncensored-HERETIC-GGUF",
+          "gguf": "Mistral-Nemo-2407-12B-Thinking-Claude-Gemini-GPT5.2-Uncensored-HERETIC.Q4_K_M.gguf",
+          "params": "12B",
+          "quant": "Q4_K_M",
+          "size_gib": 6.96,
+          "native_context_tokens": 1024000,
+          "service_context_tokens": 32768,
+          "notes": "Mistral-Nemo 12B uncensored/heretic long-context route."
+        },
+        {
+          "priority": "A",
+          "model": "mradermacher/dolphin3-llama31-8b-ablit:q4_k_m",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Dolphin3.0-Llama3.1-8B-abliterated-GGUF",
+          "gguf": "Dolphin3.0-Llama3.1-8B-abliterated.Q4_K_M.gguf",
+          "params": "8B",
+          "quant": "Q4_K_M",
+          "size_gib": 4.58,
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "Dolphin/Llama3.1 abliterated general route."
+        },
+        {
+          "priority": "A",
+          "model": "mradermacher/huihui-glm47-flash-ablit:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Huihui-GLM-4.7-Flash-abliterated-i1-GGUF",
+          "gguf": "Huihui-GLM-4.7-Flash-abliterated.i1-IQ3_XS.gguf",
+          "params": "GLM-4.7 Flash class",
+          "quant": "IQ3_XS",
+          "size_gib": 11.5,
+          "native_context_tokens": 202752,
+          "service_context_tokens": 32768,
+          "notes": "GLM-family abliterated route; IQ3 chosen for 8GB-class hosts."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/huihui-qwen3-coder-30b-a3b-ablit:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Huihui-Qwen3-Coder-30B-A3B-Instruct-abliterated-i1-GGUF",
+          "gguf": "Huihui-Qwen3-Coder-30B-A3B-Instruct-abliterated.i1-IQ3_XS.gguf",
+          "params": "30B-A3B",
+          "quant": "IQ3_XS",
+          "size_gib": 11.73,
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "Qwen coder sparse/active-parameter abliterated experiment."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/qwen36-27b-heretic:q4_k_s",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-i1-GGUF",
+          "gguf": "Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved.i1-Q4_K_S.gguf",
+          "params": "27B",
+          "quant": "Q4_K_S",
+          "size_gib": 14.74,
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "Larger Qwen3.6 uncensored/heretic route."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/qwen36-35b-a3b-ablit:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Qwen3.6-35B-A3B-abliterated-MAX-i1-GGUF",
+          "gguf": "Qwen3.6-35B-A3B-abliterated-MAX.i1-IQ3_XS.gguf",
+          "params": "35B-A3B",
+          "quant": "IQ3_XS",
+          "size_gib": 13.49,
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "Large abliterated MoE-style Qwen3.6 experiment."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/dolphin-mistral-24b-venice:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Dolphin-Mistral-24B-Venice-Edition-i1-GGUF",
+          "gguf": "Dolphin-Mistral-24B-Venice-Edition.i1-IQ3_XS.gguf",
+          "params": "24B",
+          "quant": "IQ3_XS",
+          "size_gib": 9.23,
+          "native_context_tokens": 32768,
+          "service_context_tokens": 32768,
+          "notes": "Dolphin/Mistral Venice-style route."
+        }
+      ]
+    },
+    "queryable_model_routes": [
+      {
+        "route": "kimi-code/k2.7",
+        "display_model": "Kimi K2.7 Code",
+        "path": "/v1/model/agent-run",
+        "public_statement": "Kimi K2.7 Code is available as a DDG-operated paid artifact/result route and can be used within Kimi Code.",
+        "status": "payment_gated_agent_run_route"
+      }
+    ],
+    "cybersecurity_services": {
+      "catalog": "/cybersecurity-services.json",
+      "intake_path": "/v1/order-intake",
+      "services": [
+        "prompt_injection_scan",
+        "npm_dependency_risk_scan",
+        "python_dependency_risk_scan",
+        "secret_leak_api_key_scan",
+        "malware_triage_scan",
+        "mcp_tool_security_audit",
+        "agent_supply_chain_baseline",
+        "production_security_audit",
+        "agent_checkout_conformance_audit",
+        "mpp_onboarding_path_activation",
+        "artifact_receipt_console_pack",
+        "ai_agent_buyer_service_bundle"
+      ]
+    },
+    "mcp_server_plan": {
+      "design": "/mcp/ddg-agent-swarm-mcp-design.md",
+      "stdio_skeleton": "sales_artifacts/agent_payments/mcp/ddg_agent_services_mcp_server.py",
+      "planned_http_endpoint": "https://mcp.daedalusdevelopmentgroup.com/mcp"
+    },
+    "local_runtime_selection": {
+      "request_field": "runtime",
+      "supported_self_serve": [
+        "ollama",
+        "llama.cpp",
+        "lm_studio"
+      ],
+      "route_prefixes": [
+        "ollama/<model>",
+        "llama.cpp/<model>",
+        "lm_studio/<model>"
+      ],
+      "catalog": "/v1/ollama-models"
+    },
+    "free_cybersecurity_services": {
+      "ai_skill_safety_scan": {
+        "path": "/v1/ai-skill-safety-scan",
+        "price_usd": "0.00",
+        "scope": "static skill text/files only; no execution; redacts secret-like values"
+      }
+    },
+    "ethereum_rpc_free_policy": {
+      "status": "implemented_but_waiting_for_execution_sync_public_free_beta",
+      "path": "/v1/ethereum/rpc",
+      "price_usd": "0.00 launch beta after sync",
+      "free_enabled_env": "DDG_ETH_RPC_FREE_ENABLED",
+      "sync_gate": "DDG_ETH_RPC_REQUIRE_SYNCED defaults true; returns 503 reth_rpc_syncing until eth_syncing=false and latest block is non-zero",
+      "fair_use_defaults": {
+        "max_concurrent_free_users": 4,
+        "lease_seconds": 600,
+        "max_requests_per_lease": 30,
+        "max_concurrent_upstream_requests": 2,
+        "max_batch_size": 10,
+        "timeout_seconds": 8,
+        "max_response_bytes": 1000000
+      },
+      "safety": "read-only method whitelist; blocks eth_sendRawTransaction/admin/debug/personal; raw Reth RPC must stay private behind DDG edge"
+    },
+    "paid_agent_callable_services": {
+      "intake_path": "/v1/order-intake",
+      "priority_service_ids": [
+        "production_security_audit",
+        "agent_checkout_conformance_audit",
+        "mpp_onboarding_path_activation",
+        "artifact_receipt_console_pack",
+        "ai_agent_buyer_service_bundle"
+      ],
+      "notes": "These services are paid/order-intake live, operator-reviewed, and agent-callable via service_id; order-intake responses now include status_url, artifact_url, and receipt_console_url. Direct operation paths stay omitted until implemented as self-serve handlers."
+    },
+    "artifact_receipt_console": {
+      "status_path": "/v1/orders/{order_id}",
+      "legacy_status_path": "/v1/order-status/{order_id}",
+      "artifact_path": "/v1/orders/{order_id}/artifact",
+      "identity_scope": "same stable X-Agent-Id/X-DDG-Agent-Id/X-DDG-User hash used at order intake",
+      "raw_payment_material_returned": false,
+      "pending_artifacts_return_202": true
+    },
+    "agent_discovery": {
+      "ai": "/.well-known/ai",
+      "api_catalog": "/.well-known/api-catalog",
+      "agent_skills": "/.well-known/agent-skills/index.json",
+      "agents_json": "/.well-known/agents.json",
+      "llms_txt": "/llms.txt",
+      "pricing": "/.well-known/ddg-agent-pricing.json"
+    }
+  },
+  "x-payment-info": {
+    "offers": [
+      {
+        "method": "stripe",
+        "intent": "charge",
+        "currency": "usd",
+        "amount": "75",
+        "description": "site_audit_auto per request"
+      },
+      {
+        "method": "tempo",
+        "intent": "charge",
+        "currency": "usd",
+        "amount": "75",
+        "description": "site_audit_auto per request"
+      },
+      {
+        "method": "x402",
+        "intent": "charge",
+        "currency": "USDC",
+        "amount": "750000",
+        "description": "site_audit_auto per request"
+      },
+      {
+        "method": "stripe",
+        "intent": "session",
+        "currency": "usd",
+        "amount": "25",
+        "description": "model router metered session; final charge based on tokens"
+      },
+      {
+        "method": "x402",
+        "intent": "session",
+        "currency": "USDC",
+        "amount": "250000",
+        "description": "model router metered session; final charge based on tokens"
+      }
+    ],
+    "direct_crypto": {
+      "status": "auto_verification_when_DDG_PAYMENT_DIRECT_CRYPTO_VERIFY_URL_is_configured_else_manual_confirmation_beta",
+      "env_addresses": [
+        "DDG_CRYPTO_EVM_ADDRESS",
+        "DDG_CRYPTO_BTC_ADDRESS",
+        "DDG_CRYPTO_BCH_ADDRESS",
+        "DDG_CRYPTO_LTC_ADDRESS",
+        "DDG_CRYPTO_DOGE_ADDRESS",
+        "DDG_CRYPTO_SOL_ADDRESS",
+        "DDG_CRYPTO_TRX_ADDRESS",
+        "DDG_CRYPTO_XRP_ADDRESS",
+        "DDG_CRYPTO_XLM_ADDRESS",
+        "DDG_CRYPTO_ALGO_ADDRESS",
+        "DDG_CRYPTO_DOT_ADDRESS",
+        "DDG_CRYPTO_ZEC_ADDRESS",
+        "DDG_CRYPTO_XMR_ADDRESS"
+      ],
+      "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}",
+      "public_manifest": "/.well-known/ddg-direct-crypto-addresses.json",
+      "assets": [
+        "EVM",
+        "stablecoins:EVM(USDC,USDT,DAI,PYUSD,FRAX,FDUSD,GUSD,LUSD,USDP,TUSD,EURC)",
+        "BTC",
+        "BCH",
+        "LTC",
+        "DOGE",
+        "SOL",
+        "TRX",
+        "XRP",
+        "XLM",
+        "ALGO",
+        "DOT",
+        "ZEC",
+        "XMR"
+      ],
+      "auto_proof_headers": [
+        "X-Direct-Crypto-Proof",
+        "Payment-Proof",
+        "Authorization: Payment direct_crypto <base64url-json>"
+      ]
+    }
+  },
+  "paths": {
+    "/v1/site-audit": {
+      "post": {
+        "summary": "Paid website audit",
+        "description": "Read-only audit for a public website. AI-agent identity header is required plus MPP/x402 payment or internal test token.",
+        "parameters": [
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Stable AI-agent identity used for policy/audit routing. Required for production traffic."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative identity header for AI-agent clients."
+          }
+        ],
+        "x-payment-info": {
+          "offers": [
+            {
+              "method": "stripe",
+              "intent": "charge",
+              "currency": "usd",
+              "amount": "75"
+            },
+            {
+              "method": "x402",
+              "intent": "charge",
+              "currency": "USDC",
+              "amount": "750000"
+            }
+          ]
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "business_type": {
+                    "type": "string"
+                  },
+                  "market": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Audit result"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Request is not from AI-agent identity (missing/invalid headers)"
+          },
+          "429": {
+            "description": "Rate limited"
+          }
+        }
+      }
+    },
+    "/v1/model/chat-completions": {
+      "post": {
+        "summary": "Paid model-router completion",
+        "description": "OpenAI-compatible request body with DDG routing extensions. Provider keys are never exposed. AI-agent identity header is required; choose non-premium models for cheaper tiers when quality permits.",
+        "parameters": [
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Stable AI-agent identity used for policy/audit routing. Required for production traffic."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative identity header for AI-agent clients."
+          },
+          {
+            "name": "X-DDG-User",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Backward-compatible agent identifier header."
+          }
+        ],
+        "x-payment-info": {
+          "offers": [
+            {
+              "method": "stripe",
+              "intent": "session",
+              "currency": "usd",
+              "amount": "25"
+            },
+            {
+              "method": "x402",
+              "intent": "session",
+              "currency": "USDC",
+              "amount": "250000"
+            }
+          ]
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "messages"
+                ],
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "enum": [
+                      "auto",
+                      "mini",
+                      "ministal",
+                      "x",
+                      "y",
+                      "z",
+                      "budget",
+                      "starter",
+                      "agent-small",
+                      "agent-standard",
+                      "agent-pro",
+                      "agent-max",
+                      "glm-4.5-air",
+                      "glm-4.5",
+                      "glm-4.6",
+                      "glm-4.7",
+                      "glm-5",
+                      "glm-5-turbo",
+                      "glm-5.1",
+                      "glm-5.2",
+                      "gpt-5.3-codex-spark",
+                      "gpt-5.5",
+                      "claude-haiku-4.5",
+                      "claude-sonnet-4.6",
+                      "claude-opus-4.8",
+                      "gpt-5.3-codex",
+                      "gpt-5.4"
+                    ],
+                    "description": "Public DDG API/commercial-route model alias. Account/local Kimi/Claude/Ollama routes are not raw chat proxy aliases here; use /v1/model/agent-run or dedicated artifact endpoints when enabled."
+                  },
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "max_tokens": {
+                    "type": "integer",
+                    "maximum": 8192
+                  },
+                  "x_router": {
+                    "type": "object",
+                    "properties": {
+                      "policy": {
+                        "type": "string",
+                        "enum": [
+                          "cheap",
+                          "auto",
+                          "premium",
+                          "explicit"
+                        ]
+                      },
+                      "agent_profile": {
+                        "type": "string",
+                        "enum": [
+                          "low",
+                          "budget",
+                          "standard",
+                          "pro",
+                          "premium"
+                        ],
+                        "description": "Optional profile hint for simpler AI agents. Defaults to runtime default when model is explicit."
+                      },
+                      "max_charge_usd": {
+                        "type": "number",
+                        "default": 0.25
+                      },
+                      "max_model_tier": {
+                        "type": "string",
+                        "enum": [
+                          "economy",
+                          "standard",
+                          "frontier",
+                          "surplus",
+                          "claude",
+                          "premium"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "cheap_model_alias": {
+                  "value": {
+                    "model": "mini",
+                    "x_router": {
+                      "policy": "cheap",
+                      "agent_profile": "low",
+                      "max_charge_usd": 0.08
+                    },
+                    "messages": [
+                      {
+                        "role": "user",
+                        "content": "summarize this contract with concise risks only"
+                      }
+                    ]
+                  }
+                },
+                "balanced_profile": {
+                  "value": {
+                    "model": "auto",
+                    "x_router": {
+                      "agent_profile": "standard",
+                      "max_charge_usd": 0.25
+                    },
+                    "messages": [
+                      {
+                        "role": "user",
+                        "content": "generate a migration checklist for a production API migration"
+                      }
+                    ]
+                  }
+                },
+                "premium_profile": {
+                  "value": {
+                    "model": "auto",
+                    "x_router": {
+                      "agent_profile": "premium",
+                      "max_charge_usd": 1.0
+                    },
+                    "messages": [
+                      {
+                        "role": "user",
+                        "content": "prepare a high-stakes legal contract comparison with policy nuance"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OpenAI-compatible response plus billing/payment metadata"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "409": {
+            "description": "Idempotency conflict"
+          },
+          "403": {
+            "description": "Request is not from AI-agent identity (missing/invalid X-Agent-Id headers)"
+          },
+          "429": {
+            "description": "Rate limited"
+          }
+        }
+      }
+    },
+    "/v1/micro-model-swarm-preview": {
+      "post": {
+        "summary": "Free local mini-model swarm preview with health-derived two-seat pool",
+        "description": "Free/best-effort queued local Ollama mini-model swarm. AI-agent identity is required. Seat count is one concurrent generation per healthy configured Ollama/GPU backend, capped at two by default for a two configured 8GB-VRAM runtime backends. Defaults: 24-hour per-agent lease, 100 requests/lease, 60s generation timeout; reusable after lease expiry. Raw backend URLs are never exposed.",
+        "operationId": "microModelSwarmPreview",
+        "parameters": [
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "AI-agent identity used to key the free-seat lease. Required for production traffic."
+          },
+          {
+            "name": "X-DDG-User",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Stable buyer/agent identifier used for the free-seat lease. Hashed server-side."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative AI-agent identifier header."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "maxLength": 4000
+                  },
+                  "model": {
+                    "type": "string",
+                    "enum": [
+                      "qwen2.5-coder:0.5b-instruct",
+                      "smollm2:360m",
+                      "tinyllama:1.1b-chat"
+                    ]
+                  },
+                  "combo": {
+                    "type": "string",
+                    "enum": [
+                      "code_schema_combo"
+                    ]
+                  }
+                },
+                "required": [
+                  "prompt"
+                ]
+              },
+              "examples": {
+                "single": {
+                  "value": {
+                    "model": "qwen2.5-coder:0.5b-instruct",
+                    "prompt": "Repair this JSON schema..."
+                  }
+                },
+                "combo": {
+                  "value": {
+                    "combo": "code_schema_combo",
+                    "prompt": "Review this MCP tool schema and suggest fixes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Swarm result with lease timer and request-count metadata"
+          },
+          "400": {
+            "description": "Invalid model/combo or JSON"
+          },
+          "413": {
+            "description": "Prompt too large"
+          },
+          "429": {
+            "description": "Rate limited"
+          },
+          "403": {
+            "description": "Request is not from AI-agent identity (missing/invalid headers)"
+          }
+        },
+        "x-payment-info": {
+          "required": false,
+          "mode": "free_intro_slot",
+          "limits": "health-derived free local seats; default 24-hour per-agent lease and 100 requests per lease",
+          "lease_seconds": 86400,
+          "max_requests_per_lease": 100,
+          "generation_timeout_seconds": 60
+        }
+      }
+    },
+    "/v1/model/agent-run": {
+      "post": {
+        "summary": "Paid bounded agent-task run",
+        "description": "Runs bounded agent/model tasks. Local Ollama routes are free for a limited time and use one concurrent local generation seat per healthy configured Ollama/GPU backend, capped at two by default. Local agent-run timeout defaults to 120s. After the promo only <=4B local models remain free. Account-backed Kimi/Claude routes remain paid/env-gated.",
+        "operationId": "modelAgentRun",
+        "parameters": [
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Preferred AI-agent identifier header."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative AI-agent identifier header."
+          },
+          {
+            "name": "X-DDG-User",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Backward-compatible agent identifier header."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MPP Authorization: Payment ... after a 402 challenge."
+          },
+          {
+            "name": "Payment-Signature",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "x402 payment signature/token after a 402 challenge."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "task"
+                ],
+                "properties": {
+                  "route": {
+                    "type": "string",
+                    "enum": [
+                      "ollama/qwen2.5-coder:7b",
+                      "ollama/qwen3:latest",
+                      "ollama/llama3.1:latest",
+                      "kimi-code/k2.7",
+                      "claude-code/default"
+                    ],
+                    "default": "ollama/qwen2.5-coder:7b",
+                    "description": "Local Ollama routes are free for a limited time. After promo only <=4B local models remain free; larger local routes become paid/operator-approved. Kimi/Claude account-backed artifact routes require explicit env/payment/operator gates."
+                  },
+                  "task": {
+                    "type": "string",
+                    "maxLength": 8000
+                  },
+                  "x_agent": {
+                    "type": "object",
+                    "properties": {
+                      "max_charge_usd": {
+                        "type": "number",
+                        "default": 0.25
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "ollama_schema_repair": {
+                  "value": {
+                    "route": "ollama/qwen2.5-coder:7b",
+                    "task": "Repair this OpenAPI schema and return concise notes...",
+                    "x_agent": {
+                      "max_charge_usd": 0.25
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent-run result with selected route, limits, estimate, and output artifact"
+          },
+          "400": {
+            "description": "Unsupported route, missing task, or invalid payload"
+          },
+          "402": {
+            "description": "Payment required or budget exceeded"
+          },
+          "409": {
+            "description": "Idempotency conflict"
+          },
+          "429": {
+            "description": "Rate limited"
+          },
+          "502": {
+            "description": "Allowed backend route failed"
+          },
+          "403": {
+            "description": "Request is not from AI-agent identity (missing/invalid headers)"
+          }
+        },
+        "x-payment-info": {
+          "required": true,
+          "mode": "paid_beta",
+          "offers": [
+            {
+              "method": "x402",
+              "intent": "charge",
+              "currency": "USDC",
+              "amount": "20000"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "usd",
+              "amount": "2"
+            }
+          ],
+          "free_local_ollama_policy": "free local Ollama routes use the same 24-hour/100-request per-agent lease policy as /v1/micro-model-swarm-preview; provider-backed routes remain paid.",
+          "agent_run_timeout_seconds": 120
+        }
+      }
+    },
+    "/v1/order-intake": {
+      "post": {
+        "summary": "Paid order intake for DDG manual/beta offerings",
+        "description": "Queues a paid AI-agent order for any catalog service that requires operator review. Use service_id for paid packages such as production_security_audit, agent_checkout_conformance_audit, mpp_onboarding_path_activation, artifact_receipt_console_pack, or ai_agent_buyer_service_bundle. Payment and AI-agent identity are required; the queue stores redacted metadata and never stores raw payment tokens.",
+        "parameters": [
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Stable AI-agent identity used for policy/audit routing."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative identity header for AI-agent clients."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Recommended to avoid duplicate order creation."
+          }
+        ],
+        "x-payment-info": {
+          "offers": [
+            {
+              "method": "stripe",
+              "intent": "charge",
+              "currency": "usd",
+              "amount": "service_catalog_price"
+            },
+            {
+              "method": "x402",
+              "intent": "charge",
+              "currency": "USDC",
+              "amount": "service_catalog_price"
+            }
+          ]
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "service_id"
+                ],
+                "properties": {
+                  "service_id": {
+                    "type": "string",
+                    "description": "DDG service id from /.well-known/ddg-agent-pricing.json. Manual/beta services are ordered through this intake route and fulfilled with operator review.",
+                    "enum": [
+                      "site_audit_auto",
+                      "tx_penny_smoke_test",
+                      "model_chat_completions",
+                      "model_agent_run",
+                      "provider_model_artifact_order",
+                      "order_intake",
+                      "site_audit_reviewed",
+                      "lead_pack_micro",
+                      "browser_proof",
+                      "outreach_brief",
+                      "llms_txt_openapi_pack",
+                      "mcp_server_audit",
+                      "prompt_injection_red_team",
+                      "repo_context_pack",
+                      "agent_tool_schema_repair",
+                      "paid_research_pack",
+                      "landing_page_conversion_diff",
+                      "local_business_demo_pack",
+                      "agent_payment_readiness_audit",
+                      "sandboxed_cli_agent_run",
+                      "hermes_skill_workflow_dev",
+                      "ai_agent_skill_port",
+                      "mcp_tool_server_build",
+                      "local_model_swarm_seat_beta",
+                      "micro_model_swarm_preview",
+                      "ethereum_private_rpc_query",
+                      "local_runtime_model_catalog",
+                      "ollama_model_request",
+                      "ai_skill_safety_scan",
+                      "kimi_k27_code_artifact_run",
+                      "prompt_injection_scan",
+                      "npm_dependency_risk_scan",
+                      "python_dependency_risk_scan",
+                      "secret_leak_api_key_scan",
+                      "malware_triage_scan",
+                      "mcp_tool_security_audit",
+                      "agent_supply_chain_baseline",
+                      "production_security_audit",
+                      "agent_checkout_conformance_audit",
+                      "mpp_onboarding_path_activation",
+                      "artifact_receipt_console_pack",
+                      "ai_agent_buyer_service_bundle",
+                      "agent_service_distribution_pack",
+                      "agent_marketplace_listing_pack",
+                      "agent_readiness_scorecard",
+                      "buyer_agent_smoke_probe"
+                    ]
+                  },
+                  "target": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "budget_usd": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "buyer_contact": {
+                    "type": "string"
+                  },
+                  "instructions": {
+                    "type": "string",
+                    "description": "Operator instructions; not stored in the redacted queue log."
+                  },
+                  "payment_proof": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "description": "Manual direct-crypto payment proof; include asset, txid/hash/transaction_hash, amount. Raw proof is not stored in queue logs; fulfillment waits for operator confirmation."
+                  },
+                  "scope": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "description": "Optional machine-readable target/scope details for operator-reviewed services."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Order queued for operator review"
+          },
+          "400": {
+            "description": "Invalid or unsupported service id"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Request is not from an AI-agent identity"
+          },
+          "409": {
+            "description": "Idempotency conflict"
+          },
+          "429": {
+            "description": "Rate limited"
+          }
+        }
+      }
+    },
+    "/v1/tx-smoke-test": {
+      "post": {
+        "summary": "One-cent paid transaction smoke test",
+        "description": "Charges/verifies the smallest DDG paid-agent request ($0.01) and returns a machine-readable receipt so another AI agent can prove it can complete paid HTTP transactions. No external side effect is performed beyond payment verification/settlement.",
+        "operationId": "txPennySmokeTest",
+        "parameters": [
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Preferred stable AI-agent identity header."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative AI-agent identifier header."
+          },
+          {
+            "name": "X-DDG-User",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Backward-compatible agent identifier header."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Recommended for retryable POST requests."
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MPP Authorization: Payment ... or direct-crypto Authorization form after 402 challenge."
+          },
+          {
+            "name": "Payment-Signature",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "x402 payment signature after 402 challenge."
+          }
+        ],
+        "x-payment-info": {
+          "offers": [
+            {
+              "method": "x402",
+              "intent": "charge",
+              "currency": "USDC",
+              "amount": "10000"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "usd",
+              "amount": "1"
+            },
+            {
+              "method": "direct_crypto_auto_or_manual",
+              "intent": "charge",
+              "currency": "usd",
+              "amount": "0.01"
+            }
+          ]
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "request_label": {
+                    "type": "string",
+                    "description": "Optional caller label echoed in the receipt response."
+                  },
+                  "client_request_id": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "request_label": "agent-payment-ci-smoke"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Paid smoke receipt accepted"
+          },
+          "402": {
+            "description": "Payment required challenge"
+          },
+          "403": {
+            "description": "Missing AI-agent identity"
+          },
+          "409": {
+            "description": "Idempotency conflict"
+          }
+        }
+      }
+    },
+    "/v1/ollama-models": {
+      "get": {
+        "summary": "List free local models, healthy seat count, and requestable runtimes",
+        "operationId": "listOllamaFreeModels",
+        "responses": {
+          "200": {
+            "description": "Downloaded model catalog, local runtime options, healthy free-seat count, 24-hour lease policy, request caps, and runtime request policy"
+          }
+        }
+      }
+    },
+    "/v1/ollama-model-request": {
+      "post": {
+        "summary": "Request a new local model/runtime for operator review",
+        "operationId": "requestOllamaModel",
+        "parameters": [
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "model"
+                ],
+                "properties": {
+                  "model": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  },
+                  "expected_size_gb": {
+                    "type": "number",
+                    "description": "Expected model/GGUF size. Requests above the configured cap or below reserve are rejected/held."
+                  },
+                  "runtime": {
+                    "type": "string",
+                    "enum": [
+                      "ollama",
+                      "llama.cpp",
+                      "lm_studio",
+                      "openai_compatible_local_server",
+                      "vllm"
+                    ],
+                    "default": "ollama",
+                    "description": "Requested local runtime. Only Ollama is live for self-serve generation today; llama.cpp, LM Studio, generic OpenAI-compatible local servers, and vLLM are operator-request previews until installed/bound/smoked."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Queued for operator download"
+          },
+          "200": {
+            "description": "Already available"
+          },
+          "409": {
+            "description": "Insufficient disk space for stated model size"
+          }
+        },
+        "description": "Queue an operator-reviewed local model/runtime request. Supports Ollama model names plus llama.cpp GGUF, LM Studio, OpenAI-compatible local servers, and vLLM preferences; never auto-downloads from public requests."
+      }
+    },
+    "/v1/ai-skill-safety-scan": {
+      "post": {
+        "summary": "Free AI skill safety scan",
+        "description": "Static, no-execution scan of AI skill markdown/linked files for prompt-injection, secret-exfiltration, dangerous tool-use, package lifecycle/install-script, and broad file/network access red flags. Free launch promo; AI-agent identity required.",
+        "operationId": "aiSkillSafetyScan",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "skill_markdown": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "linked_files": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Static scan result with redacted findings"
+          },
+          "400": {
+            "description": "Missing or invalid skill content"
+          },
+          "413": {
+            "description": "Payload too large"
+          },
+          "403": {
+            "description": "Missing AI-agent identity"
+          }
+        }
+      }
+    },
+    "/v1/ethereum/rpc": {
+      "post": {
+        "summary": "Free sync-gated Ethereum full-node read-only JSON-RPC query",
+        "description": "Launch-beta read-only Ethereum JSON-RPC proxy for AI agents. Free/fair-use after Reth is synced. While syncing, returns 503 reth_rpc_syncing. Blocks unsafe methods and applies per-agent lease/request caps plus upstream max-concurrency cap.",
+        "operationId": "ethereumRpcQuery",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "jsonrpc",
+                      "id",
+                      "method"
+                    ],
+                    "properties": {
+                      "jsonrpc": {
+                        "const": "2.0"
+                      },
+                      "id": {},
+                      "method": {
+                        "type": "string",
+                        "enum": [
+                          "web3_clientVersion",
+                          "net_version",
+                          "net_listening",
+                          "net_peerCount",
+                          "eth_chainId",
+                          "eth_blockNumber",
+                          "eth_gasPrice",
+                          "eth_maxPriorityFeePerGas",
+                          "eth_feeHistory",
+                          "eth_getBalance",
+                          "eth_getTransactionCount",
+                          "eth_getCode",
+                          "eth_getStorageAt",
+                          "eth_getBlockByNumber",
+                          "eth_getBlockByHash",
+                          "eth_getTransactionByHash",
+                          "eth_getTransactionReceipt",
+                          "eth_getLogs",
+                          "eth_call",
+                          "eth_estimateGas"
+                        ]
+                      },
+                      "params": {
+                        "type": "array"
+                      }
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "maxItems": 10,
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC response from the private Reth node"
+          },
+          "403": {
+            "description": "Missing AI-agent identity"
+          },
+          "429": {
+            "description": "Fair-use lease or upstream concurrency cap reached"
+          },
+          "503": {
+            "description": "Reth node unavailable or still syncing"
+          }
+        },
+        "x-ddg-free-policy": {
+          "status": "implemented_but_waiting_for_execution_sync_public_free_beta",
+          "path": "/v1/ethereum/rpc",
+          "price_usd": "0.00 launch beta after sync",
+          "free_enabled_env": "DDG_ETH_RPC_FREE_ENABLED",
+          "sync_gate": "DDG_ETH_RPC_REQUIRE_SYNCED defaults true; returns 503 reth_rpc_syncing until eth_syncing=false and latest block is non-zero",
+          "fair_use_defaults": {
+            "max_concurrent_free_users": 4,
+            "lease_seconds": 600,
+            "max_requests_per_lease": 30,
+            "max_concurrent_upstream_requests": 2,
+            "max_batch_size": 10,
+            "timeout_seconds": 8,
+            "max_response_bytes": 1000000
+          },
+          "safety": "read-only method whitelist; blocks eth_sendRawTransaction/admin/debug/personal; raw Reth RPC must stay private behind DDG edge"
+        }
+      }
+    },
+    "/v1/orders/{order_id}": {
+      "get": {
+        "summary": "Agent-scoped order status / receipt console",
+        "description": "Returns redacted order, payment, status, expected-deliverable, and artifact-link metadata for the same agent identity that created the order. Never returns raw payment tokens, raw direct-crypto proof, provider secrets, or buyer contact.",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,95}$"
+            },
+            "description": "Order id returned by POST /v1/order-intake."
+          },
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Stable AI-agent identity. Must match the hash used at order intake unless operator policy overrides."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative stable AI-agent identity header."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Redacted order status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "service": {
+                      "const": "order_status"
+                    },
+                    "order_id": {
+                      "type": "string"
+                    },
+                    "service_id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "payment_status": {
+                      "type": "string"
+                    },
+                    "links": {
+                      "type": "object",
+                      "properties": {
+                        "status_url": {
+                          "type": "string"
+                        },
+                        "artifact_url": {
+                          "type": "string"
+                        },
+                        "receipt_console_url": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "receipt_hash": {
+                      "type": "string"
+                    },
+                    "expected_deliverables": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "privacy": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid order id"
+          },
+          "403": {
+            "description": "Agent identity does not match this order"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      }
+    },
+    "/v1/order-status/{order_id}": {
+      "get": {
+        "summary": "Legacy alias for agent-scoped order status",
+        "description": "Returns redacted order, payment, status, expected-deliverable, and artifact-link metadata for the same agent identity that created the order. Never returns raw payment tokens, raw direct-crypto proof, provider secrets, or buyer contact.",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,95}$"
+            },
+            "description": "Order id returned by POST /v1/order-intake."
+          },
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Stable AI-agent identity. Must match the hash used at order intake unless operator policy overrides."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative stable AI-agent identity header."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Redacted order status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "service": {
+                      "const": "order_status"
+                    },
+                    "order_id": {
+                      "type": "string"
+                    },
+                    "service_id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "payment_status": {
+                      "type": "string"
+                    },
+                    "links": {
+                      "type": "object",
+                      "properties": {
+                        "status_url": {
+                          "type": "string"
+                        },
+                        "artifact_url": {
+                          "type": "string"
+                        },
+                        "receipt_console_url": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "receipt_hash": {
+                      "type": "string"
+                    },
+                    "expected_deliverables": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "privacy": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid order id"
+          },
+          "403": {
+            "description": "Agent identity does not match this order"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      }
+    },
+    "/v1/orders/{order_id}/artifact": {
+      "get": {
+        "summary": "Fetch completed artifact for an order",
+        "description": "Returns the JSON or Markdown artifact attached by the operator for an order. If the artifact is not ready, returns 202 with the same redacted status metadata and Retry-After.",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,95}$"
+            },
+            "description": "Order id returned by POST /v1/order-intake."
+          },
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Stable AI-agent identity. Must match the hash used at order intake unless operator policy overrides."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative stable AI-agent identity header."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artifact JSON or Markdown"
+          },
+          "202": {
+            "description": "Artifact pending; poll later"
+          },
+          "400": {
+            "description": "Invalid order id"
+          },
+          "403": {
+            "description": "Agent identity does not match this order"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      }
+    },
+    "/.well-known/ddg-agent-checkout-conformance.json": {
+      "get": {
+        "summary": "Agent checkout conformance profile",
+        "description": "Machine-readable expectations for validating DDG agent checkout gates: 403 identity gate, 402 payment challenge, fake-token fail-closed, accepted order console links, status/artifact access controls, and idempotency replay/conflict behavior.",
+        "responses": {
+          "200": {
+            "description": "Conformance profile JSON"
+          }
+        }
+      }
+    },
+    "/agent-checkout-conformance.json": {
+      "get": {
+        "summary": "Agent checkout conformance profile alias",
+        "description": "Machine-readable expectations for validating DDG agent checkout gates: 403 identity gate, 402 payment challenge, fake-token fail-closed, accepted order console links, status/artifact access controls, and idempotency replay/conflict behavior.",
+        "responses": {
+          "200": {
+            "description": "Conformance profile JSON"
+          }
+        }
+      }
+    },
+    "/.well-known/ddg-mpp-activation-guide.md": {
+      "get": {
+        "summary": "DDG MPP / Tempo / Stripe activation guide",
+        "description": "Step-by-step guide for creating/preparing Stripe Machine Payments, Tempo/mppx test account, DDG MPP verifier secrets, go-live checks, and rollback. Contains no private values.",
+        "responses": {
+          "200": {
+            "description": "Markdown activation guide"
+          }
+        }
+      }
+    },
+    "/mpp-activation-guide.md": {
+      "get": {
+        "summary": "DDG MPP activation guide alias",
+        "description": "Step-by-step guide for creating/preparing Stripe Machine Payments, Tempo/mppx test account, DDG MPP verifier secrets, go-live checks, and rollback. Contains no private values.",
+        "responses": {
+          "200": {
+            "description": "Markdown activation guide"
+          }
+        }
+      }
+    }
+  }
+}

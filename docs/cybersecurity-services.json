@@ -1,0 +1,291 @@
+{
+  "schema_version": "2026-06-14",
+  "audience": "ai_agents_only",
+  "base_url": "https://agents.daedalusdevelopmentgroup.com",
+  "intake_path": "/v1/order-intake",
+  "positioning": "Security services designed for AI-agent builders, MCP/tool authors, and swarm operators. Paid intake is machine-readable; most scans are operator-reviewed until automated scanners are fully sandboxed. Productionized paid audits and checkout/payment-path readiness packages are orderable by AI agents through /v1/order-intake.",
+  "safety_policy": {
+    "no_secret_exfiltration": true,
+    "findings_redact_raw_secrets": true,
+    "destructive_actions": "never_run_without_explicit_operator_approval",
+    "network_scans": "scope_limited_to_user_supplied_assets",
+    "package_installation": "sandbox_only; prefer lockfile/static analysis first"
+  },
+  "services": [
+    {
+      "id": "prompt_injection_scan",
+      "title": "Prompt-injection and tool-exfiltration scan",
+      "price_usd": "18.00",
+      "path": "/v1/prompt-injection-scan",
+      "fulfillment_mode": "operator_reviewed_static_and_dynamic_beta",
+      "inputs": [
+        "target_url_or_repo",
+        "agent_instructions",
+        "tool_manifest_or_openapi",
+        "known_sensitive_data_classes"
+      ],
+      "outputs": [
+        "risk_summary",
+        "exploit_reproduction_steps",
+        "prompt/tool-boundary mitigations",
+        "safe regression prompts"
+      ]
+    },
+    {
+      "id": "npm_dependency_risk_scan",
+      "title": "npm/package-lock dependency risk scan",
+      "price_usd": "12.00",
+      "path": "/v1/npm-dependency-risk-scan",
+      "fulfillment_mode": "operator_reviewed_sandbox_beta",
+      "inputs": [
+        "package.json",
+        "package-lock.json_or_pnpm-lock_or_yarn.lock",
+        "repo_url_optional"
+      ],
+      "outputs": [
+        "known_vulnerabilities",
+        "maintainer/supply-chain risk signals",
+        "install-script risk",
+        "license flags",
+        "fix priority list"
+      ]
+    },
+    {
+      "id": "python_dependency_risk_scan",
+      "title": "Python dependency and import-risk scan",
+      "price_usd": "12.00",
+      "path": "/v1/python-dependency-risk-scan",
+      "fulfillment_mode": "operator_reviewed_sandbox_beta",
+      "inputs": [
+        "pyproject.toml",
+        "requirements.txt",
+        "uv.lock_or_poetry.lock",
+        "repo_url_optional"
+      ],
+      "outputs": [
+        "known_vulnerabilities",
+        "dependency confusion risk",
+        "setup/install hooks",
+        "license flags",
+        "pinning/remediation plan"
+      ]
+    },
+    {
+      "id": "secret_leak_api_key_scan",
+      "title": "API-key/secret leak and credential boundary scan",
+      "price_usd": "15.00",
+      "path": "/v1/secret-leak-api-key-scan",
+      "fulfillment_mode": "operator_reviewed_redacted_findings",
+      "inputs": [
+        "repo_url_or_zip",
+        "env_example_optional",
+        "tool_logs_optional"
+      ],
+      "outputs": [
+        "redacted_secret_findings",
+        "leak_paths",
+        "rotation_priority",
+        "ignore/allowlist recommendations",
+        "CI guardrail suggestions"
+      ]
+    },
+    {
+      "id": "malware_triage_scan",
+      "title": "Malware/suspicious-code triage for agent workflows",
+      "price_usd": "20.00",
+      "path": "/v1/malware-triage-scan",
+      "fulfillment_mode": "sandbox_static_first_operator_review",
+      "inputs": [
+        "repo_or_archive_hash",
+        "suspicious_file_paths",
+        "allowed_dynamic_execution_scope"
+      ],
+      "outputs": [
+        "suspicious_behaviors",
+        "network/file/process indicators",
+        "safe containment notes",
+        "human-review verdict"
+      ]
+    },
+    {
+      "id": "ai_skill_safety_scan",
+      "title": "Free AI skill safety scanner",
+      "price_usd": "0.00",
+      "launch_promo": "free_for_traction",
+      "path": "/v1/ai-skill-safety-scan",
+      "fulfillment_mode": "free_static_scan_beta_operator_reviewed_when_flagged",
+      "inputs": [
+        "skill_markdown_or_repo_path",
+        "linked_files_optional",
+        "declared_tool_permissions_optional",
+        "intended_agent_runtime_optional"
+      ],
+      "outputs": [
+        "prompt-injection red flags",
+        "dangerous tool-use instructions",
+        "secret/API-key exfiltration risk",
+        "network/install/script side-effect risk",
+        "safe-to-install verdict with remediation notes"
+      ],
+      "free_limits": {
+        "max_skill_files": 8,
+        "max_total_chars": 120000,
+        "raw_secrets_redacted": true,
+        "best_effort_no_sla": true
+      }
+    },
+    {
+      "id": "mcp_tool_security_audit",
+      "title": "MCP/tool permission and auth-boundary audit",
+      "price_usd": "18.00",
+      "path": "/v1/mcp-tool-security-audit",
+      "fulfillment_mode": "operator_reviewed_schema_and_runtime_beta",
+      "inputs": [
+        "mcp_server_repo_or_url",
+        "tool_schema",
+        "auth_model",
+        "sample_agent_instructions"
+      ],
+      "outputs": [
+        "tool-risk matrix",
+        "dangerous capability flags",
+        "prompt-injection exposure",
+        "credential-scope recommendations",
+        "Hermes/native-MCP config example"
+      ]
+    },
+    {
+      "id": "agent_supply_chain_baseline",
+      "title": "Agent swarm supply-chain baseline bundle",
+      "price_usd": "35.00",
+      "path": "/v1/agent-supply-chain-baseline",
+      "fulfillment_mode": "operator_reviewed_bundle",
+      "inputs": [
+        "repo_url",
+        "package_manifests",
+        "mcp/tool manifests",
+        "deployment notes"
+      ],
+      "outputs": [
+        "combined prompt/package/secret/MCP findings",
+        "prioritized remediation plan",
+        "CI scanner starter config"
+      ]
+    },
+    {
+      "id": "production_security_audit",
+      "title": "Productionized AI-agent public-surface security audit",
+      "price_usd": "49.00",
+      "path": "/v1/production-security-audit",
+      "intake_path": "/v1/order-intake",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
+      "agent_callable": true,
+      "inputs": [
+        "target_base_url",
+        "llms_txt_or_catalog_url",
+        "openapi_url_optional",
+        "repo_or_manifest_optional",
+        "payment_flow_notes_optional"
+      ],
+      "outputs": [
+        "public endpoint risk summary",
+        "prompt-injection/tool-exfiltration findings",
+        "dependency/secret scan summary",
+        "payment-edge safety checks",
+        "redacted remediation report"
+      ]
+    },
+    {
+      "id": "agent_checkout_conformance_audit",
+      "title": "Agent checkout conformance audit",
+      "price_usd": "35.00",
+      "path": "/v1/agent-checkout-conformance-audit",
+      "intake_path": "/v1/order-intake",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
+      "agent_callable": true,
+      "inputs": [
+        "target_base_url",
+        "paid_endpoint",
+        "accepted_payment_protocols",
+        "agent_identity_header",
+        "test_budget_usd"
+      ],
+      "outputs": [
+        "403/402/200/receipt trace",
+        "idempotency replay verdict",
+        "fake-token fail-closed proof",
+        "spend-cap verdict",
+        "client integration notes"
+      ]
+    },
+    {
+      "id": "mpp_onboarding_path_activation",
+      "title": "MPP onboarding and payment-path activation",
+      "price_usd": "65.00",
+      "path": "/v1/mpp-onboarding-path-activation",
+      "intake_path": "/v1/order-intake",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
+      "agent_callable": true,
+      "inputs": [
+        "provider/currency decision",
+        "recipient address or account id",
+        "sidecar/deploy target",
+        "test amount",
+        "rollback constraints"
+      ],
+      "outputs": [
+        "sidecar health proof",
+        "402 accepted-protocol evidence",
+        "penny smoke result",
+        "replay/fake-token checks",
+        "go-live checklist"
+      ]
+    },
+    {
+      "id": "artifact_receipt_console_pack",
+      "title": "Artifact and receipt console pack",
+      "price_usd": "55.00",
+      "path": "/v1/artifact-receipt-console-pack",
+      "intake_path": "/v1/order-intake",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
+      "agent_callable": true,
+      "inputs": [
+        "order schema",
+        "receipt schema",
+        "artifact lifecycle",
+        "buyer identity model",
+        "frontend/backend stack"
+      ],
+      "outputs": [
+        "console UX spec",
+        "status JSON contract",
+        "receipt/artifact table schema",
+        "implementation patch plan",
+        "QA checklist"
+      ]
+    },
+    {
+      "id": "ai_agent_buyer_service_bundle",
+      "title": "AI-agent buyer service bundle",
+      "price_usd": "95.00",
+      "path": "/v1/ai-agent-buyer-service-bundle",
+      "intake_path": "/v1/order-intake",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
+      "agent_callable": true,
+      "inputs": [
+        "target service or repo",
+        "agent buyer goal",
+        "payment/readability/MCP/runtime scope",
+        "budget",
+        "deadline"
+      ],
+      "outputs": [
+        "security_preflight",
+        "checkout_conformance",
+        "agent_readability_upgrade",
+        "mcp_tool_audit",
+        "local_model_runtime_setup"
+      ]
+    }
+  ]
+}

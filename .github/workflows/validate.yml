@@ -1,0 +1,23 @@
+name: validate
+on:
+  pull_request:
+  push:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate JSON and Python syntax
+        run: |
+          python - <<'PY'
+          import json, pathlib, py_compile
+          for p in pathlib.Path('.').rglob('*.json'):
+              json.loads(p.read_text())
+              print('json ok', p)
+          for p in pathlib.Path('.').rglob('*.py'):
+              py_compile.compile(str(p), doraise=True)
+              print('py ok', p)
+          PY

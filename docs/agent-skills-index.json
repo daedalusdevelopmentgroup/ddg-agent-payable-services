@@ -1,0 +1,117 @@
+{
+  "base_url": "https://agents.daedalusdevelopmentgroup.com",
+  "generated_at": "2026-06-22T23:47:53.265767+00:00",
+  "schema_version": "v0.2.1",
+  "skills": [
+    {
+      "description": "Verify 403/402/fake-token/idempotency/order artifact behavior for agent-commerce payment edges.",
+      "id": "agent-payment-readiness-audit",
+      "name": "Agent Payment Readiness Audit",
+      "tags": [
+        "x402",
+        "checkout-conformance",
+        "payment-audit"
+      ],
+      "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/agent-payment-readiness-audit.json"
+    },
+    {
+      "description": "Audit MCP tools for authority boundaries, schema abuse, prompt injection, and unsafe tool exposure.",
+      "id": "mcp-tool-security-audit",
+      "name": "MCP Tool Security Audit",
+      "tags": [
+        "mcp",
+        "security",
+        "prompt-injection"
+      ],
+      "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/mcp-tool-security-audit.json"
+    },
+    {
+      "description": "Repair llms.txt, OpenAPI, pricing/catalog JSON, agent-skills, sitemap, and examples so agents can buy.",
+      "id": "agent-discovery-repair-pack",
+      "name": "Agent Discovery Repair Pack",
+      "tags": [
+        "llms.txt",
+        "openapi",
+        "agent-discovery"
+      ],
+      "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/agent-discovery-repair-pack.json"
+    },
+    {
+      "description": "Simulate a buyer agent discovering a service and validating payment/status/artifact behavior without spending unless approved.",
+      "id": "buyer-agent-smoke-probe",
+      "name": "Buyer Agent Smoke Probe",
+      "tags": [
+        "agent-commerce",
+        "smoke-test",
+        "conformance"
+      ],
+      "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/buyer-agent-smoke-probe.json"
+    },
+    {
+      "description": "Return screenshots, DOM evidence, and reproduction steps for websites and checkout flows.",
+      "id": "browser-proof-artifact",
+      "name": "Browser Proof Artifact",
+      "tags": [
+        "browser-proof",
+        "qa",
+        "evidence"
+      ],
+      "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/browser-proof-artifact.json"
+    },
+    {
+      "description": "Convert a repo or docs corpus into an agent-ready context map, Hermes skill, or MCP server scaffold.",
+      "id": "repo-context-pack",
+      "name": "Repo Context Pack",
+      "tags": [
+        "repo-analysis",
+        "skills",
+        "mcp"
+      ],
+      "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/repo-context-pack.json"
+    },
+    {
+      "description": "Plan and run prompt/tool injection checks against agent prompts, tools, and docs; CI mode planned.",
+      "id": "prompt-injection-ci",
+      "name": "Prompt Injection CI / Regression Audit",
+      "tags": [
+        "security",
+        "ci",
+        "prompt-injection"
+      ],
+      "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/prompt-injection-ci.json"
+    },
+    {
+      "description": "Operator-reviewed bounded artifact/result route using DDG model capacity without raw account/session resale.",
+      "id": "model-artifact-order",
+      "name": "DDG-Operated Model Artifact Order",
+      "tags": [
+        "model-routing",
+        "artifact",
+        "oauth-safe"
+      ],
+      "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/model-artifact-order.json"
+    },
+    {
+      "description": "Validate x402/direct-crypto/MPP rails, penny smokes, idempotency replay, and fake-token failure.",
+      "id": "payment-rail-activation-proof",
+      "name": "Payment Rail Activation Proof",
+      "tags": [
+        "x402",
+        "mpp",
+        "direct-crypto"
+      ],
+      "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/payment-rail-activation-proof.json"
+    },
+    {
+      "description": "Status URLs, receipt verification design, artifact hashes, and order polling for buyer agents.",
+      "id": "agent-status-and-receipt-tools",
+      "name": "Status, Receipt, and Artifact Tools",
+      "tags": [
+        "status",
+        "receipt",
+        "artifact"
+      ],
+      "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/agent-status-and-receipt-tools.json"
+    }
+  ]
+}

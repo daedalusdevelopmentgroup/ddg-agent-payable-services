@@ -1,0 +1,46 @@
+{
+  "name": "@daedalusdevelopmentgroup/ddg-agent-services-mcp",
+  "version": "0.1.0",
+  "title": "DDG Agent-Payable Services MCP",
+  "description": "Payment-aware MCP wrapper for DDG Agent-Payable Services: discovery, status, checkout conformance, free safety scan, order polling, and paid-service 402 challenges.",
+  "homepage": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai",
+  "documentation": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-swarm-mcp-design.md",
+  "base_url": "https://agents.daedalusdevelopmentgroup.com",
+  "transport": {
+    "stdio": {
+      "command": "uv",
+      "args": ["run", "--with", "mcp", "python", "ddg_agent_services_mcp_server.py"],
+      "required_env": ["DDG_MCP_AGENT_ID"],
+      "optional_env": ["DDG_AGENT_SERVICES_BASE_URL", "DDG_AGENT_SERVICES_ALLOWED_HOSTS"]
+    },
+    "http_streamable": {
+      "status": "planned_not_live"
+    }
+  },
+  "tools": [
+    "ddg_list_services",
+    "ddg_agent_status",
+    "ddg_checkout_conformance",
+    "ddg_list_models",
+    "ddg_list_local_runtime_options",
+    "ddg_skill_safety_scan",
+    "ddg_security_service_catalog",
+    "ddg_order_status",
+    "ddg_order_artifact",
+    "ddg_receipt_verify_design",
+    "ddg_tx_smoke_test",
+    "ddg_quote_payment",
+    "ddg_submit_order",
+    "ddg_run_paid_model",
+    "ddg_request_ollama_model"
+  ],
+  "payment_protocols_current_public_live": ["x402", "direct_crypto_auto"],
+  "payment_protocols_pending": ["mpp"],
+  "security": {
+    "no_arbitrary_shell": true,
+    "no_file_write_tools": true,
+    "no_provider_credential_relay": true,
+    "paid_tools_return_structured_402": true
+  },
+  "submission_status": "stdio_skeleton_smoked_registry_submission_waits_for_public_package_or_hosted_transport"
+}

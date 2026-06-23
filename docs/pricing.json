@@ -1,0 +1,2235 @@
+{
+  "service": "DDG Agent-Payable Services",
+  "version": "2026-06-22-agent-discovery-distribution-catalog",
+  "currency": "USD",
+  "payment_protocols": [
+    "x402",
+    "direct_crypto_auto",
+    "direct_crypto_manual"
+  ],
+  "disclaimer": "Launch-development pricing. DDG sells budgeted application/model-router output, skill/workflow/MCP artifacts, and agent-run results, not provider credentials, account seats, auth tokens, or raw account access. Account/subscription-backed model execution remains internal/manual beta or contract-only unless provider terms explicitly allow multi-tenant service use.",
+  "sources": [
+    {
+      "name": "Z.AI pricing",
+      "url": "https://docs.z.ai/guides/overview/pricing"
+    },
+    {
+      "name": "Anthropic Claude models",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview"
+    },
+    {
+      "name": "Anthropic Claude pricing",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "name": "OpenAI Codex pricing note",
+      "url": "https://developers.openai.com/codex/pricing"
+    },
+    {
+      "name": "OpenRouter GPT-5.3-Codex reference",
+      "url": "https://openrouter.ai/openai/gpt-5.3-codex"
+    },
+    {
+      "name": "OpenRouter GPT-5.5 reference",
+      "url": "https://openrouter.ai/openai/gpt-5.5"
+    },
+    {
+      "name": "Claude Code legal/compliance",
+      "url": "https://code.claude.com/docs/en/legal-and-compliance"
+    },
+    {
+      "name": "Cursor models and pricing",
+      "url": "https://cursor.com/docs/models-and-pricing"
+    },
+    {
+      "name": "Kimi model list",
+      "url": "https://platform.kimi.ai/docs/models"
+    },
+    {
+      "name": "Kimi Code CLI / K2.7 Code plan evidence",
+      "url": "https://moonshotai.github.io/kimi-cli/"
+    },
+    {
+      "name": "OpenAI Codex CLI",
+      "url": "https://developers.openai.com/codex/cli"
+    }
+  ],
+  "services": [
+    {
+      "id": "site_audit_auto",
+      "path": "/v1/site-audit",
+      "price_usd": "0.75",
+      "billing": "per_request_launch",
+      "risk": "read_only",
+      "description": "Automated website audit for agents evaluating local-business opportunities. Intro price lowered for settlement testing.",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "tx_penny_smoke_test",
+      "path": "/v1/tx-smoke-test",
+      "price_usd": "0.01",
+      "billing": "per_smoke_test",
+      "risk": "payment_smoke_only",
+      "description": "One-cent receipt-only payment smoke-test endpoint for AI agents to prove their own x402/direct-crypto/payment-client flow can complete a DDG paid request. This is infrastructure validation, not a meaningful revenue product, and has no external side effect beyond payment verification/settlement.",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_receipt_only",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "model_chat_completions",
+      "path": "/v1/model/chat-completions",
+      "price_usd": "metered",
+      "billing": "per_request_plus_usage",
+      "risk": "budgeted_model_router",
+      "description": "Live OpenAI-compatible paid model-router completion endpoint for AI agents. Supports conversation, analysis, code/help prompts, DDG routing extensions, payment gating, budget caps, and receipts. Eligible launch model prices target 75% of comparable official API list pricing; no provider-key/account exposure.",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "model_agent_run",
+      "path": "/v1/model/agent-run",
+      "price_usd": "0.00_local_limited_time; account_backed_routes_paid",
+      "billing": "limited_time_free_for_local_model_routes; per_run_plus_usage_for_account_backed_routes",
+      "risk": "sandboxed_agent_execution",
+      "description": "Live bounded agent-task endpoint. Local runtime routes are free for a limited time and can be selected across Ollama, llama.cpp, and LM Studio/llmster when the requested model is listed healthy under that runtime. Use route prefixes such as ollama/<model>, llama.cpp/<model>, lm_studio/<model>, or provide model plus runtime. Provider-backed Kimi K2.7 Code and Claude artifact routes remain paid/env-gated/manual-approved and never expose raw credentials/tokens/seats.",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_multi_local_runtime_agent_run_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent",
+      "seat_policy": "one concurrent free local generation seat per healthy local runtime endpoint (Ollama, llama.cpp, or LM Studio/llmster); default cap 2 for a two configured 8GB-VRAM runtime backends; 24-hour per-agent lease, 100 requests/lease, 60s swarm generation timeout, 120s agent-run timeout; reusable after lease expiry",
+      "supported_local_runtimes": [
+        "ollama",
+        "llama.cpp",
+        "lm_studio"
+      ]
+    },
+    {
+      "id": "provider_model_artifact_order",
+      "path": "/v1/model/artifact-order",
+      "price_usd": "4.00",
+      "billing": "per_reviewed_model_artifact_run_plus_usage",
+      "risk": "operator_review_required_provider_terms_sensitive",
+      "description": "Operator-reviewed DDG-operated model/artifact run using available backend capacity, including account/API/subscription-backed coding tools where technically and commercially eligible. Buyers receive bounded outputs/artifacts only; DDG never transfers auth tokens, account seats, raw credentials, or provider sessions. Launch pricing targets 75% of comparable official API list pricing where applicable.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_model_artifact_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "order_intake",
+      "path": "/v1/order-intake",
+      "price_usd": "varies_by_service",
+      "billing": "per_order_intake_plus_service_price",
+      "risk": "operator_review_required",
+      "description": "Paid order-intake endpoint for all manual/beta DDG agent offerings. Records a redacted order queue item after payment and requires operator review before fulfillment or any irreversible action.",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "site_audit_reviewed",
+      "path": "/v1/site-audit/reviewed",
+      "price_usd": "15.00",
+      "billing": "per_request",
+      "risk": "human_reviewed",
+      "description": "Human-reviewed audit with stronger client-facing recommendations.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "lead_pack_micro",
+      "path": "/v1/lead-pack",
+      "price_usd": "5.00",
+      "billing": "per_pack",
+      "risk": "read_only",
+      "description": "Small curated local-business lead pack with evidence URLs and outreach angles.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "browser_proof",
+      "path": "/v1/browser-proof",
+      "price_usd": "2.00",
+      "billing": "per_run",
+      "risk": "read_only",
+      "description": "Browser-based proof/QA capture with screenshots and reproducible steps.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "outreach_brief",
+      "path": "/v1/outreach-brief",
+      "price_usd": "1.50",
+      "billing": "per_request",
+      "risk": "draft_only_human_send_required",
+      "description": "Personalized outreach brief/draft. Does not send messages without human approval.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "llms_txt_openapi_pack",
+      "path": "/v1/agent-discovery-pack",
+      "price_usd": "9.00",
+      "billing": "per_pack",
+      "risk": "read_only",
+      "description": "Create or repair llms.txt, OpenAPI, pricing/catalog JSON, and agent-readable service docs.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "mcp_server_audit",
+      "path": "/v1/mcp-server-audit",
+      "price_usd": "12.00",
+      "billing": "per_audit",
+      "risk": "read_only",
+      "description": "Audit an MCP server or tool surface for installability, schema quality, auth, and prompt-injection risk.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "prompt_injection_red_team",
+      "path": "/v1/prompt-injection-red-team",
+      "price_usd": "18.00",
+      "billing": "per_target",
+      "risk": "read_only_security",
+      "description": "Probe an agent-facing website/API/MCP/tool for prompt injection, data exfiltration, unsafe tool-use, and mitigation notes.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "repo_context_pack",
+      "path": "/v1/repo-context-pack",
+      "price_usd": "15.00",
+      "billing": "per_repo",
+      "risk": "read_only_or_patch_optional",
+      "description": "Turn a repo/docs/SOP corpus into an agent-ready context pack, skill, workflow, or implementation guide.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "agent_tool_schema_repair",
+      "path": "/v1/agent-tool-schema-repair",
+      "price_usd": "12.00",
+      "billing": "per_schema",
+      "risk": "read_only_or_patch_optional",
+      "description": "Repair OpenAPI/MCP/tool schemas so agents can reliably call them, with examples and validation.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "paid_research_pack",
+      "path": "/v1/research-pack",
+      "price_usd": "8.00",
+      "billing": "per_brief",
+      "risk": "read_only",
+      "description": "Paid source-linked research brief with citations, confidence notes, and launch recommendation.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "landing_page_conversion_diff",
+      "path": "/v1/landing-page-conversion-diff",
+      "price_usd": "7.00",
+      "billing": "per_page",
+      "risk": "read_only",
+      "description": "Compare a current/proposed page and return conversion, trust, copy, and agent-readability improvements.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "local_business_demo_pack",
+      "path": "/v1/local-business-demo-pack",
+      "price_usd": "25.00",
+      "billing": "per_demo",
+      "risk": "human_reviewed",
+      "description": "Create a private lead-specific prototype/demo concept for a local business, with evidence and staged offer angle.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "agent_payment_readiness_audit",
+      "path": "/v1/agent-payment-readiness-audit",
+      "price_usd": "15.00",
+      "billing": "per_audit",
+      "risk": "read_only",
+      "description": "Audit an API/service for x402/MPP/402 paid-agent readiness, idempotency, receipts, and discovery assets.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "sandboxed_cli_agent_run",
+      "path": "/v1/sandboxed-cli-agent-run",
+      "price_usd": "3.00",
+      "billing": "per_run_plus_usage",
+      "risk": "sandboxed_agent_execution",
+      "description": "Run a bounded CLI-agent/model task in a sandbox and return the artifact/report, never provider credentials.",
+      "runtime_status": "planned",
+      "public_self_serve": false,
+      "fulfillment_mode": "not_public_self_serve_until_wrappers_and_sandbox_pass",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "hermes_skill_workflow_dev",
+      "path": "/v1/hermes-skill-workflow-dev",
+      "price_usd": "20.00",
+      "billing": "per_skill_or_workflow",
+      "risk": "sandboxed_agent_execution",
+      "description": "Build a Hermes skill, generic agent skill, or reusable workflow for the buyer's existing AI/agent stack.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "ai_agent_skill_port",
+      "path": "/v1/ai-agent-skill-port",
+      "price_usd": "18.00",
+      "billing": "per_port",
+      "risk": "read_only_or_patch_optional",
+      "description": "Use DDG-operated models to convert a procedure into a skill/workflow usable by Claude, Codex, Cursor, OpenCode, Hermes, or another agent.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "mcp_tool_server_build",
+      "path": "/v1/mcp-tool-server-build",
+      "price_usd": "35.00",
+      "billing": "per_tool_or_server",
+      "risk": "sandboxed_agent_execution",
+      "description": "Design and scaffold an MCP tool/server from a plain-English goal, including schema, install docs, and smoke tests.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "local_model_swarm_seat_beta",
+      "path": "/v1/local-model-swarm-seat",
+      "price_usd": "0.25",
+      "billing": "per_lease_preview",
+      "risk": "local_inference_best_effort",
+      "description": "Named paid lease remains planned; the current live local free-seat pool is exposed through /v1/micro-model-swarm-preview and local Ollama routes under /v1/model/agent-run. Candidate menu includes Qwen/Qwen-derived coder, abliterated/less-restrictive research models, and other GGUF/Ollama routes behind payment edge policy, usage caps, and abuse controls.",
+      "runtime_status": "planned",
+      "public_self_serve": false,
+      "fulfillment_mode": "planned_named_paid_lease; current_free_pool_via_micro_model_swarm_preview_and_agent_run",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "micro_model_swarm_preview",
+      "path": "/v1/micro-model-swarm-preview",
+      "price_usd": "0.00",
+      "billing": "research_preview",
+      "risk": "experimental",
+      "description": "Live free/best-effort local model swarm preview with strict identity, lease, request, and local-runtime seat caps. Agents may select Ollama, llama.cpp, or LM Studio/llmster when the model is listed healthy for that runtime; combos default to Ollama unless a compatible runtime/model is requested.",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "free_runtime_edge",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent",
+      "seat_policy": "one concurrent free local generation seat per healthy local runtime endpoint (Ollama, llama.cpp, or LM Studio/llmster); default cap 2 for a two configured 8GB-VRAM runtime backends; 24-hour per-agent lease, 100 requests/lease, 60s swarm generation timeout, 120s agent-run timeout; reusable after lease expiry",
+      "supported_local_runtimes": [
+        "ollama",
+        "llama.cpp",
+        "lm_studio"
+      ]
+    },
+    {
+      "id": "ethereum_private_rpc_query",
+      "path": "/v1/ethereum/rpc",
+      "price_usd": "0.00_sync-gated_launch_beta",
+      "billing": "free_launch_beta_fair_use",
+      "risk": "read_only_blockchain_rpc_proxy",
+      "description": "Free launch-beta read-only Ethereum full-node query endpoint behind the DDG AI-agent edge. It is implemented with method whitelist, sync readiness gate, fair-use lease timer, per-agent request caps, and upstream max-concurrency cap; public usefulness starts after overflow runtime backend Reth execution sync completes.",
+      "runtime_status": "implemented_syncing_not_public_ready",
+      "public_self_serve": false,
+      "fulfillment_mode": "free_sync_gated_reth_rpc_proxy_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent",
+      "free_policy": {
+        "status": "implemented_but_waiting_for_execution_sync_public_free_beta",
+        "path": "/v1/ethereum/rpc",
+        "price_usd": "0.00 launch beta after sync",
+        "free_enabled_env": "DDG_ETH_RPC_FREE_ENABLED",
+        "sync_gate": "DDG_ETH_RPC_REQUIRE_SYNCED defaults true; returns 503 reth_rpc_syncing until eth_syncing=false and latest block is non-zero",
+        "fair_use_defaults": {
+          "max_concurrent_free_users": 4,
+          "lease_seconds": 600,
+          "max_requests_per_lease": 30,
+          "max_concurrent_upstream_requests": 2,
+          "max_batch_size": 10,
+          "timeout_seconds": 8,
+          "max_response_bytes": 1000000
+        },
+        "safety": "read-only method whitelist; blocks eth_sendRawTransaction/admin/debug/personal; raw Reth RPC must stay private behind DDG edge"
+      }
+    },
+    {
+      "id": "local_runtime_model_catalog",
+      "path": "/v1/ollama-models",
+      "price_usd": "0.00",
+      "billing": "free_discovery",
+      "risk": "read_only",
+      "description": "Lists currently available local-runtime models for Ollama plus healthy OpenAI-compatible llama.cpp and LM Studio/llmster servers, free-seat policy, lease/request caps, and requestable local runtimes. Public requests never trigger model downloads or expose raw LAN endpoints.",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "free_runtime_edge_catalog",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent",
+      "seat_policy": "one concurrent free local generation seat per healthy local runtime endpoint (Ollama, llama.cpp, or LM Studio/llmster); default cap 2 for a two configured 8GB-VRAM runtime backends; 24-hour per-agent lease, 100 requests/lease, 60s swarm generation timeout, 120s agent-run timeout; reusable after lease expiry"
+    },
+    {
+      "id": "ollama_model_request",
+      "path": "/v1/ollama-model-request",
+      "price_usd": "0.00",
+      "billing": "free_operator_request",
+      "risk": "operator_review_required_download",
+      "description": "AI agents can request a new local model/runtime (Ollama, llama.cpp GGUF, LM Studio/llmster, OpenAI-compatible local server, or vLLM). Public requests never auto-download; DDG checks disk/safety/license, binding/auth posture, reserve/max-size caps, downloads manually, smokes, then marks READY.",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "operator_queue_model_download_request",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent",
+      "supported_runtimes": [
+        "ollama",
+        "llama.cpp",
+        "lm_studio",
+        "openai_compatible_local_server",
+        "vllm"
+      ]
+    },
+    {
+      "id": "ai_skill_safety_scan",
+      "path": "/v1/ai-skill-safety-scan",
+      "price_usd": "0.00",
+      "billing": "free_launch_promo",
+      "risk": "static_scan_no_execution",
+      "description": "Free static AI skill safety scanner for prompt-injection, credential-exfiltration, dangerous tool-use, package lifecycle, install-script, and broad file/network access red flags. Best-effort/no-SLA; raw secret-like values are redacted.",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "free_static_skill_security_scan_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "kimi_k27_code_artifact_run",
+      "path": "/v1/model/agent-run",
+      "route": "kimi-code/k2.7",
+      "display_model": "Kimi K2.7 Code",
+      "price_usd": "3.00",
+      "billing": "per_paid_artifact_result_run",
+      "risk": "sandboxed_provider_cli_artifact_execution",
+      "description": "Kimi K2.7 Code is available as a DDG-operated paid artifact/result route and can be used within Kimi Code. Buyers receive bounded outputs/artifacts only; DDG never transfers provider credentials, account seats, or raw provider sessions.",
+      "runtime_status": "live_runtime_when_DDG_ENABLE_KIMI_AGENT_RUN_is_enabled",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_paid_agent_run",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "prompt_injection_scan",
+      "path": "/v1/prompt-injection-scan",
+      "price_usd": "18.00",
+      "billing": "per_scan_or_bundle",
+      "risk": "read_only_security_operator_reviewed",
+      "description": "Prompt-injection and tool-exfiltration scan: risk_summary, exploit_reproduction_steps, prompt/tool-boundary mitigations.",
+      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_reviewed_static_and_dynamic_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "npm_dependency_risk_scan",
+      "path": "/v1/npm-dependency-risk-scan",
+      "price_usd": "12.00",
+      "billing": "per_scan_or_bundle",
+      "risk": "read_only_security_operator_reviewed",
+      "description": "npm/package-lock dependency risk scan: known_vulnerabilities, maintainer/supply-chain risk signals, install-script risk.",
+      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_reviewed_sandbox_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "python_dependency_risk_scan",
+      "path": "/v1/python-dependency-risk-scan",
+      "price_usd": "12.00",
+      "billing": "per_scan_or_bundle",
+      "risk": "read_only_security_operator_reviewed",
+      "description": "Python dependency and import-risk scan: known_vulnerabilities, dependency confusion risk, setup/install hooks.",
+      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_reviewed_sandbox_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "secret_leak_api_key_scan",
+      "path": "/v1/secret-leak-api-key-scan",
+      "price_usd": "15.00",
+      "billing": "per_scan_or_bundle",
+      "risk": "read_only_security_operator_reviewed",
+      "description": "API-key/secret leak and credential boundary scan: redacted_secret_findings, leak_paths, rotation_priority.",
+      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_reviewed_redacted_findings",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "malware_triage_scan",
+      "path": "/v1/malware-triage-scan",
+      "price_usd": "20.00",
+      "billing": "per_scan_or_bundle",
+      "risk": "read_only_security_operator_reviewed",
+      "description": "Malware/suspicious-code triage for agent workflows: suspicious_behaviors, network/file/process indicators, safe containment notes.",
+      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "public_self_serve": false,
+      "fulfillment_mode": "sandbox_static_first_operator_review",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "mcp_tool_security_audit",
+      "path": "/v1/mcp-tool-security-audit",
+      "price_usd": "18.00",
+      "billing": "per_scan_or_bundle",
+      "risk": "read_only_security_operator_reviewed",
+      "description": "MCP/tool permission and auth-boundary audit: tool-risk matrix, dangerous capability flags, prompt-injection exposure.",
+      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_reviewed_schema_and_runtime_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "agent_supply_chain_baseline",
+      "path": "/v1/agent-supply-chain-baseline",
+      "price_usd": "35.00",
+      "billing": "per_scan_or_bundle",
+      "risk": "read_only_security_operator_reviewed",
+      "description": "Agent swarm supply-chain baseline bundle: combined prompt/package/secret/MCP findings, prioritized remediation plan, CI scanner starter config.",
+      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_reviewed_bundle",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "production_security_audit",
+      "path": "/v1/production-security-audit",
+      "price_usd": "49.00",
+      "billing": "per_audit",
+      "risk": "read_only_scope_limited_security_audit",
+      "description": "Productionized public-surface security audit for AI-agent services, MCP/tool servers, OpenAPI/llms.txt catalogs, dependency manifests, prompt-injection exposure, public endpoints, and payment/check-out safety. Ordered by AI agents through /v1/order-intake; operator-reviewed before fulfillment.",
+      "runtime_status": "order_intake_live_operator_review",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent",
+      "intake_path": "/v1/order-intake",
+      "deliverables": [
+        "executive risk summary",
+        "redacted findings",
+        "reproduction steps",
+        "prioritized remediation plan",
+        "agent-readable JSON findings"
+      ]
+    },
+    {
+      "id": "agent_checkout_conformance_audit",
+      "path": "/v1/agent-checkout-conformance-audit",
+      "price_usd": "35.00",
+      "billing": "per_conformance_run",
+      "risk": "read_only_payment_flow_validation",
+      "description": "Agent checkout conformance audit for machine-payable services: validates 403->402->200->receipt flow, protocol advertisement, spend caps, idempotency replay, fake-token fail-closed behavior, and receipt/artifact semantics.",
+      "runtime_status": "order_intake_live_operator_review",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent",
+      "intake_path": "/v1/order-intake",
+      "deliverables": [
+        "checkout state-machine trace",
+        "curl/client repro commands",
+        "pass/fail matrix",
+        "receipt/idempotency notes",
+        "fix list"
+      ]
+    },
+    {
+      "id": "mpp_onboarding_path_activation",
+      "path": "/v1/mpp-onboarding-path-activation",
+      "price_usd": "65.00",
+      "billing": "per_payment_path_activation",
+      "risk": "operator_review_required_payment_configuration",
+      "description": "MPP/payment-rail onboarding package for AI-agent sellers: verifies provider/currency configuration, sidecar health, 402 protocol ordering, penny smoke path, replay protection, fake-proof rejection, and go-live checklist.",
+      "runtime_status": "order_intake_live_operator_review",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent",
+      "intake_path": "/v1/order-intake",
+      "deliverables": [
+        "configured env checklist",
+        "health probe evidence",
+        "402/200 receipt proof",
+        "replay/fake-token tests",
+        "go-live rollback notes"
+      ]
+    },
+    {
+      "id": "artifact_receipt_console_pack",
+      "path": "/v1/artifact-receipt-console-pack",
+      "price_usd": "55.00",
+      "billing": "per_console_pack",
+      "risk": "operator_review_required_app_artifact",
+      "description": "Buyer-facing artifact and receipt console pack for paid agent services. Base order status/artifact URLs are now live for every /v1/order-intake order; this paid pack adds a richer app/table/component spec, receipt schema, budget/rail metadata, audit trail, download links, and agent-readable status JSON.",
+      "runtime_status": "order_intake_live_operator_review",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent",
+      "intake_path": "/v1/order-intake",
+      "deliverables": [
+        "console route/component spec",
+        "receipt schema",
+        "status JSON contract",
+        "implementation patch plan",
+        "QA checklist"
+      ],
+      "base_console_paths_live": [
+        "/v1/orders/{order_id}",
+        "/v1/orders/{order_id}/artifact",
+        "/v1/order-status/{order_id}"
+      ]
+    },
+    {
+      "id": "ai_agent_buyer_service_bundle",
+      "path": "/v1/ai-agent-buyer-service-bundle",
+      "price_usd": "95.00",
+      "billing": "per_bundle",
+      "risk": "operator_review_required_bundle",
+      "description": "Bundled launch package for AI-agent buyers and sellers: security_preflight, checkout_conformance, agent_readability_upgrade, mcp_tool_audit, and local_model_runtime_setup scoped into one paid order.",
+      "runtime_status": "order_intake_live_operator_review",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent",
+      "intake_path": "/v1/order-intake",
+      "bundle_items": [
+        "security_preflight",
+        "checkout_conformance",
+        "agent_readability_upgrade",
+        "mcp_tool_audit",
+        "local_model_runtime_setup"
+      ],
+      "deliverables": [
+        "combined readiness report",
+        "machine-readable service catalog diff",
+        "checkout/security pass-fail matrix",
+        "runtime/setup checklist",
+        "next-step implementation tickets"
+      ]
+    },
+    {
+      "id": "agent_service_distribution_pack",
+      "path": "/v1/agent-service-distribution-pack",
+      "price_usd": "18.00",
+      "billing": "per_distribution_packet",
+      "risk": "read_only_publication_pack",
+      "description": "Create/polish an AI-agent service distribution packet: /.well-known/ai, API linkset, agent-skills index, agents.json, llms.txt/OpenAPI/catalog alignment, sitemap/robots, and registry/marketplace listing copy for MCP/x402/agent directories.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "agent_marketplace_listing_pack",
+      "path": "/v1/agent-marketplace-listing-pack",
+      "price_usd": "12.00",
+      "billing": "per_listing_packet",
+      "risk": "read_only_publication_pack",
+      "description": "Prepare agent-marketplace submissions and PR/issue copy for x402 directories, MCP registries, agent-ready scanners, GitHub README/listing pages, and search-indexable service docs. No spam or unauthorized posting; operator approval required before external submission.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "agent_readiness_scorecard",
+      "path": "/v1/agent-readiness-scorecard",
+      "price_usd": "8.00",
+      "billing": "per_scorecard",
+      "risk": "read_only_public_scan",
+      "description": "Score a domain/API for agent readiness: discovery endpoints, OpenAPI, llms.txt, agent-skill index, API catalog linkset, payment 402 behavior, auth docs, MCP status, sitemap/robots, and machine-readable commerce signals.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    },
+    {
+      "id": "buyer_agent_smoke_probe",
+      "path": "/v1/buyer-agent-smoke-probe",
+      "price_usd": "9.00",
+      "billing": "per_probe",
+      "risk": "non_spending_or_approval_gated_spending",
+      "description": "Run a DDG buyer-agent simulation against a target service: discover capabilities, verify 403/402/payment challenge behavior, fake-payment fail-closed, idempotency, and artifact/status usability. Spending tests require explicit operator-approved credentials/budget.",
+      "runtime_status": "manual_fulfillment_beta",
+      "public_self_serve": false,
+      "fulfillment_mode": "operator_queue_manual_beta",
+      "audience": "ai_agents_only",
+      "consumer_class": "ai_agent"
+    }
+  ],
+  "model_router": {
+    "positioning": "Paid AI-agent-queryable model router / inference concierge. Buyers pay DDG for budgeted model outputs/results; DDG routes across available legally/technically eligible backend capacity, including local Ollama workers and DDG-operated account/API/artifact workflows. Public docs never sell or transfer raw provider credentials, auth sessions, account seats, or tokens.",
+    "endpoint": "/v1/model/chat-completions",
+    "agent_run_endpoint": "/v1/model/agent-run",
+    "default_new_buyer_max_charge_usd": "0.25",
+    "pricing_notes": [
+      "Launch rates for eligible AI-agent model query/artifact routes are 75% of comparable official API list pricing where DDG can fulfill through available backend capacity.",
+      "DDG sells model outputs/results and bounded artifact runs, not raw Claude/OpenAI/Codex/Cursor/Kimi provider credentials, sessions, account seats, or tokens.",
+      "Account/subscription-backed coding capacity may be used only as DDG-operated backend capacity with operator controls and no buyer credential exposure; keep public docs framed as result/artifact delivery.",
+      "Official API/commercial-contract rails remain the cleanest public self-serve path; account-backed routes stay manual/operator-reviewed unless provider terms explicitly allow broader service use.",
+      "All model routes require AI-agent identity, payment gating, spend caps, and receipts before production advertising.",
+      "Limited-time local model promo: all local Ollama/llama.cpp/LM Studio runtime options are free/best-effort/no-SLA while capacity allows.",
+      "Post-promo local model policy: only models 4B and smaller remain free; >4B local models become paid or operator-approved capacity.",
+      "Public model-download requests are queue-only and must preserve disk reserve; they never trigger automatic ollama pull or GGUF download."
+    ],
+    "safe_packaging": [
+      "OpenAI-compatible request body with DDG routing policy extensions",
+      "Budget caps per call and per buyer",
+      "Provider keys never disclosed",
+      "Exact upstream identity shown only for explicitly supported/allowed models",
+      "Human approval for risky tool/spend side effects"
+    ],
+    "models": [
+      {
+        "id": "glm-4.5-air",
+        "family": "zai-glm",
+        "tier": "economy",
+        "provider_reference": "GLM-4.5-Air",
+        "provider_price_in_per_mtok": "0.20",
+        "provider_price_out_per_mtok": "1.10",
+        "ddg_price_in_per_mtok": "0.15",
+        "ddg_price_out_per_mtok": "0.83",
+        "notes": "Lightweight cheap route; user asked for Air-style GLM. Official docs show GLM-4.5-Air, not GLM-4.6-Air.",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "glm-4.5",
+        "family": "zai-glm",
+        "tier": "standard",
+        "provider_reference": "GLM-4.5",
+        "provider_price_in_per_mtok": "0.60",
+        "provider_price_out_per_mtok": "2.20",
+        "ddg_price_in_per_mtok": "0.45",
+        "ddg_price_out_per_mtok": "1.65",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "glm-4.6",
+        "family": "zai-glm",
+        "tier": "standard",
+        "provider_reference": "GLM-4.6",
+        "provider_price_in_per_mtok": "0.60",
+        "provider_price_out_per_mtok": "2.20",
+        "ddg_price_in_per_mtok": "0.45",
+        "ddg_price_out_per_mtok": "1.65",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "glm-4.7",
+        "family": "zai-glm",
+        "tier": "standard",
+        "provider_reference": "GLM-4.7",
+        "provider_price_in_per_mtok": "0.60",
+        "provider_price_out_per_mtok": "2.20",
+        "ddg_price_in_per_mtok": "0.45",
+        "ddg_price_out_per_mtok": "1.65",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "glm-5",
+        "family": "zai-glm",
+        "tier": "frontier",
+        "provider_reference": "GLM-5",
+        "provider_price_in_per_mtok": "1.00",
+        "provider_price_out_per_mtok": "3.20",
+        "ddg_price_in_per_mtok": "0.75",
+        "ddg_price_out_per_mtok": "2.40",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "glm-5-turbo",
+        "family": "zai-glm",
+        "tier": "frontier",
+        "provider_reference": "GLM-5-Turbo",
+        "provider_price_in_per_mtok": "1.20",
+        "provider_price_out_per_mtok": "4.00",
+        "ddg_price_in_per_mtok": "0.90",
+        "ddg_price_out_per_mtok": "3.00",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "glm-5.1",
+        "family": "zai-glm",
+        "tier": "frontier",
+        "provider_reference": "GLM-5.1",
+        "provider_price_in_per_mtok": "1.40",
+        "provider_price_out_per_mtok": "4.40",
+        "ddg_price_in_per_mtok": "1.05",
+        "ddg_price_out_per_mtok": "3.30",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "glm-5.2",
+        "family": "zai-glm",
+        "tier": "frontier",
+        "provider_reference": "GLM-5.2 Coding Plan",
+        "provider_price_in_per_mtok": "pricing_not_publicly_listed_separately_as_of_docs_check",
+        "provider_price_out_per_mtok": "pricing_not_publicly_listed_separately_as_of_docs_check",
+        "ddg_price_in_per_mtok": "1.05",
+        "ddg_price_out_per_mtok": "3.30",
+        "notes": "Z.AI llms.txt positions GLM-5.2 for Coding Plan usage; DDG provisional launch validation price matches 75% of GLM-5.1 until Z.AI publishes separate public token pricing. Requires funded GLM account/resource package before live use.",
+        "route_status": "configured_pending_account_funding",
+        "ddg_launch_discount": "provisional_75_percent_of_glm_5_1_reference"
+      },
+      {
+        "id": "gpt-5.3-codex-spark",
+        "family": "openai-codex",
+        "tier": "surplus",
+        "provider_reference": "GPT-5.3-Codex-Spark / GPT-5.3-Codex naming varies by surface",
+        "provider_price_in_per_mtok": "1.75 reference, availability caveat",
+        "provider_price_out_per_mtok": "14.00 reference, availability caveat",
+        "ddg_price_in_per_mtok": "1.31",
+        "ddg_price_out_per_mtok": "10.50",
+        "notes": "Only after terms/API availability verification; OpenAI Codex docs say Spark research preview for ChatGPT Pro users only at launch.",
+        "route_status": "api_or_commercial_contract_only",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "gpt-5.5",
+        "family": "openai-gpt",
+        "tier": "premium",
+        "provider_reference": "GPT-5.5",
+        "provider_price_in_per_mtok": "5.00",
+        "provider_price_out_per_mtok": "30.00",
+        "ddg_price_in_per_mtok": "3.75",
+        "ddg_price_out_per_mtok": "22.50",
+        "notes": "Premium/manual-approved route during beta.",
+        "route_status": "api_or_commercial_contract_only",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "claude-haiku-4.5",
+        "family": "anthropic-claude",
+        "tier": "claude",
+        "provider_reference": "claude-haiku-4-5",
+        "provider_price_in_per_mtok": "1.00",
+        "provider_price_out_per_mtok": "5.00",
+        "ddg_price_in_per_mtok": "0.75",
+        "ddg_price_out_per_mtok": "3.75",
+        "notes": "API-backed only. Claude Code Pro/Max OAuth must not be routed for third-party buyers.",
+        "route_status": "api_or_commercial_contract_only",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "claude-sonnet-4.6",
+        "family": "anthropic-claude",
+        "tier": "claude",
+        "provider_reference": "claude-sonnet-4-6",
+        "provider_price_in_per_mtok": "3.00",
+        "provider_price_out_per_mtok": "15.00",
+        "ddg_price_in_per_mtok": "2.25",
+        "ddg_price_out_per_mtok": "11.25",
+        "notes": "Official current docs show Sonnet 4.6, not Sonnet 4.7. Claude Code Pro/Max OAuth must not be routed for third-party buyers.",
+        "route_status": "api_or_commercial_contract_only",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "claude-opus-4.8",
+        "family": "anthropic-claude",
+        "tier": "claude",
+        "provider_reference": "claude-opus-4-8",
+        "provider_price_in_per_mtok": "5.00",
+        "provider_price_out_per_mtok": "25.00",
+        "ddg_price_in_per_mtok": "3.75",
+        "ddg_price_out_per_mtok": "18.75",
+        "notes": "Most capable Claude route; manual cap recommended. Claude Code Pro/Max OAuth must not be routed for third-party buyers.",
+        "route_status": "api_or_commercial_contract_only",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "gpt-5.3-codex",
+        "family": "openai-codex",
+        "tier": "surplus",
+        "provider_reference": "GPT-5.3-Codex",
+        "provider_price_in_per_mtok": "1.75 reference / verify",
+        "provider_price_out_per_mtok": "14.00 reference / verify",
+        "ddg_price_in_per_mtok": "1.31",
+        "ddg_price_out_per_mtok": "10.50",
+        "route_status": "research_or_contract_only",
+        "notes": "OpenAI Codex/ChatGPT subscription-backed relay is not enabled for public multi-tenant sale; enable only on API/contract rails.",
+        "ddg_launch_discount": "75_percent_of_official_api_list_price"
+      },
+      {
+        "id": "gpt-5.4",
+        "family": "openai-gpt",
+        "tier": "premium",
+        "provider_reference": "GPT-5.4",
+        "provider_price_in_per_mtok": "verify current API price",
+        "provider_price_out_per_mtok": "verify current API price",
+        "ddg_price_in_per_mtok": "contract-only",
+        "ddg_price_out_per_mtok": "contract-only",
+        "route_status": "research_or_contract_only",
+        "notes": "OpenAI Codex/ChatGPT subscription-backed relay is not enabled for public multi-tenant sale; enable only on API/contract rails."
+      },
+      {
+        "id": "auto",
+        "family": "router",
+        "tier": "policy",
+        "billing": "selected_model_rates",
+        "notes": "Router picks model from budget/policy. Default current route: glm-5-turbo; cheap route: glm-4.5-air."
+      },
+      {
+        "id": "kimi-code/k2.7",
+        "family": "kimi-code",
+        "tier": "account_backed_candidate",
+        "provider_reference": "Kimi K2.7 Code",
+        "provider_price_in_per_mtok": "provider-plan-backed_artifact_route",
+        "provider_price_out_per_mtok": "provider-plan-backed_artifact_route",
+        "ddg_price_in_per_mtok": "route/artifact priced",
+        "ddg_price_out_per_mtok": "route/artifact priced",
+        "notes": "Kimi K2.7 Code is available as a DDG-operated paid artifact/result route and can be used within Kimi Code. Env-gated/manual-approved; no raw credential/account/API resale.",
+        "route_status": "env_gated_manual_beta_smoke_ok"
+      }
+    ],
+    "account_local_candidate_routes": [
+      {
+        "id": "kimi-code/k2.7",
+        "route_status": "manual_beta_or_contract_only_smoke_ok",
+        "primary_endpoint": "/v1/model/agent-run",
+        "notes": "Kimi K2.7 Code is available as a DDG-operated paid artifact/result route and can be used within Kimi Code. DDG returns bounded artifacts/results, not raw credential/account/API resale.",
+        "display_model": "Kimi K2.7 Code"
+      },
+      {
+        "id": "claude-code/default",
+        "route_status": "internal_only_unless_provider_allows",
+        "primary_endpoint": "/v1/model/agent-run",
+        "notes": "Claude Code execution is useful internally; public third-party routing remains disallowed under current Claude Code legal notes."
+      },
+      {
+        "id": "ollama/qwen2.5-coder:7b",
+        "route_status": "single_free_slot",
+        "primary_endpoint": "/v1/free-local-model-slot",
+        "notes": "8GB VRAM host; concurrency=1 best effort."
+      },
+      {
+        "id": "ollama/qwen3:latest",
+        "route_status": "single_free_slot",
+        "primary_endpoint": "/v1/free-local-model-slot",
+        "notes": "May include thinking/chatter; normalize output."
+      },
+      {
+        "id": "ollama/llama3.1:latest",
+        "route_status": "single_free_slot",
+        "primary_endpoint": "/v1/free-local-model-slot",
+        "notes": "General fallback; weaker strict formatting."
+      }
+    ],
+    "runtime_contract": {
+      "chat_completions": "live_runtime",
+      "agent_run": "live_runtime_ollama_only",
+      "public_account_route_policy": "No raw account/auth/API-key resale; account/local routes must be DDG-operated artifact execution with sandboxing and provider permission."
+    },
+    "account_backed_agent_routes": [
+      {
+        "id": "kimi-code/k2.7",
+        "provider": "Kimi Code",
+        "runtime_kind": "kimi-code",
+        "public_state": "env_gated_manual_beta_smoke_ok",
+        "enabled_env": "DDG_ENABLE_KIMI_AGENT_RUN",
+        "pricing": "per_run_plus_usage",
+        "default_price_usd": "3.00",
+        "display_model": "Kimi K2.7 Code",
+        "notes": "Kimi K2.7 Code is available as DDG-operated backend capacity and can be used within Kimi Code; keep env-gated/operator-controlled unless provider terms permit broader self-serve."
+      },
+      {
+        "id": "claude-code/default",
+        "provider": "Claude Code/API-compatible account",
+        "runtime_kind": "claude-code",
+        "public_state": "env_gated_manual_beta",
+        "enabled_env": "DDG_ENABLE_CLAUDE_AGENT_RUN",
+        "pricing": "per_run_plus_usage",
+        "default_price_usd": "4.00"
+      }
+    ],
+    "launch_discount_policy": {
+      "summary": "Launch policy: eligible DDG-operated AI-agent model query/artifact routes are priced at 75% of the comparable official API list price where DDG can fulfill through available backend capacity. This is a DDG promotional service price, not resale of raw provider accounts.",
+      "formula": "ddg_price = official_api_list_price * 0.75 for eligible numeric per-token list prices",
+      "credential_policy": "No raw OAuth/account/session/token access is advertised, sold, leased, or transferred; buyers receive outputs/artifacts only.",
+      "eligibility": "Only routes DDG can operate technically and commercially with budget caps, logging, and operator controls. Manual/operator review remains required for account-backed coding/artifact workflows."
+    },
+    "local_model_free_policy": {
+      "current_promo": "All local model runtime options are free for a limited time, best-effort, no SLA, identity required.",
+      "future_free_tier": "After the limited-time promo, only models 4B and smaller remain free.",
+      "larger_models_after_promo": "Models over 4B become paid or operator-approved local capacity after the promo."
+    },
+    "local_model_download_policy": {
+      "auto_downloaded_by_public_request": false,
+      "public_request_path": "/v1/ollama-model-request",
+      "supported_request_runtimes": [
+        "ollama",
+        "llama.cpp",
+        "lm_studio"
+      ],
+      "default_disk_reserve_gb": 300,
+      "default_max_single_request_gb": 25,
+      "preferred_large_model_host": "durable runtime backend first; keep overflow runtime backend storage for Reth sync, OS, and operator workspace.",
+      "operator_review": "Requests queue only. Operator checks license/safety/disk, downloads manually, smokes, then marks READY."
+    },
+    "local_runtime_options": [
+      {
+        "id": "ollama",
+        "status": "live",
+        "notes": "Primary live local runtime behind /v1/micro-model-swarm-preview and free-promo /v1/model/agent-run local routes."
+      },
+      {
+        "id": "llama.cpp",
+        "status": "operator_request_preview_not_installed_on_current_hosts",
+        "notes": "GGUF request path is supported; install/serve after operator approval and smoke."
+      },
+      {
+        "id": "lm_studio",
+        "status": "operator_request_preview_not_installed_on_current_hosts",
+        "notes": "LM Studio local server is a requestable runtime for users who prefer it over Ollama; not currently installed on overflow runtime backend/durable runtime backend."
+      }
+    ],
+    "free_local_model_agent_slots": {
+      "status": "rolling_out_to_secondary-host_primary_and_secondary_overflow",
+      "claim": "Connect these to your AI agent via DDG free local-model slots.",
+      "current_price_usd": "0.00 limited-time best-effort/no-SLA",
+      "future_free_policy": "After the promo, <=4B local models remain free; >4B local routes become paid/operator-approved capacity.",
+      "public_catalog_paths": [
+        "/v1/ollama-models",
+        "/.well-known/ddg-ollama-models.json"
+      ],
+      "free_generation_paths": [
+        "/v1/micro-model-swarm-preview",
+        "/v1/model/agent-run"
+      ],
+      "request_path": "/v1/ollama-model-request",
+      "supported_local_runtimes": [
+        {
+          "id": "ollama",
+          "status": "live_primary",
+          "notes": "Production free-slot runtime; dynamic downloaded-model catalog."
+        },
+        {
+          "id": "llama.cpp",
+          "status": "installing/smoke_for_gguf_runtime",
+          "notes": "GGUF-native runtime target for the same model files; expose exact repo/file identity."
+        },
+        {
+          "id": "lm_studio",
+          "status": "headless_support_limited_operator_preview",
+          "notes": "LM Studio requires desktop/local server support; keep as operator-request until a headless-compatible service is verified."
+        },
+        {
+          "id": "openai-compatible-local-server",
+          "status": "planned_adapter",
+          "notes": "Any local runtime exposing OpenAI-compatible /v1/chat/completions can be added behind the same payment/free-slot edge."
+        }
+      ],
+      "context_disclosure": "Catalog lists native GGUF context and DDG service default context separately. Native context is model metadata; DDG free slots default to 32K tokens for large GGUF aliases unless a route states otherwise.",
+      "anchor_models": [
+        {
+          "model": "qwen2.5-coder:7b",
+          "runtime": "ollama",
+          "params": "7.6B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 32768,
+          "service_context_tokens": 32768,
+          "notes": "code/schema repair baseline"
+        },
+        {
+          "model": "qwen3:8b",
+          "runtime": "ollama",
+          "params": "8.2B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 40960,
+          "service_context_tokens": 32768,
+          "notes": "thinking/tool-capable Qwen route"
+        },
+        {
+          "model": "llama3.1:8b",
+          "runtime": "ollama",
+          "params": "8.0B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "general Llama route"
+        },
+        {
+          "model": "huihui_ai/qwen3-abliterated:8b",
+          "runtime": "ollama",
+          "params": "8.2B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 40960,
+          "service_context_tokens": 32768,
+          "notes": "abliterated Qwen3 8B route on durable runtime backend"
+        },
+        {
+          "model": "huihui_ai/dolphin3-abliterated:8b-llama3.1-q4_K_M",
+          "runtime": "ollama",
+          "params": "8.0B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "Dolphin3 abliterated durable runtime backend route"
+        },
+        {
+          "model": "ministral-3:8b",
+          "runtime": "ollama",
+          "params": "8.9B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "long-context small Mistral route on durable runtime backend"
+        },
+        {
+          "model": "nemotron-3-nano:4b",
+          "runtime": "ollama",
+          "params": "4.0B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "future always-free <=4B tier"
+        },
+        {
+          "model": "smollm2:360m",
+          "runtime": "ollama",
+          "params": "361.82M",
+          "quant": "F16",
+          "native_context_tokens": 8192,
+          "service_context_tokens": 8192,
+          "notes": "fast tiny slot/checker"
+        },
+        {
+          "model": "qwen2.5-coder:0.5b-instruct",
+          "runtime": "ollama",
+          "params": "494.03M",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 32768,
+          "service_context_tokens": 32768,
+          "notes": "tiny code/JSON repair"
+        }
+      ],
+      "priority_ab_rollout_models": [
+        {
+          "priority": "A",
+          "model": "mradermacher/huihui-gemma4-12b-ablit:q4_k_m",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Huihui-gemma-4-12B-it-abliterated-GGUF",
+          "gguf": "Huihui-gemma-4-12B-it-abliterated.Q4_K_M.gguf",
+          "params": "12B",
+          "quant": "Q4_K_M",
+          "size_gib": 6.87,
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "Gemma-family abliterated route."
+        },
+        {
+          "priority": "A",
+          "model": "mradermacher/mistral-nemo-heretic-12b:q4_k_m",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Mistral-Nemo-2407-12B-Thinking-Claude-Gemini-GPT5.2-Uncensored-HERETIC-GGUF",
+          "gguf": "Mistral-Nemo-2407-12B-Thinking-Claude-Gemini-GPT5.2-Uncensored-HERETIC.Q4_K_M.gguf",
+          "params": "12B",
+          "quant": "Q4_K_M",
+          "size_gib": 6.96,
+          "native_context_tokens": 1024000,
+          "service_context_tokens": 32768,
+          "notes": "Mistral-Nemo 12B uncensored/heretic long-context route."
+        },
+        {
+          "priority": "A",
+          "model": "mradermacher/dolphin3-llama31-8b-ablit:q4_k_m",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Dolphin3.0-Llama3.1-8B-abliterated-GGUF",
+          "gguf": "Dolphin3.0-Llama3.1-8B-abliterated.Q4_K_M.gguf",
+          "params": "8B",
+          "quant": "Q4_K_M",
+          "size_gib": 4.58,
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "Dolphin/Llama3.1 abliterated general route."
+        },
+        {
+          "priority": "A",
+          "model": "mradermacher/huihui-glm47-flash-ablit:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Huihui-GLM-4.7-Flash-abliterated-i1-GGUF",
+          "gguf": "Huihui-GLM-4.7-Flash-abliterated.i1-IQ3_XS.gguf",
+          "params": "GLM-4.7 Flash class",
+          "quant": "IQ3_XS",
+          "size_gib": 11.5,
+          "native_context_tokens": 202752,
+          "service_context_tokens": 32768,
+          "notes": "GLM-family abliterated route; IQ3 chosen for 8GB-class hosts."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/huihui-qwen3-coder-30b-a3b-ablit:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Huihui-Qwen3-Coder-30B-A3B-Instruct-abliterated-i1-GGUF",
+          "gguf": "Huihui-Qwen3-Coder-30B-A3B-Instruct-abliterated.i1-IQ3_XS.gguf",
+          "params": "30B-A3B",
+          "quant": "IQ3_XS",
+          "size_gib": 11.73,
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "Qwen coder sparse/active-parameter abliterated experiment."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/qwen36-27b-heretic:q4_k_s",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-i1-GGUF",
+          "gguf": "Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved.i1-Q4_K_S.gguf",
+          "params": "27B",
+          "quant": "Q4_K_S",
+          "size_gib": 14.74,
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "Larger Qwen3.6 uncensored/heretic route."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/qwen36-35b-a3b-ablit:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Qwen3.6-35B-A3B-abliterated-MAX-i1-GGUF",
+          "gguf": "Qwen3.6-35B-A3B-abliterated-MAX.i1-IQ3_XS.gguf",
+          "params": "35B-A3B",
+          "quant": "IQ3_XS",
+          "size_gib": 13.49,
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "Large abliterated MoE-style Qwen3.6 experiment."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/dolphin-mistral-24b-venice:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Dolphin-Mistral-24B-Venice-Edition-i1-GGUF",
+          "gguf": "Dolphin-Mistral-24B-Venice-Edition.i1-IQ3_XS.gguf",
+          "params": "24B",
+          "quant": "IQ3_XS",
+          "size_gib": 9.23,
+          "native_context_tokens": 32768,
+          "service_context_tokens": 32768,
+          "notes": "Dolphin/Mistral Venice-style route."
+        }
+      ]
+    }
+  },
+  "guardrails": [
+    "Never sell or transfer provider API keys, auth tokens, account seats, or raw account access.",
+    "Do not route third-party buyer requests through Claude Free/Pro/Max credentials; Claude Code legal docs explicitly disallow this for third-party developers.",
+    "Treat ChatGPT/Codex, Cursor Pro, Z.ai Code, and Kimi Code subscription-plan capacity as internal-only until explicit commercial permission exists.",
+    "Use official API/commercial rails for public model-router traffic; label non-enabled candidate routes separately from active aliases.",
+    "Block requests that try to train competing models on provider output where prohibited.",
+    "Add per-buyer quotas, abuse detection, logs, idempotency, and refund path before public launch."
+  ],
+  "subscription_backed_route_policy": {
+    "public_sale": "disabled_until_contract_allows_it",
+    "allowed_private_use": "DDG internal/manual beta tasks only; no provider credential exposure; no buyer claim that they are receiving account access.",
+    "red_routes": [
+      "claude-code-pro-oauth-for-third-party-buyers",
+      "chatgpt-codex-pro-oauth-for-third-party-buyers",
+      "cursor-pro-composer-seat-pooling",
+      "zai-code-plan-seat-pooling"
+    ],
+    "yellow_routes": [
+      "cursor-cloud-agent-api/composer-2-or-2.5 with explicit Cursor commercial approval",
+      "Kimi K2.7 Code provider-plan route with explicit Moonshot approval"
+    ],
+    "green_routes": [
+      "official APIs and commercial contracts: Kimi official API/commercial contract, Z.ai API, Anthropic API, OpenAI API"
+    ]
+  },
+  "candidate_models_not_publicly_enabled": [
+    {
+      "id": "cursor-composer-2",
+      "family": "cursor",
+      "route_status": "needs_cursor_commercial_approval",
+      "notes": "Official Cursor model page exists; headless/Cloud Agent automation appears technically possible, but Pro account pooling is high-risk."
+    },
+    {
+      "id": "cursor-composer-2.5",
+      "family": "cursor",
+      "route_status": "needs_cursor_commercial_approval",
+      "notes": "Official docs mention Auto + Composer 2.5 usage pool/API usage; do not advertise as public DDG route until commercial terms are clear."
+    },
+    {
+      "id": "claude-code-harness",
+      "family": "claude-code",
+      "route_status": "internal_only",
+      "notes": "Installed locally and authenticated as Claude Pro, but Claude docs explicitly forbid routing Free/Pro/Max credentials on behalf of users."
+    },
+    {
+      "id": "kimi-official-api-current-version",
+      "family": "moonshot-kimi",
+      "route_status": "not_enabled_user_prefers_kimi_code_account_route",
+      "notes": "Official Kimi API route is not the current DDG launch direction; DDG is using Kimi K2.7 Code bounded artifacts instead of raw Kimi API proxying."
+    }
+  ],
+  "local_model_offer": {
+    "gpu_observed": "overflow runtime backend: 8GB-VRAM GPU, 535GiB free on Linux root while Reth is syncing and already ~981GiB. durable runtime backend: 8GB-VRAM GPU, ~1.9TiB free on root LV, Ollama 0.30.5. Prefer durable runtime backend for model-library expansion; avoid large overflow runtime backend pulls until Reth storage headroom is resolved.",
+    "current_local_models": [
+      "qwen2.5-coder:7b",
+      "qwen3:latest",
+      "llama3.1:latest",
+      "smollm2:135m",
+      "smollm2:360m",
+      "smollm2:1.7b",
+      "qwen2.5:0.5b-instruct",
+      "qwen2.5-coder:0.5b-instruct",
+      "gemma3:270m",
+      "tinyllama:1.1b-chat"
+    ],
+    "capacity_decision": "Local runtime options (Ollama, llama.cpp, LM Studio/llmster) are free for a limited time as best-effort/no-SLA lead magnet capacity when the runtime/model is healthy. After promo, only <=4B local models remain free; larger local models move to paid/operator-approved capacity.",
+    "future_options_not_enabled_now": [
+      "vLLM/OpenAI-compatible adapter after exact-model smoke",
+      "additional GGUF/model pulls after operator disk review"
+    ],
+    "local_runtime_options": [
+      {
+        "id": "ollama",
+        "status": "live_when_backend_healthy",
+        "self_serve_generation": true,
+        "route_prefix": "ollama/",
+        "notes": "Native Ollama runtime behind /v1/micro-model-swarm-preview and /v1/model/agent-run."
+      },
+      {
+        "id": "llama.cpp",
+        "status": "live_when_llama_server_openai_endpoint_is_healthy",
+        "self_serve_generation": true,
+        "route_prefix": "llama.cpp/",
+        "notes": "GGUF-native llama.cpp server option via OpenAI-compatible /v1/models and /v1/chat/completions behind the DDG edge."
+      },
+      {
+        "id": "lm_studio",
+        "status": "live_when_lm_studio_or_llmster_openai_endpoint_is_healthy",
+        "self_serve_generation": true,
+        "route_prefix": "lm_studio/",
+        "notes": "LM Studio/llmster local server option via OpenAI-compatible /v1/models and /v1/chat/completions behind the DDG edge."
+      }
+    ],
+    "download_policy": {
+      "auto_downloaded_by_public_request": false,
+      "public_request_path": "/v1/ollama-model-request",
+      "supported_request_runtimes": [
+        "ollama",
+        "llama.cpp",
+        "lm_studio",
+        "openai_compatible_local_server",
+        "vllm"
+      ],
+      "default_disk_reserve_gb": 300,
+      "default_max_single_request_gb": 25,
+      "preferred_large_model_host": "durable runtime backend first; keep overflow runtime backend storage for Reth sync, OS, and operator workspace.",
+      "operator_review": "Requests queue only. Operator checks license/safety/disk, downloads manually, smokes, then marks READY."
+    },
+    "free_model_menu": {
+      "status": "rolling_out_to_secondary-host_primary_and_secondary_overflow",
+      "claim": "Connect these to your AI agent via DDG free local-model slots.",
+      "current_price_usd": "0.00 limited-time best-effort/no-SLA",
+      "future_free_policy": "After the promo, <=4B local models remain free; >4B local routes become paid/operator-approved capacity.",
+      "public_catalog_paths": [
+        "/v1/ollama-models",
+        "/.well-known/ddg-ollama-models.json"
+      ],
+      "free_generation_paths": [
+        "/v1/micro-model-swarm-preview",
+        "/v1/model/agent-run"
+      ],
+      "request_path": "/v1/ollama-model-request",
+      "supported_local_runtimes": [
+        {
+          "id": "ollama",
+          "status": "live_when_backend_healthy",
+          "self_serve_generation": true,
+          "route_prefix": "ollama/",
+          "notes": "Native Ollama runtime behind /v1/micro-model-swarm-preview and /v1/model/agent-run."
+        },
+        {
+          "id": "llama.cpp",
+          "status": "live_when_llama_server_openai_endpoint_is_healthy",
+          "self_serve_generation": true,
+          "route_prefix": "llama.cpp/",
+          "notes": "GGUF-native llama.cpp server option via OpenAI-compatible /v1/models and /v1/chat/completions behind the DDG edge."
+        },
+        {
+          "id": "lm_studio",
+          "status": "live_when_lm_studio_or_llmster_openai_endpoint_is_healthy",
+          "self_serve_generation": true,
+          "route_prefix": "lm_studio/",
+          "notes": "LM Studio/llmster local server option via OpenAI-compatible /v1/models and /v1/chat/completions behind the DDG edge."
+        },
+        {
+          "id": "openai_compatible_local_server",
+          "status": "operator_request_preview_adapter",
+          "self_serve_generation": false,
+          "notes": "Generic adapter for future local runtimes after auth, binding, timeout, and exact-model smoke tests."
+        },
+        {
+          "id": "vllm",
+          "status": "operator_request_preview_not_smoked_on_8gb_hosts",
+          "self_serve_generation": false,
+          "notes": "Requestable for suitable hardware; not advertised as live until exact-model smoke passes."
+        }
+      ],
+      "context_disclosure": "Catalog lists native GGUF context and DDG service default context separately. Native context is model metadata; DDG free slots default to 32K tokens for large GGUF aliases unless a route states otherwise.",
+      "anchor_models": [
+        {
+          "model": "qwen2.5-coder:7b",
+          "runtime": "ollama",
+          "params": "7.6B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 32768,
+          "service_context_tokens": 32768,
+          "notes": "code/schema repair baseline"
+        },
+        {
+          "model": "qwen3:8b",
+          "runtime": "ollama",
+          "params": "8.2B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 40960,
+          "service_context_tokens": 32768,
+          "notes": "thinking/tool-capable Qwen route"
+        },
+        {
+          "model": "llama3.1:8b",
+          "runtime": "ollama",
+          "params": "8.0B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "general Llama route"
+        },
+        {
+          "model": "huihui_ai/qwen3-abliterated:8b",
+          "runtime": "ollama",
+          "params": "8.2B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 40960,
+          "service_context_tokens": 32768,
+          "notes": "abliterated Qwen3 8B route on durable runtime backend"
+        },
+        {
+          "model": "huihui_ai/dolphin3-abliterated:8b-llama3.1-q4_K_M",
+          "runtime": "ollama",
+          "params": "8.0B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "Dolphin3 abliterated durable runtime backend route"
+        },
+        {
+          "model": "ministral-3:8b",
+          "runtime": "ollama",
+          "params": "8.9B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "long-context small Mistral route on durable runtime backend"
+        },
+        {
+          "model": "nemotron-3-nano:4b",
+          "runtime": "ollama",
+          "params": "4.0B",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "future always-free <=4B tier"
+        },
+        {
+          "model": "smollm2:360m",
+          "runtime": "ollama",
+          "params": "361.82M",
+          "quant": "F16",
+          "native_context_tokens": 8192,
+          "service_context_tokens": 8192,
+          "notes": "fast tiny slot/checker"
+        },
+        {
+          "model": "qwen2.5-coder:0.5b-instruct",
+          "runtime": "ollama",
+          "params": "494.03M",
+          "quant": "Q4_K_M",
+          "native_context_tokens": 32768,
+          "service_context_tokens": 32768,
+          "notes": "tiny code/JSON repair"
+        }
+      ],
+      "priority_ab_rollout_models": [
+        {
+          "priority": "A",
+          "model": "mradermacher/huihui-gemma4-12b-ablit:q4_k_m",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Huihui-gemma-4-12B-it-abliterated-GGUF",
+          "gguf": "Huihui-gemma-4-12B-it-abliterated.Q4_K_M.gguf",
+          "params": "12B",
+          "quant": "Q4_K_M",
+          "size_gib": 6.87,
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "Gemma-family abliterated route."
+        },
+        {
+          "priority": "A",
+          "model": "mradermacher/mistral-nemo-heretic-12b:q4_k_m",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Mistral-Nemo-2407-12B-Thinking-Claude-Gemini-GPT5.2-Uncensored-HERETIC-GGUF",
+          "gguf": "Mistral-Nemo-2407-12B-Thinking-Claude-Gemini-GPT5.2-Uncensored-HERETIC.Q4_K_M.gguf",
+          "params": "12B",
+          "quant": "Q4_K_M",
+          "size_gib": 6.96,
+          "native_context_tokens": 1024000,
+          "service_context_tokens": 32768,
+          "notes": "Mistral-Nemo 12B uncensored/heretic long-context route."
+        },
+        {
+          "priority": "A",
+          "model": "mradermacher/dolphin3-llama31-8b-ablit:q4_k_m",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Dolphin3.0-Llama3.1-8B-abliterated-GGUF",
+          "gguf": "Dolphin3.0-Llama3.1-8B-abliterated.Q4_K_M.gguf",
+          "params": "8B",
+          "quant": "Q4_K_M",
+          "size_gib": 4.58,
+          "native_context_tokens": 131072,
+          "service_context_tokens": 32768,
+          "notes": "Dolphin/Llama3.1 abliterated general route."
+        },
+        {
+          "priority": "A",
+          "model": "mradermacher/huihui-glm47-flash-ablit:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Huihui-GLM-4.7-Flash-abliterated-i1-GGUF",
+          "gguf": "Huihui-GLM-4.7-Flash-abliterated.i1-IQ3_XS.gguf",
+          "params": "GLM-4.7 Flash class",
+          "quant": "IQ3_XS",
+          "size_gib": 11.5,
+          "native_context_tokens": 202752,
+          "service_context_tokens": 32768,
+          "notes": "GLM-family abliterated route; IQ3 chosen for 8GB-class hosts."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/huihui-qwen3-coder-30b-a3b-ablit:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Huihui-Qwen3-Coder-30B-A3B-Instruct-abliterated-i1-GGUF",
+          "gguf": "Huihui-Qwen3-Coder-30B-A3B-Instruct-abliterated.i1-IQ3_XS.gguf",
+          "params": "30B-A3B",
+          "quant": "IQ3_XS",
+          "size_gib": 11.73,
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "Qwen coder sparse/active-parameter abliterated experiment."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/qwen36-27b-heretic:q4_k_s",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-i1-GGUF",
+          "gguf": "Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved.i1-Q4_K_S.gguf",
+          "params": "27B",
+          "quant": "Q4_K_S",
+          "size_gib": 14.74,
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "Larger Qwen3.6 uncensored/heretic route."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/qwen36-35b-a3b-ablit:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Qwen3.6-35B-A3B-abliterated-MAX-i1-GGUF",
+          "gguf": "Qwen3.6-35B-A3B-abliterated-MAX.i1-IQ3_XS.gguf",
+          "params": "35B-A3B",
+          "quant": "IQ3_XS",
+          "size_gib": 13.49,
+          "native_context_tokens": 262144,
+          "service_context_tokens": 32768,
+          "notes": "Large abliterated MoE-style Qwen3.6 experiment."
+        },
+        {
+          "priority": "B",
+          "model": "mradermacher/dolphin-mistral-24b-venice:iq3_xs",
+          "runtime": "ollama",
+          "upstream_repo": "mradermacher/Dolphin-Mistral-24B-Venice-Edition-i1-GGUF",
+          "gguf": "Dolphin-Mistral-24B-Venice-Edition.i1-IQ3_XS.gguf",
+          "params": "24B",
+          "quant": "IQ3_XS",
+          "size_gib": 9.23,
+          "native_context_tokens": 32768,
+          "service_context_tokens": 32768,
+          "notes": "Dolphin/Mistral Venice-style route."
+        }
+      ]
+    },
+    "free_seat_policy": "one concurrent free local generation seat per healthy configured Ollama/GPU backend; default cap 2 for a two configured 8GB-VRAM runtime backends; 24-hour per-agent lease, 100 requests/lease, 60s swarm generation timeout, 120s agent-run timeout; reusable after lease expiry",
+    "supported_local_runtimes": [
+      {
+        "id": "ollama",
+        "status": "live_when_backend_healthy",
+        "self_serve_generation": true,
+        "notes": "Only Ollama is live behind /v1/micro-model-swarm-preview and local /v1/model/agent-run today."
+      },
+      {
+        "id": "llama.cpp",
+        "status": "operator_request_preview",
+        "self_serve_generation": false,
+        "notes": "GGUF-native runtime is requestable; not public-live until installed, bound safely, and model-smoked."
+      },
+      {
+        "id": "lm_studio",
+        "status": "operator_request_preview",
+        "self_serve_generation": false,
+        "notes": "LM Studio server is requestable; keep operator-reviewed until a headless/server smoke passes."
+      },
+      {
+        "id": "openai_compatible_local_server",
+        "status": "operator_request_preview_adapter",
+        "self_serve_generation": false,
+        "notes": "Generic local OpenAI-compatible runtime adapter; requires auth/binding/timeout/cap smoke before READY."
+      },
+      {
+        "id": "vllm",
+        "status": "operator_request_preview",
+        "self_serve_generation": false,
+        "notes": "Requestable for appropriate hardware/models; not live on 8GB-class GPUs without model-specific smoke."
+      }
+    ],
+    "default_lease_seconds": 86400,
+    "default_max_requests_per_lease": 100,
+    "default_generation_timeout_seconds": 60,
+    "agent_run_default_timeout_seconds": 120,
+    "two_host_production_target": {
+      "secondary-host": "8GB-VRAM GPU, always-on primary/failover host",
+      "primary-host": "8GB-VRAM GPU, production GPU seat when online",
+      "condition": "both hosts must be configured in the internal backend pool and pass /api/tags health checks; raw Ollama URLs remain private behind payment edge"
+    }
+  },
+  "micro_model_swarm": {
+    "status": "downloaded_and_smoke_prepared_except_bitnet_tag_unavailable",
+    "service_path": "/v1/micro-model-swarm-preview",
+    "capacity_policy": "free local-runtime preview; buyer chooses one listed model, combo=auto, or predefined role combo; runtime can be ollama, llama.cpp, or lm_studio when that model is healthy/listed; strict lease/request/runtime/context/output caps; best-effort/no SLA.",
+    "ollama_candidates": [
+      {
+        "id": "smollm2:135m",
+        "family": "SmolLM2",
+        "download_mb": 258.3,
+        "recommended_role": "fast triage/router/classifier",
+        "route_status": "downloaded_smoke_ok"
+      },
+      {
+        "id": "smollm2:360m",
+        "family": "SmolLM2",
+        "download_mb": 692.0,
+        "recommended_role": "extractor/short summarizer/checker",
+        "route_status": "downloaded_smoke_ok"
+      },
+      {
+        "id": "smollm2:1.7b",
+        "family": "SmolLM2",
+        "download_mb": 1736.1,
+        "recommended_role": "strongest SmolLM2 local mini generalist",
+        "route_status": "downloaded_smoke_ok"
+      },
+      {
+        "id": "qwen2.5:0.5b-instruct",
+        "family": "Qwen2.5",
+        "download_mb": 379.4,
+        "recommended_role": "multilingual instruction/router/extractor",
+        "route_status": "downloaded_smoke_ok"
+      },
+      {
+        "id": "qwen2.5-coder:0.5b-instruct",
+        "family": "Qwen2.5-Coder",
+        "download_mb": 379.4,
+        "recommended_role": "tiny code/schema/JSON repair specialist",
+        "route_status": "downloaded_smoke_ok"
+      },
+      {
+        "id": "gemma3:270m",
+        "family": "Gemma 3",
+        "download_mb": 278.0,
+        "recommended_role": "tiny instruction/checker; license review before commercial use",
+        "route_status": "downloaded_smoke_ok"
+      },
+      {
+        "id": "tinyllama:1.1b-chat",
+        "family": "TinyLlama",
+        "download_mb": 608.2,
+        "recommended_role": "legacy chat baseline/ensemble diversity",
+        "route_status": "downloaded_smoke_ok"
+      },
+      {
+        "id": "bitnet-b1.58:2b",
+        "family": "BitNet",
+        "download_mb": null,
+        "recommended_role": "not available in Ollama library under tested tag; evaluate separately via HF/llama.cpp",
+        "route_status": "pull_failed_manifest_missing_in_ollama_library"
+      }
+    ],
+    "download_total_available_ollama_mb": 4331.4,
+    "download_total_available_ollama_gb": 4.23,
+    "role_combos": [
+      {
+        "id": "lead_triage_combo",
+        "models": [
+          "smollm2:135m",
+          "qwen2.5:0.5b-instruct",
+          "smollm2:360m"
+        ],
+        "roles": [
+          "route",
+          "extract",
+          "check"
+        ]
+      },
+      {
+        "id": "code_schema_combo",
+        "models": [
+          "qwen2.5-coder:0.5b-instruct",
+          "smollm2:360m",
+          "tinyllama:1.1b-chat"
+        ],
+        "roles": [
+          "repair",
+          "summarize",
+          "second_opinion"
+        ]
+      },
+      {
+        "id": "fast_vote_combo",
+        "models": [
+          "smollm2:135m",
+          "gemma3:270m",
+          "qwen2.5:0.5b-instruct"
+        ],
+        "roles": [
+          "classify_vote_1",
+          "classify_vote_2",
+          "arbiter"
+        ]
+      },
+      {
+        "id": "research_extract_combo",
+        "models": [
+          "qwen2.5:0.5b-instruct",
+          "smollm2:360m",
+          "smollm2:1.7b"
+        ],
+        "roles": [
+          "extract",
+          "summarize",
+          "final_check"
+        ]
+      },
+      {
+        "id": "copy_review_combo",
+        "models": [
+          "tinyllama:1.1b-chat",
+          "smollm2:360m",
+          "smollm2:1.7b"
+        ],
+        "roles": [
+          "rewrite",
+          "extract_claims",
+          "final_review"
+        ]
+      }
+    ]
+  },
+  "offer_contract": {
+    "contract_version": "2026-06-05-agent-run-live-beta",
+    "statuses": {
+      "live_runtime": "Implemented in the payment edge today and safe to advertise as a live HTTPS route, subject to beta payment and Cloudflare caveats.",
+      "manual_fulfillment_beta": "Catalog offer is available only through DDG/operator review or manual fulfillment; do not advertise as an OpenAPI self-serve endpoint yet.",
+      "planned": "Not public self-serve. Kept in the catalog as roadmap/packaging until wrappers, sandboxing, payment settlement, and smoke tests pass."
+    },
+    "live_runtime_paths": [
+      "/v1/micro-model-swarm-preview",
+      "/v1/model/agent-run",
+      "/v1/model/chat-completions",
+      "/v1/ollama-model-request",
+      "/v1/ollama-models",
+      "/v1/order-intake",
+      "/v1/site-audit",
+      "/v1/tx-smoke-test"
+    ],
+    "manual_fulfillment_paths": [
+      "/v1/agent-discovery-pack",
+      "/v1/agent-payment-readiness-audit",
+      "/v1/agent-tool-schema-repair",
+      "/v1/ai-agent-skill-port",
+      "/v1/browser-proof",
+      "/v1/hermes-skill-workflow-dev",
+      "/v1/landing-page-conversion-diff",
+      "/v1/lead-pack",
+      "/v1/local-business-demo-pack",
+      "/v1/mcp-server-audit",
+      "/v1/mcp-tool-server-build",
+      "/v1/outreach-brief",
+      "/v1/prompt-injection-red-team",
+      "/v1/repo-context-pack",
+      "/v1/research-pack",
+      "/v1/site-audit/reviewed",
+      "/v1/model/artifact-order"
+    ],
+    "planned_paths": [
+      "/v1/free-local-model-slot",
+      "/v1/sandboxed-cli-agent-run",
+      "/v1/ethereum/rpc"
+    ],
+    "openapi_policy": "OpenAPI advertises live_runtime paths and may include explicitly beta/503-until-ready paths only when runtime handlers exist and docs state availability limits. Manual offers stay in pricing.json and llms.txt until handlers and smoke tests exist.",
+    "payment_posture": "Mock payments are for local/staging smoke only. Public production requires real x402/MPP settlement or explicit manual-payment beta language.",
+    "agent_run_posture": "Live beta for allowlisted local Ollama artifact execution. Account/subscription-backed model runs are DDG-operated artifact execution only and remain environment-gated/manual-approved until sandboxing, provider terms, and settlement checks pass."
+  },
+  "audience": "ai_agents_only",
+  "consumer_policy": "AI-agents only. Requests without agent identity are rejected. DDG sells operated artifacts/results and metered service output, not raw credentials, account seats, or transferable auth tokens.",
+  "payment_posture_2026_06_06": {
+    "coinbase_cdp": "deferred; no Coinbase production dependency for initial launch because CDP x402 requires authenticated API keys and returned 401 without them",
+    "x402_public_testnet": "verify endpoint configured/tested for invalid-proof rejection; settle adapter implemented and needs a real buyer payload for end-to-end settlement smoke",
+    "mpp": "seller-side verifier sidecar scaffolded under edge/mpp_verifier_sidecar.mjs; requires mppx install plus Tempo/MPP recipient/currency env",
+    "direct_crypto_manual": "initial beta fallback: publish configured EVM/BTC/LTC/XMR/ZEC/DOGE addresses in 402 body, collect tx proof hash in order-intake, operator confirms before fulfillment"
+  },
+  "direct_crypto_manual": {
+    "status": "configured_by_env_addresses_manual_confirmation_only",
+    "env_addresses": [
+      "DDG_CRYPTO_EVM_ADDRESS",
+      "DDG_CRYPTO_BTC_ADDRESS",
+      "DDG_CRYPTO_LTC_ADDRESS",
+      "DDG_CRYPTO_XMR_ADDRESS",
+      "DDG_CRYPTO_ZEC_ADDRESS",
+      "DDG_CRYPTO_DOGE_ADDRESS"
+    ],
+    "proof_payload": "payment_proof {asset, txid/hash/transaction_hash, amount}",
+    "security": "raw txid/proof is not written to order queue; only payment_proof_hash is stored; fulfillment waits for operator confirmation",
+    "public_manifest": "direct_crypto_addresses.public.json",
+    "public_env": "direct_crypto_addresses.env",
+    "generated_wallet_count": 6,
+    "assets": [
+      "EVM",
+      "BTC",
+      "LTC",
+      "DOGE",
+      "ZEC",
+      "XMR"
+    ],
+    "balance_tracker": "scripts/track_direct_crypto_balances.py"
+  },
+  "rate_limits": {
+    "status": "implemented_app_layer",
+    "defaults": {
+      "DDG_RATE_LIMIT_ENABLED": "1",
+      "DDG_RATE_LIMIT_WINDOW_SECONDS": "60",
+      "DDG_RATE_LIMIT_MAX_REQUESTS": "60"
+    },
+    "key": "path + agent identity hash or forwarded-for fallback"
+  },
+  "operator_notes": [
+    "durable runtime backend an internal host is internally reachable and has Docker/Ollama running, but NVIDIA driver is blocked by nouveau until manual reboot after blacklist/initramfs update; visible GPUs are 8GB-VRAM GPU + a secondary GPU, not 8GB-VRAM GPU."
+  ],
+  "penny_tx_smoke_test": {
+    "service_id": "tx_penny_smoke_test",
+    "path": "/v1/tx-smoke-test",
+    "price_usd": "0.01",
+    "purpose": "Let other AI agents smoke-test their x402/MPP/direct-crypto payment ability with the smallest safe DDG charge and a receipt-only response.",
+    "no_external_side_effect": "The endpoint does not perform a separate blockchain transfer or irreversible action beyond verifying/settling the payment rail used to call it."
+  },
+  "ethereum_reth_private_rpc": {
+    "service_id": "ethereum_private_rpc_query",
+    "path": "/v1/ethereum/rpc",
+    "host_plan": "overflow runtime backend first because it has ample NVMe storage; keep durable runtime backend focused on paid agent services and Ollama/payment edge.",
+    "status": "runtime_handler_added_but_public_offer_waits_for_reth_sync_and_rpc_health",
+    "account_policy": "No third-party RPC vendor account required for buyers; DDG runs the node/proxy. Still AI-agent identity/payment gated at the DDG edge.",
+    "allowed_method_posture": "Read-only method whitelist; block admin/miner/personal/debug/trace/sendRawTransaction by default."
+  },
+  "payment_protocol_status": {
+    "x402": "live_sidecar_configured_on_durable runtime backend_pending_real_paid-proof-smoke",
+    "direct_crypto_auto": "live_sidecar_configured_for_supported_chains_pending_tiny-settlement-smoke",
+    "direct_crypto_manual": "live_operator_review_fallback",
+    "MPP": "planned_config_ready_signer_saved_requires_live_MPP_currency_or_Stripe_SPT_profile_before_public_claims"
+  },
+  "local_model_expansion_candidates_2026_06_13": [
+    {
+      "repo": "mradermacher/Huihui-gemma-4-12B-it-abliterated-GGUF",
+      "recommended_quant": "Q4_K_M",
+      "size_gib": 6.87,
+      "why": "12B abliterated/uncensored Gemma-family baseline; good mid-size refusal-reduced test."
+    },
+    {
+      "repo": "mradermacher/Mistral-Nemo-2407-12B-Thinking-Claude-Gemini-GPT5.2-Uncensored-HERETIC-GGUF",
+      "recommended_quant": "Q4_K_M",
+      "size_gib": 6.96,
+      "why": "Mistral-Nemo 12B uncensored/heretic thinking candidate."
+    },
+    {
+      "repo": "mradermacher/Dolphin-Mistral-24B-Venice-Edition-i1-GGUF",
+      "recommended_quant": "IQ3_XS_or_Q4_K_M_after_size_check",
+      "size_gib": "~9.23+",
+      "why": "Dolphin/Venice-style 24B general uncensored-ish candidate; durable runtime backend only."
+    },
+    {
+      "repo": "mradermacher/Huihui-Qwen3-Coder-30B-A3B-Instruct-abliterated-i1-GGUF",
+      "recommended_quant": "IQ3_XS_or_Q3_K_M",
+      "size_gib": "~11.73+",
+      "why": "Sparse/active-parameter coder abliterated route; useful if it smokes acceptably on 8GB+CPU hybrid."
+    },
+    {
+      "repo": "mradermacher/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-i1-GGUF",
+      "recommended_quant": "Q4_K_S_or_Q4_K_M",
+      "size_gib": "14.74-15.66",
+      "why": "Large Qwen3.6 uncensored/heretic option; durable runtime backend storage, experimental speed."
+    },
+    {
+      "repo": "mradermacher/Qwen3.6-35B-A3B-abliterated-MAX-i1-GGUF",
+      "recommended_quant": "IQ3_XS_or_Q3_K_M",
+      "size_gib": "13.49+",
+      "why": "Large abliterated MoE-style experiment; request-only due speed/license/disk."
+    }
+  ],
+  "free_local_model_agent_slots": {
+    "status": "rolling_out_to_secondary-host_primary_and_secondary_overflow",
+    "claim": "Connect these to your AI agent via DDG free local-model slots.",
+    "current_price_usd": "0.00 limited-time best-effort/no-SLA",
+    "future_free_policy": "After the promo, <=4B local models remain free; >4B local routes become paid/operator-approved capacity.",
+    "public_catalog_paths": [
+      "/v1/ollama-models",
+      "/.well-known/ddg-ollama-models.json"
+    ],
+    "free_generation_paths": [
+      "/v1/micro-model-swarm-preview",
+      "/v1/model/agent-run"
+    ],
+    "request_path": "/v1/ollama-model-request",
+    "supported_local_runtimes": [
+      {
+        "id": "ollama",
+        "status": "live_primary",
+        "notes": "Production free-slot runtime; dynamic downloaded-model catalog."
+      },
+      {
+        "id": "llama.cpp",
+        "status": "installing/smoke_for_gguf_runtime",
+        "notes": "GGUF-native runtime target for the same model files; expose exact repo/file identity."
+      },
+      {
+        "id": "lm_studio",
+        "status": "headless_support_limited_operator_preview",
+        "notes": "LM Studio requires desktop/local server support; keep as operator-request until a headless-compatible service is verified."
+      },
+      {
+        "id": "openai-compatible-local-server",
+        "status": "planned_adapter",
+        "notes": "Any local runtime exposing OpenAI-compatible /v1/chat/completions can be added behind the same payment/free-slot edge."
+      }
+    ],
+    "context_disclosure": "Catalog lists native GGUF context and DDG service default context separately. Native context is model metadata; DDG free slots default to 32K tokens for large GGUF aliases unless a route states otherwise.",
+    "anchor_models": [
+      {
+        "model": "qwen2.5-coder:7b",
+        "runtime": "ollama",
+        "params": "7.6B",
+        "quant": "Q4_K_M",
+        "native_context_tokens": 32768,
+        "service_context_tokens": 32768,
+        "notes": "code/schema repair baseline"
+      },
+      {
+        "model": "qwen3:8b",
+        "runtime": "ollama",
+        "params": "8.2B",
+        "quant": "Q4_K_M",
+        "native_context_tokens": 40960,
+        "service_context_tokens": 32768,
+        "notes": "thinking/tool-capable Qwen route"
+      },
+      {
+        "model": "llama3.1:8b",
+        "runtime": "ollama",
+        "params": "8.0B",
+        "quant": "Q4_K_M",
+        "native_context_tokens": 131072,
+        "service_context_tokens": 32768,
+        "notes": "general Llama route"
+      },
+      {
+        "model": "huihui_ai/qwen3-abliterated:8b",
+        "runtime": "ollama",
+        "params": "8.2B",
+        "quant": "Q4_K_M",
+        "native_context_tokens": 40960,
+        "service_context_tokens": 32768,
+        "notes": "abliterated Qwen3 8B route on durable runtime backend"
+      },
+      {
+        "model": "huihui_ai/dolphin3-abliterated:8b-llama3.1-q4_K_M",
+        "runtime": "ollama",
+        "params": "8.0B",
+        "quant": "Q4_K_M",
+        "native_context_tokens": 131072,
+        "service_context_tokens": 32768,
+        "notes": "Dolphin3 abliterated durable runtime backend route"
+      },
+      {
+        "model": "ministral-3:8b",
+        "runtime": "ollama",
+        "params": "8.9B",
+        "quant": "Q4_K_M",
+        "native_context_tokens": 262144,
+        "service_context_tokens": 32768,
+        "notes": "long-context small Mistral route on durable runtime backend"
+      },
+      {
+        "model": "nemotron-3-nano:4b",
+        "runtime": "ollama",
+        "params": "4.0B",
+        "quant": "Q4_K_M",
+        "native_context_tokens": 262144,
+        "service_context_tokens": 32768,
+        "notes": "future always-free <=4B tier"
+      },
+      {
+        "model": "smollm2:360m",
+        "runtime": "ollama",
+        "params": "361.82M",
+        "quant": "F16",
+        "native_context_tokens": 8192,
+        "service_context_tokens": 8192,
+        "notes": "fast tiny slot/checker"
+      },
+      {
+        "model": "qwen2.5-coder:0.5b-instruct",
+        "runtime": "ollama",
+        "params": "494.03M",
+        "quant": "Q4_K_M",
+        "native_context_tokens": 32768,
+        "service_context_tokens": 32768,
+        "notes": "tiny code/JSON repair"
+      }
+    ],
+    "priority_ab_rollout_models": [
+      {
+        "priority": "A",
+        "model": "mradermacher/huihui-gemma4-12b-ablit:q4_k_m",
+        "runtime": "ollama",
+        "upstream_repo": "mradermacher/Huihui-gemma-4-12B-it-abliterated-GGUF",
+        "gguf": "Huihui-gemma-4-12B-it-abliterated.Q4_K_M.gguf",
+        "params": "12B",
+        "quant": "Q4_K_M",
+        "size_gib": 6.87,
+        "native_context_tokens": 131072,
+        "service_context_tokens": 32768,
+        "notes": "Gemma-family abliterated route."
+      },
+      {
+        "priority": "A",
+        "model": "mradermacher/mistral-nemo-heretic-12b:q4_k_m",
+        "runtime": "ollama",
+        "upstream_repo": "mradermacher/Mistral-Nemo-2407-12B-Thinking-Claude-Gemini-GPT5.2-Uncensored-HERETIC-GGUF",
+        "gguf": "Mistral-Nemo-2407-12B-Thinking-Claude-Gemini-GPT5.2-Uncensored-HERETIC.Q4_K_M.gguf",
+        "params": "12B",
+        "quant": "Q4_K_M",
+        "size_gib": 6.96,
+        "native_context_tokens": 1024000,
+        "service_context_tokens": 32768,
+        "notes": "Mistral-Nemo 12B uncensored/heretic long-context route."
+      },
+      {
+        "priority": "A",
+        "model": "mradermacher/dolphin3-llama31-8b-ablit:q4_k_m",
+        "runtime": "ollama",
+        "upstream_repo": "mradermacher/Dolphin3.0-Llama3.1-8B-abliterated-GGUF",
+        "gguf": "Dolphin3.0-Llama3.1-8B-abliterated.Q4_K_M.gguf",
+        "params": "8B",
+        "quant": "Q4_K_M",
+        "size_gib": 4.58,
+        "native_context_tokens": 131072,
+        "service_context_tokens": 32768,
+        "notes": "Dolphin/Llama3.1 abliterated general route."
+      },
+      {
+        "priority": "A",
+        "model": "mradermacher/huihui-glm47-flash-ablit:iq3_xs",
+        "runtime": "ollama",
+        "upstream_repo": "mradermacher/Huihui-GLM-4.7-Flash-abliterated-i1-GGUF",
+        "gguf": "Huihui-GLM-4.7-Flash-abliterated.i1-IQ3_XS.gguf",
+        "params": "GLM-4.7 Flash class",
+        "quant": "IQ3_XS",
+        "size_gib": 11.5,
+        "native_context_tokens": 202752,
+        "service_context_tokens": 32768,
+        "notes": "GLM-family abliterated route; IQ3 chosen for 8GB-class hosts."
+      },
+      {
+        "priority": "B",
+        "model": "mradermacher/huihui-qwen3-coder-30b-a3b-ablit:iq3_xs",
+        "runtime": "ollama",
+        "upstream_repo": "mradermacher/Huihui-Qwen3-Coder-30B-A3B-Instruct-abliterated-i1-GGUF",
+        "gguf": "Huihui-Qwen3-Coder-30B-A3B-Instruct-abliterated.i1-IQ3_XS.gguf",
+        "params": "30B-A3B",
+        "quant": "IQ3_XS",
+        "size_gib": 11.73,
+        "native_context_tokens": 262144,
+        "service_context_tokens": 32768,
+        "notes": "Qwen coder sparse/active-parameter abliterated experiment."
+      },
+      {
+        "priority": "B",
+        "model": "mradermacher/qwen36-27b-heretic:q4_k_s",
+        "runtime": "ollama",
+        "upstream_repo": "mradermacher/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-i1-GGUF",
+        "gguf": "Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved.i1-Q4_K_S.gguf",
+        "params": "27B",
+        "quant": "Q4_K_S",
+        "size_gib": 14.74,
+        "native_context_tokens": 262144,
+        "service_context_tokens": 32768,
+        "notes": "Larger Qwen3.6 uncensored/heretic route."
+      },
+      {
+        "priority": "B",
+        "model": "mradermacher/qwen36-35b-a3b-ablit:iq3_xs",
+        "runtime": "ollama",
+        "upstream_repo": "mradermacher/Qwen3.6-35B-A3B-abliterated-MAX-i1-GGUF",
+        "gguf": "Qwen3.6-35B-A3B-abliterated-MAX.i1-IQ3_XS.gguf",
+        "params": "35B-A3B",
+        "quant": "IQ3_XS",
+        "size_gib": 13.49,
+        "native_context_tokens": 262144,
+        "service_context_tokens": 32768,
+        "notes": "Large abliterated MoE-style Qwen3.6 experiment."
+      },
+      {
+        "priority": "B",
+        "model": "mradermacher/dolphin-mistral-24b-venice:iq3_xs",
+        "runtime": "ollama",
+        "upstream_repo": "mradermacher/Dolphin-Mistral-24B-Venice-Edition-i1-GGUF",
+        "gguf": "Dolphin-Mistral-24B-Venice-Edition.i1-IQ3_XS.gguf",
+        "params": "24B",
+        "quant": "IQ3_XS",
+        "size_gib": 9.23,
+        "native_context_tokens": 32768,
+        "service_context_tokens": 32768,
+        "notes": "Dolphin/Mistral Venice-style route."
+      }
+    ]
+  },
+  "queryable_model_routes": [
+    {
+      "route": "kimi-code/k2.7",
+      "display_model": "Kimi K2.7 Code",
+      "path": "/v1/model/agent-run",
+      "status": "payment_gated_enabled_by_DDG_ENABLE_KIMI_AGENT_RUN",
+      "public_statement": "Kimi K2.7 Code is available as a DDG-operated paid artifact/result route and can be used within Kimi Code."
+    }
+  ],
+  "ethereum_rpc_free_policy": {
+    "status": "implemented_but_waiting_for_execution_sync_public_free_beta",
+    "path": "/v1/ethereum/rpc",
+    "price_usd": "0.00 launch beta after sync",
+    "free_enabled_env": "DDG_ETH_RPC_FREE_ENABLED",
+    "sync_gate": "DDG_ETH_RPC_REQUIRE_SYNCED defaults true; returns 503 reth_rpc_syncing until eth_syncing=false and latest block is non-zero",
+    "fair_use_defaults": {
+      "max_concurrent_free_users": 4,
+      "lease_seconds": 600,
+      "max_requests_per_lease": 30,
+      "max_concurrent_upstream_requests": 2,
+      "max_batch_size": 10,
+      "timeout_seconds": 8,
+      "max_response_bytes": 1000000
+    },
+    "safety": "read-only method whitelist; blocks eth_sendRawTransaction/admin/debug/personal; raw Reth RPC must stay private behind DDG edge"
+  },
+  "agent_callable_paid_service_groups": {
+    "ai_agent_priority_offers": [
+      "production_security_audit",
+      "agent_checkout_conformance_audit",
+      "mpp_onboarding_path_activation",
+      "artifact_receipt_console_pack",
+      "ai_agent_buyer_service_bundle"
+    ]
+  }
+}

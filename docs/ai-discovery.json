@@ -1,0 +1,180 @@
+{
+  "aiendpoint": "1.0",
+  "service": {
+    "name": "DDG Agent-Payable Services",
+    "description": "AI-agent-only paid services for checkout proof, security audits, discovery repair, model/artifact runs, and browser evidence.",
+    "category": [
+      "developer",
+      "finance",
+      "data"
+    ],
+    "language": [
+      "en"
+    ]
+  },
+  "capabilities": [
+    {
+      "id": "order_intake",
+      "description": "Pay and queue any manual/beta DDG agent service with receipt/status/artifact URLs.",
+      "endpoint": "/v1/order-intake",
+      "method": "POST",
+      "params": {
+        "service_id": "string, required -- service id from pricing/catalog",
+        "target": "object, optional -- URL/repo/goals/files for the requested service",
+        "budget_usd": "number, optional -- buyer budget cap"
+      },
+      "returns": "202 with order_id/status_url/artifact_url/receipt_console_url after valid payment; 402 challenge before payment"
+    },
+    {
+      "id": "agent_payment_readiness_audit",
+      "description": "Checkout/payment conformance proof for agent-commerce APIs.",
+      "endpoint": "/v1/order-intake",
+      "method": "POST",
+      "params": {
+        "service_id": "string, required, value agent_payment_readiness_audit",
+        "target_url": "string, required -- target service base URL"
+      },
+      "returns": "operator-reviewed JSON/Markdown evidence: 403/402/fake-payment/idempotency/status/artifact checks"
+    },
+    {
+      "id": "agent_checkout_conformance",
+      "description": "Machine-readable profile and probe target for validating DDG checkout behavior.",
+      "endpoint": "/.well-known/ddg-agent-checkout-conformance.json",
+      "method": "GET",
+      "returns": "JSON conformance profile with expected headers, routes, and status ladder"
+    },
+    {
+      "id": "model_chat_completions",
+      "description": "Paid model-router completion endpoint for AI agents with budget caps and receipts.",
+      "endpoint": "/v1/model/chat-completions",
+      "method": "POST",
+      "params": {
+        "messages": "array, required",
+        "model": "string, optional",
+        "agent_profile": "string, optional -- cheap|standard|pro|premium",
+        "max_budget_usd": "number, optional"
+      },
+      "returns": "OpenAI-compatible response or 402 challenge"
+    },
+    {
+      "id": "model_agent_run",
+      "description": "Bounded agent-task/artifact run using local or provider-backed DDG routes.",
+      "endpoint": "/v1/model/agent-run",
+      "method": "POST",
+      "params": {
+        "task": "string, required",
+        "model": "string, optional route label",
+        "runtime": "string, optional"
+      },
+      "returns": "bounded result/artifact metadata or 402 challenge"
+    },
+    {
+      "id": "local_runtime_catalog",
+      "description": "Discover healthy free/paid local model routes without raw backend URLs.",
+      "endpoint": "/v1/ollama-models",
+      "method": "GET",
+      "returns": "JSON catalog with runtime/model routes, limits, seat policy, and health-derived availability"
+    },
+    {
+      "id": "ai_skill_safety_scan",
+      "description": "Static safety scan for Hermes/agent skills and workflows; free/lead-magnet beta.",
+      "endpoint": "/v1/ai-skill-safety-scan",
+      "method": "POST",
+      "params": {
+        "skill_markdown": "string, required",
+        "linked_files": "array, optional"
+      },
+      "returns": "JSON risk findings with redacted secret-like evidence"
+    },
+    {
+      "id": "mcp_tool_security_audit",
+      "description": "Operator-reviewed MCP/tool auth, schema, installability, and prompt-injection audit.",
+      "endpoint": "/v1/order-intake",
+      "method": "POST",
+      "params": {
+        "service_id": "string, required, value mcp_tool_security_audit",
+        "target": "object, required -- MCP repo/schema/server card"
+      },
+      "returns": "security report with severity table and remediation steps"
+    },
+    {
+      "id": "agent_discovery_pack",
+      "description": "Create or repair llms.txt, OpenAPI, pricing/catalog, agent-skill, and AI discovery files.",
+      "endpoint": "/v1/order-intake",
+      "method": "POST",
+      "params": {
+        "service_id": "string, required, value llms_txt_openapi_pack",
+        "target": "object, required -- domain/repo/API docs"
+      },
+      "returns": "artifact bundle: discovery files, validation report, publish checklist"
+    },
+    {
+      "id": "browser_proof",
+      "description": "Browser screenshot/DOM evidence bundle for agent QA and buyer proof.",
+      "endpoint": "/v1/order-intake",
+      "method": "POST",
+      "params": {
+        "service_id": "string, required, value browser_proof",
+        "target_url": "string, required"
+      },
+      "returns": "operator-reviewed screenshot/trace/artifact bundle"
+    },
+    {
+      "id": "agent_service_distribution_pack",
+      "description": "Build publishable agent-discovery surfaces and registry listing packet for an AI service.",
+      "endpoint": "/v1/order-intake",
+      "method": "POST",
+      "params": {
+        "service_id": "string, required, value agent_service_distribution_pack",
+        "target": "object, required -- domain/API/repo"
+      },
+      "returns": "artifact bundle with .well-known/ai, api-catalog, agent skills, llms/OpenAPI deltas, and listing copy"
+    },
+    {
+      "id": "agent_readiness_scorecard",
+      "description": "Score a domain/API for agent discoverability, auth, MCP, payment, and commerce readiness.",
+      "endpoint": "/v1/order-intake",
+      "method": "POST",
+      "params": {
+        "service_id": "string, required, value agent_readiness_scorecard",
+        "target_url": "string, required"
+      },
+      "returns": "scorecard with fixes ordered by agent-discovery impact"
+    },
+    {
+      "id": "buyer_agent_smoke_probe",
+      "description": "Simulate how a buyer agent discovers and validates a service before spending.",
+      "endpoint": "/v1/order-intake",
+      "method": "POST",
+      "params": {
+        "service_id": "string, required, value buyer_agent_smoke_probe",
+        "target_url": "string, required"
+      },
+      "returns": "discovery/payment/conformance evidence bundle; spending tests approval-gated"
+    }
+  ],
+  "auth": {
+    "identity": "Stable agent identity header required for protected routes: X-Agent-Id, X-DDG-Agent-Id, or X-DDG-User.",
+    "payments": "Public live rails: x402 and direct-crypto. MPP/Tempo is code-ready but not advertised until penny settlement passes.",
+    "no_human_checkout": "Routes are designed for autonomous clients; missing identity returns 403 before payment."
+  },
+  "token_hints": {
+    "start_here": [
+      "/.well-known/ai",
+      "/llms.txt",
+      "/openapi.json",
+      "/.well-known/ddg-agent-pricing.json",
+      "/.well-known/agent-catalog.json",
+      "/.well-known/agent-skills/index.json"
+    ],
+    "prefer_order_intake_for_manual_services": true
+  },
+  "rate_limits": {
+    "policy": "Route-specific; protected compute is payment-gated and idempotency-key aware."
+  },
+  "meta": {
+    "updated": "2026-06-22-agent-discovery-services-added",
+    "base_url": "https://agents.daedalusdevelopmentgroup.com",
+    "contact": "0xcircuitbreaker@protonmail.com"
+  }
+}

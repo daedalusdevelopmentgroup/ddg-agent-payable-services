@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agents.daedalusdevelopmentgroup.com/schemas/agent-service.v1.json",
+  "type": "object",
+  "required": [
+    "service_id",
+    "fulfillment_mode",
+    "status"
+  ],
+  "properties": {
+    "service_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "fulfillment_mode": {
+      "type": "string"
+    },
+    "price_usd": {
+      "type": [
+        "number",
+        "string"
+      ]
+    },
+    "artifact_schema_url": {
+      "type": "string"
+    }
+  }
+}

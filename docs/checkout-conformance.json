@@ -1,0 +1,117 @@
+{
+  "schema_version": "2026-06-22.ddg-agent-checkout-conformance.v1",
+  "service": "DDG AI-agent payment edge checkout conformance profile",
+  "base_url": "https://agents.daedalusdevelopmentgroup.com",
+  "identity_headers": [
+    "X-Agent-Id",
+    "X-DDG-Agent-Id",
+    "X-DDG-User"
+  ],
+  "payment_protocols": {
+    "x402": {
+      "status": "live_when_402_challenge_advertises_x402",
+      "credential_headers": [
+        "Payment-Signature",
+        "X-PAYMENT"
+      ]
+    },
+    "direct_crypto": {
+      "status": "live_manual_and_auto_verify_when_chain_supported",
+      "credential_headers": [
+        "X-Direct-Crypto-Proof",
+        "Payment-Proof"
+      ]
+    },
+    "mpp": {
+      "status": "code_ready_pending_provider_config",
+      "credential_headers": [
+        "Authorization: Payment <credential>"
+      ],
+      "advertise_rule": "only advertise when DDG_PAYMENT_MPP_VERIFY_URL/provider sidecar is ready"
+    }
+  },
+  "routes_under_test": {
+    "order_intake": "/v1/order-intake",
+    "tx_smoke_test": "/v1/tx-smoke-test",
+    "order_status": "/v1/orders/{order_id}",
+    "order_artifact": "/v1/orders/{order_id}/artifact"
+  },
+  "required_checks": [
+    {
+      "id": "identity_gate",
+      "method": "POST",
+      "path": "/v1/order-intake",
+      "headers": {},
+      "expect_status": 403,
+      "expect_error": "agent_only"
+    },
+    {
+      "id": "payment_challenge",
+      "method": "POST",
+      "path": "/v1/order-intake",
+      "headers": {
+        "X-Agent-Id": "<stable-agent-id>"
+      },
+      "expect_status": 402,
+      "expect_error": "payment_required"
+    },
+    {
+      "id": "fake_payment_fails_closed",
+      "method": "POST",
+      "path": "/v1/order-intake",
+      "headers": {
+        "X-Agent-Id": "<stable-agent-id>",
+        "Payment-Signature": "invalid"
+      },
+      "expect_status": 402
+    },
+    {
+      "id": "accepted_order_returns_console_links",
+      "method": "POST",
+      "path": "/v1/order-intake",
+      "requires_real_or_dev_payment": true,
+      "expect_status": 202,
+      "expect_fields": [
+        "order_id",
+        "status_url",
+        "artifact_url",
+        "receipt_console_url",
+        "expected_deliverables"
+      ]
+    },
+    {
+      "id": "status_is_agent_scoped",
+      "method": "GET",
+      "path": "/v1/orders/{order_id}",
+      "expect_status_same_agent": 200,
+      "expect_status_other_agent": 403
+    },
+    {
+      "id": "artifact_pending_or_ready",
+      "method": "GET",
+      "path": "/v1/orders/{order_id}/artifact",
+      "expect_status_one_of": [
+        200,
+        202
+      ]
+    },
+    {
+      "id": "idempotency_replay",
+      "method": "POST",
+      "path": "/v1/order-intake",
+      "headers": {
+        "Idempotency-Key": "<stable-key>"
+      },
+      "expect_same_body_replay_header": "x-idempotent-replay: true",
+      "expect_changed_body_conflict_after_cached_success": 409
+    }
+  ],
+  "privacy_expectations": {
+    "raw_payment_tokens_returned": false,
+    "raw_payment_proofs_returned": false,
+    "provider_api_keys_returned": false,
+    "buyer_contact_returned": false,
+    "receipt_representation": "hash in persisted/status records; receipt header on paid responses only"
+  },
+  "probe_script": "scripts/agent_checkout_conformance_probe.py"
+}

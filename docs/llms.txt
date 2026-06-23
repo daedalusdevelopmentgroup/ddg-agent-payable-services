@@ -1,0 +1,186 @@
+# DDG Agent-Payable Services
+
+Operator: Daedalus Development Group
+Contact: 0xcircuitbreaker@protonmail.com
+Live payment protocols: x402, direct_crypto_auto, and direct_crypto_manual. MPP is code-ready but pending live provider/currency configuration.
+Canonical pricing/status catalog: /.well-known/ddg-agent-pricing.json
+AI discovery endpoint: /.well-known/ai (alias /ai)
+API linkset catalog: /.well-known/api-catalog
+Agent-skill index: /.well-known/agent-skills/index.json
+Wildcard agent manifest: /.well-known/agents.json
+Agent catalog: /.well-known/agent-catalog.json
+Quickstart: /quickstart.md or /.well-known/ddg-agent-quickstart.md
+OpenAPI live-runtime contract: /openapi.json
+
+DDG sells budgeted application/model-router output and operator-reviewable agent-work artifacts to **AI agents only** — not provider credentials, account seats, auth tokens, or raw account access.
+
+## Live runtime endpoints
+
+These routes are implemented in the current payment edge and are the only routes intentionally advertised by OpenAPI today.
+
+0. POST /v1/tx-smoke-test — one-cent paid transaction smoke test for AI agents; returns a receipt-only JSON proof that payment worked. Launch price: $0.01.
+1. POST /v1/site-audit — paid automated website audit. Read-only. Launch price: $0.75.
+2. POST /v1/model/chat-completions — paid model-router completion endpoint. OpenAI-compatible body with DDG routing extensions, budget caps, payment receipts, and no provider-key exposure.
+3. POST /v1/model/agent-run — paid bounded agent-task endpoint. Live beta allows local runtime routes across Ollama, llama.cpp, and LM Studio/llmster when the requested model is listed healthy for that runtime. Example route IDs: ollama/qwen2.5-coder:7b, llama.cpp/gemma3:270m, lm_studio/gemma3:270m. Local runtime routes are free for a limited time; provider-backed artifact routes remain paid/manual-approved.
+4. POST /v1/order-intake — paid intake/queue endpoint for all manual/beta DDG agent offerings; stores redacted order metadata and requires operator review before fulfillment or irreversible actions. Successful intake returns `status_url`, `artifact_url`, and `receipt_console_url`.
+5. GET /v1/orders/{order_id} and GET /v1/orders/{order_id}/artifact — agent-scoped order status / artifact console. Requires the same stable agent identity used at intake; returns only redacted receipt/proof hashes, never raw payment tokens or raw proof payloads. Pending artifacts return 202 with Retry-After.
+6. GET /.well-known/ddg-agent-checkout-conformance.json — machine-readable checkout-conformance profile for agents validating 403→402→200/202, receipt links, idempotency, fake-token fail-closed, and order artifact access controls. Local probe script: `scripts/agent_checkout_conformance_probe.py`.
+7. GET /.well-known/ddg-mpp-activation-guide.md — step-by-step MPP/Tempo/Stripe account, env, smoke-test, public-copy flip, and rollback checklist. MPP remains pending until the guide's live gates pass.
+8. POST /v1/micro-model-swarm-preview — free/best-effort local model swarm preview. Agents may select `runtime=ollama`, `runtime=llama.cpp`, or `runtime=lm_studio` for listed models; combos default to Ollama. Strict lease/request caps; no SLA.
+9. POST /v1/ai-skill-safety-scan — free static AI skill safety scanner for prompt-injection, credential-exfiltration, dangerous tool-use, package lifecycle/install-script, and broad file/network access red flags. No code execution; redacts secret-like values.
+
+AI-client traffic should send:
+- Idempotency-Key header for POST requests.
+- X-Agent-Id (preferred) or X-DDG-Agent-Id / X-DDG-User for anti-abuse identity/routing.
+- x402 payment via Payment-Signature / X-PAYMENT after receiving a 402 challenge. For direct crypto, retry the paid request with X-Direct-Crypto-Proof / Payment-Proof when auto-verification is configured, or submit configured-chain payment_proof through /v1/order-intake for manual confirmation. Use MPP Authorization: Payment only when the 402 challenge explicitly includes MPP.
+- x_router.max_charge_usd on chat-completions requests and x_agent.max_charge_usd on agent-run requests to cap spend.
+- x_router.agent_profile for capability-based routing of weaker AI agents:
+  - low (maps to GLM-4.5-Air)
+  - budget (maps to GLM-4.5)
+  - standard (maps to GLM-5-turbo)
+  - pro (maps to GPT-5.3-Codex)
+  - premium (maps to GPT-5.5)
+
+Recommended request defaults:
+
+- Weak agent ("ministal" or "x" style traffic):
+```json
+{
+  "model": "ministal",
+  "x_router": { "agent_profile": "low", "policy": "cheap", "max_charge_usd": 0.08 },
+  "messages": [{"role":"user","content":"summarize key risks"}]
+}
+```
+
+- Balanced agent:
+```json
+{
+  "model": "auto",
+  "x_router": { "agent_profile": "standard", "max_charge_usd": 0.25 },
+  "messages": [{"role":"user","content":"generate rollout checklist"}]
+}
+```
+
+- Premium path (for critical/legal quality tasks):
+```json
+{
+  "model": "gpt-5.5",
+  "x_router": { "max_charge_usd": 1.0, "max_model_tier": "premium" },
+  "messages": [{"role":"user","content":"write policy-sensitive production release note"}]
+}
+```
+
+DDG returns request IDs, selected tier/model/route where allowed, usage/billing estimates, receipt metadata, and route-specific artifacts.
+
+## Manual-fulfillment beta offers
+
+These are sellable/quotable DDG service packages. Agents can order paid/operator-reviewed items by calling `POST /v1/order-intake` with `service_id`, stable `X-Agent-Id`, idempotency key, and payment proof/rail headers as required. DDG/operator review remains required before fulfillment and before any irreversible outreach/send action. Intake success includes `status_url`, `artifact_url`, and `receipt_console_url`; poll `GET /v1/orders/{order_id}` and `GET /v1/orders/{order_id}/artifact` with the same agent identity to retrieve redacted status and finished artifacts.
+
+- /v1/site-audit/reviewed — human-reviewed website/conversion audit.
+- /v1/lead-pack — curated lead pack with official URLs, evidence, contact confidence, and outreach angles.
+- /v1/browser-proof — browser QA/proof capture with screenshots and reproducible steps.
+- /v1/outreach-brief — personalized outreach brief/draft only; no sending without human approval.
+- /v1/agent-discovery-pack — llms.txt + OpenAPI + pricing/catalog pack.
+- /v1/mcp-server-audit — MCP server/tool audit.
+- /v1/prompt-injection-red-team — prompt-injection and tool-safety red team.
+- /v1/repo-context-pack — repo/docs/SOPs to agent-ready context pack.
+- /v1/agent-tool-schema-repair — OpenAPI/MCP/tool schema repair.
+- /v1/research-pack — source-linked research brief.
+- /v1/landing-page-conversion-diff — conversion/trust/copy diff.
+- /v1/local-business-demo-pack — private lead-specific local-business demo pack.
+- /v1/agent-payment-readiness-audit — x402/MPP paid-agent readiness audit.
+- /v1/hermes-skill-workflow-dev — Hermes skill, generic agent skill, or reusable AI workflow development.
+- /v1/ai-agent-skill-port — port a skill/workflow to the buyer's active AI/agent stack.
+- /v1/mcp-tool-server-build — design/scaffold an MCP tool or server with docs and smoke tests.
+- /v1/ai-skill-safety-scan — free static skill/workflow safety scan for prompt-injection, secret-exfiltration, dangerous tool-use, package lifecycle/install-script, and broad file/network access red flags.
+- `service_id=production_security_audit` (`/v1/production-security-audit`) — paid productionized public-surface security audit for AI-agent services, MCP/tool servers, OpenAPI/llms.txt catalogs, dependency manifests, prompt-injection exposure, public endpoints, and payment/check-out safety.
+- `service_id=agent_checkout_conformance_audit` (`/v1/agent-checkout-conformance-audit`) — paid 403→402→200→receipt conformance run with idempotency replay, fake-token fail-closed, spend-cap, and receipt/artifact checks.
+- `service_id=mpp_onboarding_path_activation` (`/v1/mpp-onboarding-path-activation`) — paid MPP/payment-rail onboarding and go-live validation for AI-agent sellers.
+- `service_id=artifact_receipt_console_pack` (`/v1/artifact-receipt-console-pack`) — paid buyer-facing artifact/receipt console package with order status, rail/budget metadata, audit trail, and status JSON contract.
+- `service_id=ai_agent_buyer_service_bundle` (`/v1/ai-agent-buyer-service-bundle`) — paid bundle: security_preflight, checkout_conformance, agent_readability_upgrade, mcp_tool_audit, and local_model_runtime_setup.
+
+## Planned / not public self-serve yet
+
+These are intentionally not in OpenAPI today. They must stay hidden from self-serve launch claims until wrappers, sandboxing, payment settlement posture, and smoke tests pass.
+
+- /v1/sandboxed-cli-agent-run — general bounded CLI-agent run; requires stronger filesystem/env sandboxing.
+- /v1/local-model-swarm-seat — named paid lease path remains planned; current live free capacity is /v1/micro-model-swarm-preview plus selectable local runtime routes under /v1/model/agent-run.
+- /v1/ethereum/rpc — implemented sync-gated free launch beta for read-only Ethereum full-node queries, but not public-ready until overflow runtime backend Reth execution sync completes (`eth_syncing=false`, non-zero latest block, Lighthouse non-optimistic). It now has a method whitelist, per-agent fair-use lease timer, request cap, and upstream max-concurrency cap.
+
+## Model-router offer
+
+Live public chat-completions aliases are API/commercial-route candidates only: auto, mini/ministal/x/y/z, budget, starter, agent-small, agent-standard, agent-pro, agent-max, glm-4.5-air, glm-4.5, glm-4.6, glm-4.7, glm-5, glm-5-turbo, glm-5.1, glm-5.2, gpt-5.3-codex-spark, gpt-5.3-codex, gpt-5.4, gpt-5.5, claude-haiku-4.5, claude-sonnet-4.6, claude-opus-4.8.
+
+Live agent-run routes are selectable local runtime artifact routes: `ollama/<model>`, `llama.cpp/<model>`, and `lm_studio/<model>` when the requested model is listed healthy in `/v1/ollama-models`. Agents may also pass `{ "model": "...", "runtime": "ollama|llama.cpp|lm_studio" }`. Local runtime routes are FREE FOR A LIMITED TIME as best-effort/no-SLA capacity and use one concurrent local generation seat per healthy configured local runtime endpoint, capped at two by default for a two configured 8GB-VRAM runtime backends. Defaults are 24-hour per-agent lease, 100 requests/lease on the swarm preview, 60s swarm generation timeout, and 120s local agent-run timeout; the same stable agent identity can reuse after lease expiry. After the promo, only local models 4B and smaller remain free and larger local models move to paid/operator-approved capacity. Provider-backed DDG-operated artifact routes are implemented but env-gated/manual-approved: kimi-code/k2.7 and claude-code/default. These are never raw account/API resale: DDG operates the task, enforces payment/budget/sandbox controls, and returns artifacts/results without exposing provider credentials, account credentials, or seats.
+
+## Upstream local-model transparency
+
+For abliterated/uncensored local routes, DDG should expose exact upstream GGUF identity to agent clients instead of hiding it behind vague aliases. Staging candidates are listed in `/.well-known/agent-catalog.json` under `local_model_upstream_candidates`. Current <=12B mradermacher candidates queued for download/smoke include:
+
+- `mradermacher/Llama3.3-8B-Instruct-Thinking-Heretic-Uncensored-Claude-4.5-Opus-High-Reasoning-i1-GGUF`
+- `mradermacher/Huihui-Qwen3.5-9B-abliterated-GGUF`
+- `mradermacher/Huihui-gemma-4-E4B-it-abliterated-GGUF`
+- `mradermacher/Qwen3.5-4B_Abliterated-GGUF`
+- `mradermacher/Qwen2.5-Coder-7B-Abliterated-i1-GGUF`
+- `mradermacher/Llama-3.2-3B-Instruct-uncensored-GGUF`
+- `mradermacher/SmolLM2-1.7B-Instruct-Uncensored-GGUF`
+- `mradermacher/DeepSeek-R1-Distill-Qwen-1.5B-uncensored-GGUF`
+
+These are not default-routed until each selected GGUF file is downloaded and passes DDG smoke tests on the durable runtime backend/overflow runtime backend host pool. Agents may request them explicitly as upstream candidates through `/v1/order-intake` while the route wrapper is staged.
+
+Local inference note: secondary host `an internal host` is internally reachable, has ample RAM, dual Xeon E5-2697 v2 CPUs, Docker, NVIDIA Container Toolkit, Ollama `0.30.5`, 8GB-VRAM GPU / 8GiB, and ~1.9TiB free root space for model expansion. overflow runtime backend has 8GB-VRAM GPU / 8GiB and ~535GiB free on Linux root, but Reth+Lighthouse mainnet data already uses ~981GiB and execution sync is still in progress; prefer durable runtime backend storage for large model pulls and preserve overflow runtime backend headroom for Ethereum sync. Up to two free seats are true only when a secondary 8GB-VRAM GPU host and a primary 8GB-VRAM GPU host are both configured in `the internal backend pool` and pass payment-edge health checks; the public catalog reports the actual healthy count and never exposes raw Ollama URLs. `llama.cpp`, LM Studio, generic OpenAI-compatible local servers, and vLLM are requestable local runtimes but are not installed/smoked as public-live routes yet; expose them as operator-request preview options, not live runtime claims.
+
+Micro-model swarm note: the implemented preview now has these downloaded Ollama micro models prepared: smollm2:135m, smollm2:360m, smollm2:1.7b, qwen2.5:0.5b-instruct, qwen2.5-coder:0.5b-instruct, gemma3:270m, and tinyllama:1.1b-chat. It supports single-model calls plus `combo=auto`, `lead_triage_combo`, `code_schema_combo`, `fast_vote_combo`, `research_extract_combo`, and `copy_review_combo`. It is useful for lightweight routing, extraction, rewrite, JSON/schema repair, lead triage, and ensemble checking, not frontier reasoning. BitNet `bitnet-b1.58:2b` was attempted but the Ollama manifest was unavailable.
+
+## Production caveats
+
+- Public production can launch as direct_crypto_manual beta with generated addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR. Direct_crypto_auto is implemented at the edge and becomes an automatic rail once DDG_PAYMENT_DIRECT_CRYPTO_VERIFY_URL points at a chain-verification provider/sidecar; x402/MPP settlement remain additional automated rails to finish before broad self-serve scale.
+- Cloudflare/WAF must allow normal agent clients to reach /health, /llms.txt, /openapi.json, /.well-known/*, and /v1/*.
+- Human approval remains required for outreach-send, external spending, posting, account creation, or other irreversible side effects.
+
+## Manual/operator-reviewed model artifact service
+
+`service_id=provider_model_artifact_order` is available through `/v1/order-intake` for DDG-operated model work, including basic conversation, analysis, code/research drafts, or bounded artifact generation using provider/subscription-backed tools only where terms permit. DDG sells the result/artifact, not raw auth tokens, account seats, provider credentials, or unrestricted model account access.
+
+
+## Planned Ethereum privacy-node service
+
+`service_id=ethereum_private_rpc_query` / planned `/v1/ethereum/rpc` will provide read-only, method-whitelisted Reth JSON-RPC through DDG's payment edge so buyer agents do not need their own third-party Ethereum RPC account. Public self-serve waits for overflow runtime backend Reth sync and health checks; unsafe methods such as `eth_sendRawTransaction`, `admin`, `miner`, `personal`, and unrestricted `debug`/`trace` remain blocked.
+
+
+MODEL QUERY LAUNCH POLICY
+
+- DDG sells AI-agent-queryable model outputs and bounded artifact runs, not raw provider OAuth/account/session/token access.
+- Eligible launch model routes are priced at 75% of comparable official API list pricing where DDG can fulfill through available backend capacity.
+- Account-backed coding/model capacity is DDG-operated only: buyers receive outputs/artifacts and receipts; credentials and sessions stay private.
+- Riskier account-backed artifact runs remain manual/operator-reviewed until provider terms and production controls are sufficient for self-serve use.
+
+
+## Free Ollama model seats
+
+Downloaded Ollama models are discoverable at `/v1/ollama-models` and usable through `/v1/micro-model-swarm-preview` with a rotating lease timer; local `/v1/model/agent-run` Ollama routes are also free for a limited time. The free pool exposes one concurrent generation seat per healthy configured Ollama/GPU backend, capped at two by default for a two configured 8GB-VRAM runtime backends; if one host is offline the catalog reports one seat, and raw backend URLs remain hidden. Defaults: 24-hour per-agent lease, 100 requests/lease, 60s swarm generation timeout, 120s local agent-run timeout, reusable after lease expiry. Agents can request a new model/runtime at `/v1/ollama-model-request` with `runtime=ollama`, `runtime=llama.cpp`, `runtime=lm_studio`, `runtime=openai_compatible_local_server`, or `runtime=vllm`; public requests queue operator review and never auto-download models. Default guardrails reserve 300GiB and cap ordinary public model requests at 25GiB unless an operator explicitly approves a larger pull. After the limited-time promo, only local models 4B and smaller remain free.
+
+## DDG free local-model agent slots — exact rollout menu
+
+Limited-time launch offer: AI agents can connect to DDG local-model slots for **$0** via `/v1/micro-model-swarm-preview` and local Ollama routes under `/v1/model/agent-run`. Public catalog: `/v1/ollama-models` and `/.well-known/ddg-ollama-models.json`.
+
+DDG exposes both native model context and service context honestly: large GGUF aliases are created with DDG free-slot `num_ctx=32,768` by default even when the native GGUF metadata supports 131K, 202K, 262K, or 1M context.
+
+Priority A/B rollout models:
+- `mradermacher/huihui-gemma4-12b-ablit:q4_k_m` — 12B Q4_K_M; native ctx 131,072; DDG free-slot ctx 32,768; Gemma-family abliterated route.
+- `mradermacher/mistral-nemo-heretic-12b:q4_k_m` — 12B Q4_K_M; native ctx 1,024,000; DDG free-slot ctx 32,768; Mistral-Nemo 12B uncensored/heretic long-context route.
+- `mradermacher/dolphin3-llama31-8b-ablit:q4_k_m` — 8B Q4_K_M; native ctx 131,072; DDG free-slot ctx 32,768; Dolphin/Llama3.1 abliterated general route.
+- `mradermacher/huihui-glm47-flash-ablit:iq3_xs` — GLM-4.7 Flash class IQ3_XS; native ctx 202,752; DDG free-slot ctx 32,768; GLM-family abliterated route; IQ3 chosen for 8GB-class hosts.
+- `mradermacher/huihui-qwen3-coder-30b-a3b-ablit:iq3_xs` — 30B-A3B IQ3_XS; native ctx 262,144; DDG free-slot ctx 32,768; Qwen coder sparse/active-parameter abliterated experiment.
+- `mradermacher/qwen36-27b-heretic:q4_k_s` — 27B Q4_K_S; native ctx 262,144; DDG free-slot ctx 32,768; Larger Qwen3.6 uncensored/heretic route.
+- `mradermacher/qwen36-35b-a3b-ablit:iq3_xs` — 35B-A3B IQ3_XS; native ctx 262,144; DDG free-slot ctx 32,768; Large abliterated MoE-style Qwen3.6 experiment.
+- `mradermacher/dolphin-mistral-24b-venice:iq3_xs` — 24B IQ3_XS; native ctx 32,768; DDG free-slot ctx 32,768; Dolphin/Mistral Venice-style route.
+
+Post-promo policy: <=4B local models remain free; >4B local routes become paid/operator-approved capacity. Public model requests never auto-download; use `/v1/ollama-model-request` and DDG operator review.
+
+## Queryable paid artifact/model routes
+- `kimi-code/k2.7` — Kimi K2.7 Code is available as a DDG-operated paid artifact/result route and can be used within Kimi Code. Use `/v1/model/agent-run`; DDG returns bounded outputs/artifacts only and never transfers provider credentials, account seats, or raw sessions.
+
+## Agent-swarm MCP and cybersecurity services
+- MCP server design: `/mcp/ddg-agent-swarm-mcp-design.md`; initial stdio skeleton: `sales_artifacts/agent_payments/mcp/ddg_agent_services_mcp_server.py`.
+- Cybersecurity catalog: `/cybersecurity-services.json`; live free scanner: `/v1/ai-skill-safety-scan`; order paid/deeper audits via `/v1/order-intake`. Services include productionized public-surface security audits, checkout conformance audits, MPP/payment-path activation, artifact/receipt console packs, prompt-injection scans, npm/Python package scans, API-key/secret leak scans, malware triage, AI skill safety scans, MCP/tool security audits, and AI-agent buyer service bundles.

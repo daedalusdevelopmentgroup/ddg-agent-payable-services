@@ -1,0 +1,23 @@
+{
+  "schema_version": "v0.2.0",
+  "id": "ddg-agent-payable-services",
+  "name": "DDG Agent-Payable Services",
+  "description": "Use this skill when an AI agent wants to buy or evaluate DDG services. Start with the AI discovery endpoint, pricing, OpenAPI, and checkout conformance profile. Protected routes require a stable agent identity and payment credential.",
+  "base_url": "https://agents.daedalusdevelopmentgroup.com",
+  "entrypoints": {
+    "ai_discovery": "/.well-known/ai",
+    "pricing": "/.well-known/ddg-agent-pricing.json",
+    "openapi": "/openapi.json",
+    "order_intake": "/v1/order-intake",
+    "checkout_conformance": "/.well-known/ddg-agent-checkout-conformance.json"
+  },
+  "recommended_flow": [
+    "GET /.well-known/ai",
+    "GET /.well-known/ddg-agent-pricing.json",
+    "Choose a service_id",
+    "POST /v1/order-intake with X-Agent-Id and Idempotency-Key",
+    "If 402, retry with x402 or direct-crypto proof",
+    "Poll returned status_url/artifact_url"
+  ],
+  "safety": "Do not send secrets in service targets. DDG returns redacted receipts and operator-reviewed artifacts for manual services."
+}

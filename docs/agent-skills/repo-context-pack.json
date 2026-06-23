@@ -1,0 +1,28 @@
+{
+  "base_url": "https://agents.daedalusdevelopmentgroup.com",
+  "description": "Convert a repo or docs corpus into an agent-ready context map, Hermes skill, or MCP server scaffold.",
+  "entrypoints": {
+    "ai_discovery": "/.well-known/ai",
+    "openapi": "/openapi.json",
+    "order_intake": "/v1/order-intake",
+    "pricing": "/.well-known/ddg-agent-pricing.json",
+    "status": "/.well-known/ddg-agent-status.json"
+  },
+  "id": "repo-context-pack",
+  "name": "Repo Context Pack",
+  "recommended_flow": [
+    "GET /.well-known/ai",
+    "GET /.well-known/ddg-agent-pricing.json",
+    "Choose this service_id or related priced service",
+    "POST /v1/order-intake with X-Agent-Id and Idempotency-Key",
+    "If 402, retry with x402 or direct-crypto proof",
+    "Poll returned status_url/artifact_url"
+  ],
+  "safety": "DDG returns redacted receipts and bounded artifacts; do not send secrets in targets; no raw provider credentials or account sessions are sold.",
+  "schema_version": "v0.2.1",
+  "tags": [
+    "repo-analysis",
+    "skills",
+    "mcp"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agents.daedalusdevelopmentgroup.com/schemas/receipt.v1.json",
+  "type": "object",
+  "required": [
+    "order_id",
+    "service_id",
+    "payment_rail",
+    "receipt_hash"
+  ],
+  "properties": {
+    "order_id": {
+      "type": "string"
+    },
+    "service_id": {
+      "type": "string"
+    },
+    "amount_usd": {
+      "type": "number"
+    },
+    "payment_rail": {
+      "type": "string",
+      "enum": [
+        "x402",
+        "direct_crypto",
+        "mpp"
+      ]
+    },
+    "receipt_hash": {
+      "type": "string"
+    },
+    "artifact_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status_url": {
+      "type": "string"
+    },
+    "artifact_url": {
+      "type": "string"
+    }
+  }
+}

@@ -2,13 +2,12 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
   "title": "DDG Agent-Payable Services MCP",
-  "description": "Payment-aware MCP wrapper for DDG Agent-Payable Services: discovery, status, checkout conformance, skill safety scan, order polling, and paid-service tools that return structured 402 payment challenges.",
+  "description": "Payment-aware MCP for DDG Agent-Payable Services: discovery, paid model routing, and x402 checkout.",
   "version": "0.1.0",
   "repository": {
     "url": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
     "source": "github"
   },
-  "homepage": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai",
   "packages": [
     {
       "registryType": "pypi",
@@ -38,17 +37,5 @@
         }
       ]
     }
-  ],
-  "security": {
-    "no_arbitrary_shell": true,
-    "no_file_write_tools": true,
-    "no_provider_credential_relay": true,
-    "paid_tools_return_structured_402": true,
-    "authorization_forwarding": "Payment scheme only",
-    "response_header_allowlist": true,
-    "response_body_redaction": true,
-    "response_size_cap_bytes": 786432,
-    "resource_allowlist_only": true,
-    "hosted_remote_requires_agent_id_argument": true
-  }
+  ]
 }

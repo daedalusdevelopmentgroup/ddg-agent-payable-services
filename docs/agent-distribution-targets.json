@@ -39,27 +39,38 @@
     },
     {
       "id": "cdp_x402_bazaar",
-      "status": "candidate_metadata_ready_not_indexed_until_real_cdp_settlement",
+      "status": "runtime_bazaar_schemas_live_not_indexed_until_real_cdp_settlement",
       "url": "https://docs.cdp.coinbase.com/x402/bazaar",
       "next_action": "Wire Bazaar discovery extensions into the CDP Facilitator settle flow and complete one real penny-scale settlement with paymentPayload.resource set."
     },
     {
       "id": "x402scan",
-      "status": "registration_started_blocked_by_probe_501",
-      "url": "https://www.x402scan.com/resources/register",
-      "next_action": "Fix x402scan probe compatibility: x402scan appears to HEAD-probe protected resources; live HEAD currently returns 501 instead of 402; update live OpenAPI/edge behavior, then rescan."
+      "status": "registered_live_5_resources",
+      "next_action": "Keep x402scan batch tests green after every OpenAPI/payment-edge update; expand listing copy only after CDP Bazaar settlement indexing is live.",
+      "urls": [
+        "https://www.x402scan.com/server/c3540307-0eb2-455d-90b6-a21f7d5a3792",
+        "https://tryponcho.com/m/agents.daedalusdevelopmentgroup.com",
+        "https://www.x402scan.com/resources/register"
+      ]
     },
     {
       "id": "x402_ecosystem_and_awesome_lists",
-      "status": "listing_packet_staged_ready_after_probe_fix",
-      "urls": ["https://www.x402.org/ecosystem", "https://github.com/xpaysh/awesome-x402"],
+      "status": "listing_packet_ready_after_x402scan_registration",
+      "urls": [
+        "https://www.x402.org/ecosystem",
+        "https://github.com/xpaysh/awesome-x402"
+      ],
       "packet": "submissions/x402-ecosystem/awesome-x402-listing.md",
-      "next_action": "Open listing requests/PRs after x402scan/agentcash discovery probes report valid resources and the payment ladder smoke remains green."
+      "next_action": "Open listing requests/PRs now that x402scan/agentcash probes report valid paid resources; keep CDP Bazaar marked settlement-gated."
     },
     {
       "id": "mcp_aggregators",
       "status": "prepare_after_official_registry_or_package_listing",
-      "urls": ["https://smithery.ai/servers", "https://glama.ai/mcp/servers", "https://mcp.so/"],
+      "urls": [
+        "https://smithery.ai/servers",
+        "https://glama.ai/mcp/servers",
+        "https://mcp.so/"
+      ],
       "next_action": "Submit after official MCP Registry/PyPI or a public remote MCP endpoint is live to avoid overclaiming installability."
     }
   ]

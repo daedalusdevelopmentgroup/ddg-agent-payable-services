@@ -204,10 +204,27 @@ def test_distribution_targets_and_bazaar_readiness_are_gated() -> None:
     assert "cdp_x402_bazaar" in target_ids
 
     bazaar = server.ddg_x402_bazaar_readiness()
-    assert bazaar["status"] == "candidate_metadata_ready_not_indexed_until_real_cdp_settlement"
+    assert bazaar["status"] == "runtime_bazaar_schemas_live_not_indexed_until_real_cdp_settlement"
     resources = {item["resource"] for item in bazaar["candidate_resources"]}
     assert "https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test" in resources
     assert any("settlement" in requirement.lower() for requirement in bazaar["indexing_requirements"])
+
+    x402scan = server.ddg_x402scan_status()
+    assert x402scan["status"] == "registered_live_5_resources"
+    assert len(x402scan["validated_resources"]) == 5
+    assert x402scan["latest_batch_test"]["network"] == "eip155:8453"
+
+
+def test_x402_chain_support_lists_multi_chain_networks() -> None:
+    chains = server.ddg_x402_supported_chains()
+    networks = {item["network"] for item in chains["x402_accepts_networks"]}
+    assert "eip155:8453" in networks
+    assert "eip155:137" in networks  # Polygon
+    assert "eip155:42161" in networks  # Arbitrum
+    assert any(n.startswith("solana:") for n in networks)
+    assets = {item["asset"] for item in chains["direct_crypto_assets"]}
+    assert {"EVM", "BTC", "SOL", "XMR"} <= assets
+    assert chains["x402_enforcement_network"] == "eip155:8453"
 
 
 def test_static_distribution_resources_are_json() -> None:
@@ -216,3 +233,10 @@ def test_static_distribution_resources_are_json() -> None:
 
     bazaar = json.loads(server.ddg_distribution_x402_bazaar_readiness_resource())
     assert bazaar["candidate_resources"][0]["service_id"] == "tx_penny_smoke_test"
+
+    x402scan = json.loads(server.ddg_distribution_x402scan_status_resource())
+    assert x402scan["status"] == "registered_live_5_resources"
+    assert "x402scan.com/server/" in x402scan["server_page"]
+
+    chains = json.loads(server.ddg_distribution_x402_chains_resource())
+    assert "eip155:8453" in {item["network"] for item in chains["x402_accepts_networks"]}

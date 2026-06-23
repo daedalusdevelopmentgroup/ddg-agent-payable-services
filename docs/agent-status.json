@@ -1,6 +1,6 @@
 {
   "base_url": "https://agents.daedalusdevelopmentgroup.com",
-  "generated_at": "2026-06-22T23:47:53.265767+00:00",
+  "generated_at": "2026-06-23T18:49:11Z",
   "latest_verified_ladder": {
     "fake_payment": "402 payment_required",
     "identity_no_payment": "402 payment_required",
@@ -13,7 +13,7 @@
   "mcp": {
     "design_url": "/.well-known/ddg-agent-swarm-mcp-design.md",
     "planned_package": "@daedalusdevelopmentgroup/ddg-agent-services-mcp",
-    "status": "source_stdio_skeleton_and_design_ready_http_transport_pending"
+    "status": "source_stdio_and_local_streamable_http_smoked_public_registry_pending"
   },
   "notes": [
     "No raw provider credentials, OAuth sessions, private model IDs, or verifier loopback URLs are public contract values.",
@@ -39,7 +39,9 @@
     "mpp_status": "/.well-known/ddg-mpp-activation-guide.md",
     "openapi": "/openapi.json",
     "pricing": "/.well-known/ddg-agent-pricing.json",
-    "refund_policy": "/.well-known/ddg-agent-refund-policy.json"
+    "refund_policy": "/.well-known/ddg-agent-refund-policy.json",
+    "x402scan": "https://www.x402scan.com/server/c3540307-0eb2-455d-90b6-a21f7d5a3792",
+    "x402scan_merchant": "https://tryponcho.com/m/agents.daedalusdevelopmentgroup.com"
   },
   "schema_version": "v0.1.0",
   "service": "DDG Agent-Payable Services",
@@ -50,5 +52,15 @@
     "openapi_paths": 19,
     "pricing_services": 46
   },
-  "status": "production_live_x402_direct_crypto_mpp_pending"
+  "status": "production_live_x402_direct_crypto_mpp_pending",
+  "x402scan": {
+    "status": "registered_live_5_resources",
+    "resource_count": 5,
+    "network": "eip155:8453",
+    "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "cdp_x402_bazaar": {
+    "status": "runtime_bazaar_schemas_live_not_indexed_until_real_cdp_settlement",
+    "next_gate": "real CDP Facilitator settle with paymentPayload.resource, then discovery search/MCP proof"
+  }
 }

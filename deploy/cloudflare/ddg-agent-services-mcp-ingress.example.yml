@@ -1,0 +1,11 @@
+# Example Cloudflare Tunnel ingress stanza for the DDG MCP server.
+# Preferred endpoint after production smoke:
+#   https://mcp.daedalusdevelopmentgroup.com/mcp
+#
+# Keep the payment edge hostname (agents.daedalusdevelopmentgroup.com) separate
+# unless you intentionally add path-based ingress and re-smoke both services.
+
+ingress:
+  - hostname: mcp.daedalusdevelopmentgroup.com
+    service: http://127.0.0.1:8891
+  - service: http_status:404

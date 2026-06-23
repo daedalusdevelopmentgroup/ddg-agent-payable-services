@@ -5,8 +5,9 @@ Local stdio MCP wrapper for `https://agents.daedalusdevelopmentgroup.com`. It ex
 ## Status
 
 - **stdio package/skeleton:** package-ready and locally smoke-tested.
-- **HTTP/Streamable MCP:** local streamable-http support added; public production endpoint is planned and must be deployed/smoked before registry remote listing.
+- **HTTP/Streamable MCP:** source-ready and locally smoke-tested on `http://127.0.0.1:8891/mcp`; public production endpoint is planned and must be deployed/smoked before registry remote listing.
 - **PyPI package metadata:** staged as `ddg-agent-services-mcp` with MCP Registry name `io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp`.
+- **Production checklist:** [`../docs/mcp-production-readiness.md`](../docs/mcp-production-readiness.md).
 - **Public service base:** `https://agents.daedalusdevelopmentgroup.com`
 - **Public design doc:** `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-swarm-mcp-design.md`
 
@@ -112,23 +113,34 @@ MPP is installed but not advertised live until `/health.ready=true`, a public 40
 
 ## Local smoke result
 
-Smoke command used:
+Smoke commands used:
 
 ```bash
-uv run --with mcp python /tmp/ddg_mcp_stdio_smoke.py
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+DDG_MCP_AGENT_ID=ddg-mcp-stdio-smoke \
+uv run --no-project --with mcp python scripts/smoke_mcp_server.py --transport stdio
+
+PYTHONDONTWRITEBYTECODE=1 \
+uv run --no-project --with mcp python scripts/smoke_mcp_server.py \
+  --transport streamable-http \
+  --http-url http://127.0.0.1:8891/mcp \
+  --agent-id ddg-mcp-http-smoke
 ```
 
-Observed result:
+Observed result shape:
 
 ```json
 {
-  "agent_status_status": 200,
-  "conformance_status": 200,
-  "receipt_design_status": "planned_not_live",
-  "skill_scan_status": 200,
-  "tx_smoke_status": 402,
-  "tx_smoke_error": "payment_required",
-  "tx_accepted_protocols": ["x402", "direct_crypto_auto"]
+  "ok": true,
+  "tool_count": 15,
+  "sample": {
+    "agent_status_status": 200,
+    "checkout_conformance_status": 200,
+    "receipt_design_status": "planned_not_live",
+    "tx_smoke_status": 402,
+    "tx_smoke_error": "payment_required",
+    "tx_accepted_protocols": ["x402", "direct_crypto_auto"]
+  }
 }
 ```
 

@@ -14,7 +14,9 @@
       "optional_env": ["DDG_AGENT_SERVICES_BASE_URL", "DDG_AGENT_SERVICES_ALLOWED_HOSTS"]
     },
     "http_streamable": {
-      "status": "planned_not_live"
+      "status": "source_ready_local_smoked_public_deploy_pending",
+      "local_url": "http://127.0.0.1:8891/mcp",
+      "planned_public_url": "https://mcp.daedalusdevelopmentgroup.com/mcp"
     }
   },
   "tools": [

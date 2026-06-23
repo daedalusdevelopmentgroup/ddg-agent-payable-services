@@ -9,7 +9,8 @@
       "name": "George Sarris / Daedalus Development Group",
       "email": "0xcircuitbreaker@protonmail.com",
       "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai"
-    }
+    },
+    "x-guidance": "AI agents should first read /.well-known/ai, /llms.txt, pricing, and checkout-conformance. For paid routes, send a stable X-Agent-Id header, inspect the HTTP 402 challenge, pay through a live x402 rail, and retry with payment proof. Free/status/helper routes are marked security: [] and should not be treated as paid resources."
   },
   "servers": [
     {
@@ -80,7 +81,9 @@
         "/.well-known/ddg-agent-checkout-conformance.json",
         "/agent-checkout-conformance.json",
         "/mpp-activation-guide.md",
-        "/.well-known/ddg-mpp-activation-guide.md"
+        "/.well-known/ddg-mpp-activation-guide.md",
+        "/.well-known/ddg-agent-refund-policy.json",
+        "/refund-policy"
       ],
       "manual_fulfillment_beta": "Manual/operator-reviewed offers are orderable by AI agents through POST /v1/order-intake with a paid service_id. Direct operation paths stay omitted from OpenAPI until implemented as self-serve runtime handlers.",
       "planned": "See pricing catalog planned_paths; not public self-serve.",
@@ -95,7 +98,8 @@
         "/cybersecurity-services.json",
         "/.well-known/ddg-cybersecurity-services.json",
         "/mcp/ddg-agent-swarm-mcp-design.md",
-        "/.well-known/ddg-agent-swarm-mcp-design.md"
+        "/.well-known/ddg-agent-swarm-mcp-design.md",
+        "/.well-known/ddg-agent-refund-policy.json"
       ],
       "planned_beta_paths": [
         "/v1/ethereum/rpc"
@@ -505,7 +509,8 @@
       "agents_json": "/.well-known/agents.json",
       "llms_txt": "/llms.txt",
       "pricing": "/.well-known/ddg-agent-pricing.json"
-    }
+    },
+    "refund_policy": "/.well-known/ddg-agent-refund-policy.json"
   },
   "x-payment-info": {
     "offers": [
@@ -630,7 +635,17 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.75"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -681,7 +696,12 @@
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
-        }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ]
       }
     },
     "/v1/model/chat-completions": {
@@ -735,7 +755,17 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.25"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -924,7 +954,12 @@
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
-        }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ]
       }
     },
     "/v1/micro-model-swarm-preview": {
@@ -1033,25 +1068,15 @@
             "description": "Request is not from AI-agent identity (missing/invalid headers)"
           }
         },
-        "x-payment-info": {
-          "required": false,
-          "mode": "free_intro_slot",
-          "limits": "health-derived free local seats; default 24-hour per-agent lease and 100 requests per lease",
-          "lease_seconds": 86400,
-          "max_requests_per_lease": 100,
-          "generation_timeout_seconds": 60,
-          "payment_protocols_current_public_live": [
-            "x402",
-            "direct_crypto_auto"
-          ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
-        },
         "security": [],
         "x-x402scan": {
           "exclude_from_paid_probe": true
+        },
+        "x-free-tier-info": {
+          "mode": "free_intro_slot",
+          "lease_seconds": 86400,
+          "max_requests_per_lease": 100,
+          "generation_timeout_seconds": 60
         }
       }
     },
@@ -1220,11 +1245,26 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.02"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
-        }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ]
       }
     },
     "/v1/order-intake": {
@@ -1278,7 +1318,18 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "price": {
+            "mode": "dynamic",
+            "currency": "USD",
+            "min": "0.01",
+            "max": "2500.00"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -1409,7 +1460,12 @@
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
-        }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ]
       }
     },
     "/v1/tx-smoke-test": {
@@ -1497,7 +1553,17 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.01"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
         },
         "requestBody": {
           "required": false,
@@ -1544,7 +1610,12 @@
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
-        }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ]
       }
     },
     "/v1/ollama-models": {
@@ -2111,6 +2182,90 @@
         "security": [],
         "x-x402scan": {
           "exclude_from_paid_probe": true
+        }
+      }
+    },
+    "/.well-known/ddg-agent-refund-policy.json": {
+      "get": {
+        "summary": "DDG strict refund and reversal policy",
+        "description": "Machine-readable policy: refunds are manual strict reversals; approved reversals require entitlement revocation and reversal receipts so buyer agents cannot retain access after money is returned.",
+        "operationId": "getStrictRefundPolicy",
+        "tags": [
+          "discovery",
+          "payments",
+          "refunds"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Strict refund/reversal policy for AI-agent paid work.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "service": {
+                      "const": "ddg_strict_refund_and_reversal_policy"
+                    },
+                    "policy": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "service",
+                    "policy"
+                  ],
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refund-policy": {
+      "get": {
+        "summary": "DDG strict refund and reversal policy",
+        "description": "Machine-readable policy: refunds are manual strict reversals; approved reversals require entitlement revocation and reversal receipts so buyer agents cannot retain access after money is returned.",
+        "operationId": "getStrictRefundPolicy",
+        "tags": [
+          "discovery",
+          "payments",
+          "refunds"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Strict refund/reversal policy for AI-agent paid work.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "service": {
+                      "const": "ddg_strict_refund_and_reversal_policy"
+                    },
+                    "policy": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "service",
+                    "policy"
+                  ],
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
         }
       }
     }

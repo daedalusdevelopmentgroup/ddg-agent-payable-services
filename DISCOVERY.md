@@ -21,6 +21,7 @@ https://agents.daedalusdevelopmentgroup.com
 | Agent catalog | `https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json` | Agent-buyable service descriptions |
 | Agent skills | `https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/index.json` | Skill-specific service discovery |
 | Checkout conformance | `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json` | 403/402/payment/idempotency contract |
+| Refund/reversal policy | `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-refund-policy.json` | Strict no-free-work reversal and entitlement-revocation policy |
 | MCP design/status | `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-swarm-mcp-design.md` | MCP wrapper design and current status |
 
 ## Current payment rails
@@ -56,15 +57,17 @@ A capable agent looking for services such as `x402 checkout conformance`, `MCP t
 Ready now after security audit:
 
 - public GitHub repo packet
-- x402 / agent-commerce awesome-list PRs
-- x402scan resource registration review
-- x402 ecosystem listing request
+- owned machine-readable discovery surfaces (`/.well-known/ai`, `llms.txt`, OpenAPI, pricing, catalog, agent skills)
+- MCP `ddg://distribution/agent-radar` and `ddg://distribution/x402-bazaar-readiness` resources for agent clients
+- x402scan registration started but blocked by live probe behavior: the form read DDG metadata and found candidate endpoints, but currently reports 0 valid resources because six x402scan HEAD probes return 501 instead of 402. See `submissions/x402scan/`.
+- x402 / agent-commerce awesome-list PR copy
+- x402 ecosystem listing request copy
 - search-indexed docs and social links to machine-readable endpoints
 
 Ready only after additional work:
 
 - CDP x402 Bazaar: requires CDP Facilitator settlement with route discovery metadata and `paymentPayload.resource`.
-- Official MCP Registry: requires a public installable package or public HTTP/Streamable MCP endpoint plus MCP Registry metadata/namespace verification.
+- Official MCP Registry: requires a public installable package on a supported registry (PyPI for this stdio wrapper) or a public HTTP/Streamable MCP endpoint plus MCP Registry metadata/namespace verification.
 - npm/PyPI package listing: requires packaging and release workflow for the stdio MCP wrapper.
 
 ## Security posture

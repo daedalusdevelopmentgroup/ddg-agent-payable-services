@@ -23,6 +23,8 @@ REQUIRED_TOOLS = {
     "ddg_mcp_security_profile",
     "ddg_public_resource_index",
     "ddg_fetch_public_resource",
+    "ddg_agent_distribution_targets",
+    "ddg_x402_bazaar_readiness",
     "ddg_list_services",
     "ddg_agent_status",
     "ddg_checkout_conformance",
@@ -50,6 +52,8 @@ REQUIRED_RESOURCES = {
     "ddg://docs/llms",
     "ddg://docs/mcp-design",
     "ddg://openapi",
+    "ddg://distribution/agent-radar",
+    "ddg://distribution/x402-bazaar-readiness",
 }
 
 
@@ -83,6 +87,11 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
     if getattr(status_resource, "contents", None):
         first_content = status_resource.contents[0]
         status_resource_text = getattr(first_content, "text", "") or ""
+    distribution_resource = await session.read_resource("ddg://distribution/agent-radar")
+    distribution_resource_text = ""
+    if getattr(distribution_resource, "contents", None):
+        first_content = distribution_resource.contents[0]
+        distribution_resource_text = getattr(first_content, "text", "") or ""
 
     security_profile = _structured(await session.call_tool("ddg_mcp_security_profile", {}))
     status = _structured(await session.call_tool("ddg_agent_status", {}))
@@ -94,6 +103,8 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
         )
     )
     tx_smoke = _structured(await session.call_tool("ddg_tx_smoke_test", {}))
+    distribution_targets = _structured(await session.call_tool("ddg_agent_distribution_targets", {}))
+    bazaar_readiness = _structured(await session.call_tool("ddg_x402_bazaar_readiness", {}))
 
     tx_body_value = tx_smoke.get("body")
     tx_body: dict[str, Any] = tx_body_value if isinstance(tx_body_value, dict) else {}
@@ -105,6 +116,9 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
         "resource_count_at_least_required": len(resource_uris) >= len(REQUIRED_RESOURCES),
         "required_resources_present": not missing_resources,
         "manifest_status_resource_nonempty": len(status_resource_text) > 100 and "payment" in status_resource_text.lower(),
+        "distribution_resource_mentions_x402": "x402" in distribution_resource_text.lower(),
+        "distribution_targets_active": distribution_targets.get("status") == "active_distribution_work_started",
+        "bazaar_not_overclaimed": str(bazaar_readiness.get("status", "")).endswith("real_cdp_settlement"),
         "agent_status_200": status.get("status") == 200,
         "checkout_conformance_200": conformance.get("status") == 200,
         "receipt_design_planned": receipt_design.get("status") == "planned_not_live",
@@ -122,6 +136,8 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
         "sample": {
             "security_profile_status": security_profile.get("status"),
             "resource_count": len(resource_uris),
+            "distribution_status": distribution_targets.get("status"),
+            "bazaar_status": bazaar_readiness.get("status"),
             "agent_status_status": status.get("status"),
             "checkout_conformance_status": conformance.get("status"),
             "receipt_design_status": receipt_design.get("status"),

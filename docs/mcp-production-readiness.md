@@ -22,7 +22,7 @@ PYTHONPATH=src \
 uv run --extra dev python scripts/smoke_mcp_server.py --transport stdio --source-tree src
 ```
 
-Expected: `ok: true`, 18 tools and 9 resources present, `ddg_mcp_security_profile` reports `source_hardened_public_remote_pending`, `ddg://manifest/status` reads successfully, `ddg_agent_status` returns 200, and `ddg_tx_smoke_test` returns structured 402.
+Expected: `ok: true`, 20 tools and 11 resources present, `ddg_mcp_security_profile` reports `source_hardened_public_remote_pending`, `ddg://manifest/status` and `ddg://distribution/agent-radar` read successfully, `ddg_agent_status` returns 200, `ddg_x402_bazaar_readiness` does not overclaim indexing before settlement, and `ddg_tx_smoke_test` returns structured 402.
 
 ### Streamable HTTP, local only
 
@@ -46,7 +46,7 @@ uv run --extra dev python scripts/smoke_mcp_server.py \
   --agent-id ddg-mcp-http-smoke
 ```
 
-Expected: `ok: true`, 18 tools and 9 resources present, and unpaid paid-tool call returns structured 402 with `accepted_protocols` containing only currently live rails.
+Expected: `ok: true`, 20 tools and 11 resources present, and unpaid paid-tool call returns structured 402 with `accepted_protocols` containing only currently live rails.
 
 ## Production deployment path
 
@@ -102,7 +102,7 @@ Expected: `ok: true`, 18 tools and 9 resources present, and unpaid paid-tool cal
 - Generic `Authorization: Bearer/Basic/...` values are dropped; only `Authorization: Payment ...` is forwarded as payment material.
 - Response headers are allowlisted; cookies/auth/debug headers are stripped.
 - Response bodies/resources are size-capped and redacted for secret-like keys/values.
-- MCP resources are fixed `ddg://` public manifests/docs only; arbitrary URLs and paths are rejected.
+- MCP resources are fixed `ddg://` public manifests/docs or source-bundled distribution metadata only; arbitrary URLs and paths are rejected.
 - Hosted/remote buyers must pass stable `agent_id` values on paid/order-scoped tools.
 - MCP service listens on loopback behind Cloudflare; direct public access should go through the tunnel/WAF only.
 - Public paid tools should return DDG's structured payment challenges rather than opaque MCP errors.

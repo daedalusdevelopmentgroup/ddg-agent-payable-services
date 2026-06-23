@@ -69,6 +69,12 @@ Agents and partner services can discover the expected checkout contract at:
 curl https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json
 ```
 
+Strict refund/reversal policy is exposed separately so buyer agents can verify that refunds cannot leave paid entitlements live:
+
+```bash
+curl https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-refund-policy.json
+```
+
 For local/dev or intentional paid-provider validation, run:
 
 ```bash

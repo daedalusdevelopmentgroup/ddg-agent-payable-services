@@ -11,11 +11,11 @@ The MCP server remains safe to publish as a stdio/package endpoint and safe to d
 Verification completed in this audit pass:
 
 - Source secret/prompt/internal URL scan: **0 findings**.
-- Public DDG endpoint leak scan over 9 agent-consumed surfaces: **0 findings**.
-- Public payment-edge smoke: **10/10 passed**.
-- Unit tests: **10 passed**.
-- MCP stdio smoke: **18 tools, 9 resources, ok:true**.
-- MCP Streamable HTTP loopback smoke: **18 tools, 9 resources, ok:true**.
+- Public DDG endpoint payment-ladder smoke: **10/10 passed**.
+- Public live OpenAPI drift check: **source branch patched; production deploy still pending** (`info.contact`, `info.x-guidance`, x402scan `price/protocols`, strict refund/reversal policy discovery, and stale MPP/Stripe live offers are corrected in repo but not yet live on `agents.daedalusdevelopmentgroup.com/openapi.json`).
+- Unit tests: **13 passed**.
+- MCP stdio smoke: **20 tools, 12 resources, ok:true**.
+- MCP Streamable HTTP loopback smoke: **20 tools, 12 resources, ok:true**.
 - Package build: **sdist + wheel built successfully**.
 - Python dependency audit in isolated project env: **No known vulnerabilities found** after adding security floor constraints.
 
@@ -23,6 +23,7 @@ Verification completed in this audit pass:
 
 | Severity | Asset | Finding | Remediation |
 | --- | --- | --- | --- |
+| Medium | Public/live OpenAPI drift | Live production OpenAPI still lacks agentcash/x402scan metadata (`info.contact`, `info.x-guidance`, `x-payment-info.price`, `x-payment-info.protocols`) and still shows stale MPP/Stripe live offers, even though public 402 headers correctly advertise only x402/direct-crypto. | Patched in source OpenAPI; deploy/restart production before final x402scan/Bazaar/public-discovery claims. |
 | High | MCP payment header forwarding | Generic `Authorization` forwarding could accidentally relay unrelated Bearer/Basic/API tokens if a buyer agent passed them as `payment_headers`. | Patched: only `Authorization: Payment ...` is forwarded; Bearer/Basic and unknown auth schemes are dropped. |
 | Medium | Hosted Streamable HTTP identity | Hosted MCP clients could otherwise collapse onto the server's default `DDG_MCP_AGENT_ID`, weakening order/payment scoping. | Patched: paid and agent-scoped tools accept optional `agent_id`; docs mark hosted remote as requiring buyer agent IDs. |
 | Medium | Quote/path proxy surface | `ddg_quote_payment` accepted arbitrary DDG paths on the allowlisted host. | Patched: quote path is restricted to known protected DDG paths. |
@@ -40,7 +41,8 @@ Verification completed in this audit pass:
 - Paid tools still return structured `402 payment_required` when unpaid.
 - MPP is still not advertised live before provider readiness and settlement proof.
 - Public hosted remote remains outside `mcp/server.json`; template is staged separately in `mcp/server.remote-template.json`.
-- `ddg_public_resource_index`, `ddg_fetch_public_resource`, and 9 first-class MCP resources expose only fixed public DDG manifests/docs/OpenAPI.
+- `ddg_public_resource_index`, `ddg_fetch_public_resource`, and 10 first-class MCP resources expose only fixed public DDG manifests/docs/OpenAPI.
+- `ddg_agent_distribution_targets`, `ddg_x402_bazaar_readiness`, and 2 source-bundled distribution resources expose agent-radar and x402 Bazaar readiness without claiming Bazaar/hosted MCP go-live early.
 - Upstream JSON bodies, resource text, and HTTP headers are capped/redacted before returning to the MCP client.
 
 ## Required verification commands

@@ -2,16 +2,23 @@
   "name": "@daedalusdevelopmentgroup/ddg-agent-services-mcp",
   "version": "0.1.0",
   "title": "DDG Agent-Payable Services MCP",
-  "description": "Payment-aware MCP wrapper for DDG Agent-Payable Services: discovery resources, status, checkout conformance, free safety scan, order polling, and paid-service 402 challenges.",
+  "description": "Payment-aware MCP wrapper for DDG Agent-Payable Services: discovery resources, agent-radar distribution readiness, status, checkout conformance, free safety scan, order polling, x402 Bazaar readiness, and paid-service 402 challenges.",
   "homepage": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai",
   "documentation": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-swarm-mcp-design.md",
   "base_url": "https://agents.daedalusdevelopmentgroup.com",
   "transport": {
     "stdio": {
       "command": "uvx",
-      "args": ["ddg-agent-services-mcp"],
-      "required_env": ["DDG_MCP_AGENT_ID"],
-      "optional_env": ["DDG_AGENT_SERVICES_BASE_URL", "DDG_AGENT_SERVICES_ALLOWED_HOSTS"]
+      "args": [
+        "ddg-agent-services-mcp"
+      ],
+      "required_env": [
+        "DDG_MCP_AGENT_ID"
+      ],
+      "optional_env": [
+        "DDG_AGENT_SERVICES_BASE_URL",
+        "DDG_AGENT_SERVICES_ALLOWED_HOSTS"
+      ]
     },
     "http_streamable": {
       "status": "source_ready_local_smoked_public_deploy_pending",
@@ -24,6 +31,8 @@
     "ddg_mcp_security_profile",
     "ddg_public_resource_index",
     "ddg_fetch_public_resource",
+    "ddg_x402_bazaar_readiness",
+    "ddg_agent_distribution_targets",
     "ddg_list_services",
     "ddg_agent_status",
     "ddg_checkout_conformance",
@@ -49,10 +58,17 @@
     "ddg://manifest/cybersecurity-services",
     "ddg://docs/llms",
     "ddg://docs/mcp-design",
-    "ddg://openapi"
+    "ddg://openapi",
+    "ddg://distribution/agent-radar",
+    "ddg://distribution/x402-bazaar-readiness"
   ],
-  "payment_protocols_current_public_live": ["x402", "direct_crypto_auto"],
-  "payment_protocols_pending": ["mpp"],
+  "payment_protocols_current_public_live": [
+    "x402",
+    "direct_crypto_auto"
+  ],
+  "payment_protocols_pending": [
+    "mpp"
+  ],
   "security": {
     "no_arbitrary_shell": true,
     "no_file_write_tools": true,
@@ -65,5 +81,12 @@
     "hosted_remote_requires_agent_id_argument": true,
     "resource_allowlist_only": true
   },
-  "submission_status": "stdio_package_ready_registry_submission_waits_for_public_package_or_hosted_transport"
+  "submission_status": "stdio_package_ready_registry_submission_waits_for_public_package_or_hosted_transport",
+  "distribution_targets": [
+    "official_mcp_registry",
+    "cdp_x402_bazaar",
+    "x402scan",
+    "x402_ecosystem_and_awesome_lists",
+    "mcp_aggregators"
+  ]
 }

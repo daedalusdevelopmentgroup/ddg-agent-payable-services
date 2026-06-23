@@ -43,8 +43,13 @@ SENSITIVE_KEY_RE = re.compile(r"(?i)(authorization|cookie|secret|token|password|
 SENSITIVE_VALUE_PATTERNS = (
     re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----.*?-----END [A-Z ]*PRIVATE KEY-----", re.I | re.S),
     re.compile(r"\b(?:ghp|github_pat)_[A-Za-z0-9_]{16,}\b"),
-    re.compile(r"\bsk_(?:live|test)_[A-Za-z0-9]{16,}\b"),
+    re.compile(r"\bglpat-[A-Za-z0-9_\-]{16,}\b"),
+    re.compile(r"\bxox[baprs]-[A-Za-z0-9\-]{16,}\b"),
+    re.compile(r"\bsk-(?:proj-)?[A-Za-z0-9_\-]{16,}\b"),
+    re.compile(r"\b(?:sk|pk|rk)_(?:live|test)_[A-Za-z0-9]{16,}\b"),
     re.compile(r"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b"),
+    re.compile(r"\bAIza[0-9A-Za-z_\-]{20,}\b"),
+    re.compile(r"\bya29\.[0-9A-Za-z_\-]{20,}\b"),
     re.compile(r"(?i)bearer\s+[A-Za-z0-9._~+/=-]{16,}"),
 )
 SAFE_RESPONSE_HEADERS = {
@@ -78,10 +83,205 @@ PUBLIC_RESOURCE_SPECS: dict[str, dict[str, str]] = {
     "manifest.catalog": {"uri": "ddg://manifest/catalog", "path": "/.well-known/agent-catalog.json", "mime_type": "application/json", "title": "DDG service catalog"},
     "manifest.pricing": {"uri": "ddg://manifest/pricing", "path": "/.well-known/ddg-agent-pricing.json", "mime_type": "application/json", "title": "DDG agent pricing"},
     "manifest.checkout_conformance": {"uri": "ddg://manifest/checkout-conformance", "path": "/.well-known/ddg-agent-checkout-conformance.json", "mime_type": "application/json", "title": "DDG checkout conformance"},
+    "manifest.refund_policy": {"uri": "ddg://manifest/refund-policy", "path": "/.well-known/ddg-agent-refund-policy.json", "mime_type": "application/json", "title": "DDG strict refund/reversal policy"},
     "manifest.cybersecurity_services": {"uri": "ddg://manifest/cybersecurity-services", "path": "/.well-known/ddg-cybersecurity-services.json", "mime_type": "application/json", "title": "DDG cybersecurity services"},
     "docs.llms": {"uri": "ddg://docs/llms", "path": "/llms.txt", "mime_type": "text/plain", "title": "DDG llms.txt"},
     "docs.mcp_design": {"uri": "ddg://docs/mcp-design", "path": "/.well-known/ddg-agent-swarm-mcp-design.md", "mime_type": "text/markdown", "title": "DDG MCP design"},
     "openapi": {"uri": "ddg://openapi", "path": "/openapi.json", "mime_type": "application/json", "title": "DDG OpenAPI"},
+}
+
+DISTRIBUTION_TARGETS: tuple[dict[str, Any], ...] = (
+    {
+        "id": "owned_agent_discovery_surfaces",
+        "name": "Owned machine-readable DDG discovery surfaces",
+        "status": "live_and_indexable",
+        "kind": "owned_web",
+        "priority": "p0",
+        "urls": [
+            "https://agents.daedalusdevelopmentgroup.com/.well-known/ai",
+            "https://agents.daedalusdevelopmentgroup.com/llms.txt",
+            "https://agents.daedalusdevelopmentgroup.com/openapi.json",
+            "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json",
+            "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json",
+            "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/index.json",
+        ],
+        "agent_queries": [
+            "x402 checkout conformance service",
+            "MCP tool security audit service",
+            "agent discovery repair pack",
+            "buyer agent smoke probe",
+        ],
+        "next_action": "Keep public endpoint leak scans and payment-ladder smokes green after every catalog/docs update.",
+    },
+    {
+        "id": "github_public_repo",
+        "name": "GitHub public repo and topic search",
+        "status": "live",
+        "kind": "source_repository",
+        "priority": "p0",
+        "urls": ["https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services"],
+        "agent_queries": ["site:github.com MCP x402 agent commerce", "DDG Agent-Payable Services"],
+        "next_action": "Keep CodeQL, CI, Dependabot, security policy, clean commits, and topic metadata green.",
+    },
+    {
+        "id": "official_mcp_registry",
+        "name": "Official MCP Registry",
+        "status": "metadata_ready_submission_waits_for_public_package_or_hosted_endpoint",
+        "kind": "mcp_registry",
+        "priority": "p0",
+        "urls": [
+            "https://modelcontextprotocol.io/registry/about",
+            "https://github.com/modelcontextprotocol/registry",
+        ],
+        "next_action": "Publish the stdio package to PyPI or deploy/smoke the public Streamable HTTP endpoint, then publish mcp/server.json with mcp-publisher.",
+        "do_not_claim_until": [
+            "PyPI package exists or public remote MCP endpoint is reachable",
+            "registry server.json validation passes",
+            "namespace verification/publisher auth succeeds",
+        ],
+    },
+    {
+        "id": "cdp_x402_bazaar",
+        "name": "CDP x402 Bazaar discovery layer",
+        "status": "candidate_metadata_ready_not_indexed_until_real_cdp_settlement",
+        "kind": "x402_discovery",
+        "priority": "p0",
+        "urls": [
+            "https://docs.cdp.coinbase.com/x402/bazaar",
+            "https://api.cdp.coinbase.com/platform/v2/x402/discovery/search",
+            "https://api.cdp.coinbase.com/platform/v2/x402/discovery/mcp",
+        ],
+        "next_action": "Wire Bazaar discovery extensions into the CDP Facilitator settle flow and complete one real penny-scale settlement with paymentPayload.resource set.",
+        "do_not_claim_until": [
+            "CDP settle, not verify-only, completes",
+            "EXTENSION-RESPONSES does not reject Bazaar metadata",
+            "Discovery search or Bazaar MCP returns the DDG resource",
+        ],
+    },
+    {
+        "id": "x402scan",
+        "name": "x402scan resource directory",
+        "status": "registration_started_blocked_by_probe_501",
+        "kind": "x402_directory",
+        "priority": "p1",
+        "urls": ["https://www.x402scan.com/resources/register"],
+        "next_action": "Fix x402scan probe compatibility: x402scan appears to HEAD-probe protected resources; live HEAD currently returns 501 instead of 402. Ensure x402 paywall runs before request validation or mark non-x402/free endpoints with security: [] in the live OpenAPI, then rescan.",
+    },
+    {
+        "id": "x402_ecosystem_and_awesome_lists",
+        "name": "x402 ecosystem pages and awesome lists",
+        "status": "listing_packet_staged_ready_after_probe_fix",
+        "kind": "x402_ecosystem",
+        "priority": "p1",
+        "urls": ["https://www.x402.org/ecosystem", "https://github.com/xpaysh/awesome-x402"],
+        "packet": "submissions/x402-ecosystem/awesome-x402-listing.md",
+        "next_action": "Open a listing request/PR once x402scan/agentcash probes report valid paid resources and the payment ladder smoke remains green.",
+    },
+    {
+        "id": "mcp_aggregators",
+        "name": "MCP aggregators and directories",
+        "status": "prepare_after_official_registry_or_package_listing",
+        "kind": "mcp_directory",
+        "priority": "p2",
+        "urls": ["https://smithery.ai/servers", "https://glama.ai/mcp/servers", "https://mcp.so/"],
+        "next_action": "Submit after official MCP Registry/PyPI or public remote MCP endpoint is live to avoid overclaiming installability.",
+    },
+)
+
+X402_BAZAAR_READINESS: dict[str, Any] = {
+    "status": "candidate_metadata_ready_not_indexed_until_real_cdp_settlement",
+    "source_docs_checked": [
+        "https://docs.cdp.coinbase.com/x402/bazaar",
+        "https://docs.cdp.coinbase.com/x402/quickstart-for-sellers",
+    ],
+    "indexing_requirements": [
+        "Use the CDP Facilitator v2 verify/settle endpoint for production x402 payments.",
+        "Attach Bazaar discovery metadata with strict input/output JSON Schemas in route config.",
+        "Ensure the settle call includes paymentPayload.resource for the exact payable resource URL.",
+        "Complete at least one successful settlement; verify-only does not index resources.",
+        "Inspect EXTENSION-RESPONSES for rejected/processing and log only redacted status.",
+        "Query discovery search/resources or the Bazaar MCP endpoint after the indexing delay.",
+    ],
+    "candidate_resources": [
+        {
+            "service_id": "tx_penny_smoke_test",
+            "method": "POST",
+            "resource": "https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test",
+            "price_usd": "0.01",
+            "description": "One-cent side-effect-free x402 transaction smoke test for buyer agents.",
+            "input": {"request_label": "buyer-agent-smoke"},
+            "inputSchema": {
+                "type": "object",
+                "properties": {"request_label": {"type": "string", "maxLength": 120}},
+                "additionalProperties": False,
+            },
+            "output": {
+                "example": {"ok": True, "service": "tx_penny_smoke_test", "payment": {"protocol": "x402", "receipt": "..."}},
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "ok": {"type": "boolean"},
+                        "service": {"const": "tx_penny_smoke_test"},
+                        "amount_usd": {"type": "string"},
+                        "payment": {"type": "object"},
+                    },
+                    "required": ["ok", "service", "payment"],
+                },
+            },
+        },
+        {
+            "service_id": "buyer_agent_smoke_probe",
+            "method": "POST",
+            "resource": "https://agents.daedalusdevelopmentgroup.com/v1/order-intake",
+            "price_usd": "service_catalog_price",
+            "description": "Operator-reviewed buyer-agent smoke probe and proof bundle for agent-facing services.",
+            "input": {"service_id": "buyer_agent_smoke_probe", "request": {"target": "https://example.com"}},
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "service_id": {"const": "buyer_agent_smoke_probe"},
+                    "request": {
+                        "type": "object",
+                        "properties": {
+                            "target": {"type": "string", "format": "uri"},
+                            "notes": {"type": "string", "maxLength": 2000},
+                        },
+                        "required": ["target"],
+                    },
+                },
+                "required": ["service_id", "request"],
+            },
+            "output": {
+                "example": {"ok": True, "status": "queued", "order_id": "ord_...", "status_url": "/v1/orders/..."},
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "ok": {"type": "boolean"},
+                        "status": {"type": "string"},
+                        "order_id": {"type": "string"},
+                    },
+                },
+            },
+        },
+    ],
+    "discovery_verification": [
+        "GET https://api.cdp.coinbase.com/platform/v2/x402/discovery/search?query=DDG%20agent%20payment&limit=20",
+        "GET https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources?limit=100",
+        "Connect an MCP client to https://api.cdp.coinbase.com/platform/v2/x402/discovery/mcp and search for DDG after settlement.",
+    ],
+}
+
+MCP_REGISTRY_READINESS: dict[str, Any] = {
+    "status": "metadata_ready_submission_waits_for_public_package_or_hosted_endpoint",
+    "server_json": "mcp/server.json",
+    "registry_name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
+    "package_identifier": "ddg-agent-services-mcp",
+    "public_repo": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
+    "submission_gate": [
+        "Stdio package must be available from a public supported package registry such as PyPI, or remote MCP endpoint must be public and smoked.",
+        "Do not add hosted remotes to mcp/server.json until https://mcp.daedalusdevelopmentgroup.com/mcp exists and passes MCP-client smoke.",
+        "Run registry server.json validation before publishing.",
+    ],
 }
 
 
@@ -247,6 +447,10 @@ def _redacted_json(value: Any, *, depth: int = 0) -> Any:
     return value
 
 
+def _static_json_text(payload: dict[str, Any]) -> str:
+    return json.dumps(_redacted_json(payload), ensure_ascii=False, indent=2, sort_keys=True)[:MAX_RESOURCE_TEXT_CHARS]
+
+
 def _parse_json_response(raw: str) -> Any:
     parsed = json.loads(raw) if raw else {}
     return _redacted_json(parsed)
@@ -331,6 +535,12 @@ def _resource_text(resource_id_or_uri: str) -> str:
         text = exc.read(MAX_RESPONSE_BYTES + 1).decode("utf-8", errors="replace")
         if len(text) > MAX_RESPONSE_BYTES:
             raise ValueError("ddg_response_too_large") from exc
+    if spec["mime_type"] == "application/json":
+        try:
+            parsed = json.loads(text)
+            return json.dumps(_redacted_json(parsed), ensure_ascii=False, indent=2, sort_keys=True)[:MAX_RESOURCE_TEXT_CHARS]
+        except json.JSONDecodeError:
+            pass
     return _redact_text(text)[:MAX_RESOURCE_TEXT_CHARS]
 
 
@@ -410,6 +620,40 @@ def ddg_fetch_public_resource(resource: str) -> dict[str, Any]:
     return _resource_payload(resource)
 
 
+@mcp.tool()
+def ddg_agent_distribution_targets() -> dict[str, Any]:
+    """Return the AI-agent radar surfaces DDG is targeting and their current go-live gates."""
+    return {
+        "status": "active_distribution_work_started",
+        "base_url": BASE_URL,
+        "targets": list(DISTRIBUTION_TARGETS),
+        "security_gate": "Keep source/public/GitHub audits green before every external listing or registry submission.",
+        "mcp_registry": MCP_REGISTRY_READINESS,
+        "x402_bazaar": {
+            "status": X402_BAZAAR_READINESS["status"],
+            "candidate_resource_count": len(X402_BAZAAR_READINESS["candidate_resources"]),
+        },
+    }
+
+
+@mcp.tool()
+def ddg_x402_bazaar_readiness() -> dict[str, Any]:
+    """Return CDP x402 Bazaar candidate resources, schema metadata, and settlement indexing gates."""
+    return X402_BAZAAR_READINESS
+
+
+@mcp.resource("ddg://distribution/agent-radar", name="ddg_distribution_agent_radar", mime_type="application/json")
+def ddg_distribution_agent_radar_resource() -> str:
+    """DDG AI-agent distribution targets and go-live gates."""
+    return _static_json_text(ddg_agent_distribution_targets())
+
+
+@mcp.resource("ddg://distribution/x402-bazaar-readiness", name="ddg_distribution_x402_bazaar_readiness", mime_type="application/json")
+def ddg_distribution_x402_bazaar_readiness_resource() -> str:
+    """DDG x402 Bazaar readiness and candidate resource metadata."""
+    return _static_json_text(X402_BAZAAR_READINESS)
+
+
 @mcp.resource("ddg://manifest/ai", name="ddg_manifest_ai", mime_type="application/json")
 def ddg_manifest_ai_resource() -> str:
     """DDG public AI manifest."""
@@ -438,6 +682,12 @@ def ddg_manifest_pricing_resource() -> str:
 def ddg_manifest_checkout_conformance_resource() -> str:
     """DDG public checkout conformance profile."""
     return _resource_text("manifest.checkout_conformance")
+
+
+@mcp.resource("ddg://manifest/refund-policy", name="ddg_manifest_refund_policy", mime_type="application/json")
+def ddg_manifest_refund_policy_resource() -> str:
+    """DDG strict refund/reversal policy for AI-agent paid work."""
+    return _resource_text("manifest.refund_policy")
 
 
 @mcp.resource("ddg://manifest/cybersecurity-services", name="ddg_manifest_cybersecurity_services", mime_type="application/json")

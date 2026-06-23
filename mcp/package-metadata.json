@@ -8,18 +8,20 @@
   "base_url": "https://agents.daedalusdevelopmentgroup.com",
   "transport": {
     "stdio": {
-      "command": "uv",
-      "args": ["run", "--with", "mcp", "python", "ddg_agent_services_mcp_server.py"],
+      "command": "uvx",
+      "args": ["ddg-agent-services-mcp"],
       "required_env": ["DDG_MCP_AGENT_ID"],
       "optional_env": ["DDG_AGENT_SERVICES_BASE_URL", "DDG_AGENT_SERVICES_ALLOWED_HOSTS"]
     },
     "http_streamable": {
       "status": "source_ready_local_smoked_public_deploy_pending",
       "local_url": "http://127.0.0.1:8891/mcp",
-      "planned_public_url": "https://mcp.daedalusdevelopmentgroup.com/mcp"
+      "planned_public_url": "https://mcp.daedalusdevelopmentgroup.com/mcp",
+      "hosted_client_requirement": "pass stable agent_id tool argument for paid/order-scoped calls"
     }
   },
   "tools": [
+    "ddg_mcp_security_profile",
     "ddg_list_services",
     "ddg_agent_status",
     "ddg_checkout_conformance",
@@ -42,7 +44,10 @@
     "no_arbitrary_shell": true,
     "no_file_write_tools": true,
     "no_provider_credential_relay": true,
-    "paid_tools_return_structured_402": true
+    "paid_tools_return_structured_402": true,
+    "authorization_forwarding": "Payment scheme only",
+    "response_header_allowlist": true,
+    "hosted_remote_requires_agent_id_argument": true
   },
-  "submission_status": "stdio_skeleton_smoked_registry_submission_waits_for_public_package_or_hosted_transport"
+  "submission_status": "stdio_package_ready_registry_submission_waits_for_public_package_or_hosted_transport"
 }

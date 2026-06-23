@@ -13,15 +13,12 @@
     {
       "type": "streamable-http",
       "url": "https://mcp.daedalusdevelopmentgroup.com/mcp",
-      "headers": [
-        {
-          "name": "X-Agent-Id",
-          "description": "Stable AI-agent identifier for DDG agent-only gates.",
-          "isRequired": true,
-          "isSecret": false
-        }
-      ]
+      "headers": []
     }
+  ],
+  "client_requirements": [
+    "Pass a stable buyer agent_id argument on paid/order-scoped tools.",
+    "Pass only payment-specific headers inside payment_headers; generic Bearer/Basic credentials are dropped."
   ],
   "publication_gate": "Copy the remotes block into mcp/server.json only after public streamable-http smoke passes."
 }

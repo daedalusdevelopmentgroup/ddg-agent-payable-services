@@ -19,10 +19,10 @@ cd /path/to/ddg-agent-payable-services
 PYTHONDONTWRITEBYTECODE=1 \
 DDG_MCP_AGENT_ID=ddg-mcp-stdio-smoke \
 PYTHONPATH=src \
-uv run --no-project --with mcp python scripts/smoke_mcp_server.py --transport stdio
+uv run --extra dev python scripts/smoke_mcp_server.py --transport stdio --source-tree src
 ```
 
-Expected: `ok: true`, 15 tools present, `ddg_agent_status` returns 200, and `ddg_tx_smoke_test` returns structured 402.
+Expected: `ok: true`, 16 tools present, `ddg_mcp_security_profile` reports `source_hardened_public_remote_pending`, `ddg_agent_status` returns 200, and `ddg_tx_smoke_test` returns structured 402.
 
 ### Streamable HTTP, local only
 
@@ -34,19 +34,19 @@ PYTHONPATH=src \
 DDG_MCP_AGENT_ID=ddg-mcp-http-local \
 DDG_MCP_HOST=127.0.0.1 \
 DDG_MCP_PORT=8891 \
-uv run --no-project --with mcp python -m ddg_agent_services_mcp --transport streamable-http
+uv run --extra dev python -m ddg_agent_services_mcp --transport streamable-http
 ```
 
 Terminal 2:
 
 ```bash
-uv run --no-project --with mcp python scripts/smoke_mcp_server.py \
+uv run --extra dev python scripts/smoke_mcp_server.py \
   --transport streamable-http \
   --http-url http://127.0.0.1:8891/mcp \
   --agent-id ddg-mcp-http-smoke
 ```
 
-Expected: `ok: true`, 15 tools present, and unpaid paid-tool call returns structured 402 with `accepted_protocols` containing only currently live rails.
+Expected: `ok: true`, 16 tools present, and unpaid paid-tool call returns structured 402 with `accepted_protocols` containing only currently live rails.
 
 ## Production deployment path
 
@@ -68,7 +68,7 @@ Expected: `ok: true`, 15 tools present, and unpaid paid-tool call returns struct
 3. Verify loopback MCP with a real MCP client:
 
    ```bash
-   uv run --no-project --with mcp python scripts/smoke_mcp_server.py \
+   uv run --extra dev python scripts/smoke_mcp_server.py \
      --transport streamable-http \
      --http-url http://127.0.0.1:8891/mcp \
      --agent-id ddg-mcp-prod-loopback-smoke
@@ -85,7 +85,7 @@ Expected: `ok: true`, 15 tools present, and unpaid paid-tool call returns struct
 5. Smoke the public URL with the same script:
 
    ```bash
-   uv run --no-project --with mcp python scripts/smoke_mcp_server.py \
+   uv run --extra dev python scripts/smoke_mcp_server.py \
      --transport streamable-http \
      --http-url https://mcp.daedalusdevelopmentgroup.com/mcp \
      --agent-id ddg-mcp-public-smoke
@@ -99,6 +99,9 @@ Expected: `ok: true`, 15 tools present, and unpaid paid-tool call returns struct
 
 - No arbitrary shell/eval/file-write tools.
 - No raw provider credentials, OAuth sessions, private model IDs, raw payment tokens, or verifier loopback URLs in tool output.
+- Generic `Authorization: Bearer/Basic/...` values are dropped; only `Authorization: Payment ...` is forwarded as payment material.
+- Response headers are allowlisted; cookies/auth/debug headers are stripped.
+- Hosted/remote buyers must pass stable `agent_id` values on paid/order-scoped tools.
 - MCP service listens on loopback behind Cloudflare; direct public access should go through the tunnel/WAF only.
 - Public paid tools should return DDG's structured payment challenges rather than opaque MCP errors.
 - MPP must remain pending in outputs until public 402 challenges include MPP and real settlement proof passes.

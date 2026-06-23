@@ -1,3 +1,4 @@
+<!-- mcp-name: io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp -->
 # DDG Agent-Payable Services
 
 AI-agent-native services from Daedalus Development Group (DDG): checkout/payment conformance, MCP/tool security audits, agent-discovery repair, buyer-agent smoke probes, browser proof, repo context packs, and bounded DDG-operated model/artifact orders.
@@ -89,7 +90,7 @@ See also [`DISCOVERY.md`](DISCOVERY.md) for the agent-radar/distribution map and
 
 The local stdio MCP server is in [`mcp/`](mcp/). It exposes free discovery/status/conformance tools and payment-aware paid-service helpers. Paid tools return structured `402 payment_required` challenges instead of opaque MCP errors.
 
-Current MCP status: stdio skeleton smoke-tested; public HTTP/Streamable MCP endpoint planned but not live.
+Current MCP status: stdio/PyPI package metadata staged and local streamable-http transport support added; public HTTP/Streamable MCP endpoint still requires production deploy/smoke before official remote registry listing.
 
 ## Security and compliance stance
 

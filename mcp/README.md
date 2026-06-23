@@ -4,8 +4,9 @@ Local stdio MCP wrapper for `https://agents.daedalusdevelopmentgroup.com`. It ex
 
 ## Status
 
-- **stdio package/skeleton:** source-ready and locally smoke-tested.
-- **HTTP/Streamable MCP:** planned, not yet public-live.
+- **stdio package/skeleton:** package-ready and locally smoke-tested.
+- **HTTP/Streamable MCP:** local streamable-http support added; public production endpoint is planned and must be deployed/smoked before registry remote listing.
+- **PyPI package metadata:** staged as `ddg-agent-services-mcp` with MCP Registry name `io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp`.
 - **Public service base:** `https://agents.daedalusdevelopmentgroup.com`
 - **Public design doc:** `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-swarm-mcp-design.md`
 

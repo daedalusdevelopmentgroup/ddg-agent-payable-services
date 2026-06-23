@@ -9,7 +9,8 @@
       "name": "George Sarris / Daedalus Development Group",
       "email": "0xcircuitbreaker@protonmail.com",
       "url": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai"
-    }
+    },
+    "x-guidance": "AI agents should first read /.well-known/ai, /llms.txt, pricing, and checkout-conformance. For paid routes, send a stable X-Agent-Id header, inspect the HTTP 402 challenge, pay through a live x402 rail, and retry with payment proof. Free/status/helper routes are marked security: [] and should not be treated as paid resources."
   },
   "servers": [
     {
@@ -630,7 +631,17 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.75"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -681,7 +692,12 @@
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
-        }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ]
       }
     },
     "/v1/model/chat-completions": {
@@ -735,7 +751,17 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.25"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -924,7 +950,12 @@
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
-        }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ]
       }
     },
     "/v1/micro-model-swarm-preview": {
@@ -1033,25 +1064,15 @@
             "description": "Request is not from AI-agent identity (missing/invalid headers)"
           }
         },
-        "x-payment-info": {
-          "required": false,
-          "mode": "free_intro_slot",
-          "limits": "health-derived free local seats; default 24-hour per-agent lease and 100 requests per lease",
-          "lease_seconds": 86400,
-          "max_requests_per_lease": 100,
-          "generation_timeout_seconds": 60,
-          "payment_protocols_current_public_live": [
-            "x402",
-            "direct_crypto_auto"
-          ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
-        },
         "security": [],
         "x-x402scan": {
           "exclude_from_paid_probe": true
+        },
+        "x-free-tier-info": {
+          "mode": "free_intro_slot",
+          "lease_seconds": 86400,
+          "max_requests_per_lease": 100,
+          "generation_timeout_seconds": 60
         }
       }
     },
@@ -1220,11 +1241,26 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.02"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
-        }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ]
       }
     },
     "/v1/order-intake": {
@@ -1278,7 +1314,18 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "price": {
+            "mode": "dynamic",
+            "currency": "USD",
+            "min": "0.01",
+            "max": "2500.00"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -1409,7 +1456,12 @@
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
-        }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ]
       }
     },
     "/v1/tx-smoke-test": {
@@ -1497,7 +1549,17 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement"
+          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.01"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
         },
         "requestBody": {
           "required": false,
@@ -1544,7 +1606,12 @@
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
-        }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ]
       }
     },
     "/v1/ollama-models": {

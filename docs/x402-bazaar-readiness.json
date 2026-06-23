@@ -1,0 +1,68 @@
+{
+  "status": "ready_for_cdp_facilitator_integration_not_indexed_until_real_settlement",
+  "source_docs_checked": "Stripe/CDP x402 Bazaar docs via web_extract on 2026-06-23",
+  "indexing_requirements": [
+    "Use CDP Facilitator verify/settle endpoint for x402 payments.",
+    "Attach Bazaar discovery metadata through extensions.bazaar / declareDiscoveryExtension on discoverable routes.",
+    "Ensure settle payload includes paymentPayload.resource for the exact payable resource URL.",
+    "Complete at least one successful settlement; verify-only is insufficient.",
+    "Expect cache/indexing delay and 30-day rolling activity filter."
+  ],
+  "candidate_resources": [
+    {
+      "service_id": "tx_penny_smoke_test",
+      "method": "POST",
+      "resource": "https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test",
+      "price_usd": "0.01",
+      "input": {"request_label": "buyer-agent-smoke"},
+      "inputSchema": {
+        "type": "object",
+        "properties": {"request_label": {"type": "string", "maxLength": 120}},
+        "additionalProperties": false
+      },
+      "output": {
+        "example": {"ok": true, "service": "tx_penny_smoke_test", "payment": {"protocol": "x402", "receipt": "..."}},
+        "schema": {
+          "type": "object",
+          "properties": {
+            "ok": {"type": "boolean"},
+            "service": {"const": "tx_penny_smoke_test"},
+            "amount_usd": {"type": "string"},
+            "payment": {"type": "object"}
+          },
+          "required": ["ok", "service", "payment"]
+        }
+      }
+    },
+    {
+      "service_id": "buyer_agent_smoke_probe",
+      "method": "POST",
+      "resource": "https://agents.daedalusdevelopmentgroup.com/v1/order-intake",
+      "price_usd": "service_catalog_price",
+      "input": {"service_id": "buyer_agent_smoke_probe", "request": {"target": "https://example.com"}},
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "service_id": {"const": "buyer_agent_smoke_probe"},
+          "request": {
+            "type": "object",
+            "properties": {"target": {"type": "string", "format": "uri"}, "notes": {"type": "string", "maxLength": 2000}},
+            "required": ["target"]
+          }
+        },
+        "required": ["service_id", "request"]
+      },
+      "output": {
+        "example": {"ok": true, "status": "queued", "order_id": "ord_...", "status_url": "/v1/orders/..."},
+        "schema": {"type": "object", "properties": {"ok": {"type": "boolean"}, "status": {"type": "string"}, "order_id": {"type": "string"}}}
+      }
+    }
+  ],
+  "implementation_todo": [
+    "Wire DDG x402 provider verification/settlement through CDP Facilitator if not already using CDP settle.",
+    "Add a small route-to-Bazaar metadata map to the x402 verifier/edge layer.",
+    "On settle, include paymentPayload.resource equal to the exact public resource URL.",
+    "Inspect EXTENSION-RESPONSES header for rejected/processing and log only redacted status.",
+    "Run one penny settlement, then query CDP discovery search/resources for agents.daedalusdevelopmentgroup.com."
+  ]
+}

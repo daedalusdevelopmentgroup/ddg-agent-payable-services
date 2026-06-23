@@ -645,7 +645,64 @@
             {
               "x402": {}
             }
-          ]
+          ],
+          "extensions": {
+            "bazaar": {
+              "description": "DDG agent-payable service endpoint with x402 payment and bounded artifact/result delivery.",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "object",
+                    "properties": {
+                      "body": {
+                        "type": "object",
+                        "required": [
+                          "url"
+                        ],
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "Website or public API URL to audit."
+                          },
+                          "business_type": {
+                            "type": "string",
+                            "maxLength": 120
+                          },
+                          "market": {
+                            "type": "string",
+                            "maxLength": 120
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "body"
+                    ]
+                  },
+                  "output": {
+                    "type": "object",
+                    "properties": {
+                      "example": {
+                        "ok": true,
+                        "status": "queued_or_completed",
+                        "artifact_url": "https://agents.daedalusdevelopmentgroup.com/v1/orders/ord_.../artifact"
+                      }
+                    },
+                    "required": [
+                      "example"
+                    ]
+                  }
+                },
+                "required": [
+                  "input",
+                  "output"
+                ]
+              }
+            }
+          }
         },
         "requestBody": {
           "required": true,
@@ -682,7 +739,20 @@
         },
         "responses": {
           "200": {
-            "description": "Audit result"
+            "description": "Audit result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "example": {
+                  "ok": true,
+                  "status": "queued_or_completed",
+                  "artifact_url": "https://agents.daedalusdevelopmentgroup.com/v1/orders/ord_.../artifact"
+                }
+              }
+            }
           },
           "402": {
             "description": "Payment required"
@@ -765,7 +835,80 @@
             {
               "x402": {}
             }
-          ]
+          ],
+          "extensions": {
+            "bazaar": {
+              "description": "DDG agent-payable service endpoint with x402 payment and bounded artifact/result delivery.",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "object",
+                    "properties": {
+                      "body": {
+                        "type": "object",
+                        "required": [
+                          "messages"
+                        ],
+                        "properties": {
+                          "model": {
+                            "type": "string",
+                            "default": "auto"
+                          },
+                          "messages": {
+                            "type": "array",
+                            "items": {
+                              "type": "object"
+                            },
+                            "minItems": 1
+                          },
+                          "agent_profile": {
+                            "type": "string",
+                            "enum": [
+                              "low",
+                              "standard",
+                              "pro",
+                              "premium"
+                            ]
+                          }
+                        },
+                        "additionalProperties": true
+                      }
+                    },
+                    "required": [
+                      "body"
+                    ]
+                  },
+                  "output": {
+                    "type": "object",
+                    "properties": {
+                      "example": {
+                        "ok": true,
+                        "choices": [
+                          {
+                            "message": {
+                              "role": "assistant",
+                              "content": "..."
+                            }
+                          }
+                        ],
+                        "receipt": {
+                          "protocol": "x402"
+                        }
+                      }
+                    },
+                    "required": [
+                      "example"
+                    ]
+                  }
+                },
+                "required": [
+                  "input",
+                  "output"
+                ]
+              }
+            }
+          }
         },
         "requestBody": {
           "required": true,
@@ -937,7 +1080,29 @@
         },
         "responses": {
           "200": {
-            "description": "OpenAI-compatible response plus billing/payment metadata"
+            "description": "OpenAI-compatible response plus billing/payment metadata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "example": {
+                  "ok": true,
+                  "choices": [
+                    {
+                      "message": {
+                        "role": "assistant",
+                        "content": "..."
+                      }
+                    }
+                  ],
+                  "receipt": {
+                    "protocol": "x402"
+                  }
+                }
+              }
+            }
           },
           "402": {
             "description": "Payment required"
@@ -1204,7 +1369,25 @@
         },
         "responses": {
           "200": {
-            "description": "Agent-run result with selected route, limits, estimate, and output artifact"
+            "description": "Agent-run result with selected route, limits, estimate, and output artifact",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "example": {
+                  "ok": true,
+                  "status": "completed",
+                  "artifact": {
+                    "summary": "..."
+                  },
+                  "receipt": {
+                    "protocol": "x402"
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Unsupported route, missing task, or invalid payload"
@@ -1255,7 +1438,74 @@
             {
               "x402": {}
             }
-          ]
+          ],
+          "extensions": {
+            "bazaar": {
+              "description": "DDG agent-payable service endpoint with x402 payment and bounded artifact/result delivery.",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "object",
+                    "properties": {
+                      "body": {
+                        "type": "object",
+                        "required": [
+                          "task"
+                        ],
+                        "properties": {
+                          "task": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64000
+                          },
+                          "agent_profile": {
+                            "type": "string",
+                            "enum": [
+                              "low",
+                              "standard",
+                              "pro",
+                              "premium"
+                            ]
+                          },
+                          "deliverable_format": {
+                            "type": "string",
+                            "maxLength": 120
+                          }
+                        },
+                        "additionalProperties": true
+                      }
+                    },
+                    "required": [
+                      "body"
+                    ]
+                  },
+                  "output": {
+                    "type": "object",
+                    "properties": {
+                      "example": {
+                        "ok": true,
+                        "status": "completed",
+                        "artifact": {
+                          "summary": "..."
+                        },
+                        "receipt": {
+                          "protocol": "x402"
+                        }
+                      }
+                    },
+                    "required": [
+                      "example"
+                    ]
+                  }
+                },
+                "required": [
+                  "input",
+                  "output"
+                ]
+              }
+            }
+          }
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
@@ -1329,7 +1579,68 @@
             {
               "x402": {}
             }
-          ]
+          ],
+          "extensions": {
+            "bazaar": {
+              "description": "DDG agent-payable service endpoint with x402 payment and bounded artifact/result delivery.",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "object",
+                    "properties": {
+                      "body": {
+                        "type": "object",
+                        "required": [
+                          "service_id"
+                        ],
+                        "properties": {
+                          "service_id": {
+                            "type": "string",
+                            "maxLength": 120
+                          },
+                          "target": {
+                            "type": "object"
+                          },
+                          "budget_usd": {
+                            "type": "number",
+                            "minimum": 0.01,
+                            "maximum": 2500
+                          },
+                          "notes": {
+                            "type": "string",
+                            "maxLength": 8000
+                          }
+                        },
+                        "additionalProperties": true
+                      }
+                    },
+                    "required": [
+                      "body"
+                    ]
+                  },
+                  "output": {
+                    "type": "object",
+                    "properties": {
+                      "example": {
+                        "ok": true,
+                        "status": "queued",
+                        "order_id": "ord_...",
+                        "status_url": "/v1/orders/ord_..."
+                      }
+                    },
+                    "required": [
+                      "example"
+                    ]
+                  }
+                },
+                "required": [
+                  "input",
+                  "output"
+                ]
+              }
+            }
+          }
         },
         "requestBody": {
           "required": true,
@@ -1456,6 +1767,23 @@
           },
           "429": {
             "description": "Rate limited"
+          },
+          "200": {
+            "description": "Successful paid response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "example": {
+                  "ok": true,
+                  "status": "queued",
+                  "order_id": "ord_...",
+                  "status_url": "/v1/orders/ord_..."
+                }
+              }
+            }
           }
         },
         "x-x402scan": {
@@ -1563,7 +1891,55 @@
             {
               "x402": {}
             }
-          ]
+          ],
+          "extensions": {
+            "bazaar": {
+              "description": "DDG agent-payable service endpoint with x402 payment and bounded artifact/result delivery.",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "object",
+                    "properties": {
+                      "body": {
+                        "type": "object",
+                        "properties": {
+                          "request_label": {
+                            "type": "string",
+                            "maxLength": 120
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "body"
+                    ]
+                  },
+                  "output": {
+                    "type": "object",
+                    "properties": {
+                      "example": {
+                        "ok": true,
+                        "service": "tx_penny_smoke_test",
+                        "payment": {
+                          "protocol": "x402",
+                          "receipt": "x402-..."
+                        }
+                      }
+                    },
+                    "required": [
+                      "example"
+                    ]
+                  }
+                },
+                "required": [
+                  "input",
+                  "output"
+                ]
+              }
+            }
+          }
         },
         "requestBody": {
           "required": false,
@@ -1596,7 +1972,23 @@
         },
         "responses": {
           "200": {
-            "description": "Paid smoke receipt accepted"
+            "description": "Paid smoke receipt accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "example": {
+                  "ok": true,
+                  "service": "tx_penny_smoke_test",
+                  "payment": {
+                    "protocol": "x402",
+                    "receipt": "x402-..."
+                  }
+                }
+              }
+            }
           },
           "402": {
             "description": "Payment required challenge"

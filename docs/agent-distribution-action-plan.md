@@ -14,7 +14,8 @@ Ready to use now:
   - `https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json`
   - `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json`
   - `https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/index.json`
-- x402scan/agentcash registration work started: live CLI discovery now reads the OpenAPI and the one-cent smoke endpoint checks as paid, but the live OpenAPI still emits metadata warnings until this repo's OpenAPI patch is deployed. See `submissions/x402scan/ddg-agent-services-registration.md`.
+- x402scan/agentcash is now live: `agents.daedalusdevelopmentgroup.com` registered 5 x402 resources on x402scan, and AgentCash discovery/check pass against the live origin.
+- x402scan server page: `https://www.x402scan.com/server/c3540307-0eb2-455d-90b6-a21f7d5a3792`
 - x402 ecosystem/awesome-list packet staged at `submissions/x402-ecosystem/awesome-x402-listing.md`.
 
 Hold until additional proof:

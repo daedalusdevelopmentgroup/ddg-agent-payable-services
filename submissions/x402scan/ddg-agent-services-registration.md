@@ -2,39 +2,40 @@
 
 Use this packet for `https://www.x402scan.com/resources/register` or equivalent x402 directory review.
 
-## x402scan live registration attempt
+## x402scan live registration status
 
-I started the x402scan registration flow at `https://www.x402scan.com/resources/register` using:
+Registered successfully on x402scan using:
 
 ```text
 agents.daedalusdevelopmentgroup.com
 ```
 
+Public pages:
+
+- x402scan server page: `https://www.x402scan.com/server/c3540307-0eb2-455d-90b6-a21f7d5a3792`
+- Merchant/share page: `https://tryponcho.com/m/agents.daedalusdevelopmentgroup.com`
+
 ## x402scan / agentcash preflight status
 
-Initial UI attempt:
+Current live preflight:
 
-- The x402scan form read DDG metadata and identified the six candidate endpoints below.
-- It reported `0 valid resources` with `[501] Endpoint did not return a 402 payment challenge`.
-
-Fresh CLI preflight:
-
-- `npx -y @agentcash/discovery@latest discover https://agents.daedalusdevelopmentgroup.com` exits 0 and reads 17 routes from the live OpenAPI.
+- `npx -y @agentcash/discovery@latest discover https://agents.daedalusdevelopmentgroup.com` exits 0 and reads 19 routes from the live OpenAPI.
 - `npx -y @agentcash/discovery@latest check https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test` exits 0 and classifies the one-cent route as paid.
-- Remaining warnings are metadata drift in the live OpenAPI: missing `info.contact`, missing `info.x-guidance`, and paid operations lacking `x-payment-info.price` / `x-payment-info.protocols`. This source branch patches those fields; deploy before final registration.
+- Direct x402scan `developer.batchTest` reports 5 successful resources and 0 failed resources.
+- Runtime `402` bodies now include canonical x402 v2 payment requirements plus `extensions.bazaar.schema.properties.input/output` metadata for agent invocation.
+- The only remaining AgentCash discovery warning is cosmetic `FAVICON_MISSING`.
 
-Candidate endpoints discovered:
+Validated resources:
 
 ```text
 /v1/site-audit
 /v1/model/chat-completions
-/v1/micro-model-swarm-preview
 /v1/model/agent-run
 /v1/order-intake
 /v1/tx-smoke-test
 ```
 
-Current publish gate: **deploy this source branch's OpenAPI/payment-edge patch, rerun the CLI preflight below, and only then submit/register**.
+Current gate: **keep x402scan/agentcash probes green after every OpenAPI/payment-edge change; CDP Bazaar remains separately settlement-gated.**
 
 Spec requirements:
 

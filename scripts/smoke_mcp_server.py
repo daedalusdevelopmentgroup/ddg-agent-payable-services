@@ -25,6 +25,11 @@ REQUIRED_TOOLS = {
     "ddg_fetch_public_resource",
     "ddg_agent_distribution_targets",
     "ddg_x402_bazaar_readiness",
+    "ddg_x402scan_status",
+    "ddg_x402_supported_chains",
+    "ddg_direct_crypto_addresses",
+    "ddg_micro_swarm_preview",
+    "ddg_ethereum_rpc_query",
     "ddg_list_services",
     "ddg_agent_status",
     "ddg_checkout_conformance",
@@ -48,12 +53,15 @@ REQUIRED_RESOURCES = {
     "ddg://manifest/catalog",
     "ddg://manifest/pricing",
     "ddg://manifest/checkout-conformance",
+    "ddg://manifest/refund-policy",
     "ddg://manifest/cybersecurity-services",
     "ddg://docs/llms",
     "ddg://docs/mcp-design",
     "ddg://openapi",
     "ddg://distribution/agent-radar",
     "ddg://distribution/x402-bazaar-readiness",
+    "ddg://distribution/x402scan-status",
+    "ddg://distribution/x402-chains",
 }
 
 
@@ -105,6 +113,7 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
     tx_smoke = _structured(await session.call_tool("ddg_tx_smoke_test", {}))
     distribution_targets = _structured(await session.call_tool("ddg_agent_distribution_targets", {}))
     bazaar_readiness = _structured(await session.call_tool("ddg_x402_bazaar_readiness", {}))
+    x402scan_status = _structured(await session.call_tool("ddg_x402scan_status", {}))
 
     tx_body_value = tx_smoke.get("body")
     tx_body: dict[str, Any] = tx_body_value if isinstance(tx_body_value, dict) else {}
@@ -119,6 +128,7 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
         "distribution_resource_mentions_x402": "x402" in distribution_resource_text.lower(),
         "distribution_targets_active": distribution_targets.get("status") == "active_distribution_work_started",
         "bazaar_not_overclaimed": str(bazaar_readiness.get("status", "")).endswith("real_cdp_settlement"),
+        "x402scan_registered": x402scan_status.get("status") == "registered_live_5_resources" and len(x402scan_status.get("validated_resources", [])) >= 5,
         "agent_status_200": status.get("status") == 200,
         "checkout_conformance_200": conformance.get("status") == 200,
         "receipt_design_planned": receipt_design.get("status") == "planned_not_live",
@@ -138,6 +148,8 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
             "resource_count": len(resource_uris),
             "distribution_status": distribution_targets.get("status"),
             "bazaar_status": bazaar_readiness.get("status"),
+            "x402scan_status": x402scan_status.get("status"),
+            "x402scan_resource_count": len(x402scan_status.get("validated_resources", [])),
             "agent_status_status": status.get("status"),
             "checkout_conformance_status": conformance.get("status"),
             "receipt_design_status": receipt_design.get("status"),

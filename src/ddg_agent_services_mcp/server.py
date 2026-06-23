@@ -11,6 +11,7 @@ access, or unrestricted URL fetches.
 from __future__ import annotations
 
 import argparse
+import ipaddress
 import json
 import os
 import re
@@ -56,6 +57,8 @@ SAFE_RESPONSE_HEADERS = {
     "content-type",
     "cache-control",
     "payment-required",
+    "x-payment-required",
+    "x-payment-required-v1",
     "www-authenticate",
     "x-request-id",
     "x-idempotent-replay",
@@ -161,21 +164,25 @@ DISTRIBUTION_TARGETS: tuple[dict[str, Any], ...] = (
     {
         "id": "x402scan",
         "name": "x402scan resource directory",
-        "status": "registration_started_blocked_by_probe_501",
+        "status": "registered_live_5_resources",
         "kind": "x402_directory",
         "priority": "p1",
-        "urls": ["https://www.x402scan.com/resources/register"],
-        "next_action": "Fix x402scan probe compatibility: x402scan appears to HEAD-probe protected resources; live HEAD currently returns 501 instead of 402. Ensure x402 paywall runs before request validation or mark non-x402/free endpoints with security: [] in the live OpenAPI, then rescan.",
+        "urls": [
+            "https://www.x402scan.com/server/c3540307-0eb2-455d-90b6-a21f7d5a3792",
+            "https://tryponcho.com/m/agents.daedalusdevelopmentgroup.com",
+            "https://www.x402scan.com/resources/register",
+        ],
+        "next_action": "Keep x402scan batch tests green after every OpenAPI/payment-edge update; expand listing copy only after CDP Bazaar settlement indexing is live.",
     },
     {
         "id": "x402_ecosystem_and_awesome_lists",
         "name": "x402 ecosystem pages and awesome lists",
-        "status": "listing_packet_staged_ready_after_probe_fix",
+        "status": "listing_packet_ready_after_x402scan_registration",
         "kind": "x402_ecosystem",
         "priority": "p1",
         "urls": ["https://www.x402.org/ecosystem", "https://github.com/xpaysh/awesome-x402"],
         "packet": "submissions/x402-ecosystem/awesome-x402-listing.md",
-        "next_action": "Open a listing request/PR once x402scan/agentcash probes report valid paid resources and the payment ladder smoke remains green.",
+        "next_action": "Open a listing request/PR now that x402scan and agentcash probes report valid paid resources; keep the submission clear that CDP Bazaar indexing is still settlement-gated.",
     },
     {
         "id": "mcp_aggregators",
@@ -189,7 +196,7 @@ DISTRIBUTION_TARGETS: tuple[dict[str, Any], ...] = (
 )
 
 X402_BAZAAR_READINESS: dict[str, Any] = {
-    "status": "candidate_metadata_ready_not_indexed_until_real_cdp_settlement",
+    "status": "runtime_bazaar_schemas_live_not_indexed_until_real_cdp_settlement",
     "source_docs_checked": [
         "https://docs.cdp.coinbase.com/x402/bazaar",
         "https://docs.cdp.coinbase.com/x402/quickstart-for-sellers",
@@ -284,6 +291,60 @@ MCP_REGISTRY_READINESS: dict[str, Any] = {
     ],
 }
 
+X402_CHAIN_SUPPORT: dict[str, Any] = {
+    "status": "multi_chain_x402_live_base_mainnet_direct_crypto_13_assets",
+    "x402_enforcement_network": "eip155:8453",
+    "x402_accepts_networks": [
+        {"network": "eip155:8453", "label": "Base mainnet", "asset": "USDC", "asset_contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"},
+        {"network": "eip155:137", "label": "Polygon mainnet", "asset": "USDC", "asset_contract": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"},
+        {"network": "eip155:42161", "label": "Arbitrum One", "asset": "USDC", "asset_contract": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},
+        {"network": "eip155:480", "label": "World Chain mainnet", "asset": "USDC", "asset_contract": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1"},
+        {"network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp", "label": "Solana mainnet", "asset": "USDC", "asset_contract": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"},
+    ],
+    "direct_crypto_assets": [
+        {"asset": "EVM", "description": "ETH, stablecoins, and EVM-native assets across Ethereum, Base, Arbitrum, Optimism, Polygon, Avalanche, BSC, Linea, Scroll, zkSync"},
+        {"asset": "BTC"},
+        {"asset": "BCH"},
+        {"asset": "LTC"},
+        {"asset": "DOGE"},
+        {"asset": "SOL"},
+        {"asset": "TRX"},
+        {"asset": "XRP"},
+        {"asset": "ADA"},
+        {"asset": "DOT"},
+        {"asset": "XLM"},
+        {"asset": "ALGO"},
+        {"asset": "ZEC"},
+        {"asset": "XMR"},
+    ],
+    "note": "x402 production settlement currently uses Base mainnet USDC. The payment edge advertises all supported networks in the x402 accepts[] array so AI agents can pay on their preferred chain. Direct-crypto manual/beta supports 13 asset families.",
+}
+
+X402SCAN_STATUS: dict[str, Any] = {
+    "status": "registered_live_5_resources",
+    "registered_origin": "https://agents.daedalusdevelopmentgroup.com",
+    "server_page": "https://www.x402scan.com/server/c3540307-0eb2-455d-90b6-a21f7d5a3792",
+    "merchant_page": "https://tryponcho.com/m/agents.daedalusdevelopmentgroup.com",
+    "validated_resources": [
+        "https://agents.daedalusdevelopmentgroup.com/v1/site-audit",
+        "https://agents.daedalusdevelopmentgroup.com/v1/model/chat-completions",
+        "https://agents.daedalusdevelopmentgroup.com/v1/model/agent-run",
+        "https://agents.daedalusdevelopmentgroup.com/v1/order-intake",
+        "https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test",
+    ],
+    "latest_batch_test": {
+        "result": "5_success_0_failed",
+        "network": "eip155:8453",
+        "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "input_output_schema_warnings": "clean_after_runtime_extensions_bazaar_schema",
+    },
+    "guardrails": [
+        "Directory probes return canonical x402 v2 402 bodies/headers without executing backend compute.",
+        "Real work-attempt POSTs without stable AI-agent identity still fail as 403 agent_only.",
+        "CDP Bazaar remains separate and is not claimed indexed until real CDP settlement appears in discovery search/MCP.",
+    ],
+}
+
 
 def _allowed_base_hosts() -> set[str]:
     raw = os.getenv("DDG_AGENT_SERVICES_ALLOWED_HOSTS", "").strip()
@@ -301,6 +362,14 @@ def _validated_base_url(raw_url: str) -> str:
         raise SystemExit("Unsafe DDG_AGENT_SERVICES_BASE_URL: credentials in URL are not allowed")
     if parsed.scheme != "https" and host not in {"localhost", "127.0.0.1"}:
         raise SystemExit("Unsafe DDG_AGENT_SERVICES_BASE_URL: non-local DDG MCP base URLs must use HTTPS")
+    # SSRF guard: reject raw-IP literals that resolve to private/link-local/loopback ranges.
+    try:
+        ip_obj = ipaddress.ip_address(host)
+        if ip_obj.is_private or ip_obj.is_loopback or ip_obj.is_link_local or ip_obj.is_reserved:
+            if host not in {"127.0.0.1"}:
+                raise SystemExit("Unsafe DDG_AGENT_SERVICES_BASE_URL: private/loopback IP literal is not allowed")
+    except ValueError:
+        pass  # hostname is not an IP literal — fine, proceed to allowlist check
     if host not in _allowed_base_hosts():
         raise SystemExit("Unsafe DDG_AGENT_SERVICES_BASE_URL: host is not in DDG_AGENT_SERVICES_ALLOWED_HOSTS")
     return candidate
@@ -642,6 +711,43 @@ def ddg_x402_bazaar_readiness() -> dict[str, Any]:
     return X402_BAZAAR_READINESS
 
 
+@mcp.tool()
+def ddg_x402scan_status() -> dict[str, Any]:
+    """Return DDG's x402scan registration status, resource URLs, and runtime probe guardrails."""
+    return X402SCAN_STATUS
+
+
+@mcp.tool()
+def ddg_x402_supported_chains() -> dict[str, Any]:
+    """Return all x402/direct-crypto chains DDG supports for AI-agent payment routing."""
+    return X402_CHAIN_SUPPORT
+
+
+@mcp.tool()
+def ddg_direct_crypto_addresses() -> dict[str, Any]:
+    """Return DDG's public direct-crypto receiving addresses for manual/beta payment routing."""
+    return _json_request("/.well-known/ddg-direct-crypto-addresses.json")
+
+
+@mcp.tool()
+def ddg_micro_swarm_preview(prompt: str, model: str | None = None, combo: str | None = None, agent_id: str | None = None) -> dict[str, Any]:
+    """Run the free DDG micro-model-swarm preview with a local Ollama mini-model."""
+    payload: dict[str, Any] = {"prompt": _bounded_text(prompt, MAX_PROMPT_CHARS)}
+    if model:
+        payload["model"] = _safe_identifier(model, label="model", pattern=r"[A-Za-z0-9_.:/@+\-]{1,128}")
+    elif combo:
+        payload["combo"] = _safe_identifier(combo, label="combo", pattern=r"[A-Za-z0-9_]{1,64}")
+    return _json_request("/v1/micro-model-swarm-preview", method="POST", payload=payload, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_ethereum_rpc_query(body: dict[str, Any], agent_id: str | None = None) -> dict[str, Any]:
+    """Proxy a free read-only Ethereum JSON-RPC query through DDG's private Reth node (sync-gated)."""
+    if not isinstance(body, dict):
+        return {"status": 0, "body": {"error": "body_must_be_object"}}
+    return _json_request("/v1/ethereum/rpc", method="POST", payload=body, agent_id=agent_id)
+
+
 @mcp.resource("ddg://distribution/agent-radar", name="ddg_distribution_agent_radar", mime_type="application/json")
 def ddg_distribution_agent_radar_resource() -> str:
     """DDG AI-agent distribution targets and go-live gates."""
@@ -652,6 +758,18 @@ def ddg_distribution_agent_radar_resource() -> str:
 def ddg_distribution_x402_bazaar_readiness_resource() -> str:
     """DDG x402 Bazaar readiness and candidate resource metadata."""
     return _static_json_text(X402_BAZAAR_READINESS)
+
+
+@mcp.resource("ddg://distribution/x402scan-status", name="ddg_distribution_x402scan_status", mime_type="application/json")
+def ddg_distribution_x402scan_status_resource() -> str:
+    """DDG x402scan registration status and validated resource list."""
+    return _static_json_text(X402SCAN_STATUS)
+
+
+@mcp.resource("ddg://distribution/x402-chains", name="ddg_distribution_x402_chains", mime_type="application/json")
+def ddg_distribution_x402_chains_resource() -> str:
+    """DDG supported x402/direct-crypto chains and assets."""
+    return _static_json_text(X402_CHAIN_SUPPORT)
 
 
 @mcp.resource("ddg://manifest/ai", name="ddg_manifest_ai", mime_type="application/json")

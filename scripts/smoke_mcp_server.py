@@ -20,6 +20,7 @@ from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.client.streamable_http import streamablehttp_client
 
 REQUIRED_TOOLS = {
+    "ddg_mcp_security_profile",
     "ddg_list_services",
     "ddg_agent_status",
     "ddg_checkout_conformance",
@@ -60,6 +61,7 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
     tool_names = sorted(tool.name for tool in tools_result.tools)
     missing = sorted(REQUIRED_TOOLS - set(tool_names))
 
+    security_profile = _structured(await session.call_tool("ddg_mcp_security_profile", {}))
     status = _structured(await session.call_tool("ddg_agent_status", {}))
     conformance = _structured(await session.call_tool("ddg_checkout_conformance", {}))
     receipt_design = _structured(
@@ -76,6 +78,7 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
     checks = {
         "tool_count_at_least_required": len(tool_names) >= len(REQUIRED_TOOLS),
         "required_tools_present": not missing,
+        "security_profile_hardened": security_profile.get("status") == "source_hardened_public_remote_pending",
         "agent_status_200": status.get("status") == 200,
         "checkout_conformance_200": conformance.get("status") == 200,
         "receipt_design_planned": receipt_design.get("status") == "planned_not_live",
@@ -89,6 +92,7 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
         "missing_tools": missing,
         "tool_count": len(tool_names),
         "sample": {
+            "security_profile_status": security_profile.get("status"),
             "agent_status_status": status.get("status"),
             "checkout_conformance_status": conformance.get("status"),
             "receipt_design_status": receipt_design.get("status"),

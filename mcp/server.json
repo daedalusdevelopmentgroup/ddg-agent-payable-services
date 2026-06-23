@@ -43,6 +43,9 @@
     "no_arbitrary_shell": true,
     "no_file_write_tools": true,
     "no_provider_credential_relay": true,
-    "paid_tools_return_structured_402": true
+    "paid_tools_return_structured_402": true,
+    "authorization_forwarding": "Payment scheme only",
+    "response_header_allowlist": true,
+    "hosted_remote_requires_agent_id_argument": true
   }
 }

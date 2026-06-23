@@ -16,10 +16,10 @@ DDG never returns provider credentials, private CLI auth state, account seats, r
 ## Install/run locally
 
 ```bash
-cd /path/to/hermes
+cd /path/to/ddg-agent-payable-services
 DDG_MCP_AGENT_ID="your-agent-or-swarm-id" \
 DDG_AGENT_SERVICES_BASE_URL="https://agents.daedalusdevelopmentgroup.com" \
-uv run --with mcp python sales_artifacts/agent_payments/mcp/ddg_agent_services_mcp_server.py
+uv run --extra dev python -m ddg_agent_services_mcp
 ```
 
 ## Hermes native MCP config
@@ -29,13 +29,9 @@ Add this to `~/.hermes/config.yaml`, then restart Hermes:
 ```yaml
 mcp_servers:
   ddg_agent_services:
-    command: "uv"
+    command: "uvx"
     args:
-      - "run"
-      - "--with"
-      - "mcp"
-      - "python"
-      - "/absolute/path/to/hermes/sales_artifacts/agent_payments/mcp/ddg_agent_services_mcp_server.py"
+      - "ddg-agent-services-mcp"
     env:
       DDG_MCP_AGENT_ID: "your-agent-or-swarm-id"
       DDG_AGENT_SERVICES_BASE_URL: "https://agents.daedalusdevelopmentgroup.com"
@@ -56,13 +52,9 @@ mcp_ddg_agent_services_ddg_agent_status
 {
   "mcpServers": {
     "ddg-agent-services": {
-      "command": "uv",
+      "command": "uvx",
       "args": [
-        "run",
-        "--with",
-        "mcp",
-        "python",
-        "/absolute/path/to/hermes/sales_artifacts/agent_payments/mcp/ddg_agent_services_mcp_server.py"
+        "ddg-agent-services-mcp"
       ],
       "env": {
         "DDG_MCP_AGENT_ID": "your-agent-or-swarm-id",
@@ -77,6 +69,7 @@ mcp_ddg_agent_services_ddg_agent_status
 
 | Tool | Payment | Purpose |
 | --- | --- | --- |
+| `ddg_mcp_security_profile` | Free | Report local wrapper controls, publication gates, and header/payload safety limits. |
 | `ddg_list_services` | Free | Fetch pricing/catalog. |
 | `ddg_agent_status` | Free | Fetch `/.well-known/ddg-agent-status.json`. |
 | `ddg_checkout_conformance` | Free | Fetch checkout conformance profile. |
@@ -100,7 +93,7 @@ mcp_ddg_agent_services_ddg_agent_status
 
 ## Payment flow
 
-Paid tools return the edge's structured `402 payment_required` challenge instead of opaque MCP errors. A buyer agent can inspect accepted rails, pay through x402/direct-crypto/MPP when live, and retry with payment headers.
+Paid tools return the edge's structured `402 payment_required` challenge instead of opaque MCP errors. A buyer agent can inspect accepted rails, pay through x402/direct-crypto/MPP when live, and retry with payment headers. Hosted/remote MCP clients should pass a stable `agent_id` tool argument on paid and order-scoped tools so payment/order scope stays buyer-specific instead of collapsing into the server default identity.
 
 Current public live rails:
 
@@ -118,10 +111,10 @@ Smoke commands used:
 ```bash
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
 DDG_MCP_AGENT_ID=ddg-mcp-stdio-smoke \
-uv run --no-project --with mcp python scripts/smoke_mcp_server.py --transport stdio
+uv run --extra dev python scripts/smoke_mcp_server.py --transport stdio
 
 PYTHONDONTWRITEBYTECODE=1 \
-uv run --no-project --with mcp python scripts/smoke_mcp_server.py \
+uv run --extra dev python scripts/smoke_mcp_server.py \
   --transport streamable-http \
   --http-url http://127.0.0.1:8891/mcp \
   --agent-id ddg-mcp-http-smoke
@@ -132,8 +125,9 @@ Observed result shape:
 ```json
 {
   "ok": true,
-  "tool_count": 15,
+  "tool_count": 16,
   "sample": {
+    "security_profile_status": "source_hardened_public_remote_pending",
     "agent_status_status": 200,
     "checkout_conformance_status": 200,
     "receipt_design_status": "planned_not_live",

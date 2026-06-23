@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test-build-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Static secret and hygiene scan
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, sys
+          patterns = {
+              'private_key_block': r'-----BEGIN [A-Z ]*PRIVATE KEY-----',
+              'github_token': r'\b(?:ghp|github_pat)_[A-Za-z0-9_]{16,}',
+              'stripe_secret': r'\bsk_(?:live|test)_[A-Za-z0-9]{16,}',
+              'aws_access_key': r'\b(?:AKIA|ASIA)[A-Z0-9]{16}\b',
+              'raw_secret_assignment': r'(?i)(?:private[_ -]?key|secret|token|password)\s*[:=]\s*(?:0x)?[0-9a-z_./+=-]{32,}',
+              'lan_url': r'https?://(?:10\.|172\.(?:1[6-9]|2[0-9]|3[01])\.|192\.168\.)[^\s)\]"\']+',
+          }
+          findings = []
+          for p in Path('.').rglob('*'):
+              if not p.is_file() or any(part in {'.git', '.venv', 'dist', '__pycache__'} for part in p.parts):
+                  continue
+              if p.suffix.lower() not in {'.py', '.json', '.md', '.txt', '.toml', '.yaml', '.yml', '.sh', '.service'}:
+                  continue
+              text = p.read_text(encoding='utf-8', errors='replace')
+              for name, rx in patterns.items():
+                  for m in re.finditer(rx, text):
+                      findings.append((str(p), name, text[max(0, m.start()-32):m.end()+32].replace('\n', ' ')[:160]))
+          if findings:
+              print('Potential secret/leak findings:')
+              for finding in findings[:20]:
+                  print(finding)
+              sys.exit(1)
+          print('secret_hygiene_scan_ok')
+          PY
+
+      - name: Compile, unit test, and build package
+        run: |
+          uv run --extra dev python -m compileall src tests scripts
+          uv run --extra dev pytest -q
+          uv build --sdist --wheel

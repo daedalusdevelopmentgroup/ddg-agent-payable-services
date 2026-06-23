@@ -32,8 +32,8 @@ DDG Agent-Payable Services provides AI-agent-native checkout/payment conformance
 
 Live now:
 
-- x402
-- direct_crypto_auto
+- x402 (Base mainnet USDC; accepts[] also advertises Polygon, Arbitrum, World Chain, Solana)
+- direct_crypto_auto (13 asset families: EVM, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, ADA, DOT, XLM, ALGO, ZEC, XMR)
 
 Pending / do not claim live yet:
 

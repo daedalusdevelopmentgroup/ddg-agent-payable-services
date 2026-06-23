@@ -1,0 +1,36 @@
+[Unit]
+Description=DDG Agent-Payable Services MCP Streamable HTTP server
+Documentation=https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-swarm-mcp-design.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=cb
+Group=cb
+WorkingDirectory=/srv/ddg-agent-services-mcp/ddg-agent-payable-services
+Environment=DDG_MCP_AGENT_ID=ddg-mcp-production
+Environment=DDG_AGENT_SERVICES_BASE_URL=https://agents.daedalusdevelopmentgroup.com
+Environment=DDG_MCP_HOST=127.0.0.1
+Environment=DDG_MCP_PORT=8891
+Environment=DDG_MCP_TRANSPORT=streamable-http
+Environment=PYTHONUNBUFFERED=1
+# Prefer a checked-out source tree plus uv for reproducible preview deploys.
+# If installed from PyPI later, replace ExecStart with:
+# ExecStart=/usr/local/bin/ddg-agent-services-mcp --transport streamable-http
+ExecStart=/usr/bin/env uv run --no-project --with mcp python -m ddg_agent_services_mcp --transport streamable-http
+Restart=always
+RestartSec=5
+TimeoutStartSec=60
+TimeoutStopSec=20
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+LockPersonality=true
+MemoryDenyWriteExecute=true
+
+[Install]
+WantedBy=multi-user.target

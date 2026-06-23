@@ -1,0 +1,27 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
+  "title": "DDG Agent-Payable Services MCP",
+  "description": "Remote Streamable HTTP endpoint template for DDG Agent-Payable Services MCP. Do not publish this remote entry until the public URL is deployed and MCP-client smoked.",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
+    "source": "github"
+  },
+  "homepage": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.daedalusdevelopmentgroup.com/mcp",
+      "headers": [
+        {
+          "name": "X-Agent-Id",
+          "description": "Stable AI-agent identifier for DDG agent-only gates.",
+          "isRequired": true,
+          "isSecret": false
+        }
+      ]
+    }
+  ],
+  "publication_gate": "Copy the remotes block into mcp/server.json only after public streamable-http smoke passes."
+}

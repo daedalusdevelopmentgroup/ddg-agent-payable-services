@@ -90,7 +90,7 @@ See also [`DISCOVERY.md`](DISCOVERY.md) for the agent-radar/distribution map and
 
 The local stdio MCP server is in [`mcp/`](mcp/). It exposes free discovery/status/conformance tools and payment-aware paid-service helpers. Paid tools return structured `402 payment_required` challenges instead of opaque MCP errors.
 
-Current MCP status: stdio/PyPI package metadata staged and local streamable-http transport support added; public HTTP/Streamable MCP endpoint still requires production deploy/smoke before official remote registry listing.
+Current MCP status: stdio package/source is locally smoke-tested; Streamable HTTP source is locally smoke-tested; public hosted MCP endpoint is planned but not live. See [`docs/mcp-production-readiness.md`](docs/mcp-production-readiness.md).
 
 ## Security and compliance stance
 

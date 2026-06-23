@@ -164,6 +164,25 @@ def test_json_response_redacts_sensitive_keys_and_values(monkeypatch: pytest.Mon
     assert result["body"]["nested"]["safe"] == "ok"
 
 
+def test_json_resource_text_redacts_sensitive_keys_and_values(monkeypatch: pytest.MonkeyPatch) -> None:
+    class SensitiveResourceResponse(_FakeHTTPResponse):
+        def read(self, size: int = -1) -> bytes:
+            body = {
+                "ok": True,
+                "authorization": "Bearer abcdefghijklmnop",
+                "public_note": "this contains sk-proj-abcdefghijklmnopqrstuvwxyz and should be redacted",
+            }
+            data = json.dumps(body).encode()
+            return data if size is None or size < 0 else data[:size]
+
+    monkeypatch.setattr(server.urllib.request, "urlopen", lambda req, timeout: SensitiveResourceResponse())
+    text = server.ddg_manifest_status_resource()
+    parsed = json.loads(text)
+    assert parsed["authorization"] == "[REDACTED]"
+    assert parsed["public_note"] == "this contains [REDACTED] and should be redacted"
+    assert "sk-proj-" not in text
+
+
 def test_public_resource_index_and_allowlist() -> None:
     index = server.ddg_public_resource_index()
     assert index["status"] == 200
@@ -173,3 +192,25 @@ def test_public_resource_index_and_allowlist() -> None:
     rejected = server.ddg_fetch_public_resource("https://evil.example/resource")
     assert rejected["status"] == 0
     assert rejected["body"]["error"] == "unsupported_public_resource"
+
+
+def test_distribution_targets_and_bazaar_readiness_are_gated() -> None:
+    distribution = server.ddg_agent_distribution_targets()
+    assert distribution["status"] == "active_distribution_work_started"
+    target_ids = {target["id"] for target in distribution["targets"]}
+    assert "official_mcp_registry" in target_ids
+    assert "cdp_x402_bazaar" in target_ids
+
+    bazaar = server.ddg_x402_bazaar_readiness()
+    assert bazaar["status"] == "candidate_metadata_ready_not_indexed_until_real_cdp_settlement"
+    resources = {item["resource"] for item in bazaar["candidate_resources"]}
+    assert "https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test" in resources
+    assert any("settlement" in requirement.lower() for requirement in bazaar["indexing_requirements"])
+
+
+def test_static_distribution_resources_are_json() -> None:
+    radar = json.loads(server.ddg_distribution_agent_radar_resource())
+    assert radar["mcp_registry"]["registry_name"] == "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp"
+
+    bazaar = json.loads(server.ddg_distribution_x402_bazaar_readiness_resource())
+    assert bazaar["candidate_resources"][0]["service_id"] == "tx_penny_smoke_test"

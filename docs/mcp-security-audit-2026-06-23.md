@@ -13,9 +13,9 @@ Verification completed in this audit pass:
 - Source secret/prompt/internal URL scan: **0 findings**.
 - Public DDG endpoint leak scan over 9 agent-consumed surfaces: **0 findings**.
 - Public payment-edge smoke: **10/10 passed**.
-- Unit tests: **10 passed**.
-- MCP stdio smoke: **18 tools, 9 resources, ok:true**.
-- MCP Streamable HTTP loopback smoke: **18 tools, 9 resources, ok:true**.
+- Unit tests: **12 passed**.
+- MCP stdio smoke: **20 tools, 11 resources, ok:true**.
+- MCP Streamable HTTP loopback smoke: **20 tools, 11 resources, ok:true**.
 - Package build: **sdist + wheel built successfully**.
 - Python dependency audit in isolated project env: **No known vulnerabilities found** after adding security floor constraints.
 
@@ -41,6 +41,7 @@ Verification completed in this audit pass:
 - MPP is still not advertised live before provider readiness and settlement proof.
 - Public hosted remote remains outside `mcp/server.json`; template is staged separately in `mcp/server.remote-template.json`.
 - `ddg_public_resource_index`, `ddg_fetch_public_resource`, and 9 first-class MCP resources expose only fixed public DDG manifests/docs/OpenAPI.
+- `ddg_agent_distribution_targets`, `ddg_x402_bazaar_readiness`, and 2 source-bundled distribution resources expose agent-radar and x402 Bazaar readiness without claiming Bazaar/hosted MCP go-live early.
 - Upstream JSON bodies, resource text, and HTTP headers are capped/redacted before returning to the MCP client.
 
 ## Required verification commands

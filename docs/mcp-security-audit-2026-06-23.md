@@ -11,11 +11,11 @@ The MCP server remains safe to publish as a stdio/package endpoint and safe to d
 Verification completed in this audit pass:
 
 - Source secret/prompt/internal URL scan: **0 findings**.
-- Public DDG endpoint leak scan over 8 agent-consumed surfaces: **0 findings**.
+- Public DDG endpoint leak scan over 9 agent-consumed surfaces: **0 findings**.
 - Public payment-edge smoke: **10/10 passed**.
-- Unit tests: **7 passed**.
-- MCP stdio smoke: **16 tools, ok:true**.
-- MCP Streamable HTTP loopback smoke: **16 tools, ok:true**.
+- Unit tests: **10 passed**.
+- MCP stdio smoke: **18 tools, 9 resources, ok:true**.
+- MCP Streamable HTTP loopback smoke: **18 tools, 9 resources, ok:true**.
 - Package build: **sdist + wheel built successfully**.
 - Python dependency audit in isolated project env: **No known vulnerabilities found** after adding security floor constraints.
 
@@ -27,7 +27,8 @@ Verification completed in this audit pass:
 | Medium | Hosted Streamable HTTP identity | Hosted MCP clients could otherwise collapse onto the server's default `DDG_MCP_AGENT_ID`, weakening order/payment scoping. | Patched: paid and agent-scoped tools accept optional `agent_id`; docs mark hosted remote as requiring buyer agent IDs. |
 | Medium | Quote/path proxy surface | `ddg_quote_payment` accepted arbitrary DDG paths on the allowlisted host. | Patched: quote path is restricted to known protected DDG paths. |
 | Medium | Response headers | Tool output returned all upstream response headers. | Patched: response headers are allowlisted to payment/status-safe headers only; cookies/auth/debug headers are stripped. |
-| Low | Payload/resource limits | Some tool payloads could be oversized. | Patched: JSON payload cap, prompt cap, skill-scan cap, and model/order identifier validation. |
+| Medium | Response bodies and resources | Upstream JSON/text bodies could return secret-like fields or unexpectedly large resource payloads if a future backend regressed. | Patched: response/resource byte caps plus recursive JSON key/value redaction and fixed `ddg://` resource allowlist. |
+| Low | Payload/resource limits | Some tool payloads could be oversized. | Patched: JSON payload cap, response cap, resource text cap, prompt cap, skill-scan cap, and model/order identifier validation. |
 | Low | Order payload merge | `request.service_id` could override the explicit `service_id` argument. | Patched: explicit validated `service_id` wins. |
 | Medium | Python transitive dependencies | `pip-audit` initially found vulnerable MCP/http transitive dependency versions in the unconstrained environment. | Patched: added security floor constraints for affected transitive packages and regenerated `uv.lock`; isolated project audit now reports no known vulnerabilities. |
 
@@ -39,6 +40,8 @@ Verification completed in this audit pass:
 - Paid tools still return structured `402 payment_required` when unpaid.
 - MPP is still not advertised live before provider readiness and settlement proof.
 - Public hosted remote remains outside `mcp/server.json`; template is staged separately in `mcp/server.remote-template.json`.
+- `ddg_public_resource_index`, `ddg_fetch_public_resource`, and 9 first-class MCP resources expose only fixed public DDG manifests/docs/OpenAPI.
+- Upstream JSON bodies, resource text, and HTTP headers are capped/redacted before returning to the MCP client.
 
 ## Required verification commands
 

@@ -21,6 +21,8 @@ from mcp.client.streamable_http import streamablehttp_client
 
 REQUIRED_TOOLS = {
     "ddg_mcp_security_profile",
+    "ddg_public_resource_index",
+    "ddg_fetch_public_resource",
     "ddg_list_services",
     "ddg_agent_status",
     "ddg_checkout_conformance",
@@ -36,6 +38,18 @@ REQUIRED_TOOLS = {
     "ddg_submit_order",
     "ddg_run_paid_model",
     "ddg_request_ollama_model",
+}
+
+REQUIRED_RESOURCES = {
+    "ddg://manifest/ai",
+    "ddg://manifest/status",
+    "ddg://manifest/catalog",
+    "ddg://manifest/pricing",
+    "ddg://manifest/checkout-conformance",
+    "ddg://manifest/cybersecurity-services",
+    "ddg://docs/llms",
+    "ddg://docs/mcp-design",
+    "ddg://openapi",
 }
 
 
@@ -61,6 +75,15 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
     tool_names = sorted(tool.name for tool in tools_result.tools)
     missing = sorted(REQUIRED_TOOLS - set(tool_names))
 
+    resources_result = await session.list_resources()
+    resource_uris = sorted(str(resource.uri) for resource in resources_result.resources)
+    missing_resources = sorted(REQUIRED_RESOURCES - set(resource_uris))
+    status_resource = await session.read_resource("ddg://manifest/status")
+    status_resource_text = ""
+    if getattr(status_resource, "contents", None):
+        first_content = status_resource.contents[0]
+        status_resource_text = getattr(first_content, "text", "") or ""
+
     security_profile = _structured(await session.call_tool("ddg_mcp_security_profile", {}))
     status = _structured(await session.call_tool("ddg_agent_status", {}))
     conformance = _structured(await session.call_tool("ddg_checkout_conformance", {}))
@@ -79,6 +102,9 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
         "tool_count_at_least_required": len(tool_names) >= len(REQUIRED_TOOLS),
         "required_tools_present": not missing,
         "security_profile_hardened": security_profile.get("status") == "source_hardened_public_remote_pending",
+        "resource_count_at_least_required": len(resource_uris) >= len(REQUIRED_RESOURCES),
+        "required_resources_present": not missing_resources,
+        "manifest_status_resource_nonempty": len(status_resource_text) > 100 and "payment" in status_resource_text.lower(),
         "agent_status_200": status.get("status") == 200,
         "checkout_conformance_200": conformance.get("status") == 200,
         "receipt_design_planned": receipt_design.get("status") == "planned_not_live",
@@ -90,9 +116,12 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
         "ok": all(checks.values()),
         "checks": checks,
         "missing_tools": missing,
+        "missing_resources": missing_resources,
         "tool_count": len(tool_names),
+        "resource_count": len(resource_uris),
         "sample": {
             "security_profile_status": security_profile.get("status"),
+            "resource_count": len(resource_uris),
             "agent_status_status": status.get("status"),
             "checkout_conformance_status": conformance.get("status"),
             "receipt_design_status": receipt_design.get("status"),

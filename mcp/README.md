@@ -69,7 +69,9 @@ mcp_ddg_agent_services_ddg_agent_status
 
 | Tool | Payment | Purpose |
 | --- | --- | --- |
-| `ddg_mcp_security_profile` | Free | Report local wrapper controls, publication gates, and header/payload safety limits. |
+| `ddg_mcp_security_profile` | Free | Report local wrapper controls, publication gates, and header/payload/resource safety limits. |
+| `ddg_public_resource_index` | Free | List allowlisted `ddg://` manifest/doc resources. |
+| `ddg_fetch_public_resource` | Free | Fetch an allowlisted public resource by id or URI with size caps and redaction. |
 | `ddg_list_services` | Free | Fetch pricing/catalog. |
 | `ddg_agent_status` | Free | Fetch `/.well-known/ddg-agent-status.json`. |
 | `ddg_checkout_conformance` | Free | Fetch checkout conformance profile. |
@@ -90,6 +92,24 @@ mcp_ddg_agent_services_ddg_agent_status
 | `ddg_submit_order` | Service price | Submits `/v1/order-intake` after caller supplies payment proof. |
 | `ddg_run_paid_model` | Metered/route price | Calls model/chat or agent-run routes after valid payment. |
 | `ddg_request_ollama_model` | Free/manual queue | Requests a local model/runtime import; never auto-downloads by public request. |
+
+## MCP resources
+
+The server also exposes allowlisted public resources for agent discovery clients:
+
+```text
+ddg://manifest/ai
+ddg://manifest/status
+ddg://manifest/catalog
+ddg://manifest/pricing
+ddg://manifest/checkout-conformance
+ddg://manifest/cybersecurity-services
+ddg://docs/llms
+ddg://docs/mcp-design
+ddg://openapi
+```
+
+Resources are fetched only from fixed DDG public paths, never from arbitrary URLs. Responses are size-capped and secret-pattern redacted before returning to the MCP client.
 
 ## Payment flow
 
@@ -125,7 +145,8 @@ Observed result shape:
 ```json
 {
   "ok": true,
-  "tool_count": 16,
+  "tool_count": 18,
+  "resource_count": 9,
   "sample": {
     "security_profile_status": "source_hardened_public_remote_pending",
     "agent_status_status": 200,
@@ -143,6 +164,7 @@ Observed result shape:
 - No arbitrary shell, eval, or file-write tools.
 - No raw provider/session/OAuth/account credential relay.
 - No raw upstream provider rate-limit headers or private model IDs in output.
-- Tool outputs are bounded; large artifacts return URLs/hashes.
+- Tool outputs and MCP resource reads are bounded; large artifacts return URLs/hashes.
+- Upstream JSON/string bodies are redacted for secret-like keys and values before return.
 - Dynamic scanning and browser/code execution stay sandboxed/operator-reviewed service artifacts.
-- The stdio wrapper only forwards a small allowlist of payment/idempotency headers.
+- The wrapper only forwards a small allowlist of payment/idempotency headers; generic Bearer/Basic credentials are dropped.

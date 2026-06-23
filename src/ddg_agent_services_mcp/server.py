@@ -34,9 +34,19 @@ DEFAULT_ALLOWED_BASE_HOSTS = {
 }
 MAX_HEADER_VALUE_CHARS = 8192
 MAX_RESPONSE_HEADER_VALUE_CHARS = 16384
+MAX_RESPONSE_BYTES = 768 * 1024
+MAX_RESOURCE_TEXT_CHARS = 384 * 1024
 MAX_JSON_PAYLOAD_BYTES = 256 * 1024
 MAX_PROMPT_CHARS = 64_000
 MAX_SKILL_SCAN_CHARS = 180_000
+SENSITIVE_KEY_RE = re.compile(r"(?i)(authorization|cookie|secret|token|password|private[_-]?key|seed|mnemonic|payment[_-]?proof|raw[_-]?payment|provider[_-]?metadata)")
+SENSITIVE_VALUE_PATTERNS = (
+    re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----.*?-----END [A-Z ]*PRIVATE KEY-----", re.I | re.S),
+    re.compile(r"\b(?:ghp|github_pat)_[A-Za-z0-9_]{16,}\b"),
+    re.compile(r"\bsk_(?:live|test)_[A-Za-z0-9]{16,}\b"),
+    re.compile(r"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b"),
+    re.compile(r"(?i)bearer\s+[A-Za-z0-9._~+/=-]{16,}"),
+)
 SAFE_RESPONSE_HEADERS = {
     "content-type",
     "cache-control",
@@ -61,6 +71,17 @@ QUOTE_PATHS = {
     "/v1/tx-smoke-test",
     "/v1/ai-skill-safety-scan",
     "/v1/ollama-model-request",
+}
+PUBLIC_RESOURCE_SPECS: dict[str, dict[str, str]] = {
+    "manifest.ai": {"uri": "ddg://manifest/ai", "path": "/.well-known/ai", "mime_type": "application/json", "title": "DDG AI manifest"},
+    "manifest.status": {"uri": "ddg://manifest/status", "path": "/.well-known/ddg-agent-status.json", "mime_type": "application/json", "title": "DDG agent status"},
+    "manifest.catalog": {"uri": "ddg://manifest/catalog", "path": "/.well-known/agent-catalog.json", "mime_type": "application/json", "title": "DDG service catalog"},
+    "manifest.pricing": {"uri": "ddg://manifest/pricing", "path": "/.well-known/ddg-agent-pricing.json", "mime_type": "application/json", "title": "DDG agent pricing"},
+    "manifest.checkout_conformance": {"uri": "ddg://manifest/checkout-conformance", "path": "/.well-known/ddg-agent-checkout-conformance.json", "mime_type": "application/json", "title": "DDG checkout conformance"},
+    "manifest.cybersecurity_services": {"uri": "ddg://manifest/cybersecurity-services", "path": "/.well-known/ddg-cybersecurity-services.json", "mime_type": "application/json", "title": "DDG cybersecurity services"},
+    "docs.llms": {"uri": "ddg://docs/llms", "path": "/llms.txt", "mime_type": "text/plain", "title": "DDG llms.txt"},
+    "docs.mcp_design": {"uri": "ddg://docs/mcp-design", "path": "/.well-known/ddg-agent-swarm-mcp-design.md", "mime_type": "text/markdown", "title": "DDG MCP design"},
+    "openapi": {"uri": "ddg://openapi", "path": "/openapi.json", "mime_type": "application/json", "title": "DDG OpenAPI"},
 }
 
 
@@ -93,6 +114,7 @@ mcp = FastMCP(
     instructions=(
         "Payment-aware DDG Agent-Payable Services wrapper. Free tools expose discovery/status/conformance; "
         "paid tools return structured 402 challenges unless caller supplies valid payment headers. "
+        "MCP resources expose only allowlisted public DDG manifests/docs. "
         "Never relay provider credentials, raw payment material, arbitrary URLs, or shell/file access. "
         "For hosted/remote use, pass a stable buyer agent_id tool argument so DDG order and payment scopes "
         "do not collapse into the server default identity."
@@ -192,6 +214,44 @@ def _safe_response_headers(headers: Any) -> dict[str, str]:
     return public
 
 
+def _read_limited_response(resp: Any) -> str:
+    raw = resp.read(MAX_RESPONSE_BYTES + 1)
+    if len(raw) > MAX_RESPONSE_BYTES:
+        raise ValueError("ddg_response_too_large")
+    return raw.decode("utf-8", errors="replace")
+
+
+def _redact_text(value: str) -> str:
+    redacted = value
+    for pattern in SENSITIVE_VALUE_PATTERNS:
+        redacted = pattern.sub("[REDACTED]", redacted)
+    return redacted
+
+
+def _redacted_json(value: Any, *, depth: int = 0) -> Any:
+    if depth > 12:
+        return "[REDACTED:max-depth]"
+    if isinstance(value, dict):
+        safe: dict[str, Any] = {}
+        for key, item in value.items():
+            text_key = str(key)
+            if SENSITIVE_KEY_RE.search(text_key):
+                safe[text_key] = "[REDACTED]"
+            else:
+                safe[text_key] = _redacted_json(item, depth=depth + 1)
+        return safe
+    if isinstance(value, list):
+        return [_redacted_json(item, depth=depth + 1) for item in value[:500]]
+    if isinstance(value, str):
+        return _redact_text(value)[:MAX_RESOURCE_TEXT_CHARS]
+    return value
+
+
+def _parse_json_response(raw: str) -> Any:
+    parsed = json.loads(raw) if raw else {}
+    return _redacted_json(parsed)
+
+
 def _json_payload_bytes(payload: dict[str, Any] | None) -> bytes | None:
     if payload is None:
         return None
@@ -227,16 +287,19 @@ def _json_request(
     req = urllib.request.Request(BASE_URL + safe_path, data=body, headers=req_headers, method=method)
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
-            raw = resp.read().decode(errors="replace")
-            parsed = json.loads(raw) if raw else {}
-            return {"status": resp.status, "headers": _safe_response_headers(resp.headers), "body": parsed}
+            raw = _read_limited_response(resp)
+            return {"status": resp.status, "headers": _safe_response_headers(resp.headers), "body": _parse_json_response(raw)}
     except urllib.error.HTTPError as exc:
-        raw = exc.read().decode(errors="replace")
+        raw = exc.read(MAX_RESPONSE_BYTES + 1).decode("utf-8", errors="replace")
+        if len(raw) > MAX_RESPONSE_BYTES:
+            return {"status": exc.code, "headers": _safe_response_headers(exc.headers), "body": {"error": "ddg_response_too_large"}}
         try:
-            parsed = json.loads(raw)
+            parsed = _parse_json_response(raw)
         except Exception:
-            parsed = {"raw": raw[:500]}
+            parsed = {"raw": _redact_text(raw[:500])}
         return {"status": exc.code, "headers": _safe_response_headers(exc.headers), "body": parsed}
+    except ValueError as exc:
+        return {"status": 0, "headers": {}, "body": {"error": str(exc)}}
     except (urllib.error.URLError, TimeoutError, socket.timeout, OSError) as exc:
         return {
             "status": 0,
@@ -245,6 +308,59 @@ def _json_request(
         }
     except json.JSONDecodeError:
         return {"status": 0, "headers": {}, "body": {"error": "invalid_json_from_ddg"}}
+
+
+def _public_resource_spec(resource_id_or_uri: str) -> dict[str, str]:
+    key = str(resource_id_or_uri or "").strip()
+    if key in PUBLIC_RESOURCE_SPECS:
+        return PUBLIC_RESOURCE_SPECS[key]
+    for spec in PUBLIC_RESOURCE_SPECS.values():
+        if key == spec["uri"]:
+            return spec
+    raise ValueError("unsupported_public_resource")
+
+
+def _resource_text(resource_id_or_uri: str) -> str:
+    spec = _public_resource_spec(resource_id_or_uri)
+    safe_path = _safe_path(spec["path"])
+    req = urllib.request.Request(BASE_URL + safe_path, headers={"Accept": spec["mime_type"], "X-Agent-Id": _safe_agent_id()})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            text = _read_limited_response(resp)
+    except urllib.error.HTTPError as exc:
+        text = exc.read(MAX_RESPONSE_BYTES + 1).decode("utf-8", errors="replace")
+        if len(text) > MAX_RESPONSE_BYTES:
+            raise ValueError("ddg_response_too_large") from exc
+    return _redact_text(text)[:MAX_RESOURCE_TEXT_CHARS]
+
+
+def _resource_payload(resource_id_or_uri: str) -> dict[str, Any]:
+    try:
+        spec = _public_resource_spec(resource_id_or_uri)
+        text = _resource_text(spec["uri"])
+    except (ValueError, urllib.error.URLError, TimeoutError, socket.timeout, OSError) as exc:
+        return {"status": 0, "body": {"error": str(exc)}}
+    payload: dict[str, Any] = {
+        "status": 200,
+        "resource": {k: spec[k] for k in ("uri", "path", "mime_type", "title")},
+        "text": text,
+        "bytes": len(text.encode("utf-8")),
+        "truncated": len(text) >= MAX_RESOURCE_TEXT_CHARS,
+    }
+    if spec["mime_type"] == "application/json":
+        try:
+            payload["json"] = _redacted_json(json.loads(text))
+            payload.pop("text", None)
+        except json.JSONDecodeError:
+            payload["json_error"] = "invalid_json_from_ddg"
+    return payload
+
+
+def _public_resource_index() -> list[dict[str, str]]:
+    return [
+        {"id": key, "uri": spec["uri"], "path": spec["path"], "mime_type": spec["mime_type"], "title": spec["title"]}
+        for key, spec in sorted(PUBLIC_RESOURCE_SPECS.items())
+    ]
 
 
 @mcp.tool()
@@ -266,12 +382,86 @@ def ddg_mcp_security_profile() -> dict[str, Any]:
             "payment_header_allowlist": sorted(ALLOWED_EXTRA_HEADERS.values()),
             "authorization_forwarding": "Payment scheme only; Bearer/Basic tokens are dropped",
             "response_header_allowlist": sorted(SAFE_RESPONSE_HEADERS),
+            "response_body_redaction": True,
+            "max_response_bytes": MAX_RESPONSE_BYTES,
+            "max_resource_text_chars": MAX_RESOURCE_TEXT_CHARS,
             "max_json_payload_bytes": MAX_JSON_PAYLOAD_BYTES,
             "max_prompt_chars": MAX_PROMPT_CHARS,
+            "public_resource_count": len(PUBLIC_RESOURCE_SPECS),
             "hosted_remote_requires_agent_id_argument": True,
         },
         "publication_gate": "Do not add hosted remotes to mcp/server.json until public endpoint deployment, MCP-client smoke, and leak scan pass.",
     }
+
+
+@mcp.tool()
+def ddg_public_resource_index() -> dict[str, Any]:
+    """List allowlisted DDG public manifests/docs available as MCP resources."""
+    return {
+        "status": 200,
+        "resources": _public_resource_index(),
+        "security": "Only fixed DDG public resources are exposed; arbitrary URLs and paths are rejected.",
+    }
+
+
+@mcp.tool()
+def ddg_fetch_public_resource(resource: str) -> dict[str, Any]:
+    """Fetch an allowlisted DDG public manifest/doc by id or ddg:// URI with redaction and size caps."""
+    return _resource_payload(resource)
+
+
+@mcp.resource("ddg://manifest/ai", name="ddg_manifest_ai", mime_type="application/json")
+def ddg_manifest_ai_resource() -> str:
+    """DDG public AI manifest."""
+    return _resource_text("manifest.ai")
+
+
+@mcp.resource("ddg://manifest/status", name="ddg_manifest_status", mime_type="application/json")
+def ddg_manifest_status_resource() -> str:
+    """DDG public agent status manifest."""
+    return _resource_text("manifest.status")
+
+
+@mcp.resource("ddg://manifest/catalog", name="ddg_manifest_catalog", mime_type="application/json")
+def ddg_manifest_catalog_resource() -> str:
+    """DDG public service catalog manifest."""
+    return _resource_text("manifest.catalog")
+
+
+@mcp.resource("ddg://manifest/pricing", name="ddg_manifest_pricing", mime_type="application/json")
+def ddg_manifest_pricing_resource() -> str:
+    """DDG public agent pricing manifest."""
+    return _resource_text("manifest.pricing")
+
+
+@mcp.resource("ddg://manifest/checkout-conformance", name="ddg_manifest_checkout_conformance", mime_type="application/json")
+def ddg_manifest_checkout_conformance_resource() -> str:
+    """DDG public checkout conformance profile."""
+    return _resource_text("manifest.checkout_conformance")
+
+
+@mcp.resource("ddg://manifest/cybersecurity-services", name="ddg_manifest_cybersecurity_services", mime_type="application/json")
+def ddg_manifest_cybersecurity_services_resource() -> str:
+    """DDG public cybersecurity service catalog."""
+    return _resource_text("manifest.cybersecurity_services")
+
+
+@mcp.resource("ddg://docs/llms", name="ddg_docs_llms", mime_type="text/plain")
+def ddg_docs_llms_resource() -> str:
+    """DDG llms.txt for AI-agent discovery."""
+    return _resource_text("docs.llms")
+
+
+@mcp.resource("ddg://docs/mcp-design", name="ddg_docs_mcp_design", mime_type="text/markdown")
+def ddg_docs_mcp_design_resource() -> str:
+    """DDG MCP design notes for AI-agent clients."""
+    return _resource_text("docs.mcp_design")
+
+
+@mcp.resource("ddg://openapi", name="ddg_openapi", mime_type="application/json")
+def ddg_openapi_resource() -> str:
+    """DDG OpenAPI contract."""
+    return _resource_text("openapi")
 
 
 @mcp.tool()

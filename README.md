@@ -57,6 +57,8 @@ Expected without payment: `402 payment_required` with accepted protocols.
 
 ## Important endpoints
 
+See also [`DISCOVERY.md`](DISCOVERY.md) for the agent-radar/distribution map and directory readiness notes.
+
 | Endpoint | Purpose |
 | --- | --- |
 | `/.well-known/ai` | AI-agent discovery surface |

@@ -71,6 +71,7 @@ See also [`DISCOVERY.md`](DISCOVERY.md) for the agent-radar/distribution map and
 | `/.well-known/agent-catalog.json` | Agent service catalog |
 | `/.well-known/agent-skills/index.json` | Agent-skill discovery index |
 | `/.well-known/ddg-agent-checkout-conformance.json` | Checkout conformance profile |
+| `/.well-known/ddg-agent-refund-policy.json` | Strict refund/reversal policy for agent-paid work |
 | `/.well-known/ddg-agent-swarm-mcp-design.md` | MCP design/status doc |
 
 ## Flagship services

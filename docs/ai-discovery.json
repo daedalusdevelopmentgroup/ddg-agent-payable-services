@@ -44,6 +44,13 @@
       "returns": "JSON conformance profile with expected headers, routes, and status ladder"
     },
     {
+      "id": "strict_refund_reversal_policy",
+      "description": "Machine-readable strict refund/reversal policy: no automatic free-work credits; approved reversals require entitlement revocation and reversal receipts.",
+      "endpoint": "/.well-known/ddg-agent-refund-policy.json",
+      "method": "GET",
+      "returns": "JSON policy covering refund abuse controls, entitlement revocation, and reversal receipt requirements"
+    },
+    {
       "id": "model_chat_completions",
       "description": "Paid model-router completion endpoint for AI agents with budget caps and receipts.",
       "endpoint": "/v1/model/chat-completions",
@@ -165,7 +172,8 @@
       "/openapi.json",
       "/.well-known/ddg-agent-pricing.json",
       "/.well-known/agent-catalog.json",
-      "/.well-known/agent-skills/index.json"
+      "/.well-known/agent-skills/index.json",
+      "/.well-known/ddg-agent-refund-policy.json"
     ],
     "prefer_order_intake_for_manual_services": true
   },
@@ -173,7 +181,7 @@
     "policy": "Route-specific; protected compute is payment-gated and idempotency-key aware."
   },
   "meta": {
-    "updated": "2026-06-22-agent-discovery-services-added",
+    "updated": "2026-06-23-strict-refund-policy",
     "base_url": "https://agents.daedalusdevelopmentgroup.com",
     "contact": "0xcircuitbreaker@protonmail.com"
   }

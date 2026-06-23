@@ -21,6 +21,7 @@ https://agents.daedalusdevelopmentgroup.com
 | Agent catalog | `https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json` | Agent-buyable service descriptions |
 | Agent skills | `https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/index.json` | Skill-specific service discovery |
 | Checkout conformance | `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json` | 403/402/payment/idempotency contract |
+| Refund/reversal policy | `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-refund-policy.json` | Strict no-free-work reversal and entitlement-revocation policy |
 | MCP design/status | `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-swarm-mcp-design.md` | MCP wrapper design and current status |
 
 ## Current payment rails

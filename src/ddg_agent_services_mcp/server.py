@@ -83,6 +83,7 @@ PUBLIC_RESOURCE_SPECS: dict[str, dict[str, str]] = {
     "manifest.catalog": {"uri": "ddg://manifest/catalog", "path": "/.well-known/agent-catalog.json", "mime_type": "application/json", "title": "DDG service catalog"},
     "manifest.pricing": {"uri": "ddg://manifest/pricing", "path": "/.well-known/ddg-agent-pricing.json", "mime_type": "application/json", "title": "DDG agent pricing"},
     "manifest.checkout_conformance": {"uri": "ddg://manifest/checkout-conformance", "path": "/.well-known/ddg-agent-checkout-conformance.json", "mime_type": "application/json", "title": "DDG checkout conformance"},
+    "manifest.refund_policy": {"uri": "ddg://manifest/refund-policy", "path": "/.well-known/ddg-agent-refund-policy.json", "mime_type": "application/json", "title": "DDG strict refund/reversal policy"},
     "manifest.cybersecurity_services": {"uri": "ddg://manifest/cybersecurity-services", "path": "/.well-known/ddg-cybersecurity-services.json", "mime_type": "application/json", "title": "DDG cybersecurity services"},
     "docs.llms": {"uri": "ddg://docs/llms", "path": "/llms.txt", "mime_type": "text/plain", "title": "DDG llms.txt"},
     "docs.mcp_design": {"uri": "ddg://docs/mcp-design", "path": "/.well-known/ddg-agent-swarm-mcp-design.md", "mime_type": "text/markdown", "title": "DDG MCP design"},
@@ -681,6 +682,12 @@ def ddg_manifest_pricing_resource() -> str:
 def ddg_manifest_checkout_conformance_resource() -> str:
     """DDG public checkout conformance profile."""
     return _resource_text("manifest.checkout_conformance")
+
+
+@mcp.resource("ddg://manifest/refund-policy", name="ddg_manifest_refund_policy", mime_type="application/json")
+def ddg_manifest_refund_policy_resource() -> str:
+    """DDG strict refund/reversal policy for AI-agent paid work."""
+    return _resource_text("manifest.refund_policy")
 
 
 @mcp.resource("ddg://manifest/cybersecurity-services", name="ddg_manifest_cybersecurity_services", mime_type="application/json")

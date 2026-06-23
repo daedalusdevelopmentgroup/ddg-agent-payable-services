@@ -66,6 +66,7 @@ Why this first: it is side-effect-free except payment verification/receipt handl
 - llms.txt: `https://agents.daedalusdevelopmentgroup.com/llms.txt`
 - Pricing: `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json`
 - Checkout conformance: `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json`
+- Strict refund/reversal policy: `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-refund-policy.json`
 - GitHub: `https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services`
 
 ## Listing copy

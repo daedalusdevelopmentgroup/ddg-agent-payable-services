@@ -25,6 +25,7 @@ DDG Agent-Payable Services provides AI-agent-native checkout/payment conformance
 - llms.txt: https://agents.daedalusdevelopmentgroup.com/llms.txt
 - Pricing: https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json
 - Checkout conformance: https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json
+- Strict refund/reversal policy: https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-refund-policy.json
 - Agent catalog: https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json
 
 ## Payment rails to claim publicly

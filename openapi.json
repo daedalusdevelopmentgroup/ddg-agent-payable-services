@@ -81,7 +81,9 @@
         "/.well-known/ddg-agent-checkout-conformance.json",
         "/agent-checkout-conformance.json",
         "/mpp-activation-guide.md",
-        "/.well-known/ddg-mpp-activation-guide.md"
+        "/.well-known/ddg-mpp-activation-guide.md",
+        "/.well-known/ddg-agent-refund-policy.json",
+        "/refund-policy"
       ],
       "manual_fulfillment_beta": "Manual/operator-reviewed offers are orderable by AI agents through POST /v1/order-intake with a paid service_id. Direct operation paths stay omitted from OpenAPI until implemented as self-serve runtime handlers.",
       "planned": "See pricing catalog planned_paths; not public self-serve.",
@@ -96,7 +98,8 @@
         "/cybersecurity-services.json",
         "/.well-known/ddg-cybersecurity-services.json",
         "/mcp/ddg-agent-swarm-mcp-design.md",
-        "/.well-known/ddg-agent-swarm-mcp-design.md"
+        "/.well-known/ddg-agent-swarm-mcp-design.md",
+        "/.well-known/ddg-agent-refund-policy.json"
       ],
       "planned_beta_paths": [
         "/v1/ethereum/rpc"
@@ -506,7 +509,8 @@
       "agents_json": "/.well-known/agents.json",
       "llms_txt": "/llms.txt",
       "pricing": "/.well-known/ddg-agent-pricing.json"
-    }
+    },
+    "refund_policy": "/.well-known/ddg-agent-refund-policy.json"
   },
   "x-payment-info": {
     "offers": [
@@ -2178,6 +2182,90 @@
         "security": [],
         "x-x402scan": {
           "exclude_from_paid_probe": true
+        }
+      }
+    },
+    "/.well-known/ddg-agent-refund-policy.json": {
+      "get": {
+        "summary": "DDG strict refund and reversal policy",
+        "description": "Machine-readable policy: refunds are manual strict reversals; approved reversals require entitlement revocation and reversal receipts so buyer agents cannot retain access after money is returned.",
+        "operationId": "getStrictRefundPolicy",
+        "tags": [
+          "discovery",
+          "payments",
+          "refunds"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Strict refund/reversal policy for AI-agent paid work.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "service": {
+                      "const": "ddg_strict_refund_and_reversal_policy"
+                    },
+                    "policy": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "service",
+                    "policy"
+                  ],
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refund-policy": {
+      "get": {
+        "summary": "DDG strict refund and reversal policy",
+        "description": "Machine-readable policy: refunds are manual strict reversals; approved reversals require entitlement revocation and reversal receipts so buyer agents cannot retain access after money is returned.",
+        "operationId": "getStrictRefundPolicy",
+        "tags": [
+          "discovery",
+          "payments",
+          "refunds"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Strict refund/reversal policy for AI-agent paid work.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "service": {
+                      "const": "ddg_strict_refund_and_reversal_policy"
+                    },
+                    "policy": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "service",
+                    "policy"
+                  ],
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
         }
       }
     }

@@ -38,7 +38,8 @@
     "mcp_design": "/.well-known/ddg-agent-swarm-mcp-design.md",
     "mpp_status": "/.well-known/ddg-mpp-activation-guide.md",
     "openapi": "/openapi.json",
-    "pricing": "/.well-known/ddg-agent-pricing.json"
+    "pricing": "/.well-known/ddg-agent-pricing.json",
+    "refund_policy": "/.well-known/ddg-agent-refund-policy.json"
   },
   "schema_version": "v0.1.0",
   "service": "DDG Agent-Payable Services",
@@ -46,7 +47,7 @@
     "catalog_live_runtime_services": 9,
     "catalog_manual_operator_review_services": 33,
     "catalog_planned_or_hidden_services": 3,
-    "openapi_paths": 17,
+    "openapi_paths": 19,
     "pricing_services": 46
   },
   "status": "production_live_x402_direct_crypto_mpp_pending"

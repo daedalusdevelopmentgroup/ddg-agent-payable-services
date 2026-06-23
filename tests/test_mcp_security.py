@@ -170,7 +170,7 @@ def test_json_resource_text_redacts_sensitive_keys_and_values(monkeypatch: pytes
             body = {
                 "ok": True,
                 "authorization": "Bearer abcdefghijklmnop",
-                "public_note": "this contains sk-proj-abcdefghijklmnopqrstuvwxyz and should be redacted",
+                "public_note": "this contains Bearer qwertyuiopasdfgh and should be redacted",
             }
             data = json.dumps(body).encode()
             return data if size is None or size < 0 else data[:size]
@@ -180,6 +180,7 @@ def test_json_resource_text_redacts_sensitive_keys_and_values(monkeypatch: pytes
     parsed = json.loads(text)
     assert parsed["authorization"] == "[REDACTED]"
     assert parsed["public_note"] == "this contains [REDACTED] and should be redacted"
+    assert "qwertyuiopasdfgh" not in text
     assert "sk-proj-" not in text
 
 
@@ -188,6 +189,7 @@ def test_public_resource_index_and_allowlist() -> None:
     assert index["status"] == 200
     uris = {item["uri"] for item in index["resources"]}
     assert "ddg://manifest/status" in uris
+    assert "ddg://manifest/refund-policy" in uris
 
     rejected = server.ddg_fetch_public_resource("https://evil.example/resource")
     assert rejected["status"] == 0

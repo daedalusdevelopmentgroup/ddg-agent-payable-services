@@ -14,8 +14,8 @@ Ready to use now:
   - `https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json`
   - `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json`
   - `https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/index.json`
-- x402scan registration started but blocked: the form read DDG metadata and found six candidate endpoints, but currently reports `0 valid resources` because live probes returned `[501] Endpoint did not return a 402 payment challenge`. See `submissions/x402scan/ddg-agent-services-registration.md`.
-- x402 ecosystem/awesome-list copy: use the same registration packet and `DISCOVERY.md`.
+- x402scan/agentcash registration work started: live CLI discovery now reads the OpenAPI and the one-cent smoke endpoint checks as paid, but the live OpenAPI still emits metadata warnings until this repo's OpenAPI patch is deployed. See `submissions/x402scan/ddg-agent-services-registration.md`.
+- x402 ecosystem/awesome-list packet staged at `submissions/x402-ecosystem/awesome-x402-listing.md`.
 
 Hold until additional proof:
 
@@ -37,11 +37,12 @@ Use these terms consistently in repo metadata, descriptions, and listing submiss
 
 ## First submissions to start
 
-1. **x402scan**
+1. **x402scan / agentcash discovery**
    - Started registration with `agents.daedalusdevelopmentgroup.com`.
-   - Current blocker: x402scan sees `/v1/site-audit`, `/v1/model/chat-completions`, `/v1/micro-model-swarm-preview`, `/v1/model/agent-run`, `/v1/order-intake`, and `/v1/tx-smoke-test`, but gets `501` instead of `402` from all six probes.
-   - Current spec preflight: OpenAPI remains canonical at `/openapi.json`; paid operations need `responses.402`, `x-payment-info.price`, `x-payment-info.protocols`, and runnable request schemas/examples; free/SIWX/nonpaid helper routes must not look paid.
-   - Fix path: deploy live OpenAPI/edge behavior so paid probes return `402 payment_required` before validation, or mark non-x402/free endpoints with `security: []`, then rescan.
+   - Earlier UI attempt reported `0 valid resources` with `[501] Endpoint did not return a 402 payment challenge`.
+   - Fresh CLI preflight now succeeds against the live origin: `agentcash discover` reads 17 routes from OpenAPI and `agentcash check https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test` classifies the one-cent smoke route as paid.
+   - Remaining warnings are metadata/deploy drift: live OpenAPI is missing `info.contact`, `info.x-guidance`, `x-payment-info.price`, and `x-payment-info.protocols`; this source branch patches those fields and removes paid-looking `x-payment-info` from the free swarm-preview route.
+   - Deploy source OpenAPI/edge behavior, then rescan/register.
    - Recheck commands after deploy:
      ```bash
      npx -y @agentcash/discovery@latest discover https://agents.daedalusdevelopmentgroup.com

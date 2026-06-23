@@ -11,9 +11,9 @@ The MCP server remains safe to publish as a stdio/package endpoint and safe to d
 Verification completed in this audit pass:
 
 - Source secret/prompt/internal URL scan: **0 findings**.
-- Public DDG endpoint leak scan over 9 agent-consumed surfaces: **0 findings**.
-- Public payment-edge smoke: **10/10 passed**.
-- Unit tests: **12 passed**.
+- Public DDG endpoint payment-ladder smoke: **10/10 passed**.
+- Public live OpenAPI drift check: **source branch patched; production deploy still pending** (`info.contact`, `info.x-guidance`, x402scan `price/protocols`, and stale MPP/Stripe live offers are corrected in repo but not yet live on `agents.daedalusdevelopmentgroup.com/openapi.json`).
+- Unit tests: **13 passed**.
 - MCP stdio smoke: **20 tools, 11 resources, ok:true**.
 - MCP Streamable HTTP loopback smoke: **20 tools, 11 resources, ok:true**.
 - Package build: **sdist + wheel built successfully**.
@@ -23,6 +23,7 @@ Verification completed in this audit pass:
 
 | Severity | Asset | Finding | Remediation |
 | --- | --- | --- | --- |
+| Medium | Public/live OpenAPI drift | Live production OpenAPI still lacks agentcash/x402scan metadata (`info.contact`, `info.x-guidance`, `x-payment-info.price`, `x-payment-info.protocols`) and still shows stale MPP/Stripe live offers, even though public 402 headers correctly advertise only x402/direct-crypto. | Patched in source OpenAPI; deploy/restart production before final x402scan/Bazaar/public-discovery claims. |
 | High | MCP payment header forwarding | Generic `Authorization` forwarding could accidentally relay unrelated Bearer/Basic/API tokens if a buyer agent passed them as `payment_headers`. | Patched: only `Authorization: Payment ...` is forwarded; Bearer/Basic and unknown auth schemes are dropped. |
 | Medium | Hosted Streamable HTTP identity | Hosted MCP clients could otherwise collapse onto the server's default `DDG_MCP_AGENT_ID`, weakening order/payment scoping. | Patched: paid and agent-scoped tools accept optional `agent_id`; docs mark hosted remote as requiring buyer agent IDs. |
 | Medium | Quote/path proxy surface | `ddg_quote_payment` accepted arbitrary DDG paths on the allowlisted host. | Patched: quote path is restricted to known protected DDG paths. |

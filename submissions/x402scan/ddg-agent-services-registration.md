@@ -10,7 +10,20 @@ I started the x402scan registration flow at `https://www.x402scan.com/resources/
 agents.daedalusdevelopmentgroup.com
 ```
 
-x402scan successfully read DDG metadata and identified these candidate endpoints:
+## x402scan / agentcash preflight status
+
+Initial UI attempt:
+
+- The x402scan form read DDG metadata and identified the six candidate endpoints below.
+- It reported `0 valid resources` with `[501] Endpoint did not return a 402 payment challenge`.
+
+Fresh CLI preflight:
+
+- `npx -y @agentcash/discovery@latest discover https://agents.daedalusdevelopmentgroup.com` exits 0 and reads 17 routes from the live OpenAPI.
+- `npx -y @agentcash/discovery@latest check https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test` exits 0 and classifies the one-cent route as paid.
+- Remaining warnings are metadata drift in the live OpenAPI: missing `info.contact`, missing `info.x-guidance`, and paid operations lacking `x-payment-info.price` / `x-payment-info.protocols`. This source branch patches those fields; deploy before final registration.
+
+Candidate endpoints discovered:
 
 ```text
 /v1/site-audit
@@ -21,11 +34,9 @@ x402scan successfully read DDG metadata and identified these candidate endpoints
 /v1/tx-smoke-test
 ```
 
-Current x402scan result: **0 valid resources**.
+Current publish gate: **deploy this source branch's OpenAPI/payment-edge patch, rerun the CLI preflight below, and only then submit/register**.
 
-Observed blocker: all six candidate endpoints were reported as `[501] Endpoint did not return a 402 payment challenge`. Follow-up curl checks show HEAD returns 501, while direct POST with `X-Agent-Id` returns 402 for paid routes; x402scan appears to be using HEAD-style probes.
-
-x402scan guidance/spec requirements:
+Spec requirements:
 
 - OpenAPI at `/openapi.json` is the canonical discovery contract.
 - Paid operations need `responses.402`, `x-payment-info.price`, `x-payment-info.protocols`, and a runnable request schema/example so probes can reach the paywall.

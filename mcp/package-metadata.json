@@ -2,7 +2,7 @@
   "name": "@daedalusdevelopmentgroup/ddg-agent-services-mcp",
   "version": "0.1.0",
   "title": "DDG Agent-Payable Services MCP",
-  "description": "Payment-aware MCP wrapper for DDG Agent-Payable Services: discovery, status, checkout conformance, free safety scan, order polling, and paid-service 402 challenges.",
+  "description": "Payment-aware MCP wrapper for DDG Agent-Payable Services: discovery resources, status, checkout conformance, free safety scan, order polling, and paid-service 402 challenges.",
   "homepage": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai",
   "documentation": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-swarm-mcp-design.md",
   "base_url": "https://agents.daedalusdevelopmentgroup.com",
@@ -22,6 +22,8 @@
   },
   "tools": [
     "ddg_mcp_security_profile",
+    "ddg_public_resource_index",
+    "ddg_fetch_public_resource",
     "ddg_list_services",
     "ddg_agent_status",
     "ddg_checkout_conformance",
@@ -38,6 +40,17 @@
     "ddg_run_paid_model",
     "ddg_request_ollama_model"
   ],
+  "resources": [
+    "ddg://manifest/ai",
+    "ddg://manifest/status",
+    "ddg://manifest/catalog",
+    "ddg://manifest/pricing",
+    "ddg://manifest/checkout-conformance",
+    "ddg://manifest/cybersecurity-services",
+    "ddg://docs/llms",
+    "ddg://docs/mcp-design",
+    "ddg://openapi"
+  ],
   "payment_protocols_current_public_live": ["x402", "direct_crypto_auto"],
   "payment_protocols_pending": ["mpp"],
   "security": {
@@ -47,7 +60,10 @@
     "paid_tools_return_structured_402": true,
     "authorization_forwarding": "Payment scheme only",
     "response_header_allowlist": true,
-    "hosted_remote_requires_agent_id_argument": true
+    "response_body_redaction": true,
+    "response_size_cap_bytes": 786432,
+    "hosted_remote_requires_agent_id_argument": true,
+    "resource_allowlist_only": true
   },
   "submission_status": "stdio_package_ready_registry_submission_waits_for_public_package_or_hosted_transport"
 }

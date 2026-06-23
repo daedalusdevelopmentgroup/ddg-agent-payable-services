@@ -46,6 +46,9 @@
     "paid_tools_return_structured_402": true,
     "authorization_forwarding": "Payment scheme only",
     "response_header_allowlist": true,
+    "response_body_redaction": true,
+    "response_size_cap_bytes": 786432,
+    "resource_allowlist_only": true,
     "hosted_remote_requires_agent_id_argument": true
   }
 }

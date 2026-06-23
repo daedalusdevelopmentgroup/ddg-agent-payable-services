@@ -24,8 +24,9 @@ class _FakeHTTPResponse:
     def __exit__(self, *args):
         return False
 
-    def read(self) -> bytes:
-        return json.dumps({"ok": True}).encode()
+    def read(self, size: int = -1) -> bytes:
+        data = json.dumps({"ok": True}).encode()
+        return data if size is None or size < 0 else data[:size]
 
 
 def test_authorization_header_is_payment_only() -> None:
@@ -131,3 +132,44 @@ def test_invalid_agent_id_rejected() -> None:
     result = server.ddg_tx_smoke_test(agent_id="bad\nagent")
     assert result["status"] == 0
     assert result["body"]["error"] == "unsafe_agent_id"
+
+
+class _LargeHTTPResponse(_FakeHTTPResponse):
+    def read(self, size: int = -1) -> bytes:
+        return b"a" * (server.MAX_RESPONSE_BYTES + 1)
+
+
+def test_response_size_limit_fails_closed(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(server.urllib.request, "urlopen", lambda req, timeout: _LargeHTTPResponse())
+    result = server._json_request("/.well-known/ddg-agent-status.json")
+    assert result["status"] == 0
+    assert result["body"]["error"] == "ddg_response_too_large"
+
+
+def test_json_response_redacts_sensitive_keys_and_values(monkeypatch: pytest.MonkeyPatch) -> None:
+    class SensitiveResponse(_FakeHTTPResponse):
+        def read(self, size: int = -1) -> bytes:
+            body = {
+                "token": "placeholder-token-value",
+                "message": "Bearer abcdefghijklmnop",
+                "nested": {"safe": "ok"},
+            }
+            data = json.dumps(body).encode()
+            return data if size is None or size < 0 else data[:size]
+
+    monkeypatch.setattr(server.urllib.request, "urlopen", lambda req, timeout: SensitiveResponse())
+    result = server._json_request("/.well-known/ddg-agent-status.json")
+    assert result["body"]["token"] == "[REDACTED]"
+    assert result["body"]["message"] == "[REDACTED]"
+    assert result["body"]["nested"]["safe"] == "ok"
+
+
+def test_public_resource_index_and_allowlist() -> None:
+    index = server.ddg_public_resource_index()
+    assert index["status"] == 200
+    uris = {item["uri"] for item in index["resources"]}
+    assert "ddg://manifest/status" in uris
+
+    rejected = server.ddg_fetch_public_resource("https://evil.example/resource")
+    assert rejected["status"] == 0
+    assert rejected["body"]["error"] == "unsupported_public_resource"

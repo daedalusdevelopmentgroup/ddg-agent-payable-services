@@ -29,6 +29,11 @@
           "href": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json",
           "type": "application/json",
           "title": "Checkout conformance profile"
+        },
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-refund-policy.json",
+          "type": "application/json",
+          "title": "Strict refund/reversal policy"
         }
       ],
       "status": [

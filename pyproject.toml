@@ -5,12 +5,12 @@ build-backend = "hatchling.build"
 [project]
 name = "ddg-agent-services-mcp"
 version = "0.1.0"
-description = "Payment-aware MCP wrapper for DDG Agent-Payable Services"
+description = "Payment-aware MCP wrapper and AI-agent distribution/readiness surface for DDG Agent-Payable Services"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 authors = [{ name = "Daedalus Development Group", email = "0xcircuitbreaker@protonmail.com" }]
-keywords = ["mcp", "x402", "agent-commerce", "ai-agents", "machine-payments", "openapi"]
+keywords = ["mcp", "x402", "agent-commerce", "ai-agents", "machine-payments", "openapi", "mcp-registry", "bazaar"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Environment :: Console",

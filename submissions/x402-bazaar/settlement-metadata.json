@@ -1,0 +1,46 @@
+{
+  "status": "ready_for_cdp_facilitator_settle_integration_not_yet_indexed",
+  "facilitator_base": "https://api.cdp.coinbase.com/platform/v2/x402",
+  "routes": [
+    {
+      "method": "POST",
+      "resource": "https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test",
+      "price": "$0.01",
+      "description": "One-cent side-effect-free x402 transaction smoke test for buyer agents.",
+      "mimeType": "application/json",
+      "extensions": {
+        "bazaar": {
+          "input": {"request_label": "buyer-agent-smoke"},
+          "inputSchema": {
+            "type": "object",
+            "properties": {"request_label": {"type": "string", "maxLength": 120}},
+            "additionalProperties": false
+          },
+          "output": {
+            "example": {"ok": true, "service": "tx_penny_smoke_test", "payment": {"protocol": "x402", "receipt": "..."}},
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ok": {"type": "boolean"},
+                "service": {"const": "tx_penny_smoke_test"},
+                "amount_usd": {"type": "string"},
+                "payment": {"type": "object"}
+              },
+              "required": ["ok", "service", "payment"]
+            }
+          }
+        }
+      },
+      "settle_payload_requirement": {
+        "paymentPayload": {
+          "resource": "https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test"
+        }
+      }
+    }
+  ],
+  "verification_after_settle": [
+    "Query https://api.cdp.coinbase.com/platform/v2/x402/discovery/search?query=DDG%20agent%20payment&limit=20",
+    "Query https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources?limit=100",
+    "Connect an MCP client to https://api.cdp.coinbase.com/platform/v2/x402/discovery/mcp and search for DDG"
+  ]
+}

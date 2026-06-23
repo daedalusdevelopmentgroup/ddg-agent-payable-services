@@ -1,6 +1,6 @@
 {
   "status": "ready_for_cdp_facilitator_integration_not_indexed_until_real_settlement",
-  "source_docs_checked": "Stripe/CDP x402 Bazaar docs via web_extract on 2026-06-23",
+  "source_docs_checked": "CDP x402 Bazaar and seller docs checked on 2026-06-23; Bazaar indexing still requires real CDP settle with paymentPayload.resource.",
   "indexing_requirements": [
     "Use CDP Facilitator verify/settle endpoint for x402 payments.",
     "Attach Bazaar discovery metadata through extensions.bazaar / declareDiscoveryExtension on discoverable routes.",
@@ -63,6 +63,6 @@
     "Add a small route-to-Bazaar metadata map to the x402 verifier/edge layer.",
     "On settle, include paymentPayload.resource equal to the exact public resource URL.",
     "Inspect EXTENSION-RESPONSES header for rejected/processing and log only redacted status.",
-    "Run one penny settlement, then query CDP discovery search/resources for agents.daedalusdevelopmentgroup.com."
+    "Run one penny settlement, then query CDP discovery search/resources or connect an MCP client to https://api.cdp.coinbase.com/platform/v2/x402/discovery/mcp and search for DDG."
   ]
 }

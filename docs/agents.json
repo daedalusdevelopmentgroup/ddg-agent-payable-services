@@ -12,7 +12,8 @@
     "catalog": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json",
     "api_catalog": "https://agents.daedalusdevelopmentgroup.com/.well-known/api-catalog",
     "agent_skills": "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/index.json",
-    "checkout_conformance": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json"
+    "checkout_conformance": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json",
+    "refund_policy": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-refund-policy.json"
   },
   "payment_protocols": {
     "live": [

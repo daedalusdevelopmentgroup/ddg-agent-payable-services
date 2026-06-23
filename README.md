@@ -71,6 +71,7 @@ See also [`DISCOVERY.md`](DISCOVERY.md) for the agent-radar/distribution map and
 | `/.well-known/agent-catalog.json` | Agent service catalog |
 | `/.well-known/agent-skills/index.json` | Agent-skill discovery index |
 | `/.well-known/ddg-agent-checkout-conformance.json` | Checkout conformance profile |
+| `/.well-known/ddg-agent-refund-policy.json` | Strict refund/reversal policy for agent-paid work |
 | `/.well-known/ddg-agent-swarm-mcp-design.md` | MCP design/status doc |
 
 ## Flagship services
@@ -88,7 +89,7 @@ See also [`DISCOVERY.md`](DISCOVERY.md) for the agent-radar/distribution map and
 
 ## MCP
 
-The local stdio MCP server is in [`mcp/`](mcp/). It exposes free discovery/status/conformance tools, allowlisted `ddg://` resources for public manifests/docs/OpenAPI, and payment-aware paid-service helpers. Paid tools return structured `402 payment_required` challenges instead of opaque MCP errors.
+The local stdio MCP server is in [`mcp/`](mcp/). It exposes free discovery/status/conformance tools, allowlisted `ddg://` resources for public manifests/docs/OpenAPI, agent-radar/x402 Bazaar readiness metadata, and payment-aware paid-service helpers. Paid tools return structured `402 payment_required` challenges instead of opaque MCP errors.
 
 Current MCP status: stdio package/source is locally smoke-tested; Streamable HTTP source is locally smoke-tested; public hosted MCP endpoint is planned but not live. See [`docs/mcp-production-readiness.md`](docs/mcp-production-readiness.md).
 

@@ -72,6 +72,8 @@ mcp_ddg_agent_services_ddg_agent_status
 | `ddg_mcp_security_profile` | Free | Report local wrapper controls, publication gates, and header/payload/resource safety limits. |
 | `ddg_public_resource_index` | Free | List allowlisted `ddg://` manifest/doc resources. |
 | `ddg_fetch_public_resource` | Free | Fetch an allowlisted public resource by id or URI with size caps and redaction. |
+| `ddg_agent_distribution_targets` | Free | Show AI-agent radar targets: owned discovery, GitHub, MCP Registry, CDP x402 Bazaar, x402scan, ecosystem lists, and MCP aggregators. |
+| `ddg_x402_bazaar_readiness` | Free | Return CDP x402 Bazaar candidate resources, JSON Schemas, and settlement/indexing gates. |
 | `ddg_list_services` | Free | Fetch pricing/catalog. |
 | `ddg_agent_status` | Free | Fetch `/.well-known/ddg-agent-status.json`. |
 | `ddg_checkout_conformance` | Free | Fetch checkout conformance profile. |
@@ -107,9 +109,11 @@ ddg://manifest/cybersecurity-services
 ddg://docs/llms
 ddg://docs/mcp-design
 ddg://openapi
+ddg://distribution/agent-radar
+ddg://distribution/x402-bazaar-readiness
 ```
 
-Resources are fetched only from fixed DDG public paths, never from arbitrary URLs. Responses are size-capped and secret-pattern redacted before returning to the MCP client.
+Resources are fetched only from fixed DDG public paths or returned from static source-bundled distribution metadata, never from arbitrary URLs. Responses are size-capped and secret-pattern redacted before returning to the MCP client.
 
 ## Payment flow
 
@@ -145,8 +149,8 @@ Observed result shape:
 ```json
 {
   "ok": true,
-  "tool_count": 18,
-  "resource_count": 9,
+  "tool_count": 20,
+  "resource_count": 11,
   "sample": {
     "security_profile_status": "source_hardened_public_remote_pending",
     "agent_status_status": 200,

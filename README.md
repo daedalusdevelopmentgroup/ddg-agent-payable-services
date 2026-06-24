@@ -14,35 +14,52 @@ https://agents.daedalusdevelopmentgroup.com
 ```text
 x402
 direct_crypto_auto
+direct_crypto_manual
 ```
 
-MPP / Stripe / Tempo is installed but **not advertised live yet**. DDG will advertise MPP only after the verifier reports ready, the public 402 challenge includes MPP, a real penny-scale settlement succeeds, idempotency replay passes, and invalid-token failure is verified.
+Accepted crypto is intentionally broad but bounded by public receiving-address custody and verifier support:
+
+- x402 `accepts[]`: Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC.
+- Direct crypto public receiving-address families: EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
+- Auto verification applies only where the verifier can prove settlement; otherwise `/v1/order-intake` records a hashed proof for operator confirmation before fulfillment.
+
+MPP / Stripe / Tempo is installed but **not advertised live yet**. DDG will advertise MPP only after the verifier reports ready, the public 402 challenge includes MPP, a real penny-scale settlement succeeds, idempotency replay passes, invalid-token failure is verified, and all discovery/listing packets are re-synced.
 
 ## Start here if you are a buyer agent
 
 1. Fetch AI discovery:
 
 ```bash
-curl -fsS https://agents.daedalusdevelopmentgroup.com/.well-known/ai | python3 -m json.tool
+tmp=$(mktemp)
+curl -fsS -o "$tmp" https://agents.daedalusdevelopmentgroup.com/.well-known/ai
+python3 -m json.tool "$tmp"
 ```
 
 2. Fetch status:
 
 ```bash
-curl -fsS https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-status.json | python3 -m json.tool
+tmp=$(mktemp)
+curl -fsS -o "$tmp" https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-status.json
+python3 -m json.tool "$tmp"
 ```
 
 3. Fetch pricing/catalog:
 
 ```bash
-curl -fsS https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json | python3 -m json.tool
-curl -fsS https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json | python3 -m json.tool
+tmp_pricing=$(mktemp)
+tmp_catalog=$(mktemp)
+curl -fsS -o "$tmp_pricing" https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json
+curl -fsS -o "$tmp_catalog" https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json
+python3 -m json.tool "$tmp_pricing"
+python3 -m json.tool "$tmp_catalog"
 ```
 
 4. Verify checkout conformance:
 
 ```bash
-curl -fsS https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json | python3 -m json.tool
+tmp=$(mktemp)
+curl -fsS -o "$tmp" https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json
+python3 -m json.tool "$tmp"
 ```
 
 5. Probe the payment gate without spending:

@@ -63,6 +63,23 @@
           "type": "application/json",
           "title": "Agent skill index"
         }
+      ],
+      "payment-manifest": [
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-direct-crypto-addresses.json",
+          "type": "application/json",
+          "title": "Direct-crypto public receiving-address manifest"
+        },
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json",
+          "type": "application/json",
+          "title": "Pricing and live payment protocol status"
+        },
+        {
+          "href": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-mpp-activation-guide.md",
+          "type": "text/markdown",
+          "title": "MPP activation status and go-live gates"
+        }
       ]
     }
   ]

@@ -3,7 +3,7 @@
   "info": {
     "title": "DDG Agent-Payable Services",
     "version": "2026-06-22-agent-discovery-distribution",
-    "description": "Machine-payable DDG services for AI agents. Current public live payment rails are x402 and direct-crypto. MPP/Stripe/Tempo is installed but pending live provider env plus penny-settlement proof before any MPP-live advertisement. DDG sells bounded artifacts/results, not raw provider account access.",
+    "description": "Machine-payable DDG services for AI agents. Current public live payment rails are x402 multi-chain USDC and direct-crypto auto/manual for public receiving-address families. MPP/Stripe/Tempo is installed but pending live provider env plus penny-settlement proof before any MPP-live advertisement. DDG sells bounded artifacts/results, not raw provider account access.",
     "account_local_candidate_routes": [],
     "contact": {
       "name": "George Sarris / Daedalus Development Group",
@@ -510,37 +510,17 @@
       "llms_txt": "/llms.txt",
       "pricing": "/.well-known/ddg-agent-pricing.json"
     },
-    "refund_policy": "/.well-known/ddg-agent-refund-policy.json"
+    "refund_policy": "/.well-known/ddg-agent-refund-policy.json",
+    "ethereum_rpc_status": "implemented_but_not_advertised_as_public_self_serve_until_sync_health_and_security_smokes_pass"
   },
   "x-payment-info": {
     "offers": [
-      {
-        "method": "stripe",
-        "intent": "charge",
-        "currency": "usd",
-        "amount": "75",
-        "description": "site_audit_auto per request"
-      },
-      {
-        "method": "tempo",
-        "intent": "charge",
-        "currency": "usd",
-        "amount": "75",
-        "description": "site_audit_auto per request"
-      },
       {
         "method": "x402",
         "intent": "charge",
         "currency": "USDC",
         "amount": "750000",
         "description": "site_audit_auto per request"
-      },
-      {
-        "method": "stripe",
-        "intent": "session",
-        "currency": "usd",
-        "amount": "25",
-        "description": "model router metered session; final charge based on tokens"
       },
       {
         "method": "x402",
@@ -551,7 +531,7 @@
       }
     ],
     "direct_crypto": {
-      "status": "auto_verification_when_DDG_PAYMENT_DIRECT_CRYPTO_VERIFY_URL_is_configured_else_manual_confirmation_beta",
+      "status": "public_live_auto_for_verifier_supported_assets_manual_operator_confirmed_for_remaining_public_addresses",
       "env_addresses": [
         "DDG_CRYPTO_EVM_ADDRESS",
         "DDG_CRYPTO_BTC_ADDRESS",
@@ -570,8 +550,7 @@
       "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}",
       "public_manifest": "/.well-known/ddg-direct-crypto-addresses.json",
       "assets": [
-        "EVM",
-        "stablecoins:EVM(USDC,USDT,DAI,PYUSD,FRAX,FDUSD,GUSD,LUSD,USDP,TUSD,EURC)",
+        "EVM/stablecoins",
         "BTC",
         "BCH",
         "LTC",
@@ -585,12 +564,368 @@
         "ZEC",
         "XMR"
       ],
+      "public_address_families": [
+        {
+          "asset": "EVM",
+          "network": "EVM-compatible mainnets/testnets",
+          "address_env": "DDG_CRYPTO_EVM_ADDRESS",
+          "address": "0x25A4B534452372619f841956D64Ce5F45307d834",
+          "description": "ETH/EVM native assets plus operator-confirmed EVM stablecoins (USDC, USDT, DAI, PYUSD, FRAX, FDUSD, GUSD, LUSD, USDP, TUSD, EURC) on supported EVM networks; auto verifier currently supports configured EVM native/USDC paths."
+        },
+        {
+          "asset": "BTC",
+          "network": "Bitcoin mainnet native segwit",
+          "address_env": "DDG_CRYPTO_BTC_ADDRESS",
+          "address": "bc1qswcxsxmlads07gtlunrqm49fmeuc4p3lmk5k0q",
+          "description": "Bitcoin mainnet native segwit."
+        },
+        {
+          "asset": "BCH",
+          "network": "Bitcoin Cash mainnet cashaddr",
+          "address_env": "DDG_CRYPTO_BCH_ADDRESS",
+          "address": "bitcoincash:qze4aj4ns8usydmwlqx8q5nmgpud3x48avpkrqds0x",
+          "description": "Bitcoin Cash mainnet cashaddr."
+        },
+        {
+          "asset": "LTC",
+          "network": "Litecoin mainnet native segwit",
+          "address_env": "DDG_CRYPTO_LTC_ADDRESS",
+          "address": "ltc1qv8yemdhk88zxth95n5s3rnt7nrjg7z52ru2n2y",
+          "description": "Litecoin mainnet native segwit."
+        },
+        {
+          "asset": "DOGE",
+          "network": "Dogecoin mainnet legacy",
+          "address_env": "DDG_CRYPTO_DOGE_ADDRESS",
+          "address": "DEiZ9siBn8pYAhqRf1Ca7eqNNyK2ZrBd1x",
+          "description": "Dogecoin mainnet legacy."
+        },
+        {
+          "asset": "SOL",
+          "network": "Solana mainnet",
+          "address_env": "DDG_CRYPTO_SOL_ADDRESS",
+          "address": "v6ztnrxiyZPF7LSKZrm9AhAJqukWYMFMt6YboofJhGD",
+          "description": "Solana mainnet; SOL and SPL stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "TRX",
+          "network": "Tron mainnet",
+          "address_env": "DDG_CRYPTO_TRX_ADDRESS",
+          "address": "TYMsm7b6YnyD41KSAgZttRUNY3mDwU4yoo",
+          "description": "Tron mainnet; TRX and TRC20 stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "XRP",
+          "network": "XRP Ledger mainnet",
+          "address_env": "DDG_CRYPTO_XRP_ADDRESS",
+          "address": "r4Ub17w7P22kTu33qNvVkQs3XRYJvEiiYD",
+          "description": "XRP Ledger mainnet; destination-tag policy should be checked before high-volume payments."
+        },
+        {
+          "asset": "XLM",
+          "network": "Stellar mainnet",
+          "address_env": "DDG_CRYPTO_XLM_ADDRESS",
+          "address": "GAIJ5MBOB4RUGU2QRR237XX3WFO4ALNV5V42Q7JK6MLGVOBWM4OV6GFK",
+          "description": "Stellar mainnet; XLM and Stellar-issued stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "ALGO",
+          "network": "Algorand mainnet",
+          "address_env": "DDG_CRYPTO_ALGO_ADDRESS",
+          "address": "MLYNV63M76DBHTJZLST6H7SR5Z2DWWRJU2GNCN2BEXBVVVSGEJ3N6ES3YU",
+          "description": "Algorand mainnet; ALGO and ASA stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "DOT",
+          "network": "Polkadot mainnet",
+          "address_env": "DDG_CRYPTO_DOT_ADDRESS",
+          "address": "12WdyrGrNr4tsqa45zdKWXbWx3grrm3tZunbcpVNi96PvvCw",
+          "description": "Polkadot mainnet; manual/operator confirmation unless a Substrate indexer is configured."
+        },
+        {
+          "asset": "ZEC",
+          "network": "Zcash mainnet transparent t-address",
+          "address_env": "DDG_CRYPTO_ZEC_ADDRESS",
+          "address": "t1Nrg3PZAf1w3vKbzV1Rq817oRTLxq9iD5d",
+          "description": "Zcash transparent t-address; shielded payments are not auto-confirmed."
+        },
+        {
+          "asset": "XMR",
+          "network": "Monero mainnet primary address",
+          "address_env": "DDG_CRYPTO_XMR_ADDRESS",
+          "address": "46rEbwqHVMW7at7kBbdtFnRMXSqkUbbpbJZR4k4TUxsVUDdQX7po4HL2F1Nbw7kEM8hZ4F242D4kgQAj1aMU5S9U6TS6ZCy",
+          "description": "Monero primary address; public balance is not visible and auto confirmation requires view-only wallet RPC, otherwise operator confirmation."
+        }
+      ],
       "auto_proof_headers": [
         "X-Direct-Crypto-Proof",
         "Payment-Proof",
         "Authorization: Payment direct_crypto <base64url-json>"
+      ],
+      "auto_verification_scope": [
+        "BTC, BCH, LTC, DOGE, transparent ZEC via public-chain lookups",
+        "EVM native transfers and USDC on configured Ethereum/Base/Polygon RPC paths",
+        "SOL, TRX, XRP, XLM, and ALGO native payment lookups",
+        "XMR only when a view-only monero-wallet-rpc is configured"
+      ],
+      "manual_confirmation_scope": [
+        "DOT until a Substrate/Subscan indexer is configured",
+        "XMR without wallet RPC, shielded ZEC, non-USDC stablecoins, and any supported address family the verifier cannot conclusively confirm"
       ]
-    }
+    },
+    "payment_protocols_current_public_live": [
+      "x402",
+      "direct_crypto_auto",
+      "direct_crypto_manual"
+    ],
+    "payment_protocols_pending": [
+      "mpp"
+    ],
+    "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+    "crypto_payment_options": {
+      "last_synced_at": "2026-06-24T01:32:05Z",
+      "source_of_truth": {
+        "x402": "/openapi.json 402 PAYMENT-REQUIRED accepts[] plus payment_rail_addresses.env",
+        "direct_crypto": "/.well-known/ddg-direct-crypto-addresses.json plus direct_crypto_addresses.env",
+        "mpp": "/.well-known/ddg-mpp-activation-guide.md; pending until provider env and penny settlement pass"
+      },
+      "public_live_protocols": [
+        "x402",
+        "direct_crypto_auto",
+        "direct_crypto_manual"
+      ],
+      "pending_protocols": [
+        "mpp"
+      ],
+      "x402": {
+        "status": "public_live",
+        "settlement_default": "Base mainnet USDC for production/x402scan compatibility",
+        "accepted_networks": [
+          {
+            "network": "eip155:8453",
+            "label": "Base mainnet",
+            "asset": "USDC",
+            "asset_contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+            "amount_decimals": 6
+          },
+          {
+            "network": "eip155:137",
+            "label": "Polygon mainnet",
+            "asset": "USDC",
+            "asset_contract": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+            "amount_decimals": 6
+          },
+          {
+            "network": "eip155:42161",
+            "label": "Arbitrum One",
+            "asset": "USDC",
+            "asset_contract": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+            "amount_decimals": 6
+          },
+          {
+            "network": "eip155:480",
+            "label": "World Chain mainnet",
+            "asset": "USDC",
+            "asset_contract": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
+            "amount_decimals": 6
+          },
+          {
+            "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+            "label": "Solana mainnet",
+            "asset": "USDC",
+            "asset_contract": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+            "amount_decimals": 6
+          }
+        ],
+        "amount_unit": "atomic integer strings; USDC has 6 decimals, so $0.01 is \"10000\""
+      },
+      "direct_crypto": {
+        "status": "public_live_auto_for_verifier_supported_assets_manual_operator_confirmed_for_remaining_public_addresses",
+        "public_manifest": "/.well-known/ddg-direct-crypto-addresses.json",
+        "public_env": "direct_crypto_addresses.env",
+        "wallet_count": 13,
+        "assets": [
+          "EVM/stablecoins",
+          "BTC",
+          "BCH",
+          "LTC",
+          "DOGE",
+          "SOL",
+          "TRX",
+          "XRP",
+          "XLM",
+          "ALGO",
+          "DOT",
+          "ZEC",
+          "XMR"
+        ],
+        "address_env": [
+          "DDG_CRYPTO_EVM_ADDRESS",
+          "DDG_CRYPTO_BTC_ADDRESS",
+          "DDG_CRYPTO_BCH_ADDRESS",
+          "DDG_CRYPTO_LTC_ADDRESS",
+          "DDG_CRYPTO_DOGE_ADDRESS",
+          "DDG_CRYPTO_SOL_ADDRESS",
+          "DDG_CRYPTO_TRX_ADDRESS",
+          "DDG_CRYPTO_XRP_ADDRESS",
+          "DDG_CRYPTO_XLM_ADDRESS",
+          "DDG_CRYPTO_ALGO_ADDRESS",
+          "DDG_CRYPTO_DOT_ADDRESS",
+          "DDG_CRYPTO_ZEC_ADDRESS",
+          "DDG_CRYPTO_XMR_ADDRESS"
+        ],
+        "public_address_families": [
+          {
+            "asset": "EVM",
+            "network": "EVM-compatible mainnets/testnets",
+            "address_env": "DDG_CRYPTO_EVM_ADDRESS",
+            "address": "0x25A4B534452372619f841956D64Ce5F45307d834",
+            "description": "ETH/EVM native assets plus operator-confirmed EVM stablecoins (USDC, USDT, DAI, PYUSD, FRAX, FDUSD, GUSD, LUSD, USDP, TUSD, EURC) on supported EVM networks; auto verifier currently supports configured EVM native/USDC paths."
+          },
+          {
+            "asset": "BTC",
+            "network": "Bitcoin mainnet native segwit",
+            "address_env": "DDG_CRYPTO_BTC_ADDRESS",
+            "address": "bc1qswcxsxmlads07gtlunrqm49fmeuc4p3lmk5k0q",
+            "description": "Bitcoin mainnet native segwit."
+          },
+          {
+            "asset": "BCH",
+            "network": "Bitcoin Cash mainnet cashaddr",
+            "address_env": "DDG_CRYPTO_BCH_ADDRESS",
+            "address": "bitcoincash:qze4aj4ns8usydmwlqx8q5nmgpud3x48avpkrqds0x",
+            "description": "Bitcoin Cash mainnet cashaddr."
+          },
+          {
+            "asset": "LTC",
+            "network": "Litecoin mainnet native segwit",
+            "address_env": "DDG_CRYPTO_LTC_ADDRESS",
+            "address": "ltc1qv8yemdhk88zxth95n5s3rnt7nrjg7z52ru2n2y",
+            "description": "Litecoin mainnet native segwit."
+          },
+          {
+            "asset": "DOGE",
+            "network": "Dogecoin mainnet legacy",
+            "address_env": "DDG_CRYPTO_DOGE_ADDRESS",
+            "address": "DEiZ9siBn8pYAhqRf1Ca7eqNNyK2ZrBd1x",
+            "description": "Dogecoin mainnet legacy."
+          },
+          {
+            "asset": "SOL",
+            "network": "Solana mainnet",
+            "address_env": "DDG_CRYPTO_SOL_ADDRESS",
+            "address": "v6ztnrxiyZPF7LSKZrm9AhAJqukWYMFMt6YboofJhGD",
+            "description": "Solana mainnet; SOL and SPL stablecoin proof can be operator-confirmed."
+          },
+          {
+            "asset": "TRX",
+            "network": "Tron mainnet",
+            "address_env": "DDG_CRYPTO_TRX_ADDRESS",
+            "address": "TYMsm7b6YnyD41KSAgZttRUNY3mDwU4yoo",
+            "description": "Tron mainnet; TRX and TRC20 stablecoin proof can be operator-confirmed."
+          },
+          {
+            "asset": "XRP",
+            "network": "XRP Ledger mainnet",
+            "address_env": "DDG_CRYPTO_XRP_ADDRESS",
+            "address": "r4Ub17w7P22kTu33qNvVkQs3XRYJvEiiYD",
+            "description": "XRP Ledger mainnet; destination-tag policy should be checked before high-volume payments."
+          },
+          {
+            "asset": "XLM",
+            "network": "Stellar mainnet",
+            "address_env": "DDG_CRYPTO_XLM_ADDRESS",
+            "address": "GAIJ5MBOB4RUGU2QRR237XX3WFO4ALNV5V42Q7JK6MLGVOBWM4OV6GFK",
+            "description": "Stellar mainnet; XLM and Stellar-issued stablecoin proof can be operator-confirmed."
+          },
+          {
+            "asset": "ALGO",
+            "network": "Algorand mainnet",
+            "address_env": "DDG_CRYPTO_ALGO_ADDRESS",
+            "address": "MLYNV63M76DBHTJZLST6H7SR5Z2DWWRJU2GNCN2BEXBVVVSGEJ3N6ES3YU",
+            "description": "Algorand mainnet; ALGO and ASA stablecoin proof can be operator-confirmed."
+          },
+          {
+            "asset": "DOT",
+            "network": "Polkadot mainnet",
+            "address_env": "DDG_CRYPTO_DOT_ADDRESS",
+            "address": "12WdyrGrNr4tsqa45zdKWXbWx3grrm3tZunbcpVNi96PvvCw",
+            "description": "Polkadot mainnet; manual/operator confirmation unless a Substrate indexer is configured."
+          },
+          {
+            "asset": "ZEC",
+            "network": "Zcash mainnet transparent t-address",
+            "address_env": "DDG_CRYPTO_ZEC_ADDRESS",
+            "address": "t1Nrg3PZAf1w3vKbzV1Rq817oRTLxq9iD5d",
+            "description": "Zcash transparent t-address; shielded payments are not auto-confirmed."
+          },
+          {
+            "asset": "XMR",
+            "network": "Monero mainnet primary address",
+            "address_env": "DDG_CRYPTO_XMR_ADDRESS",
+            "address": "46rEbwqHVMW7at7kBbdtFnRMXSqkUbbpbJZR4k4TUxsVUDdQX7po4HL2F1Nbw7kEM8hZ4F242D4kgQAj1aMU5S9U6TS6ZCy",
+            "description": "Monero primary address; public balance is not visible and auto confirmation requires view-only wallet RPC, otherwise operator confirmation."
+          }
+        ],
+        "auto_verification_scope": [
+          "BTC, BCH, LTC, DOGE, transparent ZEC via public-chain lookups",
+          "EVM native transfers and USDC on configured Ethereum/Base/Polygon RPC paths",
+          "SOL, TRX, XRP, XLM, and ALGO native payment lookups",
+          "XMR only when a view-only monero-wallet-rpc is configured"
+        ],
+        "manual_confirmation_scope": [
+          "DOT until a Substrate/Subscan indexer is configured",
+          "XMR without wallet RPC, shielded ZEC, non-USDC stablecoins, and any supported address family the verifier cannot conclusively confirm"
+        ],
+        "proof_headers": [
+          "X-Direct-Crypto-Proof",
+          "Payment-Proof",
+          "Authorization: Payment direct_crypto <base64url-json>"
+        ],
+        "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}"
+      },
+      "mpp": {
+        "status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+        "advertise_rule": "Do not add MPP to public 402 challenges, OpenAPI live protocols, or listing copy until ready:true, real penny settlement, idempotent replay, fake-token 402, and leak scan pass."
+      }
+    },
+    "x402_supported_chains": [
+      {
+        "network": "eip155:8453",
+        "label": "Base mainnet",
+        "asset": "USDC",
+        "asset_contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "amount_decimals": 6
+      },
+      {
+        "network": "eip155:137",
+        "label": "Polygon mainnet",
+        "asset": "USDC",
+        "asset_contract": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+        "amount_decimals": 6
+      },
+      {
+        "network": "eip155:42161",
+        "label": "Arbitrum One",
+        "asset": "USDC",
+        "asset_contract": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "amount_decimals": 6
+      },
+      {
+        "network": "eip155:480",
+        "label": "World Chain mainnet",
+        "asset": "USDC",
+        "asset_contract": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
+        "amount_decimals": 6
+      },
+      {
+        "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+        "label": "Solana mainnet",
+        "asset": "USDC",
+        "asset_contract": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+        "amount_decimals": 6
+      }
+    ]
   },
   "paths": {
     "/v1/site-audit": {
@@ -635,7 +970,7 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -645,64 +980,7 @@
             {
               "x402": {}
             }
-          ],
-          "extensions": {
-            "bazaar": {
-              "description": "DDG agent-payable service endpoint with x402 payment and bounded artifact/result delivery.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "input": {
-                    "type": "object",
-                    "properties": {
-                      "body": {
-                        "type": "object",
-                        "required": [
-                          "url"
-                        ],
-                        "properties": {
-                          "url": {
-                            "type": "string",
-                            "format": "uri",
-                            "description": "Website or public API URL to audit."
-                          },
-                          "business_type": {
-                            "type": "string",
-                            "maxLength": 120
-                          },
-                          "market": {
-                            "type": "string",
-                            "maxLength": 120
-                          }
-                        },
-                        "additionalProperties": false
-                      }
-                    },
-                    "required": [
-                      "body"
-                    ]
-                  },
-                  "output": {
-                    "type": "object",
-                    "properties": {
-                      "example": {
-                        "ok": true,
-                        "status": "queued_or_completed",
-                        "artifact_url": "https://agents.daedalusdevelopmentgroup.com/v1/orders/ord_.../artifact"
-                      }
-                    },
-                    "required": [
-                      "example"
-                    ]
-                  }
-                },
-                "required": [
-                  "input",
-                  "output"
-                ]
-              }
-            }
-          }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -739,20 +1017,7 @@
         },
         "responses": {
           "200": {
-            "description": "Audit result",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "example": {
-                  "ok": true,
-                  "status": "queued_or_completed",
-                  "artifact_url": "https://agents.daedalusdevelopmentgroup.com/v1/orders/ord_.../artifact"
-                }
-              }
-            }
+            "description": "Audit result"
           },
           "402": {
             "description": "Payment required"
@@ -825,7 +1090,7 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -835,80 +1100,7 @@
             {
               "x402": {}
             }
-          ],
-          "extensions": {
-            "bazaar": {
-              "description": "DDG agent-payable service endpoint with x402 payment and bounded artifact/result delivery.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "input": {
-                    "type": "object",
-                    "properties": {
-                      "body": {
-                        "type": "object",
-                        "required": [
-                          "messages"
-                        ],
-                        "properties": {
-                          "model": {
-                            "type": "string",
-                            "default": "auto"
-                          },
-                          "messages": {
-                            "type": "array",
-                            "items": {
-                              "type": "object"
-                            },
-                            "minItems": 1
-                          },
-                          "agent_profile": {
-                            "type": "string",
-                            "enum": [
-                              "low",
-                              "standard",
-                              "pro",
-                              "premium"
-                            ]
-                          }
-                        },
-                        "additionalProperties": true
-                      }
-                    },
-                    "required": [
-                      "body"
-                    ]
-                  },
-                  "output": {
-                    "type": "object",
-                    "properties": {
-                      "example": {
-                        "ok": true,
-                        "choices": [
-                          {
-                            "message": {
-                              "role": "assistant",
-                              "content": "..."
-                            }
-                          }
-                        ],
-                        "receipt": {
-                          "protocol": "x402"
-                        }
-                      }
-                    },
-                    "required": [
-                      "example"
-                    ]
-                  }
-                },
-                "required": [
-                  "input",
-                  "output"
-                ]
-              }
-            }
-          }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -1080,29 +1272,7 @@
         },
         "responses": {
           "200": {
-            "description": "OpenAI-compatible response plus billing/payment metadata",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "example": {
-                  "ok": true,
-                  "choices": [
-                    {
-                      "message": {
-                        "role": "assistant",
-                        "content": "..."
-                      }
-                    }
-                  ],
-                  "receipt": {
-                    "protocol": "x402"
-                  }
-                }
-              }
-            }
+            "description": "OpenAI-compatible response plus billing/payment metadata"
           },
           "402": {
             "description": "Payment required"
@@ -1369,25 +1539,7 @@
         },
         "responses": {
           "200": {
-            "description": "Agent-run result with selected route, limits, estimate, and output artifact",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "example": {
-                  "ok": true,
-                  "status": "completed",
-                  "artifact": {
-                    "summary": "..."
-                  },
-                  "receipt": {
-                    "protocol": "x402"
-                  }
-                }
-              }
-            }
+            "description": "Agent-run result with selected route, limits, estimate, and output artifact"
           },
           "400": {
             "description": "Unsupported route, missing task, or invalid payload"
@@ -1428,7 +1580,7 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -1438,74 +1590,7 @@
             {
               "x402": {}
             }
-          ],
-          "extensions": {
-            "bazaar": {
-              "description": "DDG agent-payable service endpoint with x402 payment and bounded artifact/result delivery.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "input": {
-                    "type": "object",
-                    "properties": {
-                      "body": {
-                        "type": "object",
-                        "required": [
-                          "task"
-                        ],
-                        "properties": {
-                          "task": {
-                            "type": "string",
-                            "minLength": 1,
-                            "maxLength": 64000
-                          },
-                          "agent_profile": {
-                            "type": "string",
-                            "enum": [
-                              "low",
-                              "standard",
-                              "pro",
-                              "premium"
-                            ]
-                          },
-                          "deliverable_format": {
-                            "type": "string",
-                            "maxLength": 120
-                          }
-                        },
-                        "additionalProperties": true
-                      }
-                    },
-                    "required": [
-                      "body"
-                    ]
-                  },
-                  "output": {
-                    "type": "object",
-                    "properties": {
-                      "example": {
-                        "ok": true,
-                        "status": "completed",
-                        "artifact": {
-                          "summary": "..."
-                        },
-                        "receipt": {
-                          "protocol": "x402"
-                        }
-                      }
-                    },
-                    "required": [
-                      "example"
-                    ]
-                  }
-                },
-                "required": [
-                  "input",
-                  "output"
-                ]
-              }
-            }
-          }
+          ]
         },
         "x-x402scan": {
           "paid_probe_expected_status": 402
@@ -1568,7 +1653,7 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
           "price": {
             "mode": "dynamic",
             "currency": "USD",
@@ -1579,68 +1664,7 @@
             {
               "x402": {}
             }
-          ],
-          "extensions": {
-            "bazaar": {
-              "description": "DDG agent-payable service endpoint with x402 payment and bounded artifact/result delivery.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "input": {
-                    "type": "object",
-                    "properties": {
-                      "body": {
-                        "type": "object",
-                        "required": [
-                          "service_id"
-                        ],
-                        "properties": {
-                          "service_id": {
-                            "type": "string",
-                            "maxLength": 120
-                          },
-                          "target": {
-                            "type": "object"
-                          },
-                          "budget_usd": {
-                            "type": "number",
-                            "minimum": 0.01,
-                            "maximum": 2500
-                          },
-                          "notes": {
-                            "type": "string",
-                            "maxLength": 8000
-                          }
-                        },
-                        "additionalProperties": true
-                      }
-                    },
-                    "required": [
-                      "body"
-                    ]
-                  },
-                  "output": {
-                    "type": "object",
-                    "properties": {
-                      "example": {
-                        "ok": true,
-                        "status": "queued",
-                        "order_id": "ord_...",
-                        "status_url": "/v1/orders/ord_..."
-                      }
-                    },
-                    "required": [
-                      "example"
-                    ]
-                  }
-                },
-                "required": [
-                  "input",
-                  "output"
-                ]
-              }
-            }
-          }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -1767,23 +1791,6 @@
           },
           "429": {
             "description": "Rate limited"
-          },
-          "200": {
-            "description": "Successful paid response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "example": {
-                  "ok": true,
-                  "status": "queued",
-                  "order_id": "ord_...",
-                  "status_url": "/v1/orders/ord_..."
-                }
-              }
-            }
           }
         },
         "x-x402scan": {
@@ -1881,7 +1888,7 @@
           "payment_protocols_pending": [
             "mpp"
           ],
-          "mpp_status": "installed_pending_live_env_ready_true_and_penny_settlement",
+          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -1891,55 +1898,7 @@
             {
               "x402": {}
             }
-          ],
-          "extensions": {
-            "bazaar": {
-              "description": "DDG agent-payable service endpoint with x402 payment and bounded artifact/result delivery.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "input": {
-                    "type": "object",
-                    "properties": {
-                      "body": {
-                        "type": "object",
-                        "properties": {
-                          "request_label": {
-                            "type": "string",
-                            "maxLength": 120
-                          }
-                        },
-                        "additionalProperties": false
-                      }
-                    },
-                    "required": [
-                      "body"
-                    ]
-                  },
-                  "output": {
-                    "type": "object",
-                    "properties": {
-                      "example": {
-                        "ok": true,
-                        "service": "tx_penny_smoke_test",
-                        "payment": {
-                          "protocol": "x402",
-                          "receipt": "x402-..."
-                        }
-                      }
-                    },
-                    "required": [
-                      "example"
-                    ]
-                  }
-                },
-                "required": [
-                  "input",
-                  "output"
-                ]
-              }
-            }
-          }
+          ]
         },
         "requestBody": {
           "required": false,
@@ -1972,23 +1931,7 @@
         },
         "responses": {
           "200": {
-            "description": "Paid smoke receipt accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "example": {
-                  "ok": true,
-                  "service": "tx_penny_smoke_test",
-                  "payment": {
-                    "protocol": "x402",
-                    "receipt": "x402-..."
-                  }
-                }
-              }
-            }
+            "description": "Paid smoke receipt accepted"
           },
           "402": {
             "description": "Payment required challenge"
@@ -2137,108 +2080,6 @@
           "403": {
             "description": "Missing AI-agent identity"
           }
-        },
-        "security": [],
-        "x-x402scan": {
-          "exclude_from_paid_probe": true
-        }
-      }
-    },
-    "/v1/ethereum/rpc": {
-      "post": {
-        "summary": "Free sync-gated Ethereum full-node read-only JSON-RPC query",
-        "description": "Launch-beta read-only Ethereum JSON-RPC proxy for AI agents. Free/fair-use after Reth is synced. While syncing, returns 503 reth_rpc_syncing. Blocks unsafe methods and applies per-agent lease/request caps plus upstream max-concurrency cap.",
-        "operationId": "ethereumRpcQuery",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "oneOf": [
-                  {
-                    "type": "object",
-                    "required": [
-                      "jsonrpc",
-                      "id",
-                      "method"
-                    ],
-                    "properties": {
-                      "jsonrpc": {
-                        "const": "2.0"
-                      },
-                      "id": {},
-                      "method": {
-                        "type": "string",
-                        "enum": [
-                          "web3_clientVersion",
-                          "net_version",
-                          "net_listening",
-                          "net_peerCount",
-                          "eth_chainId",
-                          "eth_blockNumber",
-                          "eth_gasPrice",
-                          "eth_maxPriorityFeePerGas",
-                          "eth_feeHistory",
-                          "eth_getBalance",
-                          "eth_getTransactionCount",
-                          "eth_getCode",
-                          "eth_getStorageAt",
-                          "eth_getBlockByNumber",
-                          "eth_getBlockByHash",
-                          "eth_getTransactionByHash",
-                          "eth_getTransactionReceipt",
-                          "eth_getLogs",
-                          "eth_call",
-                          "eth_estimateGas"
-                        ]
-                      },
-                      "params": {
-                        "type": "array"
-                      }
-                    }
-                  },
-                  {
-                    "type": "array",
-                    "maxItems": 10,
-                    "items": {
-                      "type": "object"
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "JSON-RPC response from the private Reth node"
-          },
-          "403": {
-            "description": "Missing AI-agent identity"
-          },
-          "429": {
-            "description": "Fair-use lease or upstream concurrency cap reached"
-          },
-          "503": {
-            "description": "Reth node unavailable or still syncing"
-          }
-        },
-        "x-ddg-free-policy": {
-          "status": "implemented_but_waiting_for_execution_sync_public_free_beta",
-          "path": "/v1/ethereum/rpc",
-          "price_usd": "0.00 launch beta after sync",
-          "free_enabled_env": "DDG_ETH_RPC_FREE_ENABLED",
-          "sync_gate": "DDG_ETH_RPC_REQUIRE_SYNCED defaults true; returns 503 reth_rpc_syncing until eth_syncing=false and latest block is non-zero",
-          "fair_use_defaults": {
-            "max_concurrent_free_users": 4,
-            "lease_seconds": 600,
-            "max_requests_per_lease": 30,
-            "max_concurrent_upstream_requests": 2,
-            "max_batch_size": 10,
-            "timeout_seconds": 8,
-            "max_response_bytes": 1000000
-          },
-          "safety": "read-only method whitelist; blocks eth_sendRawTransaction/admin/debug/personal; raw Reth RPC must stay private behind DDG edge"
         },
         "security": [],
         "x-x402scan": {

@@ -399,7 +399,7 @@
       "billing": "free_launch_beta_fair_use",
       "risk": "read_only_blockchain_rpc_proxy",
       "description": "Free launch-beta read-only Ethereum full-node query endpoint behind the DDG AI-agent edge. It is implemented with method whitelist, sync readiness gate, fair-use lease timer, per-agent request caps, and upstream max-concurrency cap; public usefulness starts after overflow runtime backend Reth execution sync completes.",
-      "runtime_status": "implemented_syncing_not_public_ready",
+      "runtime_status": "planned",
       "public_self_serve": false,
       "fulfillment_mode": "free_sync_gated_reth_rpc_proxy_beta",
       "audience": "ai_agents_only",
@@ -420,7 +420,8 @@
           "max_response_bytes": 1000000
         },
         "safety": "read-only method whitelist; blocks eth_sendRawTransaction/admin/debug/personal; raw Reth RPC must stay private behind DDG edge"
-      }
+      },
+      "production_gate": "implemented but not public-ready until sync/health proof passes"
     },
     {
       "id": "local_runtime_model_catalog",
@@ -478,11 +479,12 @@
       "billing": "per_paid_artifact_result_run",
       "risk": "sandboxed_provider_cli_artifact_execution",
       "description": "Kimi K2.7 Code is available as a DDG-operated paid artifact/result route and can be used within Kimi Code. Buyers receive bounded outputs/artifacts only; DDG never transfers provider credentials, account seats, or raw provider sessions.",
-      "runtime_status": "live_runtime_when_DDG_ENABLE_KIMI_AGENT_RUN_is_enabled",
+      "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge_paid_agent_run",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "production_gate": "agent-run path is live; this route requires DDG_ENABLE_KIMI_AGENT_RUN and public smoke before promotion as default"
     },
     {
       "id": "prompt_injection_scan",
@@ -491,7 +493,7 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "Prompt-injection and tool-exfiltration scan: risk_summary, exploit_reproduction_steps, prompt/tool-boundary mitigations.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": false,
       "fulfillment_mode": "operator_reviewed_static_and_dynamic_beta",
       "audience": "ai_agents_only",
@@ -504,7 +506,7 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "npm/package-lock dependency risk scan: known_vulnerabilities, maintainer/supply-chain risk signals, install-script risk.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": false,
       "fulfillment_mode": "operator_reviewed_sandbox_beta",
       "audience": "ai_agents_only",
@@ -517,7 +519,7 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "Python dependency and import-risk scan: known_vulnerabilities, dependency confusion risk, setup/install hooks.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": false,
       "fulfillment_mode": "operator_reviewed_sandbox_beta",
       "audience": "ai_agents_only",
@@ -530,7 +532,7 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "API-key/secret leak and credential boundary scan: redacted_secret_findings, leak_paths, rotation_priority.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": false,
       "fulfillment_mode": "operator_reviewed_redacted_findings",
       "audience": "ai_agents_only",
@@ -543,7 +545,7 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "Malware/suspicious-code triage for agent workflows: suspicious_behaviors, network/file/process indicators, safe containment notes.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": false,
       "fulfillment_mode": "sandbox_static_first_operator_review",
       "audience": "ai_agents_only",
@@ -556,7 +558,7 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "MCP/tool permission and auth-boundary audit: tool-risk matrix, dangerous capability flags, prompt-injection exposure.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": false,
       "fulfillment_mode": "operator_reviewed_schema_and_runtime_beta",
       "audience": "ai_agents_only",
@@ -569,7 +571,7 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "Agent swarm supply-chain baseline bundle: combined prompt/package/secret/MCP findings, prioritized remediation plan, CI scanner starter config.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": false,
       "fulfillment_mode": "operator_reviewed_bundle",
       "audience": "ai_agents_only",
@@ -582,7 +584,7 @@
       "billing": "per_audit",
       "risk": "read_only_scope_limited_security_audit",
       "description": "Productionized public-surface security audit for AI-agent services, MCP/tool servers, OpenAPI/llms.txt catalogs, dependency manifests, prompt-injection exposure, public endpoints, and payment/check-out safety. Ordered by AI agents through /v1/order-intake; operator-reviewed before fulfillment.",
-      "runtime_status": "order_intake_live_operator_review",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
@@ -603,7 +605,7 @@
       "billing": "per_conformance_run",
       "risk": "read_only_payment_flow_validation",
       "description": "Agent checkout conformance audit for machine-payable services: validates 403->402->200->receipt flow, protocol advertisement, spend caps, idempotency replay, fake-token fail-closed behavior, and receipt/artifact semantics.",
-      "runtime_status": "order_intake_live_operator_review",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
@@ -624,7 +626,7 @@
       "billing": "per_payment_path_activation",
       "risk": "operator_review_required_payment_configuration",
       "description": "MPP/payment-rail onboarding package for AI-agent sellers: verifies provider/currency configuration, sidecar health, 402 protocol ordering, penny smoke path, replay protection, fake-proof rejection, and go-live checklist.",
-      "runtime_status": "order_intake_live_operator_review",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
@@ -645,7 +647,7 @@
       "billing": "per_console_pack",
       "risk": "operator_review_required_app_artifact",
       "description": "Buyer-facing artifact and receipt console pack for paid agent services. Base order status/artifact URLs are now live for every /v1/order-intake order; this paid pack adds a richer app/table/component spec, receipt schema, budget/rail metadata, audit trail, download links, and agent-readable status JSON.",
-      "runtime_status": "order_intake_live_operator_review",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
@@ -671,7 +673,7 @@
       "billing": "per_bundle",
       "risk": "operator_review_required_bundle",
       "description": "Bundled launch package for AI-agent buyers and sellers: security_preflight, checkout_conformance, agent_readability_upgrade, mcp_tool_audit, and local_model_runtime_setup scoped into one paid order.",
-      "runtime_status": "order_intake_live_operator_review",
+      "runtime_status": "manual_fulfillment_beta",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
@@ -1829,14 +1831,15 @@
       "planned": "Not public self-serve. Kept in the catalog as roadmap/packaging until wrappers, sandboxing, payment settlement, and smoke tests pass."
     },
     "live_runtime_paths": [
+      "/v1/site-audit",
+      "/v1/model/chat-completions",
       "/v1/micro-model-swarm-preview",
       "/v1/model/agent-run",
-      "/v1/model/chat-completions",
-      "/v1/ollama-model-request",
-      "/v1/ollama-models",
       "/v1/order-intake",
-      "/v1/site-audit",
-      "/v1/tx-smoke-test"
+      "/v1/tx-smoke-test",
+      "/v1/ollama-models",
+      "/v1/ollama-model-request",
+      "/v1/ai-skill-safety-scan"
     ],
     "manual_fulfillment_paths": [
       "/v1/agent-discovery-pack",
@@ -1864,7 +1867,18 @@
     ],
     "openapi_policy": "OpenAPI advertises live_runtime paths and may include explicitly beta/503-until-ready paths only when runtime handlers exist and docs state availability limits. Manual offers stay in pricing.json and llms.txt until handlers and smoke tests exist.",
     "payment_posture": "Mock payments are for local/staging smoke only. Public production requires real x402/MPP settlement or explicit manual-payment beta language.",
-    "agent_run_posture": "Live beta for allowlisted local Ollama artifact execution. Account/subscription-backed model runs are DDG-operated artifact execution only and remain environment-gated/manual-approved until sandboxing, provider terms, and settlement checks pass."
+    "agent_run_posture": "Live beta for allowlisted local Ollama artifact execution. Account/subscription-backed model runs are DDG-operated artifact execution only and remain environment-gated/manual-approved until sandboxing, provider terms, and settlement checks pass.",
+    "public_helper_paths": [
+      "/v1/orders/{order_id}",
+      "/v1/order-status/{order_id}",
+      "/v1/orders/{order_id}/artifact",
+      "/.well-known/ddg-agent-checkout-conformance.json",
+      "/agent-checkout-conformance.json",
+      "/.well-known/ddg-mpp-activation-guide.md",
+      "/mpp-activation-guide.md",
+      "/.well-known/ddg-agent-refund-policy.json",
+      "/refund-policy"
+    ]
   },
   "audience": "ai_agents_only",
   "consumer_policy": "AI-agents only. Requests without agent identity are rejected. DDG sells operated artifacts/results and metered service output, not raw credentials, account seats, or transferable auth tokens.",
@@ -1875,29 +1889,146 @@
     "direct_crypto_manual": "initial beta fallback: publish configured EVM/BTC/LTC/XMR/ZEC/DOGE addresses in 402 body, collect tx proof hash in order-intake, operator confirms before fulfillment"
   },
   "direct_crypto_manual": {
-    "status": "configured_by_env_addresses_manual_confirmation_only",
+    "status": "configured_public_receiving_addresses_manual_confirmation_with_auto_verify_adapter_for_supported_assets",
     "env_addresses": [
       "DDG_CRYPTO_EVM_ADDRESS",
       "DDG_CRYPTO_BTC_ADDRESS",
+      "DDG_CRYPTO_BCH_ADDRESS",
       "DDG_CRYPTO_LTC_ADDRESS",
-      "DDG_CRYPTO_XMR_ADDRESS",
+      "DDG_CRYPTO_DOGE_ADDRESS",
+      "DDG_CRYPTO_SOL_ADDRESS",
+      "DDG_CRYPTO_TRX_ADDRESS",
+      "DDG_CRYPTO_XRP_ADDRESS",
+      "DDG_CRYPTO_XLM_ADDRESS",
+      "DDG_CRYPTO_ALGO_ADDRESS",
+      "DDG_CRYPTO_DOT_ADDRESS",
       "DDG_CRYPTO_ZEC_ADDRESS",
-      "DDG_CRYPTO_DOGE_ADDRESS"
+      "DDG_CRYPTO_XMR_ADDRESS"
     ],
-    "proof_payload": "payment_proof {asset, txid/hash/transaction_hash, amount}",
-    "security": "raw txid/proof is not written to order queue; only payment_proof_hash is stored; fulfillment waits for operator confirmation",
+    "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}",
+    "security": "Raw txid/proof is not written to order queue; only payment_proof_hash is stored; fulfillment waits for auto-verifier settlement or operator confirmation.",
     "public_manifest": "direct_crypto_addresses.public.json",
     "public_env": "direct_crypto_addresses.env",
-    "generated_wallet_count": 6,
+    "generated_wallet_count": 13,
     "assets": [
-      "EVM",
+      "EVM/stablecoins",
       "BTC",
+      "BCH",
       "LTC",
       "DOGE",
+      "SOL",
+      "TRX",
+      "XRP",
+      "XLM",
+      "ALGO",
+      "DOT",
       "ZEC",
       "XMR"
     ],
-    "balance_tracker": "scripts/track_direct_crypto_balances.py"
+    "balance_tracker": "scripts/track_direct_crypto_balances.py",
+    "public_address_families": [
+      {
+        "asset": "EVM",
+        "network": "EVM-compatible mainnets/testnets",
+        "address_env": "DDG_CRYPTO_EVM_ADDRESS",
+        "address": "0x25A4B534452372619f841956D64Ce5F45307d834",
+        "description": "ETH/EVM native assets plus operator-confirmed EVM stablecoins (USDC, USDT, DAI, PYUSD, FRAX, FDUSD, GUSD, LUSD, USDP, TUSD, EURC) on supported EVM networks; auto verifier currently supports configured EVM native/USDC paths."
+      },
+      {
+        "asset": "BTC",
+        "network": "Bitcoin mainnet native segwit",
+        "address_env": "DDG_CRYPTO_BTC_ADDRESS",
+        "address": "bc1qswcxsxmlads07gtlunrqm49fmeuc4p3lmk5k0q",
+        "description": "Bitcoin mainnet native segwit."
+      },
+      {
+        "asset": "BCH",
+        "network": "Bitcoin Cash mainnet cashaddr",
+        "address_env": "DDG_CRYPTO_BCH_ADDRESS",
+        "address": "bitcoincash:qze4aj4ns8usydmwlqx8q5nmgpud3x48avpkrqds0x",
+        "description": "Bitcoin Cash mainnet cashaddr."
+      },
+      {
+        "asset": "LTC",
+        "network": "Litecoin mainnet native segwit",
+        "address_env": "DDG_CRYPTO_LTC_ADDRESS",
+        "address": "ltc1qv8yemdhk88zxth95n5s3rnt7nrjg7z52ru2n2y",
+        "description": "Litecoin mainnet native segwit."
+      },
+      {
+        "asset": "DOGE",
+        "network": "Dogecoin mainnet legacy",
+        "address_env": "DDG_CRYPTO_DOGE_ADDRESS",
+        "address": "DEiZ9siBn8pYAhqRf1Ca7eqNNyK2ZrBd1x",
+        "description": "Dogecoin mainnet legacy."
+      },
+      {
+        "asset": "SOL",
+        "network": "Solana mainnet",
+        "address_env": "DDG_CRYPTO_SOL_ADDRESS",
+        "address": "v6ztnrxiyZPF7LSKZrm9AhAJqukWYMFMt6YboofJhGD",
+        "description": "Solana mainnet; SOL and SPL stablecoin proof can be operator-confirmed."
+      },
+      {
+        "asset": "TRX",
+        "network": "Tron mainnet",
+        "address_env": "DDG_CRYPTO_TRX_ADDRESS",
+        "address": "TYMsm7b6YnyD41KSAgZttRUNY3mDwU4yoo",
+        "description": "Tron mainnet; TRX and TRC20 stablecoin proof can be operator-confirmed."
+      },
+      {
+        "asset": "XRP",
+        "network": "XRP Ledger mainnet",
+        "address_env": "DDG_CRYPTO_XRP_ADDRESS",
+        "address": "r4Ub17w7P22kTu33qNvVkQs3XRYJvEiiYD",
+        "description": "XRP Ledger mainnet; destination-tag policy should be checked before high-volume payments."
+      },
+      {
+        "asset": "XLM",
+        "network": "Stellar mainnet",
+        "address_env": "DDG_CRYPTO_XLM_ADDRESS",
+        "address": "GAIJ5MBOB4RUGU2QRR237XX3WFO4ALNV5V42Q7JK6MLGVOBWM4OV6GFK",
+        "description": "Stellar mainnet; XLM and Stellar-issued stablecoin proof can be operator-confirmed."
+      },
+      {
+        "asset": "ALGO",
+        "network": "Algorand mainnet",
+        "address_env": "DDG_CRYPTO_ALGO_ADDRESS",
+        "address": "MLYNV63M76DBHTJZLST6H7SR5Z2DWWRJU2GNCN2BEXBVVVSGEJ3N6ES3YU",
+        "description": "Algorand mainnet; ALGO and ASA stablecoin proof can be operator-confirmed."
+      },
+      {
+        "asset": "DOT",
+        "network": "Polkadot mainnet",
+        "address_env": "DDG_CRYPTO_DOT_ADDRESS",
+        "address": "12WdyrGrNr4tsqa45zdKWXbWx3grrm3tZunbcpVNi96PvvCw",
+        "description": "Polkadot mainnet; manual/operator confirmation unless a Substrate indexer is configured."
+      },
+      {
+        "asset": "ZEC",
+        "network": "Zcash mainnet transparent t-address",
+        "address_env": "DDG_CRYPTO_ZEC_ADDRESS",
+        "address": "t1Nrg3PZAf1w3vKbzV1Rq817oRTLxq9iD5d",
+        "description": "Zcash transparent t-address; shielded payments are not auto-confirmed."
+      },
+      {
+        "asset": "XMR",
+        "network": "Monero mainnet primary address",
+        "address_env": "DDG_CRYPTO_XMR_ADDRESS",
+        "address": "46rEbwqHVMW7at7kBbdtFnRMXSqkUbbpbJZR4k4TUxsVUDdQX7po4HL2F1Nbw7kEM8hZ4F242D4kgQAj1aMU5S9U6TS6ZCy",
+        "description": "Monero primary address; public balance is not visible and auto confirmation requires view-only wallet RPC, otherwise operator confirmation."
+      }
+    ],
+    "auto_verification_scope": [
+      "BTC, BCH, LTC, DOGE, transparent ZEC via public-chain lookups",
+      "EVM native transfers and USDC on configured Ethereum/Base/Polygon RPC paths",
+      "SOL, TRX, XRP, XLM, and ALGO native payment lookups",
+      "XMR only when a view-only monero-wallet-rpc is configured"
+    ],
+    "manual_confirmation_scope": [
+      "DOT until a Substrate/Subscan indexer is configured",
+      "XMR without wallet RPC, shielded ZEC, non-USDC stablecoins, and any supported address family the verifier cannot conclusively confirm"
+    ]
   },
   "rate_limits": {
     "status": "implemented_app_layer",
@@ -1927,10 +2058,10 @@
     "allowed_method_posture": "Read-only method whitelist; block admin/miner/personal/debug/trace/sendRawTransaction by default."
   },
   "payment_protocol_status": {
-    "x402": "live_sidecar_configured_on_durable runtime backend_pending_real_paid-proof-smoke",
-    "direct_crypto_auto": "live_sidecar_configured_for_supported_chains_pending_tiny-settlement-smoke",
-    "direct_crypto_manual": "live_operator_review_fallback",
-    "MPP": "planned_config_ready_signer_saved_requires_live_MPP_currency_or_Stripe_SPT_profile_before_public_claims"
+    "x402": "public_live_multi_chain_usdc_accepts_array_base_enforced_first_for_x402scan",
+    "direct_crypto_auto": "public_live_for_verifier_supported_assets_only",
+    "direct_crypto_manual": "public_live_operator_confirmed_for_all_public_receiving_address_families",
+    "MPP": "planned_config_ready_requires_live_provider_currency_secret_ready_true_and_penny_settlement_before_public_claims"
   },
   "local_model_expansion_candidates_2026_06_13": [
     {
@@ -2231,5 +2362,212 @@
       "artifact_receipt_console_pack",
       "ai_agent_buyer_service_bundle"
     ]
+  },
+  "crypto_payment_options": {
+    "last_synced_at": "2026-06-24T01:32:05Z",
+    "source_of_truth": {
+      "x402": "/openapi.json 402 PAYMENT-REQUIRED accepts[] plus payment_rail_addresses.env",
+      "direct_crypto": "/.well-known/ddg-direct-crypto-addresses.json plus direct_crypto_addresses.env",
+      "mpp": "/.well-known/ddg-mpp-activation-guide.md; pending until provider env and penny settlement pass"
+    },
+    "public_live_protocols": [
+      "x402",
+      "direct_crypto_auto",
+      "direct_crypto_manual"
+    ],
+    "pending_protocols": [
+      "mpp"
+    ],
+    "x402": {
+      "status": "public_live",
+      "settlement_default": "Base mainnet USDC for production/x402scan compatibility",
+      "accepted_networks": [
+        {
+          "network": "eip155:8453",
+          "label": "Base mainnet",
+          "asset": "USDC",
+          "asset_contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "amount_decimals": 6
+        },
+        {
+          "network": "eip155:137",
+          "label": "Polygon mainnet",
+          "asset": "USDC",
+          "asset_contract": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+          "amount_decimals": 6
+        },
+        {
+          "network": "eip155:42161",
+          "label": "Arbitrum One",
+          "asset": "USDC",
+          "asset_contract": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+          "amount_decimals": 6
+        },
+        {
+          "network": "eip155:480",
+          "label": "World Chain mainnet",
+          "asset": "USDC",
+          "asset_contract": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
+          "amount_decimals": 6
+        },
+        {
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "label": "Solana mainnet",
+          "asset": "USDC",
+          "asset_contract": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "amount_decimals": 6
+        }
+      ],
+      "amount_unit": "atomic integer strings; USDC has 6 decimals, so $0.01 is \"10000\""
+    },
+    "direct_crypto": {
+      "status": "public_live_auto_for_verifier_supported_assets_manual_operator_confirmed_for_remaining_public_addresses",
+      "public_manifest": "/.well-known/ddg-direct-crypto-addresses.json",
+      "public_env": "direct_crypto_addresses.env",
+      "wallet_count": 13,
+      "assets": [
+        "EVM/stablecoins",
+        "BTC",
+        "BCH",
+        "LTC",
+        "DOGE",
+        "SOL",
+        "TRX",
+        "XRP",
+        "XLM",
+        "ALGO",
+        "DOT",
+        "ZEC",
+        "XMR"
+      ],
+      "address_env": [
+        "DDG_CRYPTO_EVM_ADDRESS",
+        "DDG_CRYPTO_BTC_ADDRESS",
+        "DDG_CRYPTO_BCH_ADDRESS",
+        "DDG_CRYPTO_LTC_ADDRESS",
+        "DDG_CRYPTO_DOGE_ADDRESS",
+        "DDG_CRYPTO_SOL_ADDRESS",
+        "DDG_CRYPTO_TRX_ADDRESS",
+        "DDG_CRYPTO_XRP_ADDRESS",
+        "DDG_CRYPTO_XLM_ADDRESS",
+        "DDG_CRYPTO_ALGO_ADDRESS",
+        "DDG_CRYPTO_DOT_ADDRESS",
+        "DDG_CRYPTO_ZEC_ADDRESS",
+        "DDG_CRYPTO_XMR_ADDRESS"
+      ],
+      "public_address_families": [
+        {
+          "asset": "EVM",
+          "network": "EVM-compatible mainnets/testnets",
+          "address_env": "DDG_CRYPTO_EVM_ADDRESS",
+          "address": "0x25A4B534452372619f841956D64Ce5F45307d834",
+          "description": "ETH/EVM native assets plus operator-confirmed EVM stablecoins (USDC, USDT, DAI, PYUSD, FRAX, FDUSD, GUSD, LUSD, USDP, TUSD, EURC) on supported EVM networks; auto verifier currently supports configured EVM native/USDC paths."
+        },
+        {
+          "asset": "BTC",
+          "network": "Bitcoin mainnet native segwit",
+          "address_env": "DDG_CRYPTO_BTC_ADDRESS",
+          "address": "bc1qswcxsxmlads07gtlunrqm49fmeuc4p3lmk5k0q",
+          "description": "Bitcoin mainnet native segwit."
+        },
+        {
+          "asset": "BCH",
+          "network": "Bitcoin Cash mainnet cashaddr",
+          "address_env": "DDG_CRYPTO_BCH_ADDRESS",
+          "address": "bitcoincash:qze4aj4ns8usydmwlqx8q5nmgpud3x48avpkrqds0x",
+          "description": "Bitcoin Cash mainnet cashaddr."
+        },
+        {
+          "asset": "LTC",
+          "network": "Litecoin mainnet native segwit",
+          "address_env": "DDG_CRYPTO_LTC_ADDRESS",
+          "address": "ltc1qv8yemdhk88zxth95n5s3rnt7nrjg7z52ru2n2y",
+          "description": "Litecoin mainnet native segwit."
+        },
+        {
+          "asset": "DOGE",
+          "network": "Dogecoin mainnet legacy",
+          "address_env": "DDG_CRYPTO_DOGE_ADDRESS",
+          "address": "DEiZ9siBn8pYAhqRf1Ca7eqNNyK2ZrBd1x",
+          "description": "Dogecoin mainnet legacy."
+        },
+        {
+          "asset": "SOL",
+          "network": "Solana mainnet",
+          "address_env": "DDG_CRYPTO_SOL_ADDRESS",
+          "address": "v6ztnrxiyZPF7LSKZrm9AhAJqukWYMFMt6YboofJhGD",
+          "description": "Solana mainnet; SOL and SPL stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "TRX",
+          "network": "Tron mainnet",
+          "address_env": "DDG_CRYPTO_TRX_ADDRESS",
+          "address": "TYMsm7b6YnyD41KSAgZttRUNY3mDwU4yoo",
+          "description": "Tron mainnet; TRX and TRC20 stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "XRP",
+          "network": "XRP Ledger mainnet",
+          "address_env": "DDG_CRYPTO_XRP_ADDRESS",
+          "address": "r4Ub17w7P22kTu33qNvVkQs3XRYJvEiiYD",
+          "description": "XRP Ledger mainnet; destination-tag policy should be checked before high-volume payments."
+        },
+        {
+          "asset": "XLM",
+          "network": "Stellar mainnet",
+          "address_env": "DDG_CRYPTO_XLM_ADDRESS",
+          "address": "GAIJ5MBOB4RUGU2QRR237XX3WFO4ALNV5V42Q7JK6MLGVOBWM4OV6GFK",
+          "description": "Stellar mainnet; XLM and Stellar-issued stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "ALGO",
+          "network": "Algorand mainnet",
+          "address_env": "DDG_CRYPTO_ALGO_ADDRESS",
+          "address": "MLYNV63M76DBHTJZLST6H7SR5Z2DWWRJU2GNCN2BEXBVVVSGEJ3N6ES3YU",
+          "description": "Algorand mainnet; ALGO and ASA stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "DOT",
+          "network": "Polkadot mainnet",
+          "address_env": "DDG_CRYPTO_DOT_ADDRESS",
+          "address": "12WdyrGrNr4tsqa45zdKWXbWx3grrm3tZunbcpVNi96PvvCw",
+          "description": "Polkadot mainnet; manual/operator confirmation unless a Substrate indexer is configured."
+        },
+        {
+          "asset": "ZEC",
+          "network": "Zcash mainnet transparent t-address",
+          "address_env": "DDG_CRYPTO_ZEC_ADDRESS",
+          "address": "t1Nrg3PZAf1w3vKbzV1Rq817oRTLxq9iD5d",
+          "description": "Zcash transparent t-address; shielded payments are not auto-confirmed."
+        },
+        {
+          "asset": "XMR",
+          "network": "Monero mainnet primary address",
+          "address_env": "DDG_CRYPTO_XMR_ADDRESS",
+          "address": "46rEbwqHVMW7at7kBbdtFnRMXSqkUbbpbJZR4k4TUxsVUDdQX7po4HL2F1Nbw7kEM8hZ4F242D4kgQAj1aMU5S9U6TS6ZCy",
+          "description": "Monero primary address; public balance is not visible and auto confirmation requires view-only wallet RPC, otherwise operator confirmation."
+        }
+      ],
+      "auto_verification_scope": [
+        "BTC, BCH, LTC, DOGE, transparent ZEC via public-chain lookups",
+        "EVM native transfers and USDC on configured Ethereum/Base/Polygon RPC paths",
+        "SOL, TRX, XRP, XLM, and ALGO native payment lookups",
+        "XMR only when a view-only monero-wallet-rpc is configured"
+      ],
+      "manual_confirmation_scope": [
+        "DOT until a Substrate/Subscan indexer is configured",
+        "XMR without wallet RPC, shielded ZEC, non-USDC stablecoins, and any supported address family the verifier cannot conclusively confirm"
+      ],
+      "proof_headers": [
+        "X-Direct-Crypto-Proof",
+        "Payment-Proof",
+        "Authorization: Payment direct_crypto <base64url-json>"
+      ],
+      "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}"
+    },
+    "mpp": {
+      "status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+      "advertise_rule": "Do not add MPP to public 402 challenges, OpenAPI live protocols, or listing copy until ready:true, real penny settlement, idempotent replay, fake-token 402, and leak scan pass."
+    }
   }
 }

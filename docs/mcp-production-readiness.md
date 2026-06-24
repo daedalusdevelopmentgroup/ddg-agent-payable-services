@@ -53,7 +53,7 @@ Expected: `ok: true`, 20 tools and 11 resources present, and unpaid paid-tool ca
 1. Clone/pull the public repo on the production host, for example:
 
    ```text
-   /srv/ddg-agent-services-mcp/ddg-agent-payable-services
+   /opt/ddg-agent-services-mcp/ddg-agent-payable-services
    ```
 
 2. Install/copy the systemd template:

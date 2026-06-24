@@ -31,7 +31,14 @@ Live now:
 ```text
 x402
 direct_crypto_auto
+direct_crypto_manual
 ```
+
+Accepted crypto options exposed to buyer agents:
+
+- x402 `accepts[]`: Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC.
+- Direct crypto public receiving-address families: EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
+- Direct crypto proofs are auto-verified only for verifier-supported assets; the remaining public address families are operator-confirmed before fulfillment.
 
 Installed but not advertised live yet:
 
@@ -39,7 +46,7 @@ Installed but not advertised live yet:
 mpp
 ```
 
-MPP / Stripe / Tempo must remain pending until a real penny-scale settlement succeeds, idempotency replay passes, invalid-token failure stays closed, and the public status/pricing/catalog are updated.
+MPP / Stripe / Tempo must remain pending until a real penny-scale settlement succeeds, idempotency replay passes, invalid-token failure stays closed, the public status/pricing/catalog are updated, and all submission packets are re-synced.
 
 ## How I expect buyer agents to find DDG
 
@@ -58,8 +65,8 @@ Ready now after security audit:
 
 - public GitHub repo packet
 - owned machine-readable discovery surfaces (`/.well-known/ai`, `llms.txt`, OpenAPI, pricing, catalog, agent skills)
-- MCP `ddg://distribution/agent-radar` and `ddg://distribution/x402-bazaar-readiness` resources for agent clients
-- x402scan registration started but blocked by live probe behavior: the form read DDG metadata and found candidate endpoints, but currently reports 0 valid resources because six x402scan HEAD probes return 501 instead of 402. See `submissions/x402scan/`.
+- MCP `ddg://distribution/agent-radar`, `ddg://distribution/x402scan-status`, and `ddg://distribution/x402-chains` resources for agent clients
+- x402scan registration is live for `agents.daedalusdevelopmentgroup.com` with 5 validated resources; keep AgentCash/x402scan probes green after every OpenAPI/payment-edge/submission change.
 - x402 / agent-commerce awesome-list PR copy
 - x402 ecosystem listing request copy
 - search-indexed docs and social links to machine-readable endpoints

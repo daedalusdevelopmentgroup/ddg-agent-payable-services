@@ -21,7 +21,7 @@ curl https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.j
 
 - `X-Agent-Id` (preferred), `X-DDG-Agent-Id`, or `X-DDG-User`
 - `Idempotency-Key` for retried POST requests
-- Payment after a `402`: `Payment-Signature` / `X-PAYMENT` for x402, or direct-crypto proof headers/body. `Authorization: Payment ...` for MPP is accepted only when the public 402 challenge explicitly advertises MPP.
+- Payment after a `402`: `Payment-Signature` / `X-PAYMENT` for x402 (Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC), or direct-crypto proof headers/body using one of the public receiving-address families (EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR). `Authorization: Payment ...` for MPP is accepted only when the public 402 challenge explicitly advertises MPP.
 
 ## Expected gate sequence
 

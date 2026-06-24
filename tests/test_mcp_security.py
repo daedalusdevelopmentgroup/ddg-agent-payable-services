@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import io
 import json
-from types import SimpleNamespace
+import urllib.error
+from email.message import Message
 
 import pytest
 
@@ -52,7 +54,7 @@ def test_response_headers_are_allowlisted(monkeypatch: pytest.MonkeyPatch) -> No
         captured["headers"] = dict(req.header_items())
         return _FakeHTTPResponse()
 
-    monkeypatch.setattr(server.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(server, "_open_no_redirect", fake_urlopen)
     result = server._json_request(
         "/.well-known/ddg-agent-status.json",
         headers={"Authorization": "Bearer accidental-secret"},
@@ -113,7 +115,7 @@ def test_payload_size_limit_prevents_large_forward(monkeypatch: pytest.MonkeyPat
         called = True
         return _FakeHTTPResponse()
 
-    monkeypatch.setattr(server.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(server, "_open_no_redirect", fake_urlopen)
     result = server._json_request("/v1/model/chat-completions", method="POST", payload={"x": "a" * (server.MAX_JSON_PAYLOAD_BYTES + 1)})
     assert result["status"] == 0
     assert result["body"]["error"] == "payload_too_large"
@@ -126,6 +128,20 @@ def test_security_profile_documents_controls() -> None:
     assert profile["controls"]["authorization_forwarding"].startswith("Payment scheme only")
     assert profile["controls"]["arbitrary_url_fetch"] is False
     assert "mcp.daedalusdevelopmentgroup.com" not in profile["controls"]["base_url_allowlist"]
+    assert "localhost" not in profile["controls"]["base_url_allowlist"]
+    assert "127.0.0.1" not in profile["controls"]["base_url_allowlist"]
+    assert profile["controls"]["local_base_urls_opt_in"] is False
+
+
+def test_local_base_urls_require_explicit_opt_in(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("DDG_AGENT_SERVICES_ALLOW_LOCAL_BASE_URLS", raising=False)
+    assert "localhost" not in server._allowed_base_hosts()
+    with pytest.raises(SystemExit, match="local base URLs require"):
+        server._validated_base_url("http://localhost:8788")
+
+    monkeypatch.setenv("DDG_AGENT_SERVICES_ALLOW_LOCAL_BASE_URLS", "1")
+    assert "localhost" in server._allowed_base_hosts()
+    assert server._validated_base_url("http://localhost:8788") == "http://localhost:8788"
 
 
 def test_invalid_agent_id_rejected() -> None:
@@ -140,7 +156,7 @@ class _LargeHTTPResponse(_FakeHTTPResponse):
 
 
 def test_response_size_limit_fails_closed(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(server.urllib.request, "urlopen", lambda req, timeout: _LargeHTTPResponse())
+    monkeypatch.setattr(server, "_open_no_redirect", lambda req, timeout: _LargeHTTPResponse())
     result = server._json_request("/.well-known/ddg-agent-status.json")
     assert result["status"] == 0
     assert result["body"]["error"] == "ddg_response_too_large"
@@ -157,7 +173,7 @@ def test_json_response_redacts_sensitive_keys_and_values(monkeypatch: pytest.Mon
             data = json.dumps(body).encode()
             return data if size is None or size < 0 else data[:size]
 
-    monkeypatch.setattr(server.urllib.request, "urlopen", lambda req, timeout: SensitiveResponse())
+    monkeypatch.setattr(server, "_open_no_redirect", lambda req, timeout: SensitiveResponse())
     result = server._json_request("/.well-known/ddg-agent-status.json")
     assert result["body"]["token"] == "[REDACTED]"
     assert result["body"]["message"] == "[REDACTED]"
@@ -175,13 +191,59 @@ def test_json_resource_text_redacts_sensitive_keys_and_values(monkeypatch: pytes
             data = json.dumps(body).encode()
             return data if size is None or size < 0 else data[:size]
 
-    monkeypatch.setattr(server.urllib.request, "urlopen", lambda req, timeout: SensitiveResourceResponse())
+    monkeypatch.setattr(server, "_open_no_redirect", lambda req, timeout: SensitiveResourceResponse())
     text = server.ddg_manifest_status_resource()
     parsed = json.loads(text)
     assert parsed["authorization"] == "[REDACTED]"
     assert parsed["public_note"] == "this contains [REDACTED] and should be redacted"
     assert "qwertyuiopasdfgh" not in text
     assert "sk-proj-" not in text
+
+
+def test_malformed_payment_headers_rejected_without_forward(monkeypatch: pytest.MonkeyPatch) -> None:
+    called = False
+
+    def fake_urlopen(req, timeout):
+        nonlocal called
+        called = True
+        return _FakeHTTPResponse()
+
+    monkeypatch.setattr(server, "_open_no_redirect", fake_urlopen)
+    result = server._json_request("/.well-known/ddg-agent-status.json", headers=[("X-Payment", "token")])  # type: ignore[arg-type]
+    assert result["status"] == 0
+    assert result["body"]["error"] == "unsafe_payment_headers"
+    assert called is False
+
+
+def test_redirect_handler_refuses_redirects() -> None:
+    handler = server._NoRedirectHandler()
+    assert handler.redirect_request(None, None, 302, "Found", {}, "https://evil.example/redirect") is None
+
+
+def test_non_json_http_error_does_not_return_raw_body(monkeypatch: pytest.MonkeyPatch) -> None:
+    def fake_urlopen(req, timeout):
+        headers = Message()
+        headers["Content-Type"] = "text/plain"
+        fp = io.BytesIO(b"upstream debug token=custom-secret-format-not-returned")
+        raise urllib.error.HTTPError(req.full_url, 500, "Internal Server Error", headers, fp)
+
+    monkeypatch.setattr(server, "_open_no_redirect", fake_urlopen)
+    result = server._json_request("/.well-known/ddg-agent-status.json")
+    assert result["status"] == 500
+    assert result["body"] == {"error": "non_json_response_from_ddg"}
+    assert "custom-secret-format" not in json.dumps(result)
+
+
+def test_invalid_json_resource_does_not_return_raw_body(monkeypatch: pytest.MonkeyPatch) -> None:
+    class InvalidJsonResourceResponse(_FakeHTTPResponse):
+        def read(self, size: int = -1) -> bytes:
+            return b"not-json token=custom-secret-format-not-returned"
+
+    monkeypatch.setattr(server, "_open_no_redirect", lambda req, timeout: InvalidJsonResourceResponse())
+    text = server.ddg_manifest_status_resource()
+    parsed = json.loads(text)
+    assert parsed == {"error": "invalid_json_from_ddg", "resource": "ddg://manifest/status"}
+    assert "custom-secret-format" not in text
 
 
 def test_public_resource_index_and_allowlist() -> None:

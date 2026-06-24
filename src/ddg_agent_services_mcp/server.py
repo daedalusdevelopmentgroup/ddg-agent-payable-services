@@ -11,6 +11,7 @@ access, or unrestricted URL fetches.
 from __future__ import annotations
 
 import argparse
+from collections.abc import Mapping
 import ipaddress
 import json
 import os
@@ -30,9 +31,8 @@ DEFAULT_BASE_URL = "https://agents.daedalusdevelopmentgroup.com"
 DEFAULT_ALLOWED_BASE_HOSTS = {
     "agents.daedalusdevelopmentgroup.com",
     "api.daedalusdevelopmentgroup.com",
-    "localhost",
-    "127.0.0.1",
 }
+LOCAL_ALLOWED_BASE_HOSTS = {"localhost", "127.0.0.1"}
 MAX_HEADER_VALUE_CHARS = 8192
 MAX_RESPONSE_HEADER_VALUE_CHARS = 16384
 MAX_RESPONSE_BYTES = 768 * 1024
@@ -310,14 +310,13 @@ X402_CHAIN_SUPPORT: dict[str, Any] = {
         {"asset": "SOL"},
         {"asset": "TRX"},
         {"asset": "XRP"},
-        {"asset": "ADA"},
         {"asset": "DOT"},
         {"asset": "XLM"},
         {"asset": "ALGO"},
         {"asset": "ZEC"},
         {"asset": "XMR"},
     ],
-    "note": "x402 production settlement currently uses Base mainnet USDC. The payment edge advertises all supported networks in the x402 accepts[] array so AI agents can pay on their preferred chain. Direct-crypto manual/beta supports 13 asset families.",
+    "note": "x402 production settlement currently uses Base mainnet USDC. The payment edge advertises all supported networks in the x402 accepts[] array so AI agents can pay on their preferred chain. Direct-crypto manual/beta supports the 13 public receiving-address families in /.well-known/ddg-direct-crypto-addresses.json; ADA/Cardano is not advertised until a DDG-controlled receiving address and verification/manual-confirmation policy are installed.",
 }
 
 X402SCAN_STATUS: dict[str, Any] = {
@@ -346,10 +345,17 @@ X402SCAN_STATUS: dict[str, Any] = {
 }
 
 
+def _local_base_urls_enabled() -> bool:
+    return os.getenv("DDG_AGENT_SERVICES_ALLOW_LOCAL_BASE_URLS", "").strip().lower() in {"1", "true", "yes", "on"}
+
+
 def _allowed_base_hosts() -> set[str]:
     raw = os.getenv("DDG_AGENT_SERVICES_ALLOWED_HOSTS", "").strip()
     extra = {item.strip().lower() for item in raw.replace("\n", ",").split(",") if item.strip()}
-    return DEFAULT_ALLOWED_BASE_HOSTS | extra
+    allowed = DEFAULT_ALLOWED_BASE_HOSTS | extra
+    if _local_base_urls_enabled():
+        allowed |= LOCAL_ALLOWED_BASE_HOSTS
+    return allowed
 
 
 def _validated_base_url(raw_url: str) -> str:
@@ -367,10 +373,18 @@ def _validated_base_url(raw_url: str) -> str:
         ip_obj = ipaddress.ip_address(host)
         if ip_obj.is_private or ip_obj.is_loopback or ip_obj.is_link_local or ip_obj.is_reserved:
             if host not in {"127.0.0.1"}:
-                raise SystemExit("Unsafe DDG_AGENT_SERVICES_BASE_URL: private/loopback IP literal is not allowed")
+                raise SystemExit(
+                    "Unsafe DDG_AGENT_SERVICES_BASE_URL: private/loopback IP literal is not allowed; "
+                    "set DDG_AGENT_SERVICES_ALLOW_LOCAL_BASE_URLS=1 only for local development"
+                )
     except ValueError:
         pass  # hostname is not an IP literal — fine, proceed to allowlist check
     if host not in _allowed_base_hosts():
+        if host in LOCAL_ALLOWED_BASE_HOSTS:
+            raise SystemExit(
+                "Unsafe DDG_AGENT_SERVICES_BASE_URL: local base URLs require "
+                "DDG_AGENT_SERVICES_ALLOW_LOCAL_BASE_URLS=1"
+            )
         raise SystemExit("Unsafe DDG_AGENT_SERVICES_BASE_URL: host is not in DDG_AGENT_SERVICES_ALLOWED_HOSTS")
     return candidate
 
@@ -395,6 +409,20 @@ mcp = FastMCP(
     stateless_http=True,
     json_response=True,
 )
+
+
+class _NoRedirectHandler(urllib.request.HTTPRedirectHandler):
+    """Disable urllib's default redirect following so BASE_URL stays authoritative."""
+
+    def redirect_request(self, req: Any, fp: Any, code: int, msg: str, headers: Any, newurl: str) -> None:
+        return None
+
+
+_NO_REDIRECT_OPENER = urllib.request.build_opener(_NoRedirectHandler)
+
+
+def _open_no_redirect(req: urllib.request.Request, *, timeout: int = 30) -> Any:
+    return _NO_REDIRECT_OPENER.open(req, timeout=timeout)
 
 
 def _bounded_text(value: Any, max_chars: int) -> str:
@@ -452,15 +480,19 @@ def _safe_receipt_hash(receipt_hash: str) -> str:
     return _safe_identifier(receipt_hash, label="receipt_hash", pattern=r"[A-Za-z0-9_.:\-]{6,160}")
 
 
-def _filtered_extra_headers(headers: dict[str, str] | None) -> dict[str, str]:
+def _filtered_extra_headers(headers: Mapping[str, Any] | None) -> dict[str, str]:
     """Forward only payment/idempotency headers and never generic credentials.
 
     In particular, `Authorization` is allowed only for `Payment ...` values.
     This prevents an MCP caller from accidentally relaying unrelated Bearer,
     Basic, GitHub, cloud, or provider tokens to the DDG service endpoint.
     """
+    if headers is None:
+        return {}
+    if not isinstance(headers, Mapping):
+        raise ValueError("unsafe_payment_headers")
     safe: dict[str, str] = {}
-    for key, value in (headers or {}).items():
+    for key, value in headers.items():
         normalized = str(key).strip().lower()
         canonical = ALLOWED_EXTRA_HEADERS.get(normalized)
         if not canonical:
@@ -539,7 +571,7 @@ def _json_request(
     *,
     method: str = "GET",
     payload: dict[str, Any] | None = None,
-    headers: dict[str, str] | None = None,
+    headers: Mapping[str, Any] | None = None,
     agent_id: str | None = None,
 ) -> dict[str, Any]:
     try:
@@ -556,10 +588,14 @@ def _json_request(
     req_headers = {"Accept": "application/json", "X-Agent-Id": safe_agent_id}
     if body is not None:
         req_headers["Content-Type"] = "application/json"
-    req_headers.update(_filtered_extra_headers(headers))
+    try:
+        extra_headers = _filtered_extra_headers(headers)
+    except ValueError as exc:
+        return {"status": 0, "headers": {}, "body": {"error": str(exc)}}
+    req_headers.update(extra_headers)
     req = urllib.request.Request(BASE_URL + safe_path, data=body, headers=req_headers, method=method)
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
+        with _open_no_redirect(req, timeout=30) as resp:
             raw = _read_limited_response(resp)
             return {"status": resp.status, "headers": _safe_response_headers(resp.headers), "body": _parse_json_response(raw)}
     except urllib.error.HTTPError as exc:
@@ -569,7 +605,7 @@ def _json_request(
         try:
             parsed = _parse_json_response(raw)
         except Exception:
-            parsed = {"raw": _redact_text(raw[:500])}
+            parsed = {"error": "non_json_response_from_ddg"}
         return {"status": exc.code, "headers": _safe_response_headers(exc.headers), "body": parsed}
     except ValueError as exc:
         return {"status": 0, "headers": {}, "body": {"error": str(exc)}}
@@ -598,7 +634,7 @@ def _resource_text(resource_id_or_uri: str) -> str:
     safe_path = _safe_path(spec["path"])
     req = urllib.request.Request(BASE_URL + safe_path, headers={"Accept": spec["mime_type"], "X-Agent-Id": _safe_agent_id()})
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
+        with _open_no_redirect(req, timeout=30) as resp:
             text = _read_limited_response(resp)
     except urllib.error.HTTPError as exc:
         text = exc.read(MAX_RESPONSE_BYTES + 1).decode("utf-8", errors="replace")
@@ -609,7 +645,7 @@ def _resource_text(resource_id_or_uri: str) -> str:
             parsed = json.loads(text)
             return json.dumps(_redacted_json(parsed), ensure_ascii=False, indent=2, sort_keys=True)[:MAX_RESOURCE_TEXT_CHARS]
         except json.JSONDecodeError:
-            pass
+            return _static_json_text({"error": "invalid_json_from_ddg", "resource": spec["uri"]})
     return _redact_text(text)[:MAX_RESOURCE_TEXT_CHARS]
 
 
@@ -656,6 +692,7 @@ def ddg_mcp_security_profile() -> dict[str, Any]:
         "controls": {
             "base_url_allowlist": sorted(_allowed_base_hosts()),
             "https_required_for_non_local_upstreams": True,
+            "local_base_urls_opt_in": _local_base_urls_enabled(),
             "arbitrary_url_fetch": False,
             "shell_or_file_tools": False,
             "payment_header_allowlist": sorted(ALLOWED_EXTRA_HEADERS.values()),

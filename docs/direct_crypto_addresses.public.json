@@ -1,0 +1,124 @@
+{
+  "generated_at": "2026-06-06T08:26:04.514948+00:00",
+  "updated_at": "2026-06-24T01:32:05Z",
+  "status": "manual_confirmation_beta_with_direct_crypto_auto_verify_adapter_for_supported_assets",
+  "warning": "Public payment addresses only. Direct-crypto proofs require provider auto-verification or operator confirmation before fulfillment.",
+  "wallets": [
+    {
+      "asset": "EVM",
+      "network": "EVM-compatible mainnets/testnets",
+      "address_env": "DDG_CRYPTO_EVM_ADDRESS",
+      "address": "0x25A4B534452372619f841956D64Ce5F45307d834",
+      "derivation_path": "m/44'/60'/0'/0/0"
+    },
+    {
+      "asset": "BTC",
+      "network": "Bitcoin mainnet native segwit",
+      "address_env": "DDG_CRYPTO_BTC_ADDRESS",
+      "address": "bc1qswcxsxmlads07gtlunrqm49fmeuc4p3lmk5k0q",
+      "derivation_path": "m/84'/0'/0'/0/0"
+    },
+    {
+      "asset": "LTC",
+      "network": "Litecoin mainnet native segwit",
+      "address_env": "DDG_CRYPTO_LTC_ADDRESS",
+      "address": "ltc1qv8yemdhk88zxth95n5s3rnt7nrjg7z52ru2n2y",
+      "derivation_path": "m/84'/2'/0'/0/0"
+    },
+    {
+      "asset": "DOGE",
+      "network": "Dogecoin mainnet legacy",
+      "address_env": "DDG_CRYPTO_DOGE_ADDRESS",
+      "address": "DEiZ9siBn8pYAhqRf1Ca7eqNNyK2ZrBd1x",
+      "derivation_path": "m/44'/3'/0'/0/0"
+    },
+    {
+      "asset": "ZEC",
+      "network": "Zcash mainnet transparent t-address",
+      "address_env": "DDG_CRYPTO_ZEC_ADDRESS",
+      "address": "t1Nrg3PZAf1w3vKbzV1Rq817oRTLxq9iD5d",
+      "derivation_path": "m/44'/133'/0'/0/0"
+    },
+    {
+      "asset": "BCH",
+      "network": "Bitcoin Cash mainnet cashaddr",
+      "address_env": "DDG_CRYPTO_BCH_ADDRESS",
+      "address": "bitcoincash:qze4aj4ns8usydmwlqx8q5nmgpud3x48avpkrqds0x",
+      "derivation_path": "m/44'/145'/0'/0/0"
+    },
+    {
+      "asset": "SOL",
+      "network": "Solana mainnet",
+      "address_env": "DDG_CRYPTO_SOL_ADDRESS",
+      "address": "v6ztnrxiyZPF7LSKZrm9AhAJqukWYMFMt6YboofJhGD",
+      "derivation_path": "m/44'/501'/0'/0/0"
+    },
+    {
+      "asset": "TRX",
+      "network": "Tron mainnet",
+      "address_env": "DDG_CRYPTO_TRX_ADDRESS",
+      "address": "TYMsm7b6YnyD41KSAgZttRUNY3mDwU4yoo",
+      "derivation_path": "m/44'/195'/0'/0/0"
+    },
+    {
+      "asset": "XRP",
+      "network": "XRP Ledger mainnet",
+      "address_env": "DDG_CRYPTO_XRP_ADDRESS",
+      "address": "r4Ub17w7P22kTu33qNvVkQs3XRYJvEiiYD",
+      "derivation_path": "m/44'/144'/0'/0/0"
+    },
+    {
+      "asset": "XLM",
+      "network": "Stellar mainnet",
+      "address_env": "DDG_CRYPTO_XLM_ADDRESS",
+      "address": "GAIJ5MBOB4RUGU2QRR237XX3WFO4ALNV5V42Q7JK6MLGVOBWM4OV6GFK",
+      "derivation_path": "m/44'/148'/0'/0/0"
+    },
+    {
+      "asset": "ALGO",
+      "network": "Algorand mainnet",
+      "address_env": "DDG_CRYPTO_ALGO_ADDRESS",
+      "address": "MLYNV63M76DBHTJZLST6H7SR5Z2DWWRJU2GNCN2BEXBVVVSGEJ3N6ES3YU",
+      "derivation_path": "m/44'/283'/0'/0/0"
+    },
+    {
+      "asset": "DOT",
+      "network": "Polkadot mainnet",
+      "address_env": "DDG_CRYPTO_DOT_ADDRESS",
+      "address": "12WdyrGrNr4tsqa45zdKWXbWx3grrm3tZunbcpVNi96PvvCw",
+      "derivation_path": "m/44'/354'/0'/0/0"
+    },
+    {
+      "asset": "XMR",
+      "network": "Monero mainnet primary address",
+      "address_env": "DDG_CRYPTO_XMR_ADDRESS",
+      "address": "46rEbwqHVMW7at7kBbdtFnRMXSqkUbbpbJZR4k4TUxsVUDdQX7po4HL2F1Nbw7kEM8hZ4F242D4kgQAj1aMU5S9U6TS6ZCy",
+      "derivation_path": null
+    }
+  ],
+  "accepted_asset_families": [
+    "EVM/stablecoins",
+    "BTC",
+    "BCH",
+    "LTC",
+    "DOGE",
+    "SOL",
+    "TRX",
+    "XRP",
+    "XLM",
+    "ALGO",
+    "DOT",
+    "ZEC",
+    "XMR"
+  ],
+  "auto_verification_scope": [
+    "BTC, BCH, LTC, DOGE, transparent ZEC via public-chain lookups",
+    "EVM native transfers and USDC on configured Ethereum/Base/Polygon RPC paths",
+    "SOL, TRX, XRP, XLM, and ALGO native payment lookups",
+    "XMR only when a view-only monero-wallet-rpc is configured"
+  ],
+  "manual_confirmation_scope": [
+    "DOT until a Substrate/Subscan indexer is configured",
+    "XMR without wallet RPC, shielded ZEC, non-USDC stablecoins, and any supported address family the verifier cannot conclusively confirm"
+  ]
+}

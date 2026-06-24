@@ -2,7 +2,7 @@
 
 Operator: Daedalus Development Group
 Contact: 0xcircuitbreaker@protonmail.com
-Live payment protocols: x402, direct_crypto_auto, and direct_crypto_manual. MPP is code-ready but pending live provider/currency configuration.
+Live payment protocols: x402, direct_crypto_auto, and direct_crypto_manual. x402 advertises Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC; direct crypto publishes receiving addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR. MPP is code-ready but pending live provider/currency configuration and penny-settlement proof.
 Canonical pricing/status catalog: /.well-known/ddg-agent-pricing.json
 AI discovery endpoint: /.well-known/ai (alias /ai)
 API linkset catalog: /.well-known/api-catalog
@@ -135,7 +135,7 @@ Micro-model swarm note: the implemented preview now has these downloaded Ollama 
 
 ## Production caveats
 
-- Public production can launch as direct_crypto_manual beta with generated addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR. Direct_crypto_auto is implemented at the edge and becomes an automatic rail once DDG_PAYMENT_DIRECT_CRYPTO_VERIFY_URL points at a chain-verification provider/sidecar; x402/MPP settlement remain additional automated rails to finish before broad self-serve scale.
+- Public production accepts direct_crypto_manual with generated public receiving addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR. Direct_crypto_auto is implemented at the edge and becomes an automatic rail once DDG_PAYMENT_DIRECT_CRYPTO_VERIFY_URL points at a chain-verification provider/sidecar; x402/MPP settlement remain additional automated rails to finish before broad self-serve scale.
 - Cloudflare/WAF must allow normal agent clients to reach /health, /llms.txt, /openapi.json, /.well-known/*, and /v1/*.
 - Human approval remains required for outreach-send, external spending, posting, account creation, or other irreversible side effects.
 

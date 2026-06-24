@@ -10,23 +10,49 @@
       "mimeType": "application/json",
       "extensions": {
         "bazaar": {
-          "input": {"request_label": "buyer-agent-smoke"},
+          "input": {
+            "request_label": "buyer-agent-smoke"
+          },
           "inputSchema": {
             "type": "object",
-            "properties": {"request_label": {"type": "string", "maxLength": 120}},
+            "properties": {
+              "request_label": {
+                "type": "string",
+                "maxLength": 120
+              }
+            },
             "additionalProperties": false
           },
           "output": {
-            "example": {"ok": true, "service": "tx_penny_smoke_test", "payment": {"protocol": "x402", "receipt": "..."}},
+            "example": {
+              "ok": true,
+              "service": "tx_penny_smoke_test",
+              "payment": {
+                "protocol": "x402",
+                "receipt": "..."
+              }
+            },
             "schema": {
               "type": "object",
               "properties": {
-                "ok": {"type": "boolean"},
-                "service": {"const": "tx_penny_smoke_test"},
-                "amount_usd": {"type": "string"},
-                "payment": {"type": "object"}
+                "ok": {
+                  "type": "boolean"
+                },
+                "service": {
+                  "const": "tx_penny_smoke_test"
+                },
+                "amount_usd": {
+                  "type": "string"
+                },
+                "payment": {
+                  "type": "object"
+                }
               },
-              "required": ["ok", "service", "payment"]
+              "required": [
+                "ok",
+                "service",
+                "payment"
+              ]
             }
           }
         }
@@ -42,5 +68,213 @@
     "Query https://api.cdp.coinbase.com/platform/v2/x402/discovery/search?query=DDG%20agent%20payment&limit=20",
     "Query https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources?limit=100",
     "Connect an MCP client to https://api.cdp.coinbase.com/platform/v2/x402/discovery/mcp and search for DDG"
-  ]
+  ],
+  "crypto_payment_options": {
+    "last_synced_at": "2026-06-24T01:32:05Z",
+    "source_of_truth": {
+      "x402": "/openapi.json 402 PAYMENT-REQUIRED accepts[] plus payment_rail_addresses.env",
+      "direct_crypto": "/.well-known/ddg-direct-crypto-addresses.json plus direct_crypto_addresses.env",
+      "mpp": "/.well-known/ddg-mpp-activation-guide.md; pending until provider env and penny settlement pass"
+    },
+    "public_live_protocols": [
+      "x402",
+      "direct_crypto_auto",
+      "direct_crypto_manual"
+    ],
+    "pending_protocols": [
+      "mpp"
+    ],
+    "x402": {
+      "status": "public_live",
+      "settlement_default": "Base mainnet USDC for production/x402scan compatibility",
+      "accepted_networks": [
+        {
+          "network": "eip155:8453",
+          "label": "Base mainnet",
+          "asset": "USDC",
+          "asset_contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "amount_decimals": 6
+        },
+        {
+          "network": "eip155:137",
+          "label": "Polygon mainnet",
+          "asset": "USDC",
+          "asset_contract": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+          "amount_decimals": 6
+        },
+        {
+          "network": "eip155:42161",
+          "label": "Arbitrum One",
+          "asset": "USDC",
+          "asset_contract": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+          "amount_decimals": 6
+        },
+        {
+          "network": "eip155:480",
+          "label": "World Chain mainnet",
+          "asset": "USDC",
+          "asset_contract": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
+          "amount_decimals": 6
+        },
+        {
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "label": "Solana mainnet",
+          "asset": "USDC",
+          "asset_contract": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "amount_decimals": 6
+        }
+      ],
+      "amount_unit": "atomic integer strings; USDC has 6 decimals, so $0.01 is \"10000\""
+    },
+    "direct_crypto": {
+      "status": "public_live_auto_for_verifier_supported_assets_manual_operator_confirmed_for_remaining_public_addresses",
+      "public_manifest": "/.well-known/ddg-direct-crypto-addresses.json",
+      "public_env": "direct_crypto_addresses.env",
+      "wallet_count": 13,
+      "assets": [
+        "EVM/stablecoins",
+        "BTC",
+        "BCH",
+        "LTC",
+        "DOGE",
+        "SOL",
+        "TRX",
+        "XRP",
+        "XLM",
+        "ALGO",
+        "DOT",
+        "ZEC",
+        "XMR"
+      ],
+      "address_env": [
+        "DDG_CRYPTO_EVM_ADDRESS",
+        "DDG_CRYPTO_BTC_ADDRESS",
+        "DDG_CRYPTO_BCH_ADDRESS",
+        "DDG_CRYPTO_LTC_ADDRESS",
+        "DDG_CRYPTO_DOGE_ADDRESS",
+        "DDG_CRYPTO_SOL_ADDRESS",
+        "DDG_CRYPTO_TRX_ADDRESS",
+        "DDG_CRYPTO_XRP_ADDRESS",
+        "DDG_CRYPTO_XLM_ADDRESS",
+        "DDG_CRYPTO_ALGO_ADDRESS",
+        "DDG_CRYPTO_DOT_ADDRESS",
+        "DDG_CRYPTO_ZEC_ADDRESS",
+        "DDG_CRYPTO_XMR_ADDRESS"
+      ],
+      "public_address_families": [
+        {
+          "asset": "EVM",
+          "network": "EVM-compatible mainnets/testnets",
+          "address_env": "DDG_CRYPTO_EVM_ADDRESS",
+          "address": "0x25A4B534452372619f841956D64Ce5F45307d834",
+          "description": "ETH/EVM native assets plus operator-confirmed EVM stablecoins (USDC, USDT, DAI, PYUSD, FRAX, FDUSD, GUSD, LUSD, USDP, TUSD, EURC) on supported EVM networks; auto verifier currently supports configured EVM native/USDC paths."
+        },
+        {
+          "asset": "BTC",
+          "network": "Bitcoin mainnet native segwit",
+          "address_env": "DDG_CRYPTO_BTC_ADDRESS",
+          "address": "bc1qswcxsxmlads07gtlunrqm49fmeuc4p3lmk5k0q",
+          "description": "Bitcoin mainnet native segwit."
+        },
+        {
+          "asset": "BCH",
+          "network": "Bitcoin Cash mainnet cashaddr",
+          "address_env": "DDG_CRYPTO_BCH_ADDRESS",
+          "address": "bitcoincash:qze4aj4ns8usydmwlqx8q5nmgpud3x48avpkrqds0x",
+          "description": "Bitcoin Cash mainnet cashaddr."
+        },
+        {
+          "asset": "LTC",
+          "network": "Litecoin mainnet native segwit",
+          "address_env": "DDG_CRYPTO_LTC_ADDRESS",
+          "address": "ltc1qv8yemdhk88zxth95n5s3rnt7nrjg7z52ru2n2y",
+          "description": "Litecoin mainnet native segwit."
+        },
+        {
+          "asset": "DOGE",
+          "network": "Dogecoin mainnet legacy",
+          "address_env": "DDG_CRYPTO_DOGE_ADDRESS",
+          "address": "DEiZ9siBn8pYAhqRf1Ca7eqNNyK2ZrBd1x",
+          "description": "Dogecoin mainnet legacy."
+        },
+        {
+          "asset": "SOL",
+          "network": "Solana mainnet",
+          "address_env": "DDG_CRYPTO_SOL_ADDRESS",
+          "address": "v6ztnrxiyZPF7LSKZrm9AhAJqukWYMFMt6YboofJhGD",
+          "description": "Solana mainnet; SOL and SPL stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "TRX",
+          "network": "Tron mainnet",
+          "address_env": "DDG_CRYPTO_TRX_ADDRESS",
+          "address": "TYMsm7b6YnyD41KSAgZttRUNY3mDwU4yoo",
+          "description": "Tron mainnet; TRX and TRC20 stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "XRP",
+          "network": "XRP Ledger mainnet",
+          "address_env": "DDG_CRYPTO_XRP_ADDRESS",
+          "address": "r4Ub17w7P22kTu33qNvVkQs3XRYJvEiiYD",
+          "description": "XRP Ledger mainnet; destination-tag policy should be checked before high-volume payments."
+        },
+        {
+          "asset": "XLM",
+          "network": "Stellar mainnet",
+          "address_env": "DDG_CRYPTO_XLM_ADDRESS",
+          "address": "GAIJ5MBOB4RUGU2QRR237XX3WFO4ALNV5V42Q7JK6MLGVOBWM4OV6GFK",
+          "description": "Stellar mainnet; XLM and Stellar-issued stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "ALGO",
+          "network": "Algorand mainnet",
+          "address_env": "DDG_CRYPTO_ALGO_ADDRESS",
+          "address": "MLYNV63M76DBHTJZLST6H7SR5Z2DWWRJU2GNCN2BEXBVVVSGEJ3N6ES3YU",
+          "description": "Algorand mainnet; ALGO and ASA stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "DOT",
+          "network": "Polkadot mainnet",
+          "address_env": "DDG_CRYPTO_DOT_ADDRESS",
+          "address": "12WdyrGrNr4tsqa45zdKWXbWx3grrm3tZunbcpVNi96PvvCw",
+          "description": "Polkadot mainnet; manual/operator confirmation unless a Substrate indexer is configured."
+        },
+        {
+          "asset": "ZEC",
+          "network": "Zcash mainnet transparent t-address",
+          "address_env": "DDG_CRYPTO_ZEC_ADDRESS",
+          "address": "t1Nrg3PZAf1w3vKbzV1Rq817oRTLxq9iD5d",
+          "description": "Zcash transparent t-address; shielded payments are not auto-confirmed."
+        },
+        {
+          "asset": "XMR",
+          "network": "Monero mainnet primary address",
+          "address_env": "DDG_CRYPTO_XMR_ADDRESS",
+          "address": "46rEbwqHVMW7at7kBbdtFnRMXSqkUbbpbJZR4k4TUxsVUDdQX7po4HL2F1Nbw7kEM8hZ4F242D4kgQAj1aMU5S9U6TS6ZCy",
+          "description": "Monero primary address; public balance is not visible and auto confirmation requires view-only wallet RPC, otherwise operator confirmation."
+        }
+      ],
+      "auto_verification_scope": [
+        "BTC, BCH, LTC, DOGE, transparent ZEC via public-chain lookups",
+        "EVM native transfers and USDC on configured Ethereum/Base/Polygon RPC paths",
+        "SOL, TRX, XRP, XLM, and ALGO native payment lookups",
+        "XMR only when a view-only monero-wallet-rpc is configured"
+      ],
+      "manual_confirmation_scope": [
+        "DOT until a Substrate/Subscan indexer is configured",
+        "XMR without wallet RPC, shielded ZEC, non-USDC stablecoins, and any supported address family the verifier cannot conclusively confirm"
+      ],
+      "proof_headers": [
+        "X-Direct-Crypto-Proof",
+        "Payment-Proof",
+        "Authorization: Payment direct_crypto <base64url-json>"
+      ],
+      "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}"
+    },
+    "mpp": {
+      "status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+      "advertise_rule": "Do not add MPP to public 402 challenges, OpenAPI live protocols, or listing copy until ready:true, real penny settlement, idempotent replay, fake-token 402, and leak scan pass."
+    }
+  },
+  "last_synced_at": "2026-06-24T01:32:05Z"
 }

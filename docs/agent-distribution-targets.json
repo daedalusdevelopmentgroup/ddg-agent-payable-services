@@ -1,14 +1,28 @@
 {
   "status": "active_distribution_work_started",
+  "last_synced_at": "2026-06-24T01:32:05Z",
   "base_url": "https://agents.daedalusdevelopmentgroup.com",
   "public_repo": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
+  "payment_claims": {
+    "live_protocols": [
+      "x402",
+      "direct_crypto_auto",
+      "direct_crypto_manual"
+    ],
+    "x402_accepts": "Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC",
+    "direct_crypto_families": "EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR",
+    "pending": [
+      "mpp",
+      "cdp_x402_bazaar_indexing_until_real_settlement"
+    ]
+  },
   "priority_order": [
     "owned_agent_discovery_surfaces",
     "github_public_repo",
-    "official_mcp_registry",
-    "cdp_x402_bazaar",
     "x402scan",
     "x402_ecosystem_and_awesome_lists",
+    "cdp_x402_bazaar",
+    "official_mcp_registry",
     "mcp_aggregators"
   ],
   "targets": [
@@ -23,7 +37,7 @@
         "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json",
         "https://agents.daedalusdevelopmentgroup.com/.well-known/agent-skills/index.json"
       ],
-      "next_action": "Keep public endpoint leak scans and payment-ladder smokes green after every catalog/docs update."
+      "next_action": "Keep public endpoint leak scans, payment-ladder smokes, and submission-sync validation green after every catalog/docs update."
     },
     {
       "id": "github_public_repo",
@@ -32,26 +46,14 @@
       "next_action": "Keep CodeQL, CI, Dependabot, security policy, clean commits, and topic metadata green."
     },
     {
-      "id": "official_mcp_registry",
-      "status": "metadata_ready_submission_waits_for_public_package_or_hosted_endpoint",
-      "url": "https://modelcontextprotocol.io/registry/about",
-      "next_action": "Publish the stdio package to PyPI or deploy/smoke the public Streamable HTTP endpoint, then publish mcp/server.json with mcp-publisher."
-    },
-    {
-      "id": "cdp_x402_bazaar",
-      "status": "runtime_bazaar_schemas_live_not_indexed_until_real_cdp_settlement",
-      "url": "https://docs.cdp.coinbase.com/x402/bazaar",
-      "next_action": "Wire Bazaar discovery extensions into the CDP Facilitator settle flow and complete one real penny-scale settlement with paymentPayload.resource set."
-    },
-    {
       "id": "x402scan",
       "status": "registered_live_5_resources",
-      "next_action": "Keep x402scan batch tests green after every OpenAPI/payment-edge update; expand listing copy only after CDP Bazaar settlement indexing is live.",
       "urls": [
         "https://www.x402scan.com/server/c3540307-0eb2-455d-90b6-a21f7d5a3792",
         "https://tryponcho.com/m/agents.daedalusdevelopmentgroup.com",
         "https://www.x402scan.com/resources/register"
-      ]
+      ],
+      "next_action": "Keep x402scan batch tests and AgentCash discover/check green after every OpenAPI/payment-edge/submission update."
     },
     {
       "id": "x402_ecosystem_and_awesome_lists",
@@ -62,6 +64,18 @@
       ],
       "packet": "submissions/x402-ecosystem/awesome-x402-listing.md",
       "next_action": "Open listing requests/PRs now that x402scan/agentcash probes report valid paid resources; keep CDP Bazaar marked settlement-gated."
+    },
+    {
+      "id": "cdp_x402_bazaar",
+      "status": "runtime_bazaar_schemas_live_not_indexed_until_real_cdp_settlement",
+      "url": "https://docs.cdp.coinbase.com/x402/bazaar",
+      "next_action": "Wire Bazaar discovery extensions into the CDP Facilitator settle flow and complete one real penny-scale settlement with paymentPayload.resource set."
+    },
+    {
+      "id": "official_mcp_registry",
+      "status": "metadata_ready_submission_waits_for_public_package_or_hosted_endpoint",
+      "url": "https://modelcontextprotocol.io/registry/about",
+      "next_action": "Publish the stdio package to PyPI or deploy/smoke the public Streamable HTTP endpoint, then publish mcp/server.json with mcp-publisher."
     },
     {
       "id": "mcp_aggregators",

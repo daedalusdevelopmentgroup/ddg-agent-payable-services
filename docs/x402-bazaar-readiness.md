@@ -28,13 +28,17 @@ CDP x402 Bazaar is **not** a normal directory form. Current docs say resources a
 5. Verify discovery search/catalog or the Bazaar MCP endpoint:
 
 ```bash
-curl -fsS 'https://api.cdp.coinbase.com/platform/v2/x402/discovery/search?query=DDG%20checkout%20conformance&limit=20' | python3 -m json.tool
-curl -fsS 'https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources?limit=100' | python3 -m json.tool
+tmp_search=$(mktemp)
+tmp_resources=$(mktemp)
+curl -fsS -o "$tmp_search" 'https://api.cdp.coinbase.com/platform/v2/x402/discovery/search?query=DDG%20checkout%20conformance&limit=20'
+curl -fsS -o "$tmp_resources" 'https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources?limit=100'
+python3 -m json.tool "$tmp_search"
+python3 -m json.tool "$tmp_resources"
 # MCP clients can also connect to:
 # https://api.cdp.coinbase.com/platform/v2/x402/discovery/mcp
 ```
 
 ## Go/no-go
 
-- x402scan manual registration: ready after production OpenAPI patch is deployed and scanner shows valid resources.
+- x402scan manual registration: live with 5 validated resources; keep scanner and AgentCash checks green after every payment/discovery change.
 - CDP Bazaar: not ready until CDP settle metadata is wired and one real settlement completes.

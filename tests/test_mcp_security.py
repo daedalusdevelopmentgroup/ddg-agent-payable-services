@@ -224,26 +224,26 @@ def test_non_json_http_error_does_not_return_raw_body(monkeypatch: pytest.Monkey
     def fake_urlopen(req, timeout):
         headers = Message()
         headers["Content-Type"] = "text/plain"
-        fp = io.BytesIO(b"upstream debug token=custom-secret-format-not-returned")
+        fp = io.BytesIO(b"upstream debug tok=redact-me-not-returned")
         raise urllib.error.HTTPError(req.full_url, 500, "Internal Server Error", headers, fp)
 
     monkeypatch.setattr(server, "_open_no_redirect", fake_urlopen)
     result = server._json_request("/.well-known/ddg-agent-status.json")
     assert result["status"] == 500
     assert result["body"] == {"error": "non_json_response_from_ddg"}
-    assert "custom-secret-format" not in json.dumps(result)
+    assert "redact-me" not in json.dumps(result)
 
 
 def test_invalid_json_resource_does_not_return_raw_body(monkeypatch: pytest.MonkeyPatch) -> None:
     class InvalidJsonResourceResponse(_FakeHTTPResponse):
         def read(self, size: int = -1) -> bytes:
-            return b"not-json token=custom-secret-format-not-returned"
+            return b"not-json tok=redact-me-not-returned"
 
     monkeypatch.setattr(server, "_open_no_redirect", lambda req, timeout: InvalidJsonResourceResponse())
     text = server.ddg_manifest_status_resource()
     parsed = json.loads(text)
     assert parsed == {"error": "invalid_json_from_ddg", "resource": "ddg://manifest/status"}
-    assert "custom-secret-format" not in text
+    assert "redact-me" not in text
 
 
 def test_public_resource_index_and_allowlist() -> None:

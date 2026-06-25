@@ -152,7 +152,7 @@ Observed result shape:
   "tool_count": 20,
   "resource_count": 11,
   "sample": {
-    "security_profile_status": "source_hardened_public_remote_pending",
+    "security_profile_status": "source_hardened_public_remote_live",
     "agent_status_status": 200,
     "checkout_conformance_status": 200,
     "receipt_design_status": "planned_not_live",

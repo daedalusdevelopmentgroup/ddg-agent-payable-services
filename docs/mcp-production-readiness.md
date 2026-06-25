@@ -5,8 +5,8 @@ DDG's MCP wrapper is payment-aware: free tools expose discovery/status/conforman
 ## Current status
 
 - Stdio/package path: source-ready and locally smoked.
-- Streamable HTTP server: source-ready and locally smoked on `http://127.0.0.1:8891/mcp`.
-- Public hosted MCP endpoint: **not live yet**; do not publish a `remotes` entry in `mcp/server.json` until the public URL is deployed and MCP-client smoked.
+- Streamable HTTP server: source-ready, locally smoked on `http://127.0.0.1:8891/mcp`, and public-live at `https://mcp.daedalusdevelopmentgroup.com/mcp`.
+- Public hosted MCP endpoint: **live** at `https://mcp.daedalusdevelopmentgroup.com/mcp` and MCP-client smoked.
 - Current live payment rails exposed through MCP paid tools: `x402`, `direct_crypto_auto`.
 - MPP remains pending until provider env + `ready:true` + penny settlement proof.
 
@@ -22,7 +22,7 @@ PYTHONPATH=src \
 uv run --extra dev python scripts/smoke_mcp_server.py --transport stdio --source-tree src
 ```
 
-Expected: `ok: true`, 20 tools and 11 resources present, `ddg_mcp_security_profile` reports `source_hardened_public_remote_pending`, `ddg://manifest/status` and `ddg://distribution/agent-radar` read successfully, `ddg_agent_status` returns 200, `ddg_x402_bazaar_readiness` does not overclaim indexing before settlement, and `ddg_tx_smoke_test` returns structured 402.
+Expected: `ok: true`, 20 tools and 11 resources present, `ddg_mcp_security_profile` reports `source_hardened_public_remote_live`, `ddg://manifest/status` and `ddg://distribution/agent-radar` read successfully, `ddg_agent_status` returns 200, `ddg_x402_bazaar_readiness` does not overclaim indexing before settlement, and `ddg_tx_smoke_test` returns structured 402.
 
 ### Streamable HTTP, local only
 
@@ -112,4 +112,4 @@ Expected: `ok: true`, 20 tools and 11 resources present, and unpaid paid-tool ca
 
 Production-ready source status: **yes** for stdio and local Streamable HTTP.
 
-Public-live hosted MCP status: **hold** until loopback service deployment, Cloudflare route, public MCP-client smoke, and public leak scan all pass.
+Public-live hosted MCP status: **go** — loopback services, Cloudflare route/DNS, and public MCP-client smoke passed. Continue leak scan + registry publisher validation before external directory publication.

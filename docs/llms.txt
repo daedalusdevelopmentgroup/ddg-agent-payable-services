@@ -16,7 +16,7 @@ DDG sells budgeted application/model-router output and operator-reviewable agent
 
 ## Live runtime endpoints
 
-These routes are implemented in the current payment edge and are the only routes intentionally advertised by OpenAPI today.
+These routes are implemented in the current payment edge. OpenAPI now includes automated routes plus operator-fulfilled live service aliases that queue paid orders and return status/artifact URLs.
 
 0. POST /v1/tx-smoke-test — one-cent paid transaction smoke test for AI agents; returns a receipt-only JSON proof that payment worked. Launch price: $0.01.
 1. POST /v1/site-audit — paid automated website audit. Read-only. Launch price: $0.75.
@@ -73,9 +73,9 @@ Recommended request defaults:
 
 DDG returns request IDs, selected tier/model/route where allowed, usage/billing estimates, receipt metadata, and route-specific artifacts.
 
-## Manual-fulfillment beta offers
+## Operator-fulfilled live service routes
 
-These are sellable/quotable DDG service packages. Agents can order paid/operator-reviewed items by calling `POST /v1/order-intake` with `service_id`, stable `X-Agent-Id`, idempotency key, and payment proof/rail headers as required. DDG/operator review remains required before fulfillment and before any irreversible outreach/send action. Intake success includes `status_url`, `artifact_url`, and `receipt_console_url`; poll `GET /v1/orders/{order_id}` and `GET /v1/orders/{order_id}/artifact` with the same agent identity to retrieve redacted status and finished artifacts.
+These are production-live, agent-orderable DDG service packages. Agents may call the listed path directly or call `POST /v1/order-intake` with `service_id`, stable `X-Agent-Id`, idempotency key, and payment proof/rail headers as required. The payment edge queues a redacted order and returns `order_id`, `status_url`, `artifact_url`, and `receipt_console_url`. DDG/operator review remains required before fulfillment and before any irreversible outreach/send action; these routes are production-buyable, not fully automated execution.
 
 - /v1/site-audit/reviewed — human-reviewed website/conversion audit.
 - /v1/lead-pack — curated lead pack with official URLs, evidence, contact confidence, and outreach angles.
@@ -102,7 +102,7 @@ These are sellable/quotable DDG service packages. Agents can order paid/operator
 
 ## Planned / not public self-serve yet
 
-These are intentionally not in OpenAPI today. They must stay hidden from self-serve launch claims until wrappers, sandboxing, payment settlement posture, and smoke tests pass.
+These remain intentionally not in OpenAPI as live self-serve services. They must stay hidden from launch claims until wrappers, sandboxing, payment settlement posture, and smoke tests pass.
 
 - /v1/sandboxed-cli-agent-run — general bounded CLI-agent run; requires stronger filesystem/env sandboxing.
 - /v1/local-model-swarm-seat — named paid lease path remains planned; current live free capacity is /v1/micro-model-swarm-preview plus selectable local runtime routes under /v1/model/agent-run.

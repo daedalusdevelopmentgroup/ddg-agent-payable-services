@@ -44,11 +44,11 @@
   "schema_version": "v0.1.0",
   "service": "DDG Agent-Payable Services",
   "service_counts": {
-    "catalog_live_runtime_services": 9,
-    "catalog_manual_operator_review_services": 33,
-    "catalog_planned_or_hidden_services": 3,
-    "openapi_paths": 19,
-    "pricing_services": 46
+    "total": 46,
+    "live_runtime": 43,
+    "operator_fulfilled_live": 33,
+    "planned": 3,
+    "manual_fulfillment_beta": 0
   },
   "status": "production_live_x402_direct_crypto_mpp_pending",
   "crypto_payment_options": {
@@ -257,5 +257,9 @@
       "status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
       "advertise_rule": "Do not add MPP to public 402 challenges, OpenAPI live protocols, or listing copy until ready:true, real penny settlement, idempotent replay, fake-token 402, and leak scan pass."
     }
+  },
+  "last_production_readiness_sync": "2026-06-24T20:25:00Z",
+  "production_readiness_notes": {
+    "operator_fulfilled_services": "Manual/beta SKUs have been promoted to live agent-orderable routes where the path queues a paid operator-reviewed order and returns status/artifact URLs; they are not represented as fully automated execution."
   }
 }

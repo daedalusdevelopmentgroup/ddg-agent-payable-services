@@ -165,221 +165,238 @@
       "billing": "per_reviewed_model_artifact_run_plus_usage",
       "consumer_class": "ai_agent",
       "description": "Operator-reviewed DDG-operated model/artifact run using available backend tools where terms permit, including Kimi K2.7 Code within Kimi Code. Buyers receive bounded results/artifacts, never provider credentials, account seats, or raw provider access. Can be used for basic conversation, code/research drafts, repo analysis, or other bounded agent tasks.",
-      "fulfillment_mode": "operator_queue_model_artifact_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "provider_model_artifact_order",
       "path": "/v1/model/artifact-order",
       "price_usd": "4.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "operator_review_required_provider_terms_sensitive",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_request",
       "consumer_class": "ai_agent",
       "description": "Human-reviewed audit with stronger client-facing recommendations.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "site_audit_reviewed",
       "path": "/v1/site-audit/reviewed",
       "price_usd": "15.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "human_reviewed",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_pack",
       "consumer_class": "ai_agent",
       "description": "Small curated local-business lead pack with evidence URLs and outreach angles.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "lead_pack_micro",
       "path": "/v1/lead-pack",
       "price_usd": "5.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_run",
       "consumer_class": "ai_agent",
       "description": "Browser-based proof/QA capture with screenshots and reproducible steps.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "browser_proof",
       "path": "/v1/browser-proof",
       "price_usd": "2.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_request",
       "consumer_class": "ai_agent",
       "description": "Personalized outreach brief/draft. Does not send messages without human approval.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "outreach_brief",
       "path": "/v1/outreach-brief",
       "price_usd": "1.50",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "draft_only_human_send_required",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_pack",
       "consumer_class": "ai_agent",
       "description": "Create or repair llms.txt, OpenAPI, pricing/catalog JSON, and agent-readable service docs.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "llms_txt_openapi_pack",
       "path": "/v1/agent-discovery-pack",
       "price_usd": "9.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_audit",
       "consumer_class": "ai_agent",
       "description": "Audit an MCP server or tool surface for installability, schema quality, auth, and prompt-injection risk.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "mcp_server_audit",
       "path": "/v1/mcp-server-audit",
       "price_usd": "12.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_target",
       "consumer_class": "ai_agent",
       "description": "Probe an agent-facing website/API/MCP/tool for prompt injection, data exfiltration, unsafe tool-use, and mitigation notes.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "prompt_injection_red_team",
       "path": "/v1/prompt-injection-red-team",
       "price_usd": "18.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only_security",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_repo",
       "consumer_class": "ai_agent",
       "description": "Turn a repo/docs/SOP corpus into an agent-ready context pack, skill, workflow, or implementation guide.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "repo_context_pack",
       "path": "/v1/repo-context-pack",
       "price_usd": "15.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only_or_patch_optional",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_schema",
       "consumer_class": "ai_agent",
       "description": "Repair OpenAPI/MCP/tool schemas so agents can reliably call them, with examples and validation.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "agent_tool_schema_repair",
       "path": "/v1/agent-tool-schema-repair",
       "price_usd": "12.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only_or_patch_optional",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_brief",
       "consumer_class": "ai_agent",
       "description": "Paid source-linked research brief with citations, confidence notes, and launch recommendation.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "paid_research_pack",
       "path": "/v1/research-pack",
       "price_usd": "8.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_page",
       "consumer_class": "ai_agent",
       "description": "Compare a current/proposed page and return conversion, trust, copy, and agent-readability improvements.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "landing_page_conversion_diff",
       "path": "/v1/landing-page-conversion-diff",
       "price_usd": "7.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_demo",
       "consumer_class": "ai_agent",
       "description": "Create a private lead-specific prototype/demo concept for a local business, with evidence and staged offer angle.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "local_business_demo_pack",
       "path": "/v1/local-business-demo-pack",
       "price_usd": "25.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "human_reviewed",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_audit",
       "consumer_class": "ai_agent",
       "description": "Audit an API/service for x402/MPP/402 paid-agent readiness, idempotency, receipts, and discovery assets.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "agent_payment_readiness_audit",
       "path": "/v1/agent-payment-readiness-audit",
       "price_usd": "15.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_skill_or_workflow",
       "consumer_class": "ai_agent",
       "description": "Build a Hermes skill, generic agent skill, or reusable workflow for the buyer's existing AI/agent stack.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "hermes_skill_workflow_dev",
       "path": "/v1/hermes-skill-workflow-dev",
       "price_usd": "20.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "sandboxed_agent_execution",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_port",
       "consumer_class": "ai_agent",
       "description": "Use DDG-operated models to convert a procedure into a skill/workflow usable by Claude, Codex, Cursor, OpenCode, Hermes, or another agent.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "ai_agent_skill_port",
       "path": "/v1/ai-agent-skill-port",
       "price_usd": "18.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only_or_patch_optional",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_tool_or_server",
       "consumer_class": "ai_agent",
       "description": "Design and scaffold an MCP tool/server from a plain-English goal, including schema, install docs, and smoke tests.",
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "mcp_tool_server_build",
       "path": "/v1/mcp-tool-server-build",
       "price_usd": "35.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "sandboxed_agent_execution",
-      "runtime_status": "manual_fulfillment_beta"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "prompt_injection_scan",
@@ -388,11 +405,12 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "Prompt-injection and tool-exfiltration scan. Security services designed for AI-agent builders, MCP/tool authors, and swarm operators. Paid intake is machine-readable; most scans are operator-reviewed until automated scanners are fully sandboxed.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
-      "public_self_serve": false,
-      "fulfillment_mode": "operator_reviewed_static_and_dynamic_beta",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "npm_dependency_risk_scan",
@@ -401,11 +419,12 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "npm/package-lock dependency risk scan. Security services designed for AI-agent builders, MCP/tool authors, and swarm operators. Paid intake is machine-readable; most scans are operator-reviewed until automated scanners are fully sandboxed.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
-      "public_self_serve": false,
-      "fulfillment_mode": "operator_reviewed_sandbox_beta",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "python_dependency_risk_scan",
@@ -414,11 +433,12 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "Python dependency and import-risk scan. Security services designed for AI-agent builders, MCP/tool authors, and swarm operators. Paid intake is machine-readable; most scans are operator-reviewed until automated scanners are fully sandboxed.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
-      "public_self_serve": false,
-      "fulfillment_mode": "operator_reviewed_sandbox_beta",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "secret_leak_api_key_scan",
@@ -427,11 +447,12 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "API-key/secret leak and credential boundary scan. Security services designed for AI-agent builders, MCP/tool authors, and swarm operators. Paid intake is machine-readable; most scans are operator-reviewed until automated scanners are fully sandboxed.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
-      "public_self_serve": false,
-      "fulfillment_mode": "operator_reviewed_redacted_findings",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "malware_triage_scan",
@@ -440,11 +461,12 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "Malware/suspicious-code triage for agent workflows. Security services designed for AI-agent builders, MCP/tool authors, and swarm operators. Paid intake is machine-readable; most scans are operator-reviewed until automated scanners are fully sandboxed.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
-      "public_self_serve": false,
-      "fulfillment_mode": "sandbox_static_first_operator_review",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "mcp_tool_security_audit",
@@ -453,11 +475,12 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "MCP/tool permission and auth-boundary audit. Security services designed for AI-agent builders, MCP/tool authors, and swarm operators. Paid intake is machine-readable; most scans are operator-reviewed until automated scanners are fully sandboxed.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
-      "public_self_serve": false,
-      "fulfillment_mode": "operator_reviewed_schema_and_runtime_beta",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "agent_supply_chain_baseline",
@@ -466,11 +489,12 @@
       "billing": "per_scan_or_bundle",
       "risk": "read_only_security_operator_reviewed",
       "description": "Agent swarm supply-chain baseline bundle. Security services designed for AI-agent builders, MCP/tool authors, and swarm operators. Paid intake is machine-readable; most scans are operator-reviewed until automated scanners are fully sandboxed.",
-      "runtime_status": "manual_fulfillment_beta_via_order_intake",
-      "public_self_serve": false,
-      "fulfillment_mode": "operator_reviewed_bundle",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "production_security_audit",
@@ -479,13 +503,14 @@
       "billing": "per_audit",
       "risk": "read_only_scope_limited_security_audit",
       "description": "Productionized public-surface security audit for AI-agent services, MCP/tool servers, OpenAPI/llms.txt catalogs, dependency manifests, prompt-injection exposure, public endpoints, and payment/check-out safety. Ordered by AI agents through /v1/order-intake; operator-reviewed before fulfillment.",
-      "runtime_status": "order_intake_live_operator_review",
+      "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
       "consumer_class": "ai_agent",
       "intake_path": "/v1/order-intake",
-      "agent_callable_via": "/v1/order-intake"
+      "agent_callable_via": "/v1/order-intake",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "agent_checkout_conformance_audit",
@@ -494,13 +519,14 @@
       "billing": "per_conformance_run",
       "risk": "read_only_payment_flow_validation",
       "description": "Agent checkout conformance audit for machine-payable services: validates 403->402->200->receipt flow, protocol advertisement, spend caps, idempotency replay, fake-token fail-closed behavior, and receipt/artifact semantics.",
-      "runtime_status": "order_intake_live_operator_review",
+      "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
       "consumer_class": "ai_agent",
       "intake_path": "/v1/order-intake",
-      "agent_callable_via": "/v1/order-intake"
+      "agent_callable_via": "/v1/order-intake",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "mpp_onboarding_path_activation",
@@ -509,13 +535,14 @@
       "billing": "per_payment_path_activation",
       "risk": "operator_review_required_payment_configuration",
       "description": "MPP/payment-rail onboarding package for AI-agent sellers: verifies provider/currency configuration, sidecar health, 402 protocol ordering, penny smoke path, replay protection, fake-proof rejection, and go-live checklist.",
-      "runtime_status": "order_intake_live_operator_review",
+      "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
       "consumer_class": "ai_agent",
       "intake_path": "/v1/order-intake",
-      "agent_callable_via": "/v1/order-intake"
+      "agent_callable_via": "/v1/order-intake",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "artifact_receipt_console_pack",
@@ -524,13 +551,14 @@
       "billing": "per_console_pack",
       "risk": "operator_review_required_app_artifact",
       "description": "Buyer-facing artifact and receipt console pack for paid agent services: order table, receipt view, budget/rail metadata, artifact status, audit trail, download links, and agent-readable status JSON.",
-      "runtime_status": "order_intake_live_operator_review",
+      "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
       "consumer_class": "ai_agent",
       "intake_path": "/v1/order-intake",
-      "agent_callable_via": "/v1/order-intake"
+      "agent_callable_via": "/v1/order-intake",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "ai_agent_buyer_service_bundle",
@@ -539,7 +567,7 @@
       "billing": "per_bundle",
       "risk": "operator_review_required_bundle",
       "description": "Bundled launch package for AI-agent buyers and sellers: security_preflight, checkout_conformance, agent_readability_upgrade, mcp_tool_audit, and local_model_runtime_setup scoped into one paid order.",
-      "runtime_status": "order_intake_live_operator_review",
+      "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
@@ -552,7 +580,8 @@
         "mcp_tool_audit",
         "local_model_runtime_setup"
       ],
-      "agent_callable_via": "/v1/order-intake"
+      "agent_callable_via": "/v1/order-intake",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "agent_service_distribution_pack",
@@ -561,11 +590,12 @@
       "billing": "per_distribution_packet",
       "risk": "read_only_publication_pack",
       "description": "Create/polish an AI-agent service distribution packet: /.well-known/ai, API linkset, agent-skills index, agents.json, llms.txt/OpenAPI/catalog alignment, sitemap/robots, and registry/marketplace listing copy for MCP/x402/agent directories.",
-      "runtime_status": "manual_fulfillment_beta",
-      "public_self_serve": false,
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "agent_marketplace_listing_pack",
@@ -574,11 +604,12 @@
       "billing": "per_listing_packet",
       "risk": "read_only_publication_pack",
       "description": "Prepare agent-marketplace submissions and PR/issue copy for x402 directories, MCP registries, agent-ready scanners, GitHub README/listing pages, and search-indexable service docs. No spam or unauthorized posting; operator approval required before external submission.",
-      "runtime_status": "manual_fulfillment_beta",
-      "public_self_serve": false,
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "agent_readiness_scorecard",
@@ -587,11 +618,12 @@
       "billing": "per_scorecard",
       "risk": "read_only_public_scan",
       "description": "Score a domain/API for agent readiness: discovery endpoints, OpenAPI, llms.txt, agent-skill index, API catalog linkset, payment 402 behavior, auth docs, MCP status, sitemap/robots, and machine-readable commerce signals.",
-      "runtime_status": "manual_fulfillment_beta",
-      "public_self_serve": false,
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "id": "buyer_agent_smoke_probe",
@@ -600,11 +632,12 @@
       "billing": "per_probe",
       "risk": "non_spending_or_approval_gated_spending",
       "description": "Run a DDG buyer-agent simulation against a target service: discover capabilities, verify 403/402/payment challenge behavior, fake-payment fail-closed, idempotency, and artifact/status usability. Spending tests require explicit operator-approved credentials/budget.",
-      "runtime_status": "manual_fulfillment_beta",
-      "public_self_serve": false,
-      "fulfillment_mode": "operator_queue_manual_beta",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     }
   ],
   "operator": "Daedalus Development Group",

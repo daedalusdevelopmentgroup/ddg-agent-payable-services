@@ -1,6 +1,6 @@
 {
   "status": "active_distribution_work_started",
-  "last_synced_at": "2026-06-24T01:32:05Z",
+  "last_synced_at": "2026-06-24T20:25:00Z",
   "base_url": "https://agents.daedalusdevelopmentgroup.com",
   "public_repo": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
   "payment_claims": {
@@ -73,19 +73,23 @@
     },
     {
       "id": "official_mcp_registry",
-      "status": "metadata_ready_submission_waits_for_public_package_or_hosted_endpoint",
+      "status": "public_streamable_http_live_registry_submission_ready",
       "url": "https://modelcontextprotocol.io/registry/about",
-      "next_action": "Publish the stdio package to PyPI or deploy/smoke the public Streamable HTTP endpoint, then publish mcp/server.json with mcp-publisher."
+      "next_action": "Run registry validation/publisher flow and submit mcp/server.json now that the public Streamable HTTP endpoint is live and smoked.",
+      "urls": [
+        "https://modelcontextprotocol.io/registry/about",
+        "https://mcp.daedalusdevelopmentgroup.com/mcp"
+      ]
     },
     {
       "id": "mcp_aggregators",
-      "status": "prepare_after_official_registry_or_package_listing",
+      "status": "ready_after_public_mcp_endpoint_smoke",
       "urls": [
         "https://smithery.ai/servers",
         "https://glama.ai/mcp/servers",
         "https://mcp.so/"
       ],
-      "next_action": "Submit after official MCP Registry/PyPI or a public remote MCP endpoint is live to avoid overclaiming installability."
+      "next_action": "Submit after official MCP Registry attempt or with public remote endpoint evidence; include public smoke output and GitHub repo."
     }
   ]
 }

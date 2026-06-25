@@ -121,7 +121,7 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
     checks = {
         "tool_count_at_least_required": len(tool_names) >= len(REQUIRED_TOOLS),
         "required_tools_present": not missing,
-        "security_profile_hardened": security_profile.get("status") == "source_hardened_public_remote_pending",
+        "security_profile_hardened": security_profile.get("status") == "source_hardened_public_remote_live",
         "resource_count_at_least_required": len(resource_uris) >= len(REQUIRED_RESOURCES),
         "required_resources_present": not missing_resources,
         "manifest_status_resource_nonempty": len(status_resource_text) > 100 and "payment" in status_resource_text.lower(),

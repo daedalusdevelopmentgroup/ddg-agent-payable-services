@@ -124,7 +124,7 @@ def test_payload_size_limit_prevents_large_forward(monkeypatch: pytest.MonkeyPat
 
 def test_security_profile_documents_controls() -> None:
     profile = server.ddg_mcp_security_profile()
-    assert profile["status"] == "source_hardened_public_remote_pending"
+    assert profile["status"] == "source_hardened_public_remote_live"
     assert profile["controls"]["authorization_forwarding"].startswith("Payment scheme only")
     assert profile["controls"]["arbitrary_url_fetch"] is False
     assert "mcp.daedalusdevelopmentgroup.com" not in profile["controls"]["base_url_allowlist"]

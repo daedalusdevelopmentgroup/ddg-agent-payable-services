@@ -15,10 +15,11 @@ Environment=DDG_MCP_HOST=127.0.0.1
 Environment=DDG_MCP_PORT=8891
 Environment=DDG_MCP_TRANSPORT=streamable-http
 Environment=PYTHONUNBUFFERED=1
-# Prefer a checked-out source tree plus uv for reproducible preview deploys.
-# If installed from PyPI later, replace ExecStart with:
-# ExecStart=/usr/local/bin/ddg-agent-services-mcp --transport streamable-http
-ExecStart=/usr/bin/env uv run --no-project --with mcp python -m ddg_agent_services_mcp --transport streamable-http
+Environment=PYTHONPATH=src
+# Production source checkout path. Run `uv sync --extra dev` in WorkingDirectory
+# before enabling, then launch the pinned project virtualenv directly so systemd
+# does not need write access to a uv cache at runtime.
+ExecStart=/srv/ddg-agent-services-mcp/ddg-agent-payable-services/.venv/bin/python -m ddg_agent_services_mcp --transport streamable-http
 Restart=always
 RestartSec=5
 TimeoutStartSec=60

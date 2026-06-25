@@ -24,6 +24,7 @@ from typing import Any
 
 try:
     from mcp.server.fastmcp import FastMCP
+    from mcp.server.transport_security import TransportSecuritySettings
 except Exception as exc:  # pragma: no cover - runtime dependency guard
     raise SystemExit("Install the MCP Python SDK first: uv run --with mcp python ...") from exc
 
@@ -129,7 +130,7 @@ DISTRIBUTION_TARGETS: tuple[dict[str, Any], ...] = (
     {
         "id": "official_mcp_registry",
         "name": "Official MCP Registry",
-        "status": "metadata_ready_submission_waits_for_public_package_or_hosted_endpoint",
+        "status": "public_streamable_http_live_registry_submission_ready",
         "kind": "mcp_registry",
         "priority": "p0",
         "urls": [
@@ -187,7 +188,7 @@ DISTRIBUTION_TARGETS: tuple[dict[str, Any], ...] = (
     {
         "id": "mcp_aggregators",
         "name": "MCP aggregators and directories",
-        "status": "prepare_after_official_registry_or_package_listing",
+        "status": "ready_after_public_mcp_endpoint_smoke",
         "kind": "mcp_directory",
         "priority": "p2",
         "urls": ["https://smithery.ai/servers", "https://glama.ai/mcp/servers", "https://mcp.so/"],
@@ -279,14 +280,14 @@ X402_BAZAAR_READINESS: dict[str, Any] = {
 }
 
 MCP_REGISTRY_READINESS: dict[str, Any] = {
-    "status": "metadata_ready_submission_waits_for_public_package_or_hosted_endpoint",
+    "status": "public_streamable_http_live_registry_submission_ready",
     "server_json": "mcp/server.json",
     "registry_name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
     "package_identifier": "ddg-agent-services-mcp",
     "public_repo": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
     "submission_gate": [
         "Stdio package must be available from a public supported package registry such as PyPI, or remote MCP endpoint must be public and smoked.",
-        "Do not add hosted remotes to mcp/server.json until https://mcp.daedalusdevelopmentgroup.com/mcp exists and passes MCP-client smoke.",
+        "https://mcp.daedalusdevelopmentgroup.com/mcp is live and MCP-client smoked; keep registry validation/publisher flow green before external MCP directory publication.",
         "Run registry server.json validation before publishing.",
     ],
 }
@@ -392,6 +393,26 @@ def _validated_base_url(raw_url: str) -> str:
 BASE_URL = _validated_base_url(os.getenv("DDG_AGENT_SERVICES_BASE_URL", DEFAULT_BASE_URL))
 DEFAULT_AGENT_ID = os.getenv("DDG_MCP_AGENT_ID", "ddg-mcp-client")
 
+
+def _mcp_allowed_hosts() -> list[str]:
+    """Hosts accepted by MCP HTTP DNS-rebinding protection.
+
+    The MCP SDK correctly rejects unknown Host headers. Hosted Cloudflare Tunnel
+    traffic arrives with `Host: mcp.daedalusdevelopmentgroup.com`, while local
+    smokes use loopback with or without the port. Keep this explicit rather than
+    disabling DNS-rebinding protection.
+    """
+    configured = [part.strip() for part in os.getenv("DDG_MCP_ALLOWED_HOSTS", "").split(",") if part.strip()]
+    defaults = [
+        "127.0.0.1",
+        "127.0.0.1:8891",
+        "localhost",
+        "localhost:8891",
+        "mcp.daedalusdevelopmentgroup.com",
+        "agents.daedalusdevelopmentgroup.com",
+    ]
+    return list(dict.fromkeys(configured + defaults))
+
 mcp = FastMCP(
     "ddg-agent-services",
     instructions=(
@@ -408,6 +429,7 @@ mcp = FastMCP(
     streamable_http_path=os.getenv("DDG_MCP_STREAMABLE_HTTP_PATH", "/mcp"),
     stateless_http=True,
     json_response=True,
+    transport_security=TransportSecuritySettings(allowed_hosts=_mcp_allowed_hosts()),
 )
 
 
@@ -683,11 +705,11 @@ def ddg_mcp_security_profile() -> dict[str, Any]:
     """Return this MCP wrapper's local security controls and publication gates."""
     parsed = urllib.parse.urlparse(BASE_URL)
     return {
-        "status": "source_hardened_public_remote_pending",
+        "status": "source_hardened_public_remote_live",
         "base_url_host": parsed.hostname,
         "transport": {
             "stdio": "ready",
-            "streamable_http": "source_ready_local_smoked_public_deploy_pending",
+            "streamable_http": "public_live_at_https://mcp.daedalusdevelopmentgroup.com/mcp",
         },
         "controls": {
             "base_url_allowlist": sorted(_allowed_base_hosts()),
@@ -706,7 +728,7 @@ def ddg_mcp_security_profile() -> dict[str, Any]:
             "public_resource_count": len(PUBLIC_RESOURCE_SPECS),
             "hosted_remote_requires_agent_id_argument": True,
         },
-        "publication_gate": "Do not add hosted remotes to mcp/server.json until public endpoint deployment, MCP-client smoke, and leak scan pass.",
+        "publication_gate": "Hosted endpoint deployment and MCP-client smoke have passed; continue to run leak scan plus registry validation/publisher flow before external MCP directory submissions.",
     }
 
 

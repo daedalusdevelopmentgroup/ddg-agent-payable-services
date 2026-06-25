@@ -62,7 +62,7 @@
       "ollama/qwen3:latest",
       "ollama/llama3.1:latest"
     ],
-    "runtime_status": "production_live_agent_orderable_catalog_with_operator_fulfilled_routes",
+    "runtime_status": "production_live_all_catalog_services_agent_orderable",
     "omitted_planned_paths": "Only planned/not-public paths are omitted from OpenAPI.",
     "runtime_contract": {
       "live_runtime_paths": [
@@ -80,10 +80,12 @@
         "/v1/artifact-receipt-console-pack",
         "/v1/browser-proof",
         "/v1/buyer-agent-smoke-probe",
+        "/v1/ethereum/rpc",
         "/v1/hermes-skill-workflow-dev",
         "/v1/landing-page-conversion-diff",
         "/v1/lead-pack",
         "/v1/local-business-demo-pack",
+        "/v1/local-model-swarm-seat",
         "/v1/malware-triage-scan",
         "/v1/mcp-server-audit",
         "/v1/mcp-tool-security-audit",
@@ -104,22 +106,23 @@
         "/v1/python-dependency-risk-scan",
         "/v1/repo-context-pack",
         "/v1/research-pack",
+        "/v1/sandboxed-cli-agent-run",
         "/v1/secret-leak-api-key-scan",
         "/v1/site-audit",
         "/v1/site-audit/reviewed",
         "/v1/tx-smoke-test",
-        "/v1/orders/{order_id}",
-        "/v1/orders/{order_id}/artifact",
-        "/v1/order-status/{order_id}",
         "/.well-known/ddg-agent-checkout-conformance.json",
+        "/.well-known/ddg-agent-refund-policy.json",
+        "/.well-known/ddg-mpp-activation-guide.md",
         "/agent-checkout-conformance.json",
         "/mpp-activation-guide.md",
-        "/.well-known/ddg-mpp-activation-guide.md",
-        "/.well-known/ddg-agent-refund-policy.json",
-        "/refund-policy"
+        "/refund-policy",
+        "/v1/order-status/{order_id}",
+        "/v1/orders/{order_id}",
+        "/v1/orders/{order_id}/artifact"
       ],
-      "manual_fulfillment_beta": "No catalog services remain manual_fulfillment_beta in the public production catalog. Operator-fulfilled services are live payment-edge order routes that queue reviewed fulfillment and return status/artifact URLs.",
-      "planned": "Only planned_paths are not public self-serve.",
+      "manual_fulfillment_beta": "No catalog services remain manual_fulfillment_beta in the public production catalog.",
+      "planned": "No public catalog services remain planned; services without full automation are explicitly operator-fulfilled live order routes.",
       "discovery_paths": [
         "/llms.txt",
         "/openapi.json",
@@ -134,9 +137,7 @@
         "/.well-known/ddg-agent-swarm-mcp-design.md",
         "/.well-known/ddg-agent-refund-policy.json"
       ],
-      "planned_beta_paths": [
-        "/v1/ethereum/rpc"
-      ],
+      "planned_beta_paths": [],
       "local_free_seat_defaults": {
         "configured_free_seat_cap": 2,
         "lease_seconds": 86400,
@@ -160,10 +161,12 @@
         "/v1/artifact-receipt-console-pack",
         "/v1/browser-proof",
         "/v1/buyer-agent-smoke-probe",
+        "/v1/ethereum/rpc",
         "/v1/hermes-skill-workflow-dev",
         "/v1/landing-page-conversion-diff",
         "/v1/lead-pack",
         "/v1/local-business-demo-pack",
+        "/v1/local-model-swarm-seat",
         "/v1/malware-triage-scan",
         "/v1/mcp-server-audit",
         "/v1/mcp-tool-security-audit",
@@ -178,6 +181,7 @@
         "/v1/python-dependency-risk-scan",
         "/v1/repo-context-pack",
         "/v1/research-pack",
+        "/v1/sandboxed-cli-agent-run",
         "/v1/secret-leak-api-key-scan",
         "/v1/site-audit/reviewed"
       ]
@@ -580,7 +584,7 @@
     },
     "refund_policy": "/.well-known/ddg-agent-refund-policy.json",
     "ethereum_rpc_status": "implemented_but_not_advertised_as_public_self_serve_until_sync_health_and_security_smokes_pass",
-    "last_production_readiness_sync": "2026-06-24T20:25:00Z"
+    "last_production_readiness_sync": "2026-06-25T12:45:00Z"
   },
   "x-payment-info": {
     "offers": [
@@ -8688,6 +8692,510 @@
             "agent-readable JSON artifact",
             "receipt/status metadata"
           ]
+        }
+      }
+    },
+    "/v1/sandboxed-cli-agent-run": {
+      "post": {
+        "summary": "Paid operator-queued DDG service: sandboxed_cli_agent_run",
+        "description": "Run a bounded CLI-agent/model task in a sandbox and return the artifact/report, never provider credentials. This endpoint is production-orderable by AI agents: after AI-agent identity and payment verification it queues an operator-reviewed order and returns order_id, status_url, artifact_url, and receipt metadata. Fulfillment is operator-reviewed unless and until the service has a separate fully automated runtime handler.",
+        "operationId": "sandboxedCliAgentRun",
+        "parameters": [
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3
+            },
+            "description": "Stable AI-agent identity used for audit/order scope."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative AI-agent identity header."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Recommended to avoid duplicate order creation."
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Payment authorization material for supported rails when required."
+          },
+          {
+            "name": "Payment-Signature",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "x402 payment signature after 402 challenge."
+          },
+          {
+            "name": "Payment-Proof",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Direct-crypto proof header for auto/manual verification."
+          }
+        ],
+        "x-payment-info": {
+          "offers": [
+            {
+              "method": "x402",
+              "intent": "charge",
+              "currency": "USDC",
+              "amount": "3000000"
+            },
+            {
+              "method": "direct_crypto_auto_or_manual",
+              "intent": "charge",
+              "currency": "usd",
+              "amount": "3.00"
+            }
+          ],
+          "payment_protocols_current_public_live": [
+            "x402",
+            "direct_crypto_auto",
+            "direct_crypto_manual"
+          ],
+          "payment_protocols_pending": [
+            "mpp"
+          ],
+          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "3.00"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "target": {
+                    "type": "object"
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "budget_usd": {
+                    "type": "number",
+                    "minimum": 0.01,
+                    "maximum": 2500
+                  },
+                  "notes": {
+                    "type": "string",
+                    "maxLength": 8000
+                  },
+                  "callback_url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "payment_proof": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Order queued for operator-reviewed fulfillment with status/artifact URLs."
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Missing AI-agent identity"
+          },
+          "409": {
+            "description": "Idempotency conflict"
+          },
+          "429": {
+            "description": "Rate limit"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          },
+          {
+            "X402Payment": []
+          }
+        ],
+        "x-ddg-fulfillment": {
+          "service_id": "sandboxed_cli_agent_run",
+          "runtime_status": "live_runtime",
+          "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
+        }
+      }
+    },
+    "/v1/local-model-swarm-seat": {
+      "post": {
+        "summary": "Paid operator-queued DDG service: local_model_swarm_seat_beta",
+        "description": "Named paid lease remains planned; the current live local free-seat pool is exposed through /v1/micro-model-swarm-preview and local Ollama routes under /v1/model/agent-run. Candidate menu includes Qwen/Qwen-derived coder, abliterated/less-restrictive research models, and other GGUF/Ollama routes behind payment edge policy, usage caps, and abuse controls. This endpoint is production-orderable by AI agents: after AI-agent identity and payment verification it queues an operator-reviewed order and returns order_id, status_url, artifact_url, and receipt metadata. Fulfillment is operator-reviewed unless and until the service has a separate fully automated runtime handler.",
+        "operationId": "localModelSwarmSeatBeta",
+        "parameters": [
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3
+            },
+            "description": "Stable AI-agent identity used for audit/order scope."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative AI-agent identity header."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Recommended to avoid duplicate order creation."
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Payment authorization material for supported rails when required."
+          },
+          {
+            "name": "Payment-Signature",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "x402 payment signature after 402 challenge."
+          },
+          {
+            "name": "Payment-Proof",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Direct-crypto proof header for auto/manual verification."
+          }
+        ],
+        "x-payment-info": {
+          "offers": [
+            {
+              "method": "x402",
+              "intent": "charge",
+              "currency": "USDC",
+              "amount": "250000"
+            },
+            {
+              "method": "direct_crypto_auto_or_manual",
+              "intent": "charge",
+              "currency": "usd",
+              "amount": "0.25"
+            }
+          ],
+          "payment_protocols_current_public_live": [
+            "x402",
+            "direct_crypto_auto",
+            "direct_crypto_manual"
+          ],
+          "payment_protocols_pending": [
+            "mpp"
+          ],
+          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.25"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "target": {
+                    "type": "object"
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "budget_usd": {
+                    "type": "number",
+                    "minimum": 0.01,
+                    "maximum": 2500
+                  },
+                  "notes": {
+                    "type": "string",
+                    "maxLength": 8000
+                  },
+                  "callback_url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "payment_proof": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Order queued for operator-reviewed fulfillment with status/artifact URLs."
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Missing AI-agent identity"
+          },
+          "409": {
+            "description": "Idempotency conflict"
+          },
+          "429": {
+            "description": "Rate limit"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          },
+          {
+            "X402Payment": []
+          }
+        ],
+        "x-ddg-fulfillment": {
+          "service_id": "local_model_swarm_seat_beta",
+          "runtime_status": "live_runtime",
+          "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
+        }
+      }
+    },
+    "/v1/ethereum/rpc": {
+      "post": {
+        "summary": "Paid operator-queued DDG service: ethereum_private_rpc_query",
+        "description": "Free launch-beta read-only Ethereum full-node query endpoint behind the DDG AI-agent edge. It is implemented with method whitelist, sync readiness gate, fair-use lease timer, per-agent request caps, and upstream max-concurrency cap; public usefulness starts after overflow runtime backend Reth execution sync completes. Until the dedicated Reth backend is fully synced, this path queues an operator-reviewed query/artifact instead of exposing raw unrestricted RPC. This endpoint is production-orderable by AI agents: after AI-agent identity and payment verification it queues an operator-reviewed order and returns order_id, status_url, artifact_url, and receipt metadata. Fulfillment is operator-reviewed unless and until the service has a separate fully automated runtime handler.",
+        "operationId": "ethereumPrivateRpcQuery",
+        "parameters": [
+          {
+            "name": "X-Agent-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3
+            },
+            "description": "Stable AI-agent identity used for audit/order scope."
+          },
+          {
+            "name": "X-DDG-Agent-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alternative AI-agent identity header."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Recommended to avoid duplicate order creation."
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Payment authorization material for supported rails when required."
+          },
+          {
+            "name": "Payment-Signature",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "x402 payment signature after 402 challenge."
+          },
+          {
+            "name": "Payment-Proof",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Direct-crypto proof header for auto/manual verification."
+          }
+        ],
+        "x-payment-info": {
+          "offers": [
+            {
+              "method": "x402",
+              "intent": "charge",
+              "currency": "USDC",
+              "amount": "10000"
+            },
+            {
+              "method": "direct_crypto_auto_or_manual",
+              "intent": "charge",
+              "currency": "usd",
+              "amount": "0.01"
+            }
+          ],
+          "payment_protocols_current_public_live": [
+            "x402",
+            "direct_crypto_auto",
+            "direct_crypto_manual"
+          ],
+          "payment_protocols_pending": [
+            "mpp"
+          ],
+          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.01"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "target": {
+                    "type": "object"
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "budget_usd": {
+                    "type": "number",
+                    "minimum": 0.01,
+                    "maximum": 2500
+                  },
+                  "notes": {
+                    "type": "string",
+                    "maxLength": 8000
+                  },
+                  "callback_url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "payment_proof": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Order queued for operator-reviewed fulfillment with status/artifact URLs."
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Missing AI-agent identity"
+          },
+          "409": {
+            "description": "Idempotency conflict"
+          },
+          "429": {
+            "description": "Rate limit"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          },
+          {
+            "X402Payment": []
+          }
+        ],
+        "x-ddg-fulfillment": {
+          "service_id": "ethereum_private_rpc_query",
+          "runtime_status": "live_runtime",
+          "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
         }
       }
     }

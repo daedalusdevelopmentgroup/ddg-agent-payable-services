@@ -1,6 +1,6 @@
 {
   "service": "DDG Agent-Payable Services",
-  "version": "2026-06-24-all-agent-orderable-production-catalog",
+  "version": "2026-06-25-all-services-agent-orderable-production-catalog",
   "currency": "USD",
   "payment_protocols": [
     "x402",
@@ -343,11 +343,13 @@
       "billing": "per_run_plus_usage",
       "risk": "sandboxed_agent_execution",
       "description": "Run a bounded CLI-agent/model task in a sandbox and return the artifact/report, never provider credentials.",
-      "runtime_status": "planned",
-      "public_self_serve": false,
-      "fulfillment_mode": "not_public_self_serve_until_wrappers_and_sandbox_pass",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls",
+      "previous_planned_fulfillment_mode": "not_public_self_serve_until_wrappers_and_sandbox_pass"
     },
     {
       "id": "hermes_skill_workflow_dev",
@@ -401,11 +403,13 @@
       "billing": "per_lease_preview",
       "risk": "local_inference_best_effort",
       "description": "Named paid lease remains planned; the current live local free-seat pool is exposed through /v1/micro-model-swarm-preview and local Ollama routes under /v1/model/agent-run. Candidate menu includes Qwen/Qwen-derived coder, abliterated/less-restrictive research models, and other GGUF/Ollama routes behind payment edge policy, usage caps, and abuse controls.",
-      "runtime_status": "planned",
-      "public_self_serve": false,
-      "fulfillment_mode": "planned_named_paid_lease; current_free_pool_via_micro_model_swarm_preview_and_agent_run",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
-      "consumer_class": "ai_agent"
+      "consumer_class": "ai_agent",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls",
+      "previous_planned_fulfillment_mode": "planned_named_paid_lease; current_free_pool_via_micro_model_swarm_preview_and_agent_run"
     },
     {
       "id": "micro_model_swarm_preview",
@@ -429,13 +433,13 @@
     {
       "id": "ethereum_private_rpc_query",
       "path": "/v1/ethereum/rpc",
-      "price_usd": "0.00_sync-gated_launch_beta",
-      "billing": "free_launch_beta_fair_use",
+      "price_usd": "0.01",
+      "billing": "per_operator_reviewed_query_launch",
       "risk": "read_only_blockchain_rpc_proxy",
-      "description": "Free launch-beta read-only Ethereum full-node query endpoint behind the DDG AI-agent edge. It is implemented with method whitelist, sync readiness gate, fair-use lease timer, per-agent request caps, and upstream max-concurrency cap; public usefulness starts after overflow runtime backend Reth execution sync completes.",
-      "runtime_status": "planned",
-      "public_self_serve": false,
-      "fulfillment_mode": "free_sync_gated_reth_rpc_proxy_beta",
+      "description": "Free launch-beta read-only Ethereum full-node query endpoint behind the DDG AI-agent edge. It is implemented with method whitelist, sync readiness gate, fair-use lease timer, per-agent request caps, and upstream max-concurrency cap; public usefulness starts after overflow runtime backend Reth execution sync completes. Until the dedicated Reth backend is fully synced, this path queues an operator-reviewed query/artifact instead of exposing raw unrestricted RPC.",
+      "runtime_status": "live_runtime",
+      "public_self_serve": true,
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "audience": "ai_agents_only",
       "consumer_class": "ai_agent",
       "free_policy": {
@@ -455,7 +459,9 @@
         },
         "safety": "read-only method whitelist; blocks eth_sendRawTransaction/admin/debug/personal; raw Reth RPC must stay private behind DDG edge"
       },
-      "production_gate": "implemented but not public-ready until sync/health proof passes"
+      "production_gate": "implemented but not public-ready until sync/health proof passes",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls",
+      "previous_planned_fulfillment_mode": "free_sync_gated_reth_rpc_proxy_beta"
     },
     {
       "id": "local_runtime_model_catalog",
@@ -1911,10 +1917,12 @@
       "/v1/artifact-receipt-console-pack",
       "/v1/browser-proof",
       "/v1/buyer-agent-smoke-probe",
+      "/v1/ethereum/rpc",
       "/v1/hermes-skill-workflow-dev",
       "/v1/landing-page-conversion-diff",
       "/v1/lead-pack",
       "/v1/local-business-demo-pack",
+      "/v1/local-model-swarm-seat",
       "/v1/malware-triage-scan",
       "/v1/mcp-server-audit",
       "/v1/mcp-tool-security-audit",
@@ -1935,6 +1943,7 @@
       "/v1/python-dependency-risk-scan",
       "/v1/repo-context-pack",
       "/v1/research-pack",
+      "/v1/sandboxed-cli-agent-run",
       "/v1/secret-leak-api-key-scan",
       "/v1/site-audit",
       "/v1/site-audit/reviewed",
@@ -1959,11 +1968,7 @@
       "/v1/site-audit/reviewed",
       "/v1/model/artifact-order"
     ],
-    "planned_paths": [
-      "/v1/ethereum/rpc",
-      "/v1/local-model-swarm-seat",
-      "/v1/sandboxed-cli-agent-run"
-    ],
+    "planned_paths": [],
     "openapi_policy": "OpenAPI advertises live_runtime paths and may include explicitly beta/503-until-ready paths only when runtime handlers exist and docs state availability limits. Manual offers stay in pricing.json and llms.txt until handlers and smoke tests exist.",
     "payment_posture": "Mock payments are for local/staging smoke only. Public production requires real x402/MPP settlement or explicit manual-payment beta language.",
     "agent_run_posture": "Live beta for allowlisted local Ollama artifact execution. Account/subscription-backed model runs are DDG-operated artifact execution only and remain environment-gated/manual-approved until sandboxing, provider terms, and settlement checks pass.",
@@ -1993,10 +1998,12 @@
       "/v1/artifact-receipt-console-pack",
       "/v1/browser-proof",
       "/v1/buyer-agent-smoke-probe",
+      "/v1/ethereum/rpc",
       "/v1/hermes-skill-workflow-dev",
       "/v1/landing-page-conversion-diff",
       "/v1/lead-pack",
       "/v1/local-business-demo-pack",
+      "/v1/local-model-swarm-seat",
       "/v1/malware-triage-scan",
       "/v1/mcp-server-audit",
       "/v1/mcp-tool-security-audit",
@@ -2011,10 +2018,11 @@
       "/v1/python-dependency-risk-scan",
       "/v1/repo-context-pack",
       "/v1/research-pack",
+      "/v1/sandboxed-cli-agent-run",
       "/v1/secret-leak-api-key-scan",
       "/v1/site-audit/reviewed"
     ],
-    "last_production_readiness_sync": "2026-06-24T20:25:00Z"
+    "last_production_readiness_sync": "2026-06-25T12:45:00Z"
   },
   "audience": "ai_agents_only",
   "consumer_policy": "AI-agents only. Requests without agent identity are rejected. DDG sells operated artifacts/results and metered service output, not raw credentials, account seats, or transferable auth tokens.",

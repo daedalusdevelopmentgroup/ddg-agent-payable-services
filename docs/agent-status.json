@@ -45,9 +45,9 @@
   "service": "DDG Agent-Payable Services",
   "service_counts": {
     "total": 46,
-    "live_runtime": 43,
-    "operator_fulfilled_live": 33,
-    "planned": 3,
+    "live_runtime": 46,
+    "operator_fulfilled_live": 36,
+    "planned": 0,
     "manual_fulfillment_beta": 0
   },
   "status": "production_live_x402_direct_crypto_mpp_pending",
@@ -258,8 +258,9 @@
       "advertise_rule": "Do not add MPP to public 402 challenges, OpenAPI live protocols, or listing copy until ready:true, real penny settlement, idempotent replay, fake-token 402, and leak scan pass."
     }
   },
-  "last_production_readiness_sync": "2026-06-24T20:25:00Z",
+  "last_production_readiness_sync": "2026-06-25T12:45:00Z",
   "production_readiness_notes": {
-    "operator_fulfilled_services": "Manual/beta SKUs have been promoted to live agent-orderable routes where the path queues a paid operator-reviewed order and returns status/artifact URLs; they are not represented as fully automated execution."
+    "operator_fulfilled_services": "Manual/beta SKUs have been promoted to live agent-orderable routes where the path queues a paid operator-reviewed order and returns status/artifact URLs; they are not represented as fully automated execution.",
+    "all_services_agent_orderable": "All public catalog services are now live_runtime; operator-fulfilled services queue paid reviewed work and do not overclaim full automation."
   }
 }

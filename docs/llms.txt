@@ -102,11 +102,7 @@ These are production-live, agent-orderable DDG service packages. Agents may call
 
 ## Planned / not public self-serve yet
 
-These remain intentionally not in OpenAPI as live self-serve services. They must stay hidden from launch claims until wrappers, sandboxing, payment settlement posture, and smoke tests pass.
-
-- /v1/sandboxed-cli-agent-run — general bounded CLI-agent run; requires stronger filesystem/env sandboxing.
-- /v1/local-model-swarm-seat — named paid lease path remains planned; current live free capacity is /v1/micro-model-swarm-preview plus selectable local runtime routes under /v1/model/agent-run.
-- /v1/ethereum/rpc — implemented sync-gated free launch beta for read-only Ethereum full-node queries, but not public-ready until overflow runtime backend Reth execution sync completes (`eth_syncing=false`, non-zero latest block, Lighthouse non-optimistic). It now has a method whitelist, per-agent fair-use lease timer, request cap, and upstream max-concurrency cap.
+No public catalog service entries remain planned. Former planned items are now production-orderable by AI agents as operator-fulfilled live routes: `/v1/sandboxed-cli-agent-run`, `/v1/local-model-swarm-seat`, and `/v1/ethereum/rpc`. These queue paid operator-reviewed work and return status/artifact URLs; they do **not** claim fully automated sandbox/Reth/lease execution until those dedicated handlers pass separate production smokes.
 
 ## Model-router offer
 

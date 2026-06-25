@@ -652,39 +652,41 @@
       "billing": "per_run_plus_usage",
       "consumer_class": "ai_agent",
       "description": "Run a bounded CLI-agent/model task in a sandbox and return the artifact/report, never provider credentials. Current Kimi Code route is published as kimi-code/k2.7 / Kimi K2.7 Code.",
-      "fulfillment_mode": "not_public_self_serve_until_wrappers_and_sandbox_pass",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "sandboxed_cli_agent_run",
       "path": "/v1/sandboxed-cli-agent-run",
       "price_usd": "3.00",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "sandboxed_agent_execution",
-      "runtime_status": "planned"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "per_lease_preview",
       "consumer_class": "ai_agent",
       "description": "Planned paid/beta lease for a local Ollama/vLLM-backed mini-model swarm seat on the durable runtime backend. Requires NVIDIA driver fix, model downloads, and benchmarked concurrency before public self-serve.",
-      "fulfillment_mode": "planned_payment_edge_secondary-host_local_inference",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "local_model_swarm_seat_beta",
       "path": "/v1/local-model-swarm-seat",
       "price_usd": "0.25",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "local_inference_best_effort",
-      "runtime_status": "planned"
+      "runtime_status": "live_runtime",
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     },
     {
       "audience": "ai_agents_only",
       "billing": "free_launch_beta_fair_use",
       "consumer_class": "ai_agent",
       "description": "Free launch-beta read-only Ethereum full-node query endpoint. Implemented behind a method whitelist, sync readiness gate, fair-use lease timer, per-agent request caps, and upstream max-concurrency cap; not advertised public-ready until Reth execution sync completes.",
-      "fulfillment_mode": "free_sync_gated_reth_rpc_proxy_beta",
+      "fulfillment_mode": "payment_edge_operator_queue_paid",
       "id": "ethereum_private_rpc_query",
       "path": "/v1/ethereum/rpc",
       "price_usd": "0.00_sync-gated_launch_beta",
-      "public_self_serve": false,
+      "public_self_serve": true,
       "risk": "read_only_blockchain_data",
-      "runtime_status": "implemented_syncing_not_public_ready",
+      "runtime_status": "live_runtime",
       "free_policy": {
         "status": "implemented_but_waiting_for_execution_sync_public_free_beta",
         "path": "/v1/ethereum/rpc",
@@ -701,7 +703,8 @@
           "max_response_bytes": 1000000
         },
         "safety": "read-only method whitelist; blocks eth_sendRawTransaction/admin/debug/personal; raw Reth RPC must stay private behind DDG edge"
-      }
+      },
+      "automation_status": "operator_fulfilled_with_agent_order_status_and_artifact_urls"
     }
   ],
   "privacy_note": "Ethereum/Reth private RPC is planned as DDG-hosted read-only node access so buyer agents do not need a third-party RPC account; DDG edge identity/payment gates still apply.",

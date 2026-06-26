@@ -18,16 +18,13 @@ Public repo:
 https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services
 ```
 
-Last sync: `2026-06-24T01:32:05Z`
+Last sync: `2026-06-25T16:05:00Z`
 
 ## Current status
 
-The MCP server is source/package-ready and locally smoked over stdio and Streamable HTTP. The official MCP Registry submission should still wait until one of these is true:
+The MCP server is source/package-ready, locally smoked over stdio, and publicly live over Streamable HTTP at `https://mcp.daedalusdevelopmentgroup.com/mcp`. `mcp/server.json` now includes a `remotes[]` entry for the hosted endpoint and validates with the official registry validation API.
 
-1. `ddg-agent-services-mcp` is available from PyPI; or
-2. `https://mcp.daedalusdevelopmentgroup.com/mcp` exists and passes a real MCP-client public smoke.
-
-Do **not** publish `mcp/server.remote-template.json` as live metadata before the hosted endpoint exists.
+Publishing is no longer blocked by endpoint readiness; it is blocked only by official MCP Registry publisher authentication/account flow (`mcp-publisher login github` or domain auth).
 
 ## Payment/distribution truth that must match other packets
 
@@ -44,6 +41,7 @@ cd /path/to/ddg-agent-payable-services
 python3 scripts/validate_submission_sync.py
 python -m json.tool mcp/server.json >/dev/null
 PYTHONDONTWRITEBYTECODE=1 DDG_MCP_AGENT_ID=ddg-mcp-stdio-smoke uv run --extra dev python scripts/smoke_mcp_server.py --transport stdio --source-tree src
+PYTHONDONTWRITEBYTECODE=1 DDG_MCP_AGENT_ID=ddg-mcp-public-smoke uv run --extra dev python scripts/smoke_mcp_server.py --transport streamable-http --http-url https://mcp.daedalusdevelopmentgroup.com/mcp --agent-id ddg-mcp-public-smoke
 uv build --sdist --wheel
 ```
 
@@ -60,7 +58,7 @@ python3 -m json.tool "$tmp_validate"
 
 ## Publish command shape
 
-After the package or public endpoint gate is satisfied, use the official publisher flow from the registry repo/docs, for example:
+The public endpoint gate is satisfied. Use the official publisher flow from the registry repo/docs:
 
 ```bash
 mcp-publisher login github

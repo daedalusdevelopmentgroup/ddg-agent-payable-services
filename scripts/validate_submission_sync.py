@@ -52,6 +52,15 @@ EXPECTED_X402_NETWORKS = [
     "eip155:480",
     "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
 ]
+# Canonical "honest-middle" MPP posture. The MPP payment CHALLENGE is public-live
+# (verifier ready:true, advertised in the 402 challenge, fake tokens fail closed),
+# but the first real buyer-funded SETTLEMENT is still pending. Docs may list MPP in
+# the live protocol set ONLY while every mpp.status carries the settlement-pending
+# marker below. When the real penny settles, flip MPP_SETTLEMENT_PROVEN=True and the
+# validator stops requiring the pending marker.
+MPP_SETTLEMENT_PROVEN = False
+LIVE_PROTOCOLS = ["mpp", "x402", "direct_crypto_auto", "direct_crypto_manual"]
+MPP_PENDING_MARKER = "first_real_buyer_settlement_pending"
 REQUIRED_SUBMISSION_FILES = [
     "submissions/x402scan/ddg-agent-services-registration.md",
     "submissions/x402-ecosystem/awesome-x402-listing.md",
@@ -104,7 +113,7 @@ def main() -> int:
     settlement = load_json("submissions/x402-bazaar/settlement-metadata.json")
     targets = load_json("docs/agent-distribution-targets.json")
 
-    expect(pricing.get("payment_protocols") == ["x402", "direct_crypto_auto", "direct_crypto_manual"], "pricing payment_protocols drifted", errors)
+    expect(pricing.get("payment_protocols") == LIVE_PROTOCOLS, "pricing payment_protocols drifted", errors)
     manual = pricing.get("direct_crypto_manual", {})
     expect(manual.get("assets") == EXPECTED_DIRECT_ASSETS, "pricing direct_crypto_manual.assets drifted", errors)
     expect(manual.get("env_addresses") == EXPECTED_DIRECT_ENV, "pricing direct_crypto_manual.env_addresses drifted", errors)
@@ -120,9 +129,11 @@ def main() -> int:
     chains = [item.get("network") for item in xpi.get("x402_supported_chains", [])]
     expect(chains == EXPECTED_X402_NETWORKS, "openapi x402_supported_chains drifted", errors)
     offer_methods = {str(offer.get("method", "")).lower() for offer in xpi.get("offers", [])}
-    expect("stripe" not in offer_methods and "tempo" not in offer_methods and "mpp" not in offer_methods, "openapi top-level live offers must not include pending MPP/Stripe/Tempo", errors)
-    expect(xpi.get("payment_protocols_current_public_live") == ["x402", "direct_crypto_auto", "direct_crypto_manual"], "openapi live protocol list drifted", errors)
-    expect("mpp" in [str(x).lower() for x in xpi.get("payment_protocols_pending", [])], "openapi pending protocols must include mpp", errors)
+    expect("stripe" not in offer_methods and "tempo" not in offer_methods, "openapi top-level live offers must not include Stripe/Tempo (only mpp/x402 are challenge-live)", errors)
+    expect(xpi.get("payment_protocols_current_public_live") in (["MPP", "x402", "direct_crypto_auto", "direct_crypto_manual"], LIVE_PROTOCOLS), "openapi live protocol list drifted", errors)
+    expect(xpi.get("payment_protocols_pending", []) == [], "openapi top-level pending protocols should be empty (MPP is challenge-live)", errors)
+    if not MPP_SETTLEMENT_PROVEN:
+        expect(MPP_PENDING_MARKER in str(xpi.get("settlement_proof_pending", "")) or any(MPP_PENDING_MARKER in str(v) for v in xpi.get("settlement_proof_pending", [])) or "mpp_first_real_buyer_settlement" in xpi.get("settlement_proof_pending", []), "openapi must mark mpp first-real-buyer settlement pending until proven", errors)
 
     for path, path_item in openapi.get("paths", {}).items():
         post = path_item.get("post") if isinstance(path_item, dict) else None
@@ -130,11 +141,15 @@ def main() -> int:
         if isinstance(pinfo, dict):
             live = [str(x).lower() for x in pinfo.get("payment_protocols_current_public_live", [])]
             pending = [str(x).lower() for x in pinfo.get("payment_protocols_pending", [])]
-            expect("mpp" not in live, f"{path} must not claim MPP live", errors)
-            expect("mpp" in pending, f"{path} must keep MPP pending", errors)
+            # MPP challenge is live, so it's allowed in the per-route live set,
+            # but each route must keep the settlement-pending honesty marker until
+            # a real penny settles.
+            expect("mpp" not in pending, f"{path} should not list MPP as pending (challenge is live)", errors)
+            if not MPP_SETTLEMENT_PROVEN:
+                expect(MPP_PENDING_MARKER in str(pinfo.get("mpp_status", "")), f"{path} must keep MPP first-real-buyer settlement pending in mpp_status", errors)
             expect(pinfo.get("protocols") == [{"x402": {}}], f"{path} x402scan protocols drifted", errors)
 
-    expect(targets.get("payment_claims", {}).get("live_protocols") == ["x402", "direct_crypto_auto", "direct_crypto_manual"], "distribution targets payment claims drifted", errors)
+    expect(targets.get("payment_claims", {}).get("live_protocols") == LIVE_PROTOCOLS, "distribution targets payment claims drifted", errors)
     expect("registered_live_5_resources" in json.dumps(targets), "distribution targets lost x402scan live status", errors)
 
     for rel in REQUIRED_SUBMISSION_FILES:

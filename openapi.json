@@ -601,6 +601,13 @@
         "currency": "USDC",
         "amount": "250000",
         "description": "model router metered session; final charge based on tokens"
+      },
+      {
+        "method": "mpp",
+        "intent": "charge",
+        "currency": "USD",
+        "amount": "0.01",
+        "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
       }
     ],
     "direct_crypto": {
@@ -747,29 +754,27 @@
       ]
     },
     "payment_protocols_current_public_live": [
+      "MPP",
       "x402",
       "direct_crypto_auto",
       "direct_crypto_manual"
     ],
-    "payment_protocols_pending": [
-      "mpp"
-    ],
-    "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+    "payment_protocols_pending": [],
+    "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
     "crypto_payment_options": {
       "last_synced_at": "2026-06-24T01:32:05Z",
       "source_of_truth": {
         "x402": "/openapi.json 402 PAYMENT-REQUIRED accepts[] plus payment_rail_addresses.env",
         "direct_crypto": "/.well-known/ddg-direct-crypto-addresses.json plus direct_crypto_addresses.env",
-        "mpp": "/.well-known/ddg-mpp-activation-guide.md; pending until provider env and penny settlement pass"
+        "mpp": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending"
       },
       "public_live_protocols": [
+        "mpp",
         "x402",
         "direct_crypto_auto",
         "direct_crypto_manual"
       ],
-      "pending_protocols": [
-        "mpp"
-      ],
+      "pending_protocols": [],
       "x402": {
         "status": "public_live",
         "settlement_default": "Base mainnet USDC for production/x402scan compatibility",
@@ -998,6 +1003,15 @@
         "asset_contract": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
         "amount_decimals": 6
       }
+    ],
+    "mpp": {
+      "status": "public_challenge_live_ready_true_route_priced_first_real_buyer_settlement_pending",
+      "recipient_address": "0x25A4B534452372619f841956D64Ce5F45307d834",
+      "currency_contract": "0x20c0000000000000000000000000000000000000"
+    },
+    "settlement_proof_pending": [
+      "mpp_first_real_buyer_settlement",
+      "cdp_x402_bazaar_indexing"
     ]
   },
   "paths": {
@@ -1034,17 +1048,23 @@
               "intent": "charge",
               "currency": "USDC",
               "amount": "750000"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "0.75",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -1155,17 +1175,23 @@
               "intent": "session",
               "currency": "USDC",
               "amount": "250000"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "0.25",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -1644,19 +1670,25 @@
               "intent": "charge",
               "currency": "USDC",
               "amount": "20000"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "0.02",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "free_local_ollama_policy": "free local Ollama routes use the same 24-hour/100-request per-agent lease policy as /v1/micro-model-swarm-preview; provider-backed routes remain paid.",
           "agent_run_timeout_seconds": 120,
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -1720,17 +1752,23 @@
               "intent": "charge",
               "currency": "USDC",
               "amount": "service_catalog_price"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "0.01",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "dynamic",
             "currency": "USD",
@@ -1956,17 +1994,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "0.01"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "0.01",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -2655,17 +2699,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "4.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "4.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -2840,17 +2890,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "15.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "15.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -3025,17 +3081,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "5.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "5.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -3210,17 +3272,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "2.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "2.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -3395,17 +3463,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "1.50"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "1.50",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -3580,17 +3654,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "9.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "9.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -3765,17 +3845,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "12.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "12.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -3950,17 +4036,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "18.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "18.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -4135,17 +4227,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "15.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "15.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -4320,17 +4418,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "12.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "12.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -4505,17 +4609,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "8.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "8.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -4690,17 +4800,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "7.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "7.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -4875,17 +4991,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "25.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "25.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5060,17 +5182,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "15.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "15.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5245,17 +5373,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "20.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "20.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5430,17 +5564,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "18.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "18.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5615,17 +5755,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "35.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "35.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5800,17 +5946,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "18.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "18.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5985,17 +6137,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "12.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "12.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -6170,17 +6328,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "12.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "12.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -6355,17 +6519,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "15.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "15.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -6540,17 +6710,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "20.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "20.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -6725,17 +6901,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "18.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "18.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -6910,17 +7092,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "35.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "35.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -7095,17 +7283,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "49.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "49.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -7282,17 +7476,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "35.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "35.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -7469,17 +7669,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "65.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "65.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -7656,17 +7862,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "55.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "55.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -7843,17 +8055,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "95.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "95.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -8030,17 +8248,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "18.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "18.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -8215,17 +8439,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "12.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "12.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -8400,17 +8630,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "8.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "8.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -8585,17 +8821,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "9.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "9.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -8770,17 +9012,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "3.00"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "3.00",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -8938,17 +9186,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "0.25"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "0.25",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -9106,17 +9360,23 @@
               "intent": "charge",
               "currency": "usd",
               "amount": "0.01"
+            },
+            {
+              "method": "mpp",
+              "intent": "charge",
+              "currency": "USD",
+              "amount": "0.01",
+              "description": "MPP/Tempo Authorization: Payment rail; route-priced by DDG payment edge"
             }
           ],
           "payment_protocols_current_public_live": [
+            "MPP",
             "x402",
             "direct_crypto_auto",
             "direct_crypto_manual"
           ],
-          "payment_protocols_pending": [
-            "mpp"
-          ],
-          "mpp_status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+          "payment_protocols_pending": [],
+          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
           "price": {
             "mode": "fixed",
             "currency": "USD",

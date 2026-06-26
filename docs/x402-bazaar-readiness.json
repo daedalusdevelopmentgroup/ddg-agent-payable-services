@@ -135,16 +135,15 @@
     "source_of_truth": {
       "x402": "/openapi.json 402 PAYMENT-REQUIRED accepts[] plus payment_rail_addresses.env",
       "direct_crypto": "/.well-known/ddg-direct-crypto-addresses.json plus direct_crypto_addresses.env",
-      "mpp": "/.well-known/ddg-mpp-activation-guide.md; pending until provider env and penny settlement pass"
+      "mpp": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending"
     },
     "public_live_protocols": [
+      "mpp",
       "x402",
       "direct_crypto_auto",
       "direct_crypto_manual"
     ],
-    "pending_protocols": [
-      "mpp"
-    ],
+    "pending_protocols": [],
     "x402": {
       "status": "public_live",
       "settlement_default": "Base mainnet USDC for production/x402scan compatibility",
@@ -333,9 +332,13 @@
       "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}"
     },
     "mpp": {
-      "status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+      "status": "public_challenge_live_ready_true_route_priced_first_real_buyer_settlement_pending",
       "advertise_rule": "Do not add MPP to public 402 challenges, OpenAPI live protocols, or listing copy until ready:true, real penny settlement, idempotent replay, fake-token 402, and leak scan pass."
-    }
+    },
+    "settlement_proof_pending": [
+      "mpp_first_real_buyer_settlement",
+      "cdp_x402_bazaar_indexing"
+    ]
   },
   "x402scan_status": "registered_live_5_resources; keep batch tests green after every submission/docs/OpenAPI change",
   "last_synced_at": "2026-06-24T01:32:05Z"

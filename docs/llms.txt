@@ -2,7 +2,7 @@
 
 Operator: Daedalus Development Group
 Contact: 0xcircuitbreaker@protonmail.com
-Live payment protocols: x402, direct_crypto_auto, and direct_crypto_manual. x402 advertises Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC; direct crypto publishes receiving addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR. MPP is code-ready but pending live provider/currency configuration and penny-settlement proof.
+Live payment protocols: x402, direct_crypto_auto, and direct_crypto_manual. x402 advertises Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC; direct crypto publishes receiving addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR. MPP public challenge is live with ready:true; first real buyer-funded settlement remains pending and penny-settlement proof.
 Canonical pricing/status catalog: /.well-known/ddg-agent-pricing.json
 AI discovery endpoint: /.well-known/ai (alias /ai)
 API linkset catalog: /.well-known/api-catalog

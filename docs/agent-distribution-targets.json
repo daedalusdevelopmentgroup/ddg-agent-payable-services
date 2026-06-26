@@ -1,10 +1,11 @@
 {
   "status": "active_distribution_work_started",
-  "last_synced_at": "2026-06-24T20:25:00Z",
+  "last_synced_at": "2026-06-25T16:35:00Z",
   "base_url": "https://agents.daedalusdevelopmentgroup.com",
   "public_repo": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
   "payment_claims": {
     "live_protocols": [
+      "mpp",
       "x402",
       "direct_crypto_auto",
       "direct_crypto_manual"
@@ -12,7 +13,6 @@
     "x402_accepts": "Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC",
     "direct_crypto_families": "EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR",
     "pending": [
-      "mpp",
       "cdp_x402_bazaar_indexing_until_real_settlement"
     ]
   },
@@ -73,23 +73,25 @@
     },
     {
       "id": "official_mcp_registry",
-      "status": "public_streamable_http_live_registry_submission_ready",
+      "status": "validated_remote_metadata_account_gated_publish",
       "url": "https://modelcontextprotocol.io/registry/about",
-      "next_action": "Run registry validation/publisher flow and submit mcp/server.json now that the public Streamable HTTP endpoint is live and smoked.",
+      "next_action": "server.json validates and public MCP smoke passes; run mcp-publisher login/publish under DDG GitHub/domain auth to publish.",
       "urls": [
         "https://modelcontextprotocol.io/registry/about",
         "https://mcp.daedalusdevelopmentgroup.com/mcp"
-      ]
+      ],
+      "packet": "submissions/mcp-registry/ddg-agent-services-publish.md"
     },
     {
       "id": "mcp_aggregators",
-      "status": "ready_after_public_mcp_endpoint_smoke",
+      "status": "glama_json_committed_smithery_mcpso_account_gated",
       "urls": [
         "https://smithery.ai/servers",
         "https://glama.ai/mcp/servers",
         "https://mcp.so/"
       ],
-      "next_action": "Submit after official MCP Registry attempt or with public remote endpoint evidence; include public smoke output and GitHub repo."
+      "next_action": "Glama crawl signal committed. Smithery and MCP.so require web/API account submission using submissions/mcp-aggregators/listing-payloads.md.",
+      "packet": "submissions/mcp-aggregators/listing-payloads.md"
     }
   ]
 }

@@ -23,7 +23,7 @@ Accepted crypto is intentionally broad but bounded by public receiving-address c
 - Direct crypto public receiving-address families: EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
 - Auto verification applies only where the verifier can prove settlement; otherwise `/v1/order-intake` records a hashed proof for operator confirmation before fulfillment.
 
-MPP / Stripe / Tempo is installed but **not advertised live yet**. DDG will advertise MPP only after the verifier reports ready, the public 402 challenge includes MPP, a real penny-scale settlement succeeds, idempotency replay passes, invalid-token failure is verified, and all discovery/listing packets are re-synced.
+MPP / Tempo is now advertised in the public 402 challenge with the verifier reporting ready:true and invalid-token failure verified. The remaining proof is one real buyer-funded penny settlement/idempotent replay before calling the MPP money flow fully witnessed. Stripe SPT remains planned.
 
 ## Start here if you are a buyer agent
 
@@ -108,7 +108,7 @@ See also [`DISCOVERY.md`](DISCOVERY.md) for the agent-radar/distribution map and
 
 The local stdio MCP server is in [`mcp/`](mcp/). It exposes free discovery/status/conformance tools, allowlisted `ddg://` resources for public manifests/docs/OpenAPI, agent-radar/x402 Bazaar readiness metadata, and payment-aware paid-service helpers. Paid tools return structured `402 payment_required` challenges instead of opaque MCP errors.
 
-Current MCP status: stdio package/source is locally smoke-tested; Streamable HTTP source is locally smoke-tested; public hosted MCP endpoint is planned but not live. See [`docs/mcp-production-readiness.md`](docs/mcp-production-readiness.md).
+Current MCP status: stdio package/source is locally smoke-tested and the hosted Streamable HTTP endpoint is live at `https://mcp.daedalusdevelopmentgroup.com/mcp` with public MCP-client smoke passing. See [`docs/mcp-production-readiness.md`](docs/mcp-production-readiness.md).
 
 ## Security and compliance stance
 

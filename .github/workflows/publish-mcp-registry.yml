@@ -49,7 +49,7 @@ jobs:
               url = 'https://registry.modelcontextprotocol.io/v0.1/servers?' + urllib.parse.urlencode({'search': name})
               with urllib.request.urlopen(url, timeout=30) as response:
                   data = json.load(response)
-              matches = [server for server in data.get('servers', []) if server.get('name') == name]
+              matches = [entry for entry in data.get('servers', []) if entry.get('server', {}).get('name') == name]
               print(json.dumps({'delay': delay, 'matches': len(matches), 'servers': data.get('servers', [])[:3]}, indent=2))
               if matches:
                   sys.exit(0)

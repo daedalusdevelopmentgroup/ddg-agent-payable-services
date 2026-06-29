@@ -1,0 +1,57 @@
+name: Publish MCP Registry
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    name: Publish server.json to official MCP Registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install mcp-publisher
+        run: |
+          set -euo pipefail
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" -o /tmp/mcp-publisher.tar.gz
+          tar -xzf /tmp/mcp-publisher.tar.gz -C /tmp mcp-publisher
+          sudo install -m 0755 /tmp/mcp-publisher /usr/local/bin/mcp-publisher
+          mcp-publisher --help
+
+      - name: Validate registry metadata
+        run: mcp-publisher validate mcp/server.json
+
+      - name: Authenticate with GitHub Actions OIDC
+        run: mcp-publisher login github-oidc
+
+      - name: Publish registry metadata
+        run: mcp-publisher publish mcp/server.json
+
+      - name: Verify registry listing
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import sys
+          import time
+          import urllib.parse
+          import urllib.request
+
+          name = 'io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp'
+          for delay in (0, 5, 15, 30):
+              if delay:
+                  time.sleep(delay)
+              url = 'https://registry.modelcontextprotocol.io/v0.1/servers?' + urllib.parse.urlencode({'search': name})
+              with urllib.request.urlopen(url, timeout=30) as response:
+                  data = json.load(response)
+              matches = [server for server in data.get('servers', []) if server.get('name') == name]
+              print(json.dumps({'delay': delay, 'matches': len(matches), 'servers': data.get('servers', [])[:3]}, indent=2))
+              if matches:
+                  sys.exit(0)
+          raise SystemExit('Registry listing not visible after publish')
+          PY

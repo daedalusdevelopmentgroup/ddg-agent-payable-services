@@ -7,8 +7,8 @@ DDG's MCP wrapper is payment-aware: free tools expose discovery/status/conforman
 - Stdio/package path: source-ready and locally smoked.
 - Streamable HTTP server: source-ready, locally smoked on `http://127.0.0.1:8891/mcp`, and public-live at `https://mcp.daedalusdevelopmentgroup.com/mcp`.
 - Public hosted MCP endpoint: **live** at `https://mcp.daedalusdevelopmentgroup.com/mcp` and MCP-client smoked.
-- Current live payment rails exposed through MCP paid tools: `x402`, `direct_crypto_auto`.
-- MPP remains pending until provider env + `ready:true` + penny settlement proof.
+- Current live payment rails exposed through MCP paid tools: `MPP` challenge-live, `x402`, `direct_crypto_auto`, and `direct_crypto_manual`.
+- MPP is public challenge-live (`ready:true`, advertised in 402 challenges, fake credentials fail closed), but the first real buyer-funded MPP settlement remains the remaining proof before saying fully settled-live.
 
 ## Local smoke commands
 
@@ -46,7 +46,7 @@ uv run --extra dev python scripts/smoke_mcp_server.py \
   --agent-id ddg-mcp-http-smoke
 ```
 
-Expected: `ok: true`, 20 tools and 11 resources present, and unpaid paid-tool call returns structured 402 with `accepted_protocols` containing only currently live rails.
+Expected: `ok: true`, required tools/resources present, and unpaid paid-tool call returns structured 402 with `accepted_protocols` containing only currently live or honestly gated rails; MPP may appear only while status keeps the first-real-settlement-pending marker.
 
 ## Production deployment path
 

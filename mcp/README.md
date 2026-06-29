@@ -5,8 +5,9 @@ Local stdio MCP wrapper for `https://agents.daedalusdevelopmentgroup.com`. It ex
 ## Status
 
 - **stdio package/skeleton:** package-ready and locally smoke-tested.
-- **HTTP/Streamable MCP:** source-ready and locally smoke-tested on `http://127.0.0.1:8891/mcp`; public production endpoint is planned and must be deployed/smoked before registry remote listing.
-- **PyPI package metadata:** staged as `ddg-agent-services-mcp` with MCP Registry name `io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp`.
+- **HTTP/Streamable MCP:** public production endpoint is live at `https://mcp.daedalusdevelopmentgroup.com/mcp` and MCP-client smoked; plain browser/curl requests without `Accept: text/event-stream` receive the normal Streamable HTTP negotiation `406`.
+- **PyPI package:** published as `ddg-agent-services-mcp` with MCP Registry name `io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp`.
+- **Official MCP Registry:** `mcp/server.json` validates; final publication is blocked only on the `mcp-publisher` auth/publish flow.
 - **Production checklist:** [`../docs/mcp-production-readiness.md`](../docs/mcp-production-readiness.md).
 - **Public service base:** `https://agents.daedalusdevelopmentgroup.com`
 - **Public design doc:** `https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-swarm-mcp-design.md`
@@ -158,7 +159,7 @@ Observed result shape:
     "receipt_design_status": "planned_not_live",
     "tx_smoke_status": 402,
     "tx_smoke_error": "payment_required",
-    "tx_accepted_protocols": ["x402", "direct_crypto_auto"]
+    "tx_accepted_protocols": ["MPP", "x402", "direct_crypto_auto", "direct_crypto_manual"]
   }
 }
 ```

@@ -14,8 +14,10 @@
   },
   "mcp": {
     "design_url": "/.well-known/ddg-agent-swarm-mcp-design.md",
-    "planned_package": "@daedalusdevelopmentgroup/ddg-agent-services-mcp",
-    "status": "source_stdio_skeleton_and_design_ready_http_transport_pending"
+    "pypi_package": "ddg-agent-services-mcp",
+    "registry_name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
+    "remote_url": "https://mcp.daedalusdevelopmentgroup.com/mcp",
+    "status": "source_stdio_package_and_public_streamable_http_live_registry_submission_ready"
   },
   "notes": [
     "No raw provider credentials, OAuth sessions, private model IDs, or verifier loopback URLs are public contract values.",

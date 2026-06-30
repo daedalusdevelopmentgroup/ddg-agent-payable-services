@@ -127,7 +127,7 @@ x402
 direct_crypto_auto
 ```
 
-MPP is installed but not advertised live until `/health.ready=true`, a public 402 challenge includes MPP, a real penny-scale MPP settlement succeeds, idempotency replay passes, and invalid-token failure is verified.
+MPP is installed but settlement-proven live until `/health.ready=true`, a public 402 challenge includes MPP, a real penny-scale MPP settlement succeeds, idempotency replay passes, and invalid-token failure is verified.
 
 ## Local smoke result
 

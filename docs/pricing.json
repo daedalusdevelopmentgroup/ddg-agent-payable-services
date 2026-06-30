@@ -2513,7 +2513,7 @@
     "source_of_truth": {
       "x402": "/openapi.json 402 PAYMENT-REQUIRED accepts[] plus payment_rail_addresses.env",
       "direct_crypto": "/.well-known/ddg-direct-crypto-addresses.json plus direct_crypto_addresses.env",
-      "mpp": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending"
+      "mpp": "public_live_settlement_proven"
     },
     "public_live_protocols": [
       "mpp",
@@ -2710,7 +2710,7 @@
       "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}"
     },
     "mpp": {
-      "status": "public_challenge_live_ready_true_route_priced_first_real_buyer_settlement_pending",
+      "status": "public_live_settlement_proven",
       "advertise_rule": "Do not add MPP to public 402 challenges, OpenAPI live protocols, or listing copy until ready:true, real penny settlement, idempotent replay, fake-token 402, and leak scan pass."
     },
     "settlement_proof_pending": [
@@ -2719,7 +2719,7 @@
     ]
   },
   "mpp": {
-    "status": "public_challenge_live_ready_true_route_priced_first_real_buyer_settlement_pending",
+    "status": "public_live_settlement_proven",
     "recipient_address": "0x25A4B534452372619f841956D64Ce5F45307d834",
     "currency_contract": "0x20c0000000000000000000000000000000000000",
     "amount_policy": "route-priced; tx smoke is 0.01 USD",

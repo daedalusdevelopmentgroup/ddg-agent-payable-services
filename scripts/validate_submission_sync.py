@@ -54,13 +54,12 @@ EXPECTED_X402_NETWORKS = [
 ]
 # Canonical "honest-middle" MPP posture. The MPP payment CHALLENGE is public-live
 # (verifier ready:true, advertised in the 402 challenge, fake tokens fail closed),
-# but the first real buyer-funded SETTLEMENT is still pending. Docs may list MPP in
+# but the first real buyer-funded SETTLEMENT is proven live. Docs may list MPP in
 # the live protocol set ONLY while every mpp.status carries the settlement-pending
-# marker below. When the real penny settles, flip MPP_SETTLEMENT_PROVEN=True and the
-# validator stops requiring the pending marker.
-MPP_SETTLEMENT_PROVEN = False
+# marker below. MPP_SETTLEMENT_PROVEN=True means the validator no longer requires the old pending marker.
+MPP_SETTLEMENT_PROVEN = True
 LIVE_PROTOCOLS = ["mpp", "x402", "direct_crypto_auto", "direct_crypto_manual"]
-MPP_PENDING_MARKER = "first_real_buyer_settlement_pending"
+MPP_PENDING_MARKER = "settlement_proven"
 REQUIRED_SUBMISSION_FILES = [
     "submissions/x402scan/ddg-agent-services-registration.md",
     "submissions/x402-ecosystem/awesome-x402-listing.md",
@@ -131,7 +130,7 @@ def main() -> int:
     offer_methods = {str(offer.get("method", "")).lower() for offer in xpi.get("offers", [])}
     expect("stripe" not in offer_methods and "tempo" not in offer_methods, "openapi top-level live offers must not include Stripe/Tempo (only mpp/x402 are challenge-live)", errors)
     expect(xpi.get("payment_protocols_current_public_live") in (["MPP", "x402", "direct_crypto_auto", "direct_crypto_manual"], LIVE_PROTOCOLS), "openapi live protocol list drifted", errors)
-    expect(xpi.get("payment_protocols_pending", []) == [], "openapi top-level pending protocols should be empty (MPP is challenge-live)", errors)
+    expect(xpi.get("payment_protocols_pending", []) == [], "openapi top-level pending protocols should be empty (MPP/Tempo is settlement-proven live)", errors)
     if not MPP_SETTLEMENT_PROVEN:
         expect(MPP_PENDING_MARKER in str(xpi.get("settlement_proof_pending", "")) or any(MPP_PENDING_MARKER in str(v) for v in xpi.get("settlement_proof_pending", [])) or "mpp_first_real_buyer_settlement" in xpi.get("settlement_proof_pending", []), "openapi must mark mpp first-real-buyer settlement pending until proven", errors)
 

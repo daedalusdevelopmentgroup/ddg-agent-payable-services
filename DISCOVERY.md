@@ -40,7 +40,7 @@ Accepted crypto options exposed to buyer agents:
 - Direct crypto public receiving-address families: EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
 - Direct crypto proofs are auto-verified only for verifier-supported assets; the remaining public address families are operator-confirmed before fulfillment.
 
-Installed but not advertised live yet:
+Installed but settlement-proven live yet:
 
 ```text
 mpp

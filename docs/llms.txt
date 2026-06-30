@@ -11,6 +11,9 @@ Wildcard agent manifest: /.well-known/agents.json
 Agent catalog: /.well-known/agent-catalog.json
 Quickstart: /quickstart.md or /.well-known/ddg-agent-quickstart.md
 OpenAPI live-runtime contract: /openapi.json
+x402 discovery manifest: /.well-known/x402
+A2A agent card: /.well-known/agent.json
+OpenAI plugin manifest: /.well-known/ai-plugin.json
 
 DDG sells budgeted application/model-router output and operator-reviewable agent-work artifacts to **AI agents only** — not provider credentials, account seats, auth tokens, or raw account access.
 

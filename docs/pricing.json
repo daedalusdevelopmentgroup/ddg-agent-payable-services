@@ -2206,7 +2206,8 @@
     "x402": "public_live_multi_chain_usdc_accepts_array_base_enforced_first_for_x402scan",
     "direct_crypto_auto": "public_live_for_verifier_supported_assets_only",
     "direct_crypto_manual": "public_live_operator_confirmed_for_all_public_receiving_address_families",
-    "MPP": "planned_config_ready_requires_live_provider_currency_secret_ready_true_and_penny_settlement_before_public_claims"
+    "MPP": "public_live_settlement_proven",
+    "x402_facilitator_settlement": "pending_cdp_business_approval_or_self_hosted_facilitator"
   },
   "local_model_expansion_candidates_2026_06_13": [
     {
@@ -2714,7 +2715,7 @@
       "advertise_rule": "Do not add MPP to public 402 challenges, OpenAPI live protocols, or listing copy until ready:true, real penny settlement, idempotent replay, fake-token 402, and leak scan pass."
     },
     "settlement_proof_pending": [
-      "mpp_first_real_buyer_settlement",
+      "mpp_tx_smoke_settlement_proven",
       "cdp_x402_bazaar_indexing"
     ]
   },

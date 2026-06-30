@@ -8,7 +8,7 @@ DDG's MCP wrapper is payment-aware: free tools expose discovery/status/conforman
 - Streamable HTTP server: source-ready, locally smoked on `http://127.0.0.1:8891/mcp`, and public-live at `https://mcp.daedalusdevelopmentgroup.com/mcp`.
 - Public hosted MCP endpoint: **live** at `https://mcp.daedalusdevelopmentgroup.com/mcp` and MCP-client smoked.
 - Current live payment rails exposed through MCP paid tools: `MPP` challenge-live, `x402`, `direct_crypto_auto`, and `direct_crypto_manual`.
-- MPP is public challenge-live (`ready:true`, advertised in 402 challenges, fake credentials fail closed), but the first real buyer-funded MPP settlement remains the remaining proof before saying fully settled-live.
+- MPP is public settlement-proven live for `/v1/tx-smoke-test` (`ready:true`, advertised in 402 challenges, fake credentials fail closed, receipt hash `c0e160a79ab9376daa6d9f2aed1486e4`).
 
 ## Local smoke commands
 
@@ -46,7 +46,7 @@ uv run --extra dev python scripts/smoke_mcp_server.py \
   --agent-id ddg-mcp-http-smoke
 ```
 
-Expected: `ok: true`, required tools/resources present, and unpaid paid-tool call returns structured 402 with `accepted_protocols` containing only currently live or honestly gated rails; MPP may appear only while status keeps the first-real-settlement-pending marker.
+Expected: `ok: true`, required tools/resources present, and unpaid paid-tool call returns structured 402 with `accepted_protocols` containing only currently live or honestly gated rails; MPP may appear when public status reports settlement-proven proof.
 
 ## Production deployment path
 
@@ -106,7 +106,7 @@ Expected: `ok: true`, required tools/resources present, and unpaid paid-tool cal
 - Hosted/remote buyers must pass stable `agent_id` values on paid/order-scoped tools.
 - MCP service listens on loopback behind Cloudflare; direct public access should go through the tunnel/WAF only.
 - Public paid tools should return DDG's structured payment challenges rather than opaque MCP errors.
-- MPP must remain pending in outputs until public 402 challenges include MPP and real settlement proof passes.
+- MPP outputs must remain aligned with public 402 challenges and settlement proof; current status is settlement-proven for tx-smoke, while x402/CDP settlement indexing remains pending.
 
 ## Go/no-go
 

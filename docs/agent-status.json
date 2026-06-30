@@ -21,7 +21,7 @@
   },
   "notes": [
     "No raw provider credentials, OAuth sessions, private model IDs, or verifier loopback URLs are public contract values.",
-    "MPP verifier reports ready:true and public 402 challenges now advertise MPP; invalid tokens fail closed. First real buyer-funded MPP settlement is still the remaining money-flow proof."
+    "MPP verifier reports ready:true, public 402 challenges advertise MPP, invalid tokens fail closed, and tx-smoke settlement is proven with receipt hash c0e160a79ab9376daa6d9f2aed1486e4."
   ],
   "operator_contact": "0xcircuitbreaker@protonmail.com",
   "payment_protocols": {
@@ -60,7 +60,7 @@
     "source_of_truth": {
       "x402": "/openapi.json 402 PAYMENT-REQUIRED accepts[] plus payment_rail_addresses.env",
       "direct_crypto": "/.well-known/ddg-direct-crypto-addresses.json plus direct_crypto_addresses.env",
-      "mpp": "Public 402 challenge plus /mpp-activation-guide.md; sidecar /health ready:true on active production hosts."
+      "mpp": "public_live_settlement_proven"
     },
     "public_live_protocols": [
       "mpp",
@@ -263,7 +263,7 @@
       "amount_policy": "route-priced from catalog/payment edge; tx-smoke-test is 0.01 USD"
     },
     "settlement_proof_pending": [
-      "mpp_first_real_buyer_settlement",
+      "mpp_tx_smoke_settlement_proven",
       "cdp_x402_bazaar_indexing"
     ]
   },

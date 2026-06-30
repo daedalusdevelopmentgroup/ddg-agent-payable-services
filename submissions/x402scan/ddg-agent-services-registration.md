@@ -106,7 +106,7 @@ Before any other listing/submission/PR, update all of these together and run `py
 - Paid operations need `responses.402`, `x-payment-info.price`, `x-payment-info.protocols`, and a runnable request schema/example so probes can reach the paywall.
 - Runtime `402` challenge behavior is the final source of truth.
 - Free/non-x402 endpoints should be marked with `security: []` or otherwise not advertised as paid resources.
-- MPP must remain pending until provider env, `ready:true`, public 402 MPP advertisement, real penny settlement, idempotency replay, fake-token 402, and leak scan all pass.
+- MPP/Tempo is settlement-proven for tx-smoke. Keep x402/CDP facilitator settlement and indexing pending until CDP business approval/credentials or a self-hosted facilitator path proves settlement, idempotency replay, fake-token 402, and leak scan.
 
 Local preflight after any deploy:
 

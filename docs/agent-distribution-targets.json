@@ -1,6 +1,6 @@
 {
   "status": "active_distribution_work_started",
-  "last_synced_at": "2026-06-25T16:35:00Z",
+  "last_synced_at": "2026-06-30T14:32:47Z",
   "base_url": "https://agents.daedalusdevelopmentgroup.com",
   "public_repo": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
   "payment_claims": {
@@ -73,24 +73,25 @@
     },
     {
       "id": "official_mcp_registry",
-      "status": "validated_remote_metadata_account_gated_publish",
-      "url": "https://modelcontextprotocol.io/registry/about",
-      "next_action": "server.json validates and public MCP smoke passes; run mcp-publisher login/publish under DDG GitHub/domain auth to publish.",
+      "status": "published_verified_live",
+      "url": "https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.daedalusdevelopmentgroup%2Fddg-agent-services-mcp",
+      "next_action": "Official MCP Registry publish verified via GitHub Actions OIDC; bump mcp/server.json version before future registry publishes.",
       "urls": [
-        "https://modelcontextprotocol.io/registry/about",
+        "https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.daedalusdevelopmentgroup%2Fddg-agent-services-mcp",
+        "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services/actions/runs/28451913650",
         "https://mcp.daedalusdevelopmentgroup.com/mcp"
       ],
       "packet": "submissions/mcp-registry/ddg-agent-services-publish.md"
     },
     {
       "id": "mcp_aggregators",
-      "status": "glama_json_committed_smithery_mcpso_account_gated",
+      "status": "glama_signal_committed_mcpso_attempted_login_gated_smithery_api_key_gated",
       "urls": [
-        "https://smithery.ai/servers",
-        "https://glama.ai/mcp/servers",
-        "https://mcp.so/"
+        "https://smithery.ai/new",
+        "https://glama.ai/mcp/servers?search=ddg-agent-services-mcp",
+        "https://mcp.so/submit"
       ],
-      "next_action": "Glama crawl signal committed. Smithery and MCP.so require web/API account submission using submissions/mcp-aggregators/listing-payloads.md.",
+      "next_action": "MCP.so form reached but requires site sign-in before POST /api/submit-project. Smithery CLI reached publish flow but requires a Smithery API key; install key locally and rerun the packet command. Glama has glama.json committed and should be monitored for crawler indexing.",
       "packet": "submissions/mcp-aggregators/listing-payloads.md"
     }
   ]

@@ -75,3 +75,11 @@ Official MCP Registry:
 mcp/server.json includes both remote Streamable HTTP and PyPI stdio metadata.
 Validation endpoint returned valid:true. Publishing is account/OAuth gated through mcp-publisher.
 ```
+
+## Submission status (2026-06-30)
+
+- Official MCP Registry: **published and verified live** via GitHub Actions OIDC run https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services/actions/runs/28451913650. Registry query: https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.daedalusdevelopmentgroup%2Fddg-agent-services-mcp
+- MCP.so: submit form reached at https://mcp.so/submit; submission POST is **site-login gated** (`Please Sign in to submit a server.` / `/api/submit-project`). Payload below is ready for a signed-in browser session.
+- Smithery.ai: `smithery mcp publish https://mcp.daedalusdevelopmentgroup.com/mcp -n daedalusdevelopmentgroup/ddg-agent-services-mcp` reached publish flow but is **Smithery API-key gated**. Do not paste the key in chat; set it locally/securely and rerun.
+- Glama: `glama.json` is committed; quick public page probe did not yet show DDG indexed. Monitor crawler/indexing.
+

@@ -3,7 +3,7 @@
   "info": {
     "title": "DDG Agent-Payable Services",
     "version": "2026-06-22-agent-discovery-distribution",
-    "description": "Machine-payable DDG services for AI agents. Current public live payment rails are x402 multi-chain USDC and direct-crypto auto/manual for public receiving-address families. MPP/Stripe/Tempo is installed but pending live provider env plus penny-settlement proof before any MPP-live advertisement. DDG sells bounded artifacts/results, not raw provider account access.",
+    "description": "Machine-payable DDG services for AI agents. Current public live payment rails are x402 multi-chain USDC and direct-crypto auto/manual for public receiving-address families. MPP/Stripe/Tempo is installed but live with verified pathUSD/Tempo penny settlement proof; Stripe/SPT remains planned after profile activation. DDG sells bounded artifacts/results, not raw provider account access.",
     "account_local_candidate_routes": [],
     "contact": {
       "name": "George Sarris / Daedalus Development Group",
@@ -760,13 +760,13 @@
       "direct_crypto_manual"
     ],
     "payment_protocols_pending": [],
-    "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+    "mpp_status": "public_live_settlement_proven",
     "crypto_payment_options": {
       "last_synced_at": "2026-06-24T01:32:05Z",
       "source_of_truth": {
         "x402": "/openapi.json 402 PAYMENT-REQUIRED accepts[] plus payment_rail_addresses.env",
         "direct_crypto": "/.well-known/ddg-direct-crypto-addresses.json plus direct_crypto_addresses.env",
-        "mpp": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending"
+        "mpp": "public_live_settlement_proven"
       },
       "public_live_protocols": [
         "mpp",
@@ -1005,7 +1005,7 @@
       }
     ],
     "mpp": {
-      "status": "public_challenge_live_ready_true_route_priced_first_real_buyer_settlement_pending",
+      "status": "public_live_settlement_proven",
       "recipient_address": "0x25A4B534452372619f841956D64Ce5F45307d834",
       "currency_contract": "0x20c0000000000000000000000000000000000000"
     },
@@ -1064,7 +1064,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -1191,7 +1191,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -1566,7 +1566,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Payment authorization header when a supported public rail requires it. MPP is pending until live proof."
+            "description": "Payment authorization header when a supported public rail requires it. MPP/Tempo is settlement-proven live until live proof."
           },
           {
             "name": "Payment-Signature",
@@ -1688,7 +1688,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -1768,7 +1768,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "dynamic",
             "currency": "USD",
@@ -1969,7 +1969,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Payment authorization header when a supported public rail requires it. MPP is pending until live proof."
+            "description": "Payment authorization header when a supported public rail requires it. MPP/Tempo is settlement-proven live until live proof."
           },
           {
             "name": "Payment-Signature",
@@ -2010,7 +2010,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -2715,7 +2715,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -2906,7 +2906,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -3097,7 +3097,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -3288,7 +3288,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -3479,7 +3479,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -3670,7 +3670,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -3861,7 +3861,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -4052,7 +4052,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -4243,7 +4243,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -4434,7 +4434,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -4625,7 +4625,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -4816,7 +4816,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5007,7 +5007,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5198,7 +5198,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5389,7 +5389,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5580,7 +5580,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5771,7 +5771,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -5962,7 +5962,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -6153,7 +6153,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -6344,7 +6344,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -6535,7 +6535,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -6726,7 +6726,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -6917,7 +6917,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -7108,7 +7108,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -7299,7 +7299,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -7492,7 +7492,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -7685,7 +7685,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -7878,7 +7878,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -8071,7 +8071,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -8264,7 +8264,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -8455,7 +8455,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -8646,7 +8646,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -8837,7 +8837,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -9028,7 +9028,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -9202,7 +9202,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",
@@ -9376,7 +9376,7 @@
             "direct_crypto_manual"
           ],
           "payment_protocols_pending": [],
-          "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+          "mpp_status": "public_live_settlement_proven",
           "price": {
             "mode": "fixed",
             "currency": "USD",

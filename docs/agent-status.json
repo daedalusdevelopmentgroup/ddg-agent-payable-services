@@ -1,6 +1,6 @@
 {
   "base_url": "https://agents.daedalusdevelopmentgroup.com",
-  "generated_at": "2026-06-22T23:47:53.265767+00:00",
+  "generated_at": "2026-06-30T07:37:38.703052+00:00",
   "latest_verified_ladder": {
     "fake_payment": "402 payment_required",
     "identity_no_payment": "402 payment_required",
@@ -28,7 +28,7 @@
     "x402": "public_live",
     "direct_crypto_auto": "public_live_for_verifier_supported_assets",
     "direct_crypto_manual": "public_live_operator_confirmed_for_public_receiving_address_families",
-    "mpp": "public_challenge_live_ready_true_route_priced_first_real_buyer_settlement_pending",
+    "mpp": "public_live_settlement_proven",
     "stripe_spt": "planned_after_mpp_or_profile_activation"
   },
   "public_discovery": {
@@ -40,7 +40,7 @@
     "checkout_conformance": "/.well-known/ddg-agent-checkout-conformance.json",
     "llms": "/llms.txt",
     "mcp_design": "/.well-known/ddg-agent-swarm-mcp-design.md",
-    "mpp_status": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending",
+    "mpp_status": "public_live_settlement_proven",
     "openapi": "/openapi.json",
     "pricing": "/.well-known/ddg-agent-pricing.json",
     "refund_policy": "/.well-known/ddg-agent-refund-policy.json"
@@ -257,7 +257,7 @@
       "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}"
     },
     "mpp": {
-      "status": "public_challenge_live_ready_true_route_priced_first_real_buyer_settlement_pending",
+      "status": "public_live_settlement_proven",
       "recipient_address": "0x25A4B534452372619f841956D64Ce5F45307d834",
       "currency_contract": "0x20c0000000000000000000000000000000000000",
       "amount_policy": "route-priced from catalog/payment edge; tx-smoke-test is 0.01 USD"
@@ -271,5 +271,11 @@
   "production_readiness_notes": {
     "operator_fulfilled_services": "Manual/beta SKUs have been promoted to live agent-orderable routes where the path queues a paid operator-reviewed order and returns status/artifact URLs; they are not represented as fully automated execution.",
     "all_services_agent_orderable": "All public catalog services are now live_runtime; operator-fulfilled services queue paid reviewed work and do not overclaim full automation."
+  },
+  "settlement_proofs": {
+    "mpp_tempo_pathusd_tx": "0x2500f61d2c5e5717edcde2239114d030e57f2a4726cb73028477c79b605fa282",
+    "mpp_tempo_pathusd_amount_atomic": "10000",
+    "mpp_tempo_pathusd_amount_display": "0.01",
+    "mpp_tempo_pathusd_fee_token": "0x20c0000000000000000000000000000000000000"
   }
 }

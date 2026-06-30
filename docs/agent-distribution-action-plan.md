@@ -32,7 +32,7 @@ Hold until additional proof:
 - Live protocols: `x402`, `direct_crypto_auto`, `direct_crypto_manual`.
 - x402 `accepts[]`: Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC.
 - Direct-crypto public receiving-address families: EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
-- MPP is pending, not live, until the go-live proof gates above pass.
+- MPP/Tempo is settlement-proven live, not live, until the go-live proof gates above pass.
 - CDP x402 Bazaar indexing is not live until real CDP Facilitator settlement causes Bazaar discovery/search to return DDG.
 
 ## Submission sync rule
@@ -79,7 +79,7 @@ Use these terms consistently in repo metadata, descriptions, and listing submiss
 
 2. **x402 ecosystem / awesome lists**
    - Link to GitHub repo, `DISCOVERY.md`, and the one-cent smoke route.
-   - State that x402scan is live, CDP Bazaar indexing is settlement-gated, and MPP is pending.
+   - State that x402scan is live, CDP Bazaar indexing is settlement-gated, and MPP/Tempo is settlement-proven live.
 
 3. **Official MCP Registry**
    - Validate `mcp/server.json` first.

@@ -1,0 +1,34 @@
+{
+  "name": "DDG Agent-Payable Services MCP",
+  "description": "Payment-aware MCP for DDG Agent-Payable Services: discovery, x402 checkout, MCP/security audits, paid model routing, and agent-commerce readiness resources.",
+  "homepage": "https://agents.daedalusdevelopmentgroup.com/.well-known/ai",
+  "repository": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
+  "license": "MIT",
+  "tags": [
+    "mcp",
+    "x402",
+    "agent-commerce",
+    "machine-payments",
+    "ai-agents",
+    "security",
+    "openapi",
+    "model-context-protocol"
+  ],
+  "transport": {
+    "type": "streamable-http",
+    "url": "https://mcp.daedalusdevelopmentgroup.com/mcp"
+  },
+  "pypi": "https://pypi.org/project/ddg-agent-services-mcp/0.1.0/",
+  "verification": {
+    "openapi": "https://agents.daedalusdevelopmentgroup.com/openapi.json",
+    "status": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-status.json",
+    "x402scan": "https://www.x402scan.com/server/c3540307-0eb2-455d-90b6-a21f7d5a3792",
+    "mpp_settlement_tx": "0x2500f61d2c5e5717edcde2239114d030e57f2a4726cb73028477c79b605fa282"
+  },
+  "payment_rails": [
+    "MPP/Tempo (settlement-proven)",
+    "x402",
+    "direct_crypto_auto",
+    "direct_crypto_manual"
+  ]
+}

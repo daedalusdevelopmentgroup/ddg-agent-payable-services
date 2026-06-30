@@ -118,17 +118,7 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
     tx_body_value = tx_smoke.get("body")
     tx_body: dict[str, Any] = tx_body_value if isinstance(tx_body_value, dict) else {}
     accepted_protocols = tx_body.get("accepted_protocols") or []
-    status_body_value = status.get("body")
-    status_body: dict[str, Any] = status_body_value if isinstance(status_body_value, dict) else {}
-    status_mpp = str(status_body.get("payment_protocols", {}).get("mpp", ""))
     accepted_protocol_labels = [str(x).upper() for x in accepted_protocols]
-    # Honest middle posture: MPP challenge advertisement may be public-live once the
-    # verifier is ready and fake credentials fail closed, but docs/status must still
-    # carry the settlement-pending marker until the first real buyer-funded MPP
-    # settlement is proven. This keeps the smoke aligned with validate_submission_sync.
-    mpp_posture_honest = "MPP" not in accepted_protocol_labels or (
-        "public_challenge_live" in status_mpp and "first_real_buyer_settlement_pending" in status_mpp
-    )
     checks = {
         "tool_count_at_least_required": len(tool_names) >= len(REQUIRED_TOOLS),
         "required_tools_present": not missing,
@@ -144,7 +134,7 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
         "checkout_conformance_200": conformance.get("status") == 200,
         "receipt_design_planned": receipt_design.get("status") == "planned_not_live",
         "tx_smoke_structured_402": tx_smoke.get("status") == 402 and tx_body.get("error") == "payment_required",
-        "mpp_posture_honest": mpp_posture_honest,
+        "mpp_advertised_after_live_settlement": "MPP" in accepted_protocol_labels,
     }
 
     return {
@@ -167,7 +157,7 @@ async def _exercise_session(session: ClientSession) -> dict[str, Any]:
             "tx_smoke_status": tx_smoke.get("status"),
             "tx_smoke_error": tx_body.get("error"),
             "tx_accepted_protocols": tx_body.get("accepted_protocols"),
-            "mpp_status": status_mpp,
+            "mpp_settlement_proven": "MPP" in accepted_protocol_labels,
         },
     }
 

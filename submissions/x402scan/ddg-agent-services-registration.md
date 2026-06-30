@@ -79,7 +79,7 @@ XMR
 
 Automatic direct-crypto verification is limited to verifier-supported assets. The remaining public receiving-address families are operator-confirmed before fulfillment via hashed proof metadata. ADA/Cardano is **not** advertised until a DDG-controlled receiving address and verification/manual-confirmation policy exist.
 
-Pending and not advertised live:
+Pending and settlement-proven live:
 
 ```text
 mpp

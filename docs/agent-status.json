@@ -263,8 +263,10 @@
       "amount_policy": "route-priced from catalog/payment edge; tx-smoke-test is 0.01 USD"
     },
     "settlement_proof_pending": [
-      "mpp_tx_smoke_settlement_proven",
       "cdp_x402_bazaar_indexing"
+    ],
+    "settlement_proof_confirmed": [
+      "mpp_tx_smoke_settlement_proven"
     ]
   },
   "last_production_readiness_sync": "2026-06-25T12:45:00Z",

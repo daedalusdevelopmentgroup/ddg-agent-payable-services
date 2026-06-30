@@ -388,11 +388,13 @@
     },
     "mpp": {
       "status": "public_live_settlement_proven",
-      "advertise_rule": "Do not add MPP to public 402 challenges, OpenAPI live protocols, or listing copy until ready:true, real penny settlement, idempotent replay, fake-token 402, and leak scan pass."
+      "advertise_rule": "MPP may be advertised as public_live_settlement_proven when ready:true, public 402 includes MPP, tx-smoke settlement proof is present, idempotent replay is safe, fake-token 402 holds, and leak scan passes. x402/CDP facilitator settlement remains separately gated."
     },
     "settlement_proof_pending": [
-      "mpp_tx_smoke_settlement_proven",
       "cdp_x402_bazaar_indexing"
+    ],
+    "settlement_proof_confirmed": [
+      "mpp_tx_smoke_settlement_proven"
     ]
   }
 }

@@ -30,7 +30,17 @@ jobs:
         run: mcp-publisher login github-oidc
 
       - name: Publish registry metadata
-        run: mcp-publisher publish mcp/server.json
+        run: |
+          set -euo pipefail
+          if mcp-publisher publish mcp/server.json 2>publish.err; then
+            exit 0
+          fi
+          cat publish.err
+          if grep -qi 'invalid version: cannot publish duplicate version' publish.err; then
+            echo 'Version is already published; continuing to registry-listing verification.'
+            exit 0
+          fi
+          exit 1
 
       - name: Verify registry listing
         run: |

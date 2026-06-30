@@ -31,7 +31,7 @@ Publishing is no longer blocked by endpoint readiness; it is blocked only by off
 - Live rails: `x402`, `direct_crypto_auto`, `direct_crypto_manual`.
 - x402 `accepts[]`: Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC.
 - Direct-crypto public receiving-address families: EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, XMR.
-- MPP/Stripe/Tempo is pending until provider env, `ready:true`, public 402 MPP advertisement, real penny settlement, idempotent replay, fake-token 402, and leak scan all pass.
+- MPP/Tempo is settlement-proven for tx-smoke. Keep x402/CDP facilitator settlement and indexing pending until CDP business approval/credentials or a self-hosted facilitator path proves settlement, idempotent replay, fake-token 402, and leak scan.
 - CDP x402 Bazaar is not indexed/live until real CDP Facilitator settlement with `paymentPayload.resource` causes Bazaar discovery/search to return DDG.
 
 ## Validation commands

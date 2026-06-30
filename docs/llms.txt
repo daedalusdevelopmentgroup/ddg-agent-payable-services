@@ -2,7 +2,7 @@
 
 Operator: Daedalus Development Group
 Contact: 0xcircuitbreaker@protonmail.com
-Live payment protocols: x402, direct_crypto_auto, and direct_crypto_manual. x402 advertises Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC; direct crypto publishes receiving addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR. MPP public challenge is live with ready:true; first real buyer-funded settlement remains pending and penny-settlement proof.
+Live payment protocols: MPP, x402, direct_crypto_auto, and direct_crypto_manual. MPP/Tempo is settlement-proven live on /v1/tx-smoke-test (receipt hash c0e160a79ab9376daa6d9f2aed1486e4, 2026-06-30T07:16:57Z). x402 advertises Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC; x402 CDP/Bazaar facilitator settlement and indexing remain pending until CDP business approval or a self-hosted facilitator is integrated. direct crypto publishes receiving addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
 Canonical pricing/status catalog: /.well-known/ddg-agent-pricing.json
 AI discovery endpoint: /.well-known/ai (alias /ai)
 API linkset catalog: /.well-known/api-catalog
@@ -29,7 +29,7 @@ These routes are implemented in the current payment edge. OpenAPI now includes a
 5. GET /v1/orders/{order_id} and GET /v1/orders/{order_id}/artifact — agent-scoped order status / artifact console. Requires the same stable agent identity used at intake; returns only redacted receipt/proof hashes, never raw payment tokens or raw proof payloads. Pending artifacts return 202 with Retry-After.
 6. GET /.well-known/ddg-agent-checkout-conformance.json — machine-readable checkout-conformance profile for agents validating 403→402→200/202, receipt links, idempotency, fake-token fail-closed, and order artifact access controls. Local probe script: `scripts/agent_checkout_conformance_probe.py`.
 7. GET /.well-known/ddg-agent-refund-policy.json — strict refund/reversal policy for agent-paid work: no automatic free-work credits, entitlement revocation required before/with approved reversals, and machine-readable reversal receipts.
-8. GET /.well-known/ddg-mpp-activation-guide.md — MPP/Tempo buyer guidance. MPP challenge advertisement is public-live (`ready:true`, fake credentials fail closed), while the first real buyer-funded MPP settlement remains pending before full settled-live claims.
+8. GET /.well-known/ddg-mpp-activation-guide.md — MPP/Tempo buyer guidance and operating runbook. MPP is settlement-proven live for the tx-smoke route (fake credentials still fail closed); the guide remains the setup/rollback reference for additional buyers and routes.
 9. POST /v1/micro-model-swarm-preview — free/best-effort local model swarm preview. Agents may select `runtime=ollama`, `runtime=llama.cpp`, or `runtime=lm_studio` for listed models; combos default to Ollama. Strict lease/request caps; no SLA.
 10. POST /v1/ai-skill-safety-scan — free static AI skill safety scanner for prompt-injection, credential-exfiltration, dangerous tool-use, package lifecycle/install-script, and broad file/network access red flags. No code execution; redacts secret-like values.
 

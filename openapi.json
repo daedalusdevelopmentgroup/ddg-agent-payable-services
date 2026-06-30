@@ -963,7 +963,7 @@
         "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}"
       },
       "mpp": {
-        "status": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement",
+        "status": "public_live_settlement_proven",
         "advertise_rule": "Do not add MPP to public 402 challenges, OpenAPI live protocols, or listing copy until ready:true, real penny settlement, idempotent replay, fake-token 402, and leak scan pass."
       }
     },
@@ -1010,7 +1010,7 @@
       "currency_contract": "0x20c0000000000000000000000000000000000000"
     },
     "settlement_proof_pending": [
-      "mpp_first_real_buyer_settlement",
+      "mpp_tx_smoke_settlement_proven",
       "cdp_x402_bazaar_indexing"
     ]
   },
@@ -1566,7 +1566,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Payment authorization header when a supported public rail requires it. MPP/Tempo is settlement-proven live until live proof."
+            "description": "Payment authorization header when a supported public rail requires it. MPP/Tempo is settlement-proven live for tx-smoke; x402/CDP facilitator settlement/indexing remains separately gated."
           },
           {
             "name": "Payment-Signature",
@@ -1969,7 +1969,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Payment authorization header when a supported public rail requires it. MPP/Tempo is settlement-proven live until live proof."
+            "description": "Payment authorization header when a supported public rail requires it. MPP/Tempo is settlement-proven live for tx-smoke; x402/CDP facilitator settlement/indexing remains separately gated."
           },
           {
             "name": "Payment-Signature",

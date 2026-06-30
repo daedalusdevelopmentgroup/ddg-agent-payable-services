@@ -731,14 +731,14 @@
   "service": "DDG Agent-Payable Services",
   "payment_protocol_status": {
     "live": [
+      "MPP",
       "x402",
       "direct_crypto_auto",
       "direct_crypto_manual"
     ],
-    "pending": [
-      "MPP"
-    ],
-    "MPP": "code_ready_pending_live_provider_currency_secret_config_and_penny_settlement"
+    "pending": [],
+    "MPP": "public_live_settlement_proven",
+    "x402_facilitator_settlement": "pending_cdp_business_approval_or_self_hosted_facilitator"
   },
   "local_model_upstream_candidates": {
     "status": "staging; not default-routed until downloaded and smoke-tested on durable runtime backend/overflow runtime backend",
@@ -1186,7 +1186,7 @@
     "spending_default": "non-spending unless a real credential or dev mock token is supplied"
   },
   "mpp_activation": {
-    "status": "code_ready_pending_provider_currency_secret_config",
+    "status": "public_live_settlement_proven",
     "guide_url": "https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-mpp-activation-guide.md",
     "required_live_values": [
       "DDG-controlled MPP recipient address",
@@ -1198,18 +1198,24 @@
     "go_live_gates": [
       "sidecar /health ready:true",
       "402 advertises MPP",
-      "real penny payment succeeds",
+      "real tx-smoke payment succeeded",
       "idempotent replay no double-charge",
       "fake token returns 402"
     ],
-    "secret_handling": "Private values are not published in public catalog; install directly on production host/secret manager."
+    "secret_handling": "Private values are not published in public catalog; install directly on production host/secret manager.",
+    "settlement_proof": {
+      "route": "/v1/tx-smoke-test",
+      "receipt_hash": "c0e160a79ab9376daa6d9f2aed1486e4",
+      "verified_at": "2026-06-30T07:16:57Z"
+    },
+    "required_live_values_label": "already_installed_for_current_tx_smoke_mpp_path; use guide for additional buyers/routes and optional Stripe/SPT path"
   },
   "crypto_payment_options": {
     "last_synced_at": "2026-06-24T01:32:05Z",
     "source_of_truth": {
       "x402": "/openapi.json 402 PAYMENT-REQUIRED accepts[] plus payment_rail_addresses.env",
       "direct_crypto": "/.well-known/ddg-direct-crypto-addresses.json plus direct_crypto_addresses.env",
-      "mpp": "public_challenge_live_ready_true_route_priced; first_real_buyer_settlement_pending"
+      "mpp": "public_live_settlement_proven"
     },
     "public_live_protocols": [
       "mpp",
@@ -1406,11 +1412,11 @@
       "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}"
     },
     "mpp": {
-      "status": "public_challenge_live_ready_true_route_priced_first_real_buyer_settlement_pending",
+      "status": "public_live_settlement_proven",
       "advertise_rule": "Do not add MPP to public 402 challenges, OpenAPI live protocols, or listing copy until ready:true, real penny settlement, idempotent replay, fake-token 402, and leak scan pass."
     },
     "settlement_proof_pending": [
-      "mpp_first_real_buyer_settlement",
+      "mpp_tx_smoke_settlement_proven",
       "cdp_x402_bazaar_indexing"
     ]
   }

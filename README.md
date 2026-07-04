@@ -1,143 +1,155 @@
 <!-- mcp-name: io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp -->
 # DDG Agent-Payable Services
 
-AI-agent-native services from Daedalus Development Group (DDG): checkout/payment conformance, MCP/tool security audits, agent-discovery repair, buyer-agent smoke probes, browser proof, repo context packs, and bounded DDG-operated model/artifact orders.
-
-Production base URL:
+**106 x402/direct-crypto services for AI agents.** The largest agent-payable service surface in the x402 ecosystem — from \$0.001 utilities (DNS, hash, UUID) to \$0.05 AI services (agent registry), all fully automated with zero human in the loop.
 
 ```text
 https://agents.daedalusdevelopmentgroup.com
 ```
 
-## Current live payment rails
+## Quick Start
 
-```text
-x402
-direct_crypto_auto
-direct_crypto_manual
-```
-
-Accepted crypto is intentionally broad but bounded by public receiving-address custody and verifier support:
-
-- x402 `accepts[]`: Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC.
-- Direct crypto public receiving-address families: EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
-- Auto verification applies only where the verifier can prove settlement; otherwise `/v1/order-intake` records a hashed proof for operator confirmation before fulfillment.
-
-MPP / Tempo is now advertised in the public 402 challenge with the verifier reporting ready:true and invalid-token failure verified. The remaining proof is one real buyer-funded penny settlement/idempotent replay before calling the MPP money flow fully witnessed. Stripe SPT remains planned.
-
-## Start here if you are a buyer agent
-
-1. Fetch AI discovery:
+### Install
 
 ```bash
-tmp=$(mktemp)
-curl -fsS -o "$tmp" https://agents.daedalusdevelopmentgroup.com/.well-known/ai
-python3 -m json.tool "$tmp"
+pip install ddg-agent-services-mcp
+
+# With framework support:
+pip install ddg-agent-services-mcp[langchain]     # or crewai, openai-agents, autogen, etc.
+pip install ddg-agent-services-mcp[all-frameworks] # everything
 ```
 
-2. Fetch status:
+### Use with any framework
 
-```bash
-tmp=$(mktemp)
-curl -fsS -o "$tmp" https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-status.json
-python3 -m json.tool "$tmp"
+```python
+from ddg_agent_services_mcp.tools import create_langchain_tools
+
+tools = create_langchain_tools(
+    agent_id="my-agent",
+    private_key="0x...",  # Your EVM wallet key (Base USDC)
+)
+# Pass tools to your LangChain agent
 ```
 
-3. Fetch pricing/catalog:
+**8 frameworks supported:** LangChain, CrewAI, OpenAI Agents SDK, AutoGen, PydanticAI, LlamaIndex, Google ADK, and MCP.
 
-```bash
-tmp_pricing=$(mktemp)
-tmp_catalog=$(mktemp)
-curl -fsS -o "$tmp_pricing" https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json
-curl -fsS -o "$tmp_catalog" https://agents.daedalusdevelopmentgroup.com/.well-known/agent-catalog.json
-python3 -m json.tool "$tmp_pricing"
-python3 -m json.tool "$tmp_catalog"
+### MCP (Claude / Cursor / Hermes)
+
+```json
+{
+  "mcpServers": {
+    "ddg-agent-services": {
+      "command": "npx",
+      "args": ["-y", "@smithery/cli@latest", "install", "0xcircuitbreaker/ddg-agent-services-mcp"]
+    }
+  }
+}
 ```
 
-4. Verify checkout conformance:
+Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 
-```bash
-tmp=$(mktemp)
-curl -fsS -o "$tmp" https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-checkout-conformance.json
-python3 -m json.tool "$tmp"
-```
+## Payment Rails
 
-5. Probe the payment gate without spending:
+| Rail | Status | Networks |
+|---|---|---|
+| **x402** | ✅ Live | Base, Polygon, Arbitrum, World Chain, Solana (USDC) |
+| **direct_crypto_auto** | ✅ Live | 13 asset families (BTC, ETH, SOL, LTC, DOGE, etc.) |
+| **direct_crypto_manual** | ✅ Live | Operator-confirmed fallback |
+| **MPP/Tempo** | ✅ Live | Settlement-proven |
 
-```bash
-curl -i -X POST https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test \
-  -H 'Content-Type: application/json' \
-  -H 'X-Agent-Id: your-agent-id' \
-  -d '{"service":"tx_penny_smoke_test"}'
-```
+## Service Catalog (106 services)
 
-Expected without payment: `402 payment_required` with accepted protocols.
+### AI / ML (GPU-backed on GTX 1080)
+| Service | Price | Description |
+|---|---|---|
+| `/v1/embeddings` | \$0.0005 | 768-dim vectors (Ollama nomic-embed-text) |
+| `/v1/image-generation` | \$0.03 | Stable Diffusion v1.5 on GPU |
+| `/v1/llm-judge` | \$0.01 | Neutral judge for multi-model consensus |
+| `/v1/summarize` | \$0.005 | Local LLM summarization |
+| `/v1/sentiment` | \$0.002 | Sentiment analysis |
+| `/v1/translate` | \$0.003 | Language translation |
 
-## Important endpoints
+### Network & Web
+| Service | Price | Description |
+|---|---|---|
+| `/v1/web-search` | \$0.005 | SearXNG aggregator (20+ engines) |
+| `/v1/url-fetch` | \$0.002 | Raw content + headers from any URL |
+| `/v1/url-status` | \$0.001 | Quick HEAD liveness check |
+| `/v1/robots-check` | \$0.001 | robots.txt compliance check |
+| `/v1/ip-geolocation` | \$0.001 | IP → country/city/ISP |
+| `/v1/dns-lookup` | \$0.001 | DNS records (A/AAAA/MX/TXT/NS) |
+| `/v1/whois-lookup` | \$0.002 | Domain registration data |
+| `/v1/link-extract` | \$0.002 | Extract hyperlinks from a page |
+| `/v1/fetch-as-markdown` | \$0.002 | Clean markdown extraction |
+| `/v1/screenshot` | \$0.005 | Headless Chromium screenshot |
 
-See also [`DISCOVERY.md`](DISCOVERY.md) for the agent-radar/distribution map and directory readiness notes.
+### Security
+| Service | Price | Description |
+|---|---|---|
+| `/v1/threat-check` | \$0.005 | URL/wallet reputation (URLhaus + TLS) |
+| `/v1/ssl-cert-info` | \$0.002 | SSL certificate chain + expiry |
+| `/v1/http-headers` | \$0.001 | Security header analysis |
+| `/v1/subdomain-enumerate` | \$0.005 | Subdomain discovery via CT logs |
+| `/v1/tls-version-check` | \$0.002 | TLS version + cipher suite audit |
+| `/v1/prompt-injection-scan` | \$0.01 | Prompt injection vulnerability scan |
+| `/v1/mcp-tool-security-audit` | \$0.05 | MCP server security audit |
 
-| Endpoint | Purpose |
-| --- | --- |
-| `/.well-known/ai` | AI-agent discovery surface |
-| `/.well-known/ddg-agent-status.json` | Rail/service/MCP status |
-| `/.well-known/api-catalog` | Linkset API catalog |
-| `/openapi.json` | OpenAPI contract |
-| `/llms.txt` | LLM-facing instructions |
-| `/.well-known/ddg-agent-pricing.json` | Machine-readable pricing |
-| `/.well-known/agent-catalog.json` | Agent service catalog |
-| `/.well-known/agent-skills/index.json` | Agent-skill discovery index |
-| `/.well-known/ddg-agent-checkout-conformance.json` | Checkout conformance profile |
-| `/.well-known/ddg-agent-refund-policy.json` | Strict refund/reversal policy for agent-paid work |
-| `/.well-known/ddg-agent-swarm-mcp-design.md` | MCP design/status doc |
+### Blockchain
+| Service | Price | Description |
+|---|---|---|
+| `/v1/contract-abi` | \$0.002 | Verified ABI from block explorers |
+| `/v1/ethereum/rpc` | \$0.005 | EVM RPC proxy (Base/Ethereum) |
 
-## Flagship services
+### Compute & Documents
+| Service | Price | Description |
+|---|---|---|
+| `/v1/code-execution` | \$0.01 | Python in Docker sandbox (no network) |
+| `/v1/pdf-extract` | \$0.005 | Text extraction from PDFs |
+| `/v1/ocr` | \$0.005 | Image text extraction (Tesseract) |
+| `/v1/qr-code` | \$0.001 | QR code PNG generation |
+| `/v1/image-generation` | \$0.03 | Text-to-image (Stable Diffusion) |
 
-- `agent_payment_readiness_audit`
-- `mcp_tool_security_audit`
-- `agent_service_distribution_pack`
-- `agent_marketplace_listing_pack`
-- `agent_readiness_scorecard`
-- `buyer_agent_smoke_probe`
-- `browser_proof`
-- `repo_context_pack`
-- `ai_skill_safety_scan`
-- `model_agent_run`
+### Utilities (\$0.001 each)
+| Service | Description |
+|---|---|
+| `/v1/hash-compute` | SHA-256/MD5/BLAKE2 hashing |
+| `/v1/base64-codec` | Encode/decode base64 |
+| `/v1/uuid-generate` | UUID v1/v3/v4/v5 |
+| `/v1/timestamp` | Current time in all formats |
+| `/v1/random` | Secure random data |
+| `/v1/json-validate` | JSON Schema validation |
+| `/v1/schema-infer` | Infer JSON Schema from sample |
+| `/v1/diff-text` | Text comparison/diff |
+| `/v1/language-detect` | Language detection |
+| `/v1/price-feed` | Crypto/forex prices |
 
-## MCP
+### Full catalog
+See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 106 services.
 
-The local stdio MCP server is in [`mcp/`](mcp/). It exposes free discovery/status/conformance tools, allowlisted `ddg://` resources for public manifests/docs/OpenAPI, agent-radar/x402 Bazaar readiness metadata, and payment-aware paid-service helpers. Paid tools return structured `402 payment_required` challenges instead of opaque MCP errors.
+## Discovery
 
-Current MCP status: stdio package/source is locally smoke-tested and the hosted Streamable HTTP endpoint is live at `https://mcp.daedalusdevelopmentgroup.com/mcp` with public MCP-client smoke passing. See [`docs/mcp-production-readiness.md`](docs/mcp-production-readiness.md).
+| Surface | URL |
+|---|---|
+| AI manifest | `/.well-known/ai` |
+| x402 discovery | `/.well-known/x402` |
+| OpenAPI spec | `/openapi.json` (108 paths) |
+| llms.txt | `/llms.txt` |
+| Pricing | `/.well-known/ddg-agent-pricing.json` |
+| Status | `/.well-known/ddg-agent-status.json` |
+| Agent catalog | `/.well-known/agent-catalog.json` |
 
-## Security and compliance stance
+## Infrastructure
 
-DDG sells bounded artifacts/results, not raw model-provider account access. DDG never sells, returns, or relays:
+| Component | Hardware |
+|---|---|
+| Payment edge | T620 (48 cores, 377GB RAM, 24/7) |
+| GPU (SD + embeddings) | T620 GTX 1080 8GB |
+| LLM inference | T620 Ollama (24 models) |
+| Code execution | Docker isolated containers |
+| Web search | SearXNG (self-hosted, 20+ engines) |
+| Email relay | Postfix |
+| Node | Alienware RTX 3080 8GB (secondary) |
 
-- raw OAuth tokens
-- provider API keys
-- private account/session state
-- raw provider seats
-- private model IDs when they would reveal account mechanics
-- raw payment tokens or verifier sidecar URLs
+## License
 
-Provider-backed model capacity is packaged as DDG-operated artifact/result delivery with spend caps, output schemas, redaction, receipts, and operator review where needed.
-
-## Repository contents
-
-```text
-openapi.json                         Public OpenAPI contract copy
-docs/pricing.json                    Pricing copy
-docs/agent-catalog.json              Catalog copy
-docs/agent-status.json               Status copy
-docs/checkout-conformance.json       Checkout profile copy
-docs/agent-skills/                   Agent skill JSON files
-mcp/                                 Local stdio MCP server and metadata
-scripts/agent_checkout_conformance_probe.py  Probe script
-examples/                            Curl and Python buyer-agent examples
-schemas/                             Public JSON schema drafts
-```
-
-## Contact
-
-Operator contact: `0xcircuitbreaker@protonmail.com`
+MIT

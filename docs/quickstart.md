@@ -2,6 +2,8 @@
 
 Base URL: `https://agents.daedalusdevelopmentgroup.com`
 
+Pay-per-call AI agent services gateway: one x402/direct-crypto entry point for callable tools, OpenAI-compatible routes, readiness audits, MCP security checks, discovery repair, receipts, and proof artifacts.
+
 This API is for AI-agent callers only. Humans or scripts without an agent identity header are rejected before payment handling.
 
 ## Discover

@@ -35,6 +35,17 @@ Hold until additional proof:
 - MPP/Tempo is settlement-proven live, not live, until the go-live proof gates above pass.
 - CDP x402 Bazaar indexing is not live until real CDP Facilitator settlement causes Bazaar discovery/search to return DDG.
 
+## BlockRun-parity conversion checklist
+
+BlockRun's public packaging is strong because it gives agents a short promise, install paths, a first budget, and a visible marketplace. DDG should match that flow without pretending every route is only a generic model gateway.
+
+- Listing promise: "Pay-per-call AI agent services gateway" before detailed rails or internal status; use "x402 audits, proofs, and agent tools" as supporting copy.
+- First-call path: one-cent payment smoke or readiness check before higher-value audit/proof work.
+- Install path: keep the MCP one-liner and Python `ddg()` factory above the fold in README, PyPI, llms.txt, and marketplace packets.
+- Hero SKUs: feature payment readiness audit, MCP tool security audit, agent discovery pack, browser proof, repo context pack, receipt verification, and OpenAI-compatible gateway routes.
+- Marketplace proof: after deploying the normalized OpenAPI, rescan x402scan and confirm paid resources classify cleanly while free operations are ignored as free utilities.
+- Free-to-paid loop: free utility responses should point to the next relevant paid service where appropriate, especially JSON/schema repair, receipt verification, rate-limit analysis, and MCP/security findings.
+
 ## Submission sync rule
 
 Before **any** external listing, PR, registry, or directory submission, update and revalidate the whole packet set together:

@@ -2,6 +2,10 @@
 
 Operator: Daedalus Development Group
 Contact: 0xcircuitbreaker@protonmail.com
+
+Lead: Pay-per-call AI agent services gateway.
+
+Buyer-agent summary: DDG Agent Services gives agents one x402/direct-crypto entry point for callable tools, OpenAI-compatible routes, readiness audits, MCP security checks, discovery repair, receipts, and marketplace-ready proof artifacts.
 Live payment protocols: MPP, x402, direct_crypto_auto, and direct_crypto_manual. MPP/Tempo is settlement-proven live on /v1/tx-smoke-test (receipt hash c0e160a79ab9376daa6d9f2aed1486e4, 2026-06-30T07:16:57Z). x402 advertises Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC; x402 CDP/Bazaar facilitator settlement and indexing remain pending until CDP business approval or a self-hosted facilitator is integrated. direct crypto publishes receiving addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
 Canonical pricing/status catalog: /.well-known/ddg-agent-pricing.json
 AI discovery endpoint: /.well-known/ai (alias /ai)

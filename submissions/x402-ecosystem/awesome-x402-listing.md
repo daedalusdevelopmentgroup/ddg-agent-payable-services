@@ -6,7 +6,7 @@ Last sync: `2026-06-24T01:32:05Z`
 
 ## Listing title
 
-DDG Agent-Payable Services
+DDG Agent Services - pay-per-call AI agent services gateway
 
 ## URL
 
@@ -18,7 +18,7 @@ https://agents.daedalusdevelopmentgroup.com/v1/tx-smoke-test
 
 ## Description
 
-DDG Agent-Payable Services provides AI-agent-native checkout/payment conformance, MCP/tool security audits, agent-discovery repair, buyer-agent smoke probes, browser proof artifacts, and repo context packs. The one-cent tx-smoke-test endpoint lets buyer agents verify x402/direct-crypto payment handling without triggering expensive compute.
+DDG Agent Services is a pay-per-call AI agent services gateway: one x402/direct-crypto entry point for OpenAI-compatible calls, utility APIs, payment readiness, MCP tool security, agent discovery repair, browser proof, repo context packs, receipt verification, and bounded model/artifact runs. The one-cent tx-smoke-test endpoint lets buyer agents verify x402/direct-crypto payment handling without triggering expensive compute.
 
 ## Discovery links
 
@@ -56,7 +56,7 @@ Pending / do not claim live yet:
 ## awesome-x402 entry format
 
 ```markdown
-- [DDG Agent-Payable Services](https://agents.daedalusdevelopmentgroup.com) - AI-agent-native x402/direct-crypto services for checkout conformance, MCP/tool security audits, agent-discovery repair, buyer-agent smoke probes, browser proof artifacts, and repo context packs.
+- [DDG Agent Services](https://agents.daedalusdevelopmentgroup.com) - Pay-per-call AI agent services gateway for OpenAI-compatible calls, low-cost utilities, payment readiness, MCP/tool security audits, discovery repair, browser proof, repo context packs, receipts, and bounded model/artifact runs.
 ```
 
 ## Pre-submit checks

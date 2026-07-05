@@ -139,7 +139,14 @@ Why this first: it is side-effect-free except payment verification/receipt handl
 ## Listing copy
 
 ```text
-DDG Agent-Payable Services provides AI-agent-native checkout/payment conformance, MCP/tool security audits, agent-discovery repair, buyer-agent smoke probes, browser proof artifacts, and repo context packs. The one-cent tx-smoke-test endpoint lets buyer agents verify x402 and direct-crypto payment handling without triggering expensive compute.
+DDG Agent Services is a pay-per-call AI agent services gateway: one x402/direct-crypto entry point for callable tools, OpenAI-compatible routes, payment readiness, MCP security checks, discovery repair, receipts, browser proof artifacts, and repo context packs. The one-cent tx-smoke-test endpoint lets buyer agents verify x402 and direct-crypto payment handling without triggering expensive compute.
+```
+
+## Recommended x402scan title/description
+
+```text
+Title: DDG Agent Services - pay-per-call AI agent services gateway
+Description: One x402/direct-crypto entry point for AI-agent callable tools, OpenAI-compatible routes, payment readiness, MCP security checks, discovery repair, receipts, browser proof artifacts, and repo context packs. Start with a one-cent payment smoke test.
 ```
 
 ## Keywords

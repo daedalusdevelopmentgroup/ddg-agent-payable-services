@@ -1,6 +1,8 @@
 <!-- mcp-name: io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp -->
 # DDG Agent-Payable Services
 
+**Pay-per-call AI agent services gateway.** DDG gives agents one x402/direct-crypto entry point for callable tools, OpenAI-compatible routes, readiness audits, MCP security checks, discovery repair, receipts, and marketplace-ready proof artifacts.
+
 **124 x402/direct-crypto services for AI agents.** The largest agent-payable service surface in the x402 ecosystem — from $0.001 utilities (DNS, hash, UUID) to $0.01 social/financial/agent-infra services. All fully automated with zero human in the loop. Includes an **OpenAI-compatible gateway** (`/v1/chat/completions`, `/v1/models`, `/v1/embeddings`).
 
 ```text

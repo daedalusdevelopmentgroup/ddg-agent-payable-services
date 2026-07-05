@@ -81,6 +81,28 @@ QUOTE_PATHS = {
     "/v1/ai-skill-safety-scan",
     "/v1/ollama-model-request",
 }
+DATA_ENDPOINT_PATHS = {
+    "/v1/prediction-markets",
+    "/v1/dex-pairs",
+    "/v1/model-catalog",
+    "/v1/price-feed",
+    "/v1/contract-abi",
+    "/v1/dns-lookup",
+    "/v1/whois-lookup",
+    "/v1/threat-check",
+    "/v1/embeddings",
+    "/v1/ocr",
+    "/v1/pdf-extract",
+    "/v1/qr-code",
+    "/v1/fetch-as-markdown",
+    "/v1/translate",
+    "/v1/ip-geolocation",
+    "/v1/sentiment",
+    "/v1/language-detect",
+    "/v1/web-search",
+    "/v1/url-fetch",
+    "/v1/summarize",
+}
 PUBLIC_RESOURCE_SPECS: dict[str, dict[str, str]] = {
     "manifest.ai": {"uri": "ddg://manifest/ai", "path": "/.well-known/ai", "mime_type": "application/json", "title": "DDG AI manifest"},
     "manifest.status": {"uri": "ddg://manifest/status", "path": "/.well-known/ddg-agent-status.json", "mime_type": "application/json", "title": "DDG agent status"},
@@ -484,6 +506,14 @@ def _safe_quote_path(path: str) -> str:
     path_only = urllib.parse.urlparse(candidate).path
     if path_only not in QUOTE_PATHS:
         raise ValueError("unsupported_quote_path")
+    return candidate
+
+
+def _safe_data_path(path: str) -> str:
+    candidate = _safe_path(path)
+    path_only = urllib.parse.urlparse(candidate).path
+    if path_only not in DATA_ENDPOINT_PATHS:
+        raise ValueError("unsupported_data_path")
     return candidate
 
 
@@ -1059,22 +1089,24 @@ def ddg_order_artifact(order_id: str, agent_id: str | None = None) -> dict[str, 
 
 
 @mcp.tool()
-def ddg_receipt_verify(receipt_hash: str, order_id: str | None = None, agent_id: str | None = None) -> dict[str, Any]:
-    """Verify a DDG receipt hash against live payment-edge order/audit state.
+def ddg_receipt_verify_design(order_id: str, receipt_hash: str) -> dict[str, Any]:
+    """Describe the planned free receipt-verification tool contract.
 
-    The verifier accepts hashes/ids only. If an order id is supplied, DDG checks
-    the same stable agent identity used at order intake before returning
-    order-scoped metadata. Raw payment tokens/proofs and buyer contact details
-    are never returned.
+    This is intentionally marked not-live until `/v1/receipt-verify` is implemented
+    and backed by payment-edge audit/state reconciliation.
     """
     try:
+        safe_order_id = _safe_order_id(order_id)
         safe_receipt_hash = _safe_receipt_hash(receipt_hash)
-        payload: dict[str, Any] = {"receipt_hash": safe_receipt_hash}
-        if order_id:
-            payload["order_id"] = _safe_order_id(order_id)
     except ValueError as exc:
         return {"status": 0, "body": {"error": str(exc)}}
-    return _json_request("/v1/receipt-verify", method="POST", payload=payload, agent_id=agent_id)
+    return {
+        "status": "planned_not_live",
+        "planned_endpoint": "/v1/receipt-verify",
+        "input": {"order_id": safe_order_id, "receipt_hash": safe_receipt_hash},
+        "will_return": ["valid", "service_id", "payment_rail", "amount_usd", "settled_at", "artifact_hash"],
+        "privacy": "The verifier should accept hashes/ids only and never return buyer contact, raw payment tokens, or provider metadata.",
+    }
 
 
 @mcp.tool()
@@ -1093,6 +1125,29 @@ def ddg_tx_smoke_test(payment_headers: dict[str, str] | None = None, agent_id: s
         headers=payment_headers or {},
         agent_id=agent_id,
     )
+
+
+@mcp.tool()
+def ddg_data_query(
+    path: str,
+    body: dict[str, Any] | None = None,
+    payment_headers: dict[str, str] | None = None,
+    agent_id: str | None = None,
+) -> dict[str, Any]:
+    """Call an allowlisted DDG paid data endpoint (prediction-markets, dex-pairs, model-catalog, price-feed, dns-lookup, web-search, contract-abi, etc.).
+
+    Call with no payment_headers to receive the x402 402 price quote; retry with
+    payment_headers to get results. Most endpoints grant free-trial calls per agent_id.
+    Use ddg_list_services or the ddg://openapi resource for exact schemas and current prices.
+    """
+    try:
+        safe_path = _safe_data_path(path)
+    except ValueError as exc:
+        return {"status": 0, "headers": {}, "body": {"error": str(exc), "allowed_paths": sorted(DATA_ENDPOINT_PATHS)}}
+    if body is not None and not isinstance(body, dict):
+        return {"status": 0, "headers": {}, "body": {"error": "body_must_be_object"}}
+    return _json_request(safe_path, method="POST", payload=body or {}, headers=payment_headers or {}, agent_id=agent_id)
+
 
 
 def main() -> None:

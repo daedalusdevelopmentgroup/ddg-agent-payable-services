@@ -42,7 +42,7 @@ Free discovery: GET /v1/model-catalog (all model tiers + per-1M-token prices) an
 - POST /v1/prediction-markets - live prediction markets (Polymarket): odds, volume, liquidity, outcomes. $0.005; 10 free/agent/24h.
 - POST /v1/dex-pairs - DEX pair/liquidity/price data (DexScreener) by token symbol or contract address. $0.002; 10 free/agent/24h.
 - POST /v1/stock-price, /v1/stock-history, /v1/fx-rate, /v1/commodity-price - markets/FX/commodity data. $0.01.
-- POST /v1/social/twitter-search, /v1/social/reddit-search, /v1/social/reddit-thread, /v1/hn-search, /v1/youtube-transcript, /v1/sec-filings - research/social data. $0.01.
+- POST /v1/hn-search, /v1/sec-filings - research data (Hacker News, SEC EDGAR). $0.01. (Twitter/Reddit/YouTube data endpoints are temporarily coming-soon while we upgrade their sources.)
 - POST /v1/structured-extract, /v1/change-detect, /v1/browser-automate, /v1/scheduled-task, /v1/webhook-deliver - agent automation primitives. $0.01.
 
 Pricing note (x402-competitive, updated 2026-07-05): utilities $0.0005-$0.005; automated audits/packs/scans capped at $0.10; metered LLM routes (/v1/chat/completions, /v1/model/agent-run) priced from $0.0002 with NO stated cap - pay for what you use. Every paid route grants free-trial calls per agent per 24h.

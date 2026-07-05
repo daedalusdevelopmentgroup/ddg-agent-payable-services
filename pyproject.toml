@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ddg-agent-services-mcp"
-version = "0.4.0"
+version = "0.4.1"
 description = "Payment-aware MCP server + multi-framework SDK for DDG Agent-Payable Services (109 x402/direct-crypto endpoints, OpenAI-compatible gateway)"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -38,7 +38,7 @@ dependencies = [
   # x402 client deps — make `from ddg_agent_services_mcp import ddg` work out of the box.
   "requests>=2.31.0",
   "eth-account>=0.13.0",
-  "x402>=2.14.0",
+  "x402[evm]>=2.14.0",
 ]
 
 [project.optional-dependencies]

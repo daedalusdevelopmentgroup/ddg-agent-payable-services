@@ -62,8 +62,15 @@ class DDGPaidClient:
         self.account = Account.from_key(private_key)
         self.base_url = base_url or self.BASE_URL
 
-        # Initialize x402 client for payment handling
+        # Initialize x402 client and register the EVM 'exact' scheme so
+        # payments are actually SIGNED with the agent's wallet (Base = eip155:8453).
+        # Requires x402[evm] (web3); degrades gracefully to free/free-trial only.
         self.x402_client = x402ClientSync()
+        try:
+            from x402.mechanisms.evm.exact import ExactEvmScheme
+            self.x402_client.register("eip155:8453", ExactEvmScheme(signer=self.account))
+        except Exception:
+            pass
         self.x402_http = x402HTTPClientSync(self.x402_client)
 
     def post(
@@ -132,14 +139,11 @@ class DDGPaidClient:
     def _handle_402(self, resp: requests.Response) -> dict[str, str] | None:
         """Parse a 402 response and create signed payment headers."""
         try:
-            # Extract payment-required headers
-            header_dict = dict(resp.headers)
-            body = resp.content
-
-            # Use x402 SDK to parse the payment requirement
+            # resp.headers is a case-insensitive dict; pass .get directly (do NOT
+            # dict() it — that breaks the SDK's case-insensitive header lookups).
             payment_required = self.x402_http.get_payment_required_response(
-                lambda k: header_dict.get(k) or header_dict.get(k.lower()),
-                body,
+                lambda k: resp.headers.get(k),
+                resp.content,
             )
 
             if payment_required is None:
@@ -668,16 +672,51 @@ def create_openai_client(
             "Install it with: pip install openai"
         ) from exc
 
+    import httpx
+
     _base = base_url or DDGPaidClient.BASE_URL
 
-    # The DDG gateway accepts the standard OpenAI request body format.
-    # We return an OpenAI client with base_url pointed at the DDG /v1 prefix.
-    # The caller is responsible for supplying X-Agent-Id and X-PAYMENT headers
-    # (via default_headers or a custom httpx transport) when using paid routes.
+    # Build an x402 client that signs with the agent's wallet, then wrap the
+    # OpenAI SDK's httpx transport so 402 challenges are signed + retried
+    # automatically -> chat.completions.create() just works and pays.
+    account = Account.from_key(private_key)
+    _xclient = x402ClientSync()
+    from x402.mechanisms.evm.exact import ExactEvmScheme
+    _xclient.register("eip155:8453", ExactEvmScheme(signer=account))
+    _xhttp = x402HTTPClientSync(_xclient)
+
+    class _X402Transport(httpx.BaseTransport):
+        def __init__(self) -> None:
+            self._inner = httpx.HTTPTransport()
+        def handle_request(self, request: httpx.Request) -> httpx.Response:
+            resp = self._inner.handle_request(request)
+            if resp.status_code != 402:
+                return resp
+            resp.read()
+            try:
+                pr = _xhttp.get_payment_required_response(
+                    lambda k: resp.headers.get(k) or resp.headers.get(k.lower()),
+                    resp.content,
+                )
+                if pr is None:
+                    return resp
+                payload = _xhttp.create_payment_payload(pr)
+                if payload is None:
+                    return resp
+                sig = _xhttp.encode_payment_signature_header(payload)
+            except Exception:
+                return resp
+            headers = dict(request.headers)
+            headers.update(sig)
+            retry = httpx.Request(request.method, request.url,
+                                  headers=headers, content=request.content)
+            return self._inner.handle_request(retry)
+
     return OpenAI(
         base_url=f"{_base}/v1",
         api_key=os.environ.get("DDG_API_KEY", "ddg-x402"),
         default_headers={"X-Agent-Id": agent_id},
+        http_client=httpx.Client(transport=_X402Transport()),
     )
 
 

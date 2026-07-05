@@ -4,19 +4,23 @@ Base URL: `https://agents.daedalusdevelopmentgroup.com` · Pay-per-call via **x4
 
 ## Python
 ```bash
-pip install ddg-agent-services-mcp
+pip install "ddg-agent-services-mcp[openai]"
 ```
 ```python
-from ddg_agent_services_mcp import ddg
+from ddg_agent_services_mcp import ddg, create_openai_client
 c = ddg(agent_id="my-agent", private_key="0x" + "1"*64)   # dummy key ok for free/free-trial
 c.get("/v1/model-catalog")                                 # free
 c.post("/v1/web-search", {"query": "x402 protocol"})       # free-trial
 
-# Paid/metered — auto-pays x402 with a FUNDED Base USDC wallet:
+# Paid/metered — auto-signs + pays x402 with a FUNDED Base USDC wallet:
 #   export DDG_AGENT_ID=my-agent DDG_PRIVATE_KEY=0x<funded base key>
 paid = ddg()
-paid.post("/v1/chat/completions", {"model": "glm-4.5-air",
-    "messages": [{"role": "user", "content": "hi"}]})       # OpenAI-shaped, metered
+paid.post("/v1/dex-pairs", {"query": "WETH", "limit": 3})
+
+# Real openai.OpenAI drop-in — chat.completions.create() auto-pays:
+oai = create_openai_client(agent_id="my-agent", private_key="0x<funded base key>")
+oai.chat.completions.create(model="glm-4.5-air",
+    messages=[{"role": "user", "content": "hi"}])
 ```
 
 ## TypeScript
@@ -31,4 +35,4 @@ Point the OpenAI SDK at `https://agents.daedalusdevelopmentgroup.com/v1`; `GET /
 ## The x402 flow (what the clients automate)
 1. Call an endpoint → `402 Payment Required` with an x402 v2 challenge (`accepts[]`: Base USDC, amount, payTo).
 2. Sign an EIP-3009 USDC authorization for that amount with your Base wallet.
-3. Retry with the `X-PAYMENT` header → `200` + result + receipt.
+3. Retry with the signed `PAYMENT-SIGNATURE` header → `200` + result + receipt.

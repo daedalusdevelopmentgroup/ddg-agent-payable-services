@@ -5,7 +5,8 @@ Contact: 0xcircuitbreaker@protonmail.com
 
 Lead: Pay-per-call AI agent services gateway.
 
-Buyer-agent summary: DDG Agent Services gives agents one x402/direct-crypto entry point for callable tools, OpenAI-compatible routes, readiness audits, MCP security checks, discovery repair, receipts, and marketplace-ready proof artifacts.
+Buyer-agent summary: DDG Agent Services gives agents one x402/direct-crypto entry point for callable tools, OpenAI-compatible routes, readiness audits, MCP security checks, discovery repair, receipts, and marketplace-ready proof artifacts. Start with `/v1/tx-smoke-test` ($0.01), then `/v1/site-audit` ($0.03), `/v1/agent-readiness-scorecard` ($0.01), `/v1/agent-discovery-pack` ($0.01), `/v1/agent-payment-readiness-audit` ($0.02), or `/v1/mcp-tool-security-audit` ($0.02). DDG has an OpenAI-compatible gateway, but the defensible wedge is the audit/proof/security layer for x402, MCP, OpenAPI, llms.txt, receipts, and bounded artifacts.
+
 Live payment protocols: MPP, x402, direct_crypto_auto, and direct_crypto_manual. MPP/Tempo is settlement-proven live on /v1/tx-smoke-test (receipt hash c0e160a79ab9376daa6d9f2aed1486e4, 2026-06-30T07:16:57Z). x402 advertises Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC; x402 CDP/Bazaar facilitator settlement and indexing remain pending until CDP business approval or a self-hosted facilitator is integrated. direct crypto publishes receiving addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
 Canonical pricing/status catalog: /.well-known/ddg-agent-pricing.json
 AI discovery endpoint: /.well-known/ai (alias /ai)
@@ -21,12 +22,37 @@ OpenAI plugin manifest: /.well-known/ai-plugin.json (legacy ChatGPT-plugin disco
 
 DDG sells budgeted application/model-router output and operator-reviewable agent-work artifacts to **AI agents only** — not provider credentials, account seats, auth tokens, or raw account access.
 
+## Quickstart integration (one line)
+
+OpenAI-compatible gateway - point any OpenAI SDK at DDG and pay per call via x402:
+
+    from openai import OpenAI
+    client = OpenAI(base_url="https://agents.daedalusdevelopmentgroup.com/v1", api_key="x402")
+    client.models.list()  # GET /v1/models (free, OpenAI format)
+    client.chat.completions.create(model="glm-4.5-air", messages=[{"role":"user","content":"hi"}])
+    # First call returns HTTP 402 with an x402 payment challenge; pay + retry.
+    # Metered, from $0.0002/call, NO cap - you authorize your budget, settled at actual.
+
+MCP server: `pip install ddg-agent-services-mcp` (or `uvx ddg-agent-services-mcp`); also live at https://mcp.daedalusdevelopmentgroup.com/mcp . Includes `ddg_data_query` for the paid data endpoints.
+
+Free discovery: GET /v1/model-catalog (all model tiers + per-1M-token prices) and GET /v1/models (OpenAI format). Free Ethereum RPC: POST /v1/ethereum/rpc (read-only method whitelist, 100 free calls/agent/24h, then $0.002).
+
+## New agent data endpoints (x402 bazaar top-seller categories)
+
+- POST /v1/prediction-markets - live prediction markets (Polymarket): odds, volume, liquidity, outcomes. $0.005; 10 free/agent/24h.
+- POST /v1/dex-pairs - DEX pair/liquidity/price data (DexScreener) by token symbol or contract address. $0.002; 10 free/agent/24h.
+- POST /v1/stock-price, /v1/stock-history, /v1/fx-rate, /v1/commodity-price - markets/FX/commodity data. $0.01.
+- POST /v1/social/twitter-search, /v1/social/reddit-search, /v1/social/reddit-thread, /v1/hn-search, /v1/youtube-transcript, /v1/sec-filings - research/social data. $0.01.
+- POST /v1/structured-extract, /v1/change-detect, /v1/browser-automate, /v1/scheduled-task, /v1/webhook-deliver - agent automation primitives. $0.01.
+
+Pricing note (x402-competitive, updated 2026-07-05): utilities $0.0005-$0.005; automated audits/packs/scans capped at $0.10; metered LLM routes (/v1/chat/completions, /v1/model/agent-run) priced from $0.0002 with NO stated cap - pay for what you use. Every paid route grants free-trial calls per agent per 24h.
+
 ## Live runtime endpoints
 
 These routes are implemented in the current payment edge. OpenAPI now includes automated routes plus operator-fulfilled live service aliases that queue paid orders and return status/artifact URLs.
 
 0. POST /v1/tx-smoke-test — one-cent paid transaction smoke test for AI agents; returns a receipt-only JSON proof that payment worked. Launch price: $0.01.
-1. POST /v1/site-audit — paid automated website audit. Read-only. Launch price: $0.75.
+1. POST /v1/site-audit — paid automated website audit. Read-only. Launch price: $0.03.
 2. POST /v1/model/chat-completions — paid model-router completion endpoint. OpenAI-compatible body with DDG routing extensions, budget caps, payment receipts, and no provider-key exposure.
 3. POST /v1/model/agent-run — paid bounded agent-task endpoint. Live beta allows local runtime routes across Ollama, llama.cpp, and LM Studio/llmster when the requested model is listed healthy for that runtime. Example route IDs: ollama/qwen2.5-coder:7b, llama.cpp/gemma3:270m, lm_studio/gemma3:270m. Local runtime routes are free for a limited time; provider-backed artifact routes remain paid/manual-approved.
 4. POST /v1/order-intake — paid intake/queue endpoint for all manual/beta DDG agent offerings; stores redacted order metadata and requires operator review before fulfillment or irreversible actions. Successful intake returns `status_url`, `artifact_url`, and `receipt_console_url`.
@@ -203,7 +229,7 @@ Post-promo policy: <=4B local models remain free; >4B local routes become paid/o
 
 ## Utility Endpoints (Phase 1-3)
 
-- POST /v1/agent-registry ($0.05 USDC) — Search or list AI agents in the DDG agent directory. Registration is free.
+- POST /v1/agent-registry ($0.01 USDC) — Search or list AI agents in the DDG agent directory. Registration is free.
 - POST /v1/code-execution ($0.01 USDC) — Run Python code in a sandboxed Docker container. No network, read-only filesystem.
 - POST /v1/contract-abi ($0.002 USDC) — Fetch verified smart contract ABI from block explorers (Base, Ethereum, Optimism, Arbitrum, Polygon, Scroll).
 - POST /v1/dns-lookup ($0.001 USDC) — DNS resolution for any domain. Returns A, AAAA, MX, TXT, NS, CNAME, SOA, CAA, SRV records.

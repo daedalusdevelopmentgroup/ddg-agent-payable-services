@@ -1,0 +1,40 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
+  "description": "Pay-per-call gateway for AI agents: 90+ x402/direct-crypto tools (utilities, blockchain RPC, market data, security audits) plus an OpenAI-compatible LLM gateway and MCP security/discovery checks. Settles in USDC on Base; most routes grant free-trial calls.",
+  "repository": {
+    "url": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
+    "source": "github"
+  },
+  "version": "0.4.1",
+  "websiteUrl": "https://agents.daedalusdevelopmentgroup.com",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "ddg-agent-services-mcp",
+      "version": "0.4.1",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "DDG_AGENT_ID",
+          "description": "Stable agent identifier for free-trial + usage tracking (optional).",
+          "isRequired": false,
+          "format": "string"
+        },
+        {
+          "name": "DDG_PRIVATE_KEY",
+          "description": "EVM (Base) wallet private key used to auto-pay x402 on paid routes (optional; free/free-trial routes need no wallet).",
+          "isRequired": false,
+          "isSecret": true,
+          "format": "string"
+        }
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.daedalusdevelopmentgroup.com/mcp"
+    }
+  ]
+}

@@ -168,13 +168,13 @@ Recommended first paid packages:
 | service_id | Price | Use when |
 | --- | ---: | --- |
 | `tx_penny_smoke_test` | `$0.01` | An agent wants to test its ability to complete a paid DDG transaction and receive a receipt. Use direct endpoint `/v1/tx-smoke-test`. |
-| `provider_model_artifact_order` | `$4.00+` | An agent wants DDG-operated model work using OAuth/account/subscription-backed tools where terms permit; no raw account/token access is transferred. |
-| `ethereum_private_rpc_query` | `$0.03` planned | An agent wants private read-only Ethereum node data without its own RPC vendor account; public self-serve waits for overflow runtime backend Reth sync. |
-| `local_business_demo_pack` | `$25.00` | An agent wants a lead-specific staged demo concept and offer angle for a local business. |
-| `agent_payment_readiness_audit` | `$15.00` | An agent/service builder wants x402/direct-crypto/MPP-readiness/402/idempotency/discovery reviewed. |
-| `mcp_tool_server_build` | `$35.00` | An agent wants a small MCP tool/server scaffold with schema, install docs, and smoke tests. |
-| `agent_tool_schema_repair` | `$12.00` | An agent has OpenAPI/MCP/tool schemas that are hard for agents to call reliably. |
-| `repo_context_pack` | `$15.00` | An agent wants a repo/docs/SOP corpus turned into an agent-ready context pack or workflow. |
+| `provider_model_artifact_order` | `$0.01` | An agent wants DDG-operated model/artifact work with receipts and no raw account/token access transferred. |
+| `ethereum_private_rpc_query` | `$0.002` | An agent wants read-only Ethereum/Base RPC data without its own RPC vendor account. |
+| `local_business_demo_pack` | `$0.02` | An agent wants a lead-specific staged demo concept and offer angle for a local business. |
+| `agent_payment_readiness_audit` | `$0.02` | An agent/service builder wants x402/direct-crypto/MPP-readiness/402/idempotency/discovery reviewed. |
+| `mcp_tool_server_build` | `$0.02` | An agent wants a small MCP tool/server scaffold with schema, install docs, and smoke tests. |
+| `agent_tool_schema_repair` | `$0.02` | An agent has OpenAPI/MCP/tool schemas that are hard for agents to call reliably. |
+| `repo_context_pack` | `$0.02` | An agent wants a repo/docs/SOP corpus turned into an agent-ready context pack or workflow. |
 
 ### Example: local-business demo pack
 
@@ -246,4 +246,3 @@ Priority A/B rollout models:
 - `mradermacher/dolphin-mistral-24b-venice:iq3_xs` — 24B IQ3_XS; native ctx 32,768; DDG free-slot ctx 32,768; Dolphin/Mistral Venice-style route.
 
 Post-promo policy: <=4B local models remain free; >4B local routes become paid/operator-approved capacity. Public model requests never auto-download; use `/v1/ollama-model-request` and DDG operator review.
-

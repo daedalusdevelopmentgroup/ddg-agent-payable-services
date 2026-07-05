@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ddg-agent-services-mcp"
-version = "0.1.1"
-description = "Payment-aware MCP wrapper and AI-agent distribution/readiness surface for DDG Agent-Payable Services"
+version = "0.3.0"
+description = "Payment-aware MCP server + multi-framework SDK for DDG Agent-Payable Services (109 x402/direct-crypto endpoints, OpenAI-compatible gateway)"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"

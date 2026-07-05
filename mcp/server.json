@@ -3,7 +3,7 @@
   "name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
   "title": "DDG Agent-Payable Services MCP",
   "description": "Payment-aware MCP for DDG agent services: discovery, x402 checkout, and readiness resources.",
-  "version": "0.1.1",
+  "version": "0.3.0",
   "repository": {
     "url": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
     "source": "github"
@@ -12,7 +12,7 @@
     {
       "registryType": "pypi",
       "identifier": "ddg-agent-services-mcp",
-      "version": "0.1.1",
+      "version": "0.3.0",
       "transport": {
         "type": "stdio"
       },

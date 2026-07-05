@@ -1,13 +1,62 @@
 <!-- mcp-name: io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp -->
 # DDG Agent-Payable Services
 
-**106 x402/direct-crypto services for AI agents.** The largest agent-payable service surface in the x402 ecosystem — from \$0.001 utilities (DNS, hash, UUID) to \$0.05 AI services (agent registry), all fully automated with zero human in the loop.
+**109 x402/direct-crypto services for AI agents.** The largest agent-payable service surface in the x402 ecosystem — from \$0.001 utilities (DNS, hash, UUID) to \$0.05 AI services (agent registry), all fully automated with zero human in the loop. Includes an **OpenAI-compatible gateway** (`/v1/chat/completions`, `/v1/models`, `/v1/embeddings`).
 
 ```text
 https://agents.daedalusdevelopmentgroup.com
 ```
 
 ## Quick Start
+
+### One-liner SDK (zero framework deps)
+
+```python
+from ddg_agent_services_mcp import ddg
+
+client = ddg(agent_id="my-agent", private_key="0x...")
+result = client.post("/v1/site-audit", {"url": "https://example.com"})
+```
+
+Or configure once via environment:
+
+```bash
+export DDG_AGENT_ID="my-agent"
+export DDG_PRIVATE_KEY="0x..."
+```
+
+```python
+from ddg_agent_services_mcp import ddg
+client = ddg()  # reads from env
+```
+
+### OpenAI-compatible gateway
+
+Drop-in replacement for `openai-python` — point any OpenAI client at DDG:
+
+```python
+from ddg_agent_services_mcp import create_openai_client
+
+client = create_openai_client(agent_id="my-agent", private_key="0x...")
+response = client.chat.completions.create(
+    model="auto",
+    messages=[{"role": "user", "content": "Hello"}],
+)
+print(response.choices[0].message.content)
+```
+
+**Supported routes:** `GET /v1/models`, `POST /v1/chat/completions`, `POST /v1/embeddings`
+
+Or use the standard `openai` package directly:
+
+```python
+from openai import OpenAI
+client = OpenAI(
+    base_url="https://agents.daedalusdevelopmentgroup.com/v1",
+    api_key="ddg-x402",
+    default_headers={"X-Agent-Id": "my-agent"},
+)
+```
 
 ### Install
 
@@ -53,21 +102,26 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | Rail | Status | Networks |
 |---|---|---|
 | **x402** | ✅ Live | Base, Polygon, Arbitrum, World Chain, Solana (USDC) |
-| **direct_crypto_auto** | ✅ Live | 13 asset families (BTC, ETH, SOL, LTC, DOGE, etc.) |
+| **direct_crypto_auto** | ✅ Live | 13 asset families: EVM/stablecoins (ETH, USDC, USDT), BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, XMR |
 | **direct_crypto_manual** | ✅ Live | Operator-confirmed fallback |
 | **MPP/Tempo** | ✅ Live | Settlement-proven |
 
-## Service Catalog (106 services)
+## Service Catalog (109 services)
 
 ### AI / ML (GPU-backed on GTX 1080)
 | Service | Price | Description |
 |---|---|---|
+| `/v1/chat/completions` | pay-per-call | OpenAI-compatible chat completions gateway |
+| `/v1/models` | free | List available model aliases |
 | `/v1/embeddings` | \$0.0005 | 768-dim vectors (Ollama nomic-embed-text) |
 | `/v1/image-generation` | \$0.03 | Stable Diffusion v1.5 on GPU |
+| `/v1/model/agent-run` | pay-per-call | Bounded agent-task endpoint (local runtime) |
+| `/v1/model-consensus` | \$0.02 | Multi-model consensus via llm-judge |
 | `/v1/llm-judge` | \$0.01 | Neutral judge for multi-model consensus |
 | `/v1/summarize` | \$0.005 | Local LLM summarization |
 | `/v1/sentiment` | \$0.002 | Sentiment analysis |
 | `/v1/translate` | \$0.003 | Language translation |
+| `/v1/language-detect` | \$0.001 | Language detection |
 
 ### Network & Web
 | Service | Price | Description |
@@ -124,7 +178,7 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | `/v1/price-feed` | Crypto/forex prices |
 
 ### Full catalog
-See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 106 services.
+See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 109 services.
 
 ## Discovery
 
@@ -132,7 +186,7 @@ See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-a
 |---|---|
 | AI manifest | `/.well-known/ai` |
 | x402 discovery | `/.well-known/x402` |
-| OpenAPI spec | `/openapi.json` (108 paths) |
+| OpenAPI spec | `/openapi.json` (113 paths) |
 | llms.txt | `/llms.txt` |
 | Pricing | `/.well-known/ddg-agent-pricing.json` |
 | Status | `/.well-known/ddg-agent-status.json` |

@@ -1059,24 +1059,22 @@ def ddg_order_artifact(order_id: str, agent_id: str | None = None) -> dict[str, 
 
 
 @mcp.tool()
-def ddg_receipt_verify_design(order_id: str, receipt_hash: str) -> dict[str, Any]:
-    """Describe the planned free receipt-verification tool contract.
+def ddg_receipt_verify(receipt_hash: str, order_id: str | None = None, agent_id: str | None = None) -> dict[str, Any]:
+    """Verify a DDG receipt hash against live payment-edge order/audit state.
 
-    This is intentionally marked not-live until `/v1/receipt-verify` is implemented
-    and backed by payment-edge audit/state reconciliation.
+    The verifier accepts hashes/ids only. If an order id is supplied, DDG checks
+    the same stable agent identity used at order intake before returning
+    order-scoped metadata. Raw payment tokens/proofs and buyer contact details
+    are never returned.
     """
     try:
-        safe_order_id = _safe_order_id(order_id)
         safe_receipt_hash = _safe_receipt_hash(receipt_hash)
+        payload: dict[str, Any] = {"receipt_hash": safe_receipt_hash}
+        if order_id:
+            payload["order_id"] = _safe_order_id(order_id)
     except ValueError as exc:
         return {"status": 0, "body": {"error": str(exc)}}
-    return {
-        "status": "planned_not_live",
-        "planned_endpoint": "/v1/receipt-verify",
-        "input": {"order_id": safe_order_id, "receipt_hash": safe_receipt_hash},
-        "will_return": ["valid", "service_id", "payment_rail", "amount_usd", "settled_at", "artifact_hash"],
-        "privacy": "The verifier should accept hashes/ids only and never return buyer contact, raw payment tokens, or provider metadata.",
-    }
+    return _json_request("/v1/receipt-verify", method="POST", payload=payload, agent_id=agent_id)
 
 
 @mcp.tool()

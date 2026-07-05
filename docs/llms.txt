@@ -11,9 +11,9 @@ Wildcard agent manifest: /.well-known/agents.json
 Agent catalog: /.well-known/agent-catalog.json
 Quickstart: /quickstart.md or /.well-known/ddg-agent-quickstart.md
 OpenAPI live-runtime contract: /openapi.json
-x402 discovery manifest: /.well-known/x402
-A2A agent card: /.well-known/agent.json
-OpenAI plugin manifest: /.well-known/ai-plugin.json
+x402 discovery manifest: /.well-known/x402 (the standard endpoint x402 directory scanners and agent crawlers look for; lists payable resources + accepted chains)
+A2A agent card: /.well-known/agent.json (Agent-to-Agent protocol discovery)
+OpenAI plugin manifest: /.well-known/ai-plugin.json (legacy ChatGPT-plugin discovery format; points to OpenAPI)
 
 DDG sells budgeted application/model-router output and operator-reviewable agent-work artifacts to **AI agents only** — not provider credentials, account seats, auth tokens, or raw account access.
 
@@ -29,9 +29,21 @@ These routes are implemented in the current payment edge. OpenAPI now includes a
 5. GET /v1/orders/{order_id} and GET /v1/orders/{order_id}/artifact — agent-scoped order status / artifact console. Requires the same stable agent identity used at intake; returns only redacted receipt/proof hashes, never raw payment tokens or raw proof payloads. Pending artifacts return 202 with Retry-After.
 6. GET /.well-known/ddg-agent-checkout-conformance.json — machine-readable checkout-conformance profile for agents validating 403→402→200/202, receipt links, idempotency, fake-token fail-closed, and order artifact access controls. Local probe script: `scripts/agent_checkout_conformance_probe.py`.
 7. GET /.well-known/ddg-agent-refund-policy.json — strict refund/reversal policy for agent-paid work: no automatic free-work credits, entitlement revocation required before/with approved reversals, and machine-readable reversal receipts.
-8. GET /.well-known/ddg-mpp-activation-guide.md — MPP/Tempo buyer guidance and operating runbook. MPP is settlement-proven live for the tx-smoke route (fake credentials still fail closed); the guide remains the setup/rollback reference for additional buyers and routes.
+8. GET /.well-known/ddg-mpp-activation-guide.md — MPP/Tempo buyer guidance and operating runbook. MPP is settlement-proven live for the tx-smoke route; the guide remains the setup/rollback reference for additional buyers and routes.
 9. POST /v1/micro-model-swarm-preview — free/best-effort local model swarm preview. Agents may select `runtime=ollama`, `runtime=llama.cpp`, or `runtime=lm_studio` for listed models; combos default to Ollama. Strict lease/request caps; no SLA.
 10. POST /v1/ai-skill-safety-scan — free static AI skill safety scanner for prompt-injection, credential-exfiltration, dangerous tool-use, package lifecycle/install-script, and broad file/network access red flags. No code execution; redacts secret-like values.
+11. POST /v1/json-repair — free instant JSON/schema repair for AI agents. Fixes trailing commas, smart quotes, unescaped newlines, markdown fences, truncated JSON, extracts JSON from prose. Deterministic, no LLM call. Optional target_schema validation.
+12. POST /v1/context-distill — free agent context compression/state distillation. Extracts file paths, errors, URLs, decisions, TODOs, code references, and a compressed summary from conversation/work logs. Deterministic, no LLM call.
+13. POST /v1/rate-limit-analyzer — free rate-limit/retry strategy analyzer. Parses standard rate-limit headers, computes optimal cadence, utilization, and projected spend. Pure math, no network.
+14. POST /v1/model-consensus (paid) — multi-model consensus vote. Sends prompt to N models, returns consensus + disagreement flags.
+15. POST /v1/credential-escrow-proxy (paid) — agent pays DDG, DDG calls the upstream API with its credentials, returns result. Agent never sees the key.
+16. POST /v1/test-runner (paid) — bounded sandbox test runner. Submit code + tests, get pass/fail + stdout. No network, hard timeout.
+17. POST /v1/agent-attestation (free) — prove agent identity + task completion with .tine provenance. Returns signed attestation.
+18. POST /v1/code-to-endpoint (paid) — wrap a function as an x402-payable HTTP endpoint. Operator-reviewed.
+19. POST /v1/tine-verify (free) — verify .tine artifact content-addressed provenance. Checks format, step hashes, tamper detection.
+20. POST /v1/tine-diff (paid) — diff two .tine artifacts. Structured comparison of agent runs.
+21. POST /v1/tine-provenance-chain (free) — trace the fork/parent chain of a .tine artifact. Full provenance lineage.
+22. POST /v1/receipt-verify (free) — verify a DDG receipt hash against redacted live order/audit state. Optional order_id enforces same-agent scope; never returns raw payment tokens or proofs.
 
 AI-client traffic should send:
 - Idempotency-Key header for POST requests.
@@ -184,3 +196,48 @@ Post-promo policy: <=4B local models remain free; >4B local routes become paid/o
 ## Agent-swarm MCP and cybersecurity services
 - MCP server design: `/mcp/ddg-agent-swarm-mcp-design.md`; initial stdio skeleton: `sales_artifacts/agent_payments/mcp/ddg_agent_services_mcp_server.py`.
 - Cybersecurity catalog: `/cybersecurity-services.json`; live free scanner: `/v1/ai-skill-safety-scan`; order paid/deeper audits via `/v1/order-intake`. Services include productionized public-surface security audits, checkout conformance audits, MPP/payment-path activation, artifact/receipt console packs, prompt-injection scans, npm/Python package scans, API-key/secret leak scans, malware triage, AI skill safety scans, MCP/tool security audits, and AI-agent buyer service bundles.
+
+## Utility Endpoints (Phase 1-3)
+
+- POST /v1/agent-registry ($0.05 USDC) — Search or list AI agents in the DDG agent directory. Registration is free.
+- POST /v1/code-execution ($0.01 USDC) — Run Python code in a sandboxed Docker container. No network, read-only filesystem.
+- POST /v1/contract-abi ($0.002 USDC) — Fetch verified smart contract ABI from block explorers (Base, Ethereum, Optimism, Arbitrum, Polygon, Scroll).
+- POST /v1/dns-lookup ($0.001 USDC) — DNS resolution for any domain. Returns A, AAAA, MX, TXT, NS, CNAME, SOA, CAA, SRV records.
+- POST /v1/email-send ($0.01 USDC) — Send a transactional email via SMTP relay. Rate-limited.
+- POST /v1/embeddings ($0.0005 USDC) — Generate vector embeddings for RAG/semantic search. GPU-accelerated (BGE, Instructor models).
+- POST /v1/fetch-as-markdown ($0.002 USDC) — Extract clean markdown from any URL. Full JS rendering via Playwright available.
+- POST /v1/image-generation ($0.03 USDC) — Generate an image from a text prompt. Local Stable Diffusion or OpenAI DALL-E fallback.
+- POST /v1/ocr ($0.005 USDC) — Extract text from images using OCR (Tesseract). Accepts base64 or URL input.
+- POST /v1/pdf-extract ($0.005 USDC) — Extract text from PDF documents. Accepts base64 or URL input.
+- POST /v1/price-feed ($0.001 USDC) — Get crypto, forex, or stock prices in real-time.
+- POST /v1/qr-code ($0.001 USDC) — Generate a QR code PNG from any text/data.
+- POST /v1/screenshot ($0.005 USDC) — Capture a PNG screenshot of any URL using headless Chromium.
+- POST /v1/threat-check ($0.005 USDC) — Check URL or wallet address reputation. Aggregates URLhaus, TLS validation, DNS, pattern analysis.
+- POST /v1/translate ($0.003 USDC) — Translate text between languages. Self-hosted LibreTranslate or cloud fallback.
+- POST /v1/whois-lookup ($0.002 USDC) — WHOIS registration data for any domain.
+
+## AI-Agent Primitives (Tier 4-6)
+
+- POST /v1/base64-codec ($0.001 USDC) — Encode or decode base64, with URL-safe variant support.
+- POST /v1/diff-text ($0.002 USDC) — Compare two text blocks and return a structured diff (unified, HTML, or JSON).
+- POST /v1/git-repo-analyze ($0.01 USDC) — Analyze a git repo: languages, file count, last commit, license. Uses Docker isolation.
+- POST /v1/hash-compute ($0.001 USDC) — Compute cryptographic hash (SHA-256, MD5, SHA-1, BLAKE2, etc.) of input text.
+- POST /v1/http-headers ($0.001 USDC) — Get HTTP response headers for a URL, including security header analysis.
+- POST /v1/ip-geolocation ($0.001 USDC) — Geolocate an IP address. Returns country, city, ISP, coordinates.
+- POST /v1/json-validate ($0.001 USDC) — Validate JSON against a JSON Schema. Returns detailed error paths.
+- POST /v1/language-detect ($0.001 USDC) — Detect the language of a text string. Returns ISO code and alternatives.
+- POST /v1/link-extract ($0.002 USDC) — Extract all hyperlinks from a web page. Returns internal/external classification.
+- POST /v1/llm-judge ($0.01 USDC) — Judge which of two LLM responses is better. Uses local Ollama models as neutral judge.
+- POST /v1/random ($0.001 USDC) — Generate cryptographically secure random data: strings, hex, tokens, integers.
+- POST /v1/robots-check ($0.001 USDC) — Check robots.txt rules for a URL. Returns allowed/disallowed, crawl delay, sitemaps.
+- POST /v1/schema-infer ($0.002 USDC) — Infer JSON Schema from a JSON sample. Useful for reverse-engineering APIs.
+- POST /v1/sentiment ($0.002 USDC) — Sentiment analysis on text. Returns positive/negative/neutral with confidence score.
+- POST /v1/ssl-cert-info ($0.002 USDC) — Get SSL certificate details for a hostname: issuer, expiry, SANs, fingerprint.
+- POST /v1/subdomain-enumerate ($0.005 USDC) — Find subdomains via certificate transparency logs (crt.sh).
+- POST /v1/summarize ($0.005 USDC) — Summarize text using local LLM. Supports bullet, paragraph, tldr, and structured styles.
+- POST /v1/timestamp ($0.001 USDC) — Get current time in multiple formats: Unix, ISO 8601, RFC 3339, human-readable.
+- POST /v1/tls-version-check ($0.002 USDC) — Check which TLS versions a server supports and identify weak ciphers.
+- POST /v1/url-fetch ($0.002 USDC) — Fetch raw content from a URL. Returns body, headers, status code. For hitting REST APIs.
+- POST /v1/url-status ($0.001 USDC) — Quick HEAD check on a URL. Returns status code, redirects, server info.
+- POST /v1/uuid-generate ($0.001 USDC) — Generate UUIDs (v1, v3, v4, v5). For distributed agent ID generation.
+- POST /v1/web-search ($0.005 USDC) — Search the web and return structured JSON results. Aggregates 20+ search engines via SearXNG.

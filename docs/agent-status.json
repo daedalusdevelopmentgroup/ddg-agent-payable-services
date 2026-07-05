@@ -1,6 +1,6 @@
 {
   "base_url": "https://agents.daedalusdevelopmentgroup.com",
-  "generated_at": "2026-06-30T07:37:38.703052+00:00",
+  "generated_at": "2026-07-03T20:03:30.582923+00:00",
   "latest_verified_ladder": {
     "fake_payment": "402 payment_required",
     "identity_no_payment": "402 payment_required",
@@ -14,22 +14,33 @@
   },
   "mcp": {
     "design_url": "/.well-known/ddg-agent-swarm-mcp-design.md",
-    "pypi_package": "ddg-agent-services-mcp",
-    "registry_name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
-    "remote_url": "https://mcp.daedalusdevelopmentgroup.com/mcp",
-    "status": "source_stdio_package_and_public_streamable_http_live_registry_submission_ready"
+    "planned_package": "@daedalusdevelopmentgroup/ddg-agent-services-mcp",
+    "status": "public_streamable_http_and_source_package_ready_account_gated_registry_publish"
   },
   "notes": [
     "No raw provider credentials, OAuth sessions, private model IDs, or verifier loopback URLs are public contract values.",
-    "MPP verifier reports ready:true, public 402 challenges advertise MPP, invalid tokens fail closed, and tx-smoke settlement is proven with receipt hash c0e160a79ab9376daa6d9f2aed1486e4."
+    "MPP verifier reports ready:true, public 402 challenges advertise MPP, invalid tokens fail closed, and tx-smoke settlement is proven with receipt hash c0e160a79ab9376daa6d9f2aed1486e4.",
+    "x402 settlement is production-proven on Base USDC via self-hosted qntx; tx 0xde0805c82b4e705281de6a9fdfb042a5ed70f1766c32bf3de064f75e89080441.",
+    "Receipt verification endpoint is live at /v1/receipt-verify and exposed through the DDG MCP tool ddg_receipt_verify; responses are redacted and agent/order scoped."
   ],
   "operator_contact": "0xcircuitbreaker@protonmail.com",
   "payment_protocols": {
-    "x402": "public_live",
+    "x402": "public_live_settlement_proven_self_hosted_qntx",
     "direct_crypto_auto": "public_live_for_verifier_supported_assets",
     "direct_crypto_manual": "public_live_operator_confirmed_for_public_receiving_address_families",
     "mpp": "public_live_settlement_proven",
-    "stripe_spt": "planned_after_mpp_or_profile_activation"
+    "stripe_spt": "planned_after_mpp_or_profile_activation",
+    "x402_facilitator_settlement": "public_live_settlement_proven_self_hosted_qntx",
+    "x402_settlement_proof": {
+      "route": "/v1/tx-smoke-test",
+      "tx_hash": "0xde0805c82b4e705281de6a9fdfb042a5ed70f1766c32bf3de064f75e89080441",
+      "network": "eip155:8453",
+      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "amount_atomic": "10000",
+      "amount_usd": "0.01",
+      "verified_at": "2026-07-01T18:28:56Z",
+      "facilitator": "qntx/self-hosted"
+    }
   },
   "public_discovery": {
     "agent_skills": "/.well-known/agent-skills/index.json",
@@ -43,14 +54,24 @@
     "mpp_status": "public_live_settlement_proven",
     "openapi": "/openapi.json",
     "pricing": "/.well-known/ddg-agent-pricing.json",
-    "refund_policy": "/.well-known/ddg-agent-refund-policy.json"
+    "refund_policy": "/.well-known/ddg-agent-refund-policy.json",
+    "enterprise_hardening": "/.well-known/ddg-enterprise-hardening.json",
+    "receipt_verify": "/v1/receipt-verify"
   },
   "schema_version": "v0.1.0",
   "service": "DDG Agent-Payable Services",
   "service_counts": {
-    "total": 46,
-    "live_runtime": 46,
-    "operator_fulfilled_live": 36,
+    "total": 67,
+    "live_runtime": 67,
+    "public_self_serve": 67,
+    "free_or_promo": 13,
+    "nonfree": 54,
+    "operator_fulfilled_live": 39,
+    "automated_or_direct_runtime_live": 28,
+    "automated_self_contained_robotics": 8,
+    "backend_or_provider_proxied": 9,
+    "payment_only_receipt": 5,
+    "openapi_paths": 69,
     "planned": 0,
     "manual_fulfillment_beta": 0
   },
@@ -60,7 +81,7 @@
     "source_of_truth": {
       "x402": "/openapi.json 402 PAYMENT-REQUIRED accepts[] plus payment_rail_addresses.env",
       "direct_crypto": "/.well-known/ddg-direct-crypto-addresses.json plus direct_crypto_addresses.env",
-      "mpp": "public_live_settlement_proven"
+      "mpp": "Public 402 challenge plus /mpp-activation-guide.md; sidecar /health ready:true on active production hosts."
     },
     "public_live_protocols": [
       "mpp",
@@ -272,7 +293,73 @@
   "last_production_readiness_sync": "2026-06-25T12:45:00Z",
   "production_readiness_notes": {
     "operator_fulfilled_services": "Manual/beta SKUs have been promoted to live agent-orderable routes where the path queues a paid operator-reviewed order and returns status/artifact URLs; they are not represented as fully automated execution.",
-    "all_services_agent_orderable": "All public catalog services are now live_runtime; operator-fulfilled services queue paid reviewed work and do not overclaim full automation."
+    "all_services_agent_orderable": "All public catalog services are now live_runtime; operator-fulfilled services queue paid reviewed work and do not overclaim full automation.",
+    "service_count_accounting": "Catalog reconciled from pricing.json: 55 live_runtime AI-agent-orderable services; 6 free/promo, 49 non-free, 37 operator-fulfilled/order-queue, 19 direct/automated/free runtime surfaces. Do not describe all services as fully automated; operator-fulfilled services queue paid reviewed work and return status/artifact URLs."
+  },
+  "payment_protocol_status": {
+    "x402_facilitator_settlement": "public_live_settlement_proven_self_hosted_qntx",
+    "x402_settlement_proof": {
+      "route": "/v1/tx-smoke-test",
+      "tx_hash": "0xde0805c82b4e705281de6a9fdfb042a5ed70f1766c32bf3de064f75e89080441",
+      "network": "eip155:8453",
+      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "amount_atomic": "10000",
+      "amount_usd": "0.01",
+      "verified_at": "2026-07-01T18:28:56Z",
+      "facilitator": "qntx/self-hosted"
+    }
+  },
+  "enterprise_hardening": {
+    "status": "primary_and_secondary_runtime_guards_active_primary_monitor_active",
+    "latest_checker": "scripts/enterprise_hardening_check.py",
+    "latest_primary_report": "audit/enterprise-hardening-latest.json",
+    "primary_runtime_firewall_guard": "active",
+    "secondary_runtime_firewall_guard": "active",
+    "primary_enterprise_monitor_timer": "active_15min_systemd_timer",
+    "public_agent_access": "payment_edge_only",
+    "raw_runtime_endpoints_public_policy": "blocked_except_loopback_and_trusted_peer",
+    "paid_route_challenge_coverage": "49_of_49_nonfree_routes_passed_no_spend_probe_on_t620",
+    "free_route_count": 6,
+    "nonfree_route_count": 49,
+    "refund_reversal_policy": "/.well-known/ddg-agent-refund-policy.json",
+    "order_status_console": "/v1/orders/{order_id}",
+    "artifact_console": "/v1/orders/{order_id}/artifact",
+    "custody_posture": "production_beta_acceptable_not_treasury_grade",
+    "custody_audit": "audit/enterprise-custody-posture-2026-07-02.md",
+    "latest_service_proof_matrix": "audit/enterprise-service-proof-matrix-2026-07-02.json",
+    "next_enterprise_gate": "representative_paid_fulfillment_proof_by_category_plus_external_alert_channel",
+    "public_status_endpoint": "/.well-known/ddg-enterprise-hardening.json",
+    "latest_public_endpoint_verified": "live_http_200_sanitized_no_forbidden_internal_markers",
+    "backend_proxied_readiness_audit": "audit/backend-proxied-readiness-2026-07-02-post-glm-fallback.md",
+    "site_audit_paid_proof_gate": "no_spend_backend_ready_via_glm_direct_pending_explicit_paid_fulfillment_proof",
+    "safe_low_cost_paid_proof_candidates": [
+      {
+        "path": "/v1/site-audit",
+        "cost_usd": "0.75",
+        "category": "backend_proxied_glm_direct",
+        "requires": "explicit_paid_proof_approval"
+      },
+      {
+        "path": "/v1/ethereum/rpc",
+        "cost_usd": "0.01",
+        "category": "operator_artifact_queue"
+      },
+      {
+        "path": "/v1/local-model-swarm-seat",
+        "cost_usd": "0.25",
+        "category": "operator_artifact_queue"
+      },
+      {
+        "path": "/v1/model/agent-run",
+        "cost_usd": "3.00",
+        "category": "provider_account_backed_agent_run",
+        "requires": "buyer_funds_and_quota_check"
+      }
+    ],
+    "site_audit_backend_mode": "glm_coding_plan_direct_when_Hermes_API_key_absent"
+  },
+  "discovery": {
+    "enterprise_hardening": "/.well-known/ddg-enterprise-hardening.json"
   },
   "settlement_proofs": {
     "mpp_tempo_pathusd_tx": "0x2500f61d2c5e5717edcde2239114d030e57f2a4726cb73028477c79b605fa282",

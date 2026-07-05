@@ -1,0 +1,370 @@
+{
+  "base_url": "https://agents.daedalusdevelopmentgroup.com",
+  "generated_at": "2026-07-03T20:03:30.582923+00:00",
+  "latest_verified_ladder": {
+    "fake_payment": "402 payment_required",
+    "identity_no_payment": "402 payment_required",
+    "live_accepted_protocols": [
+      "MPP",
+      "x402",
+      "direct_crypto_auto",
+      "direct_crypto_manual"
+    ],
+    "no_identity": "403 agent_only"
+  },
+  "mcp": {
+    "design_url": "/.well-known/ddg-agent-swarm-mcp-design.md",
+    "planned_package": "@daedalusdevelopmentgroup/ddg-agent-services-mcp",
+    "status": "public_streamable_http_and_source_package_ready_account_gated_registry_publish"
+  },
+  "notes": [
+    "No raw provider credentials, OAuth sessions, private model IDs, or verifier loopback URLs are public contract values.",
+    "MPP verifier reports ready:true, public 402 challenges advertise MPP, invalid tokens fail closed, and tx-smoke settlement is proven with receipt hash c0e160a79ab9376daa6d9f2aed1486e4.",
+    "x402 settlement is production-proven on Base USDC via self-hosted qntx; tx 0xde0805c82b4e705281de6a9fdfb042a5ed70f1766c32bf3de064f75e89080441.",
+    "Receipt verification endpoint is live at /v1/receipt-verify and exposed through the DDG MCP tool ddg_receipt_verify; responses are redacted and agent/order scoped."
+  ],
+  "operator_contact": "0xcircuitbreaker@protonmail.com",
+  "payment_protocols": {
+    "x402": "public_live_settlement_proven_self_hosted_qntx",
+    "direct_crypto_auto": "public_live_for_verifier_supported_assets",
+    "direct_crypto_manual": "public_live_operator_confirmed_for_public_receiving_address_families",
+    "mpp": "public_live_settlement_proven",
+    "stripe_spt": "planned_after_mpp_or_profile_activation",
+    "x402_facilitator_settlement": "public_live_settlement_proven_self_hosted_qntx",
+    "x402_settlement_proof": {
+      "route": "/v1/tx-smoke-test",
+      "tx_hash": "0xde0805c82b4e705281de6a9fdfb042a5ed70f1766c32bf3de064f75e89080441",
+      "network": "eip155:8453",
+      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "amount_atomic": "10000",
+      "amount_usd": "0.01",
+      "verified_at": "2026-07-01T18:28:56Z",
+      "facilitator": "qntx/self-hosted"
+    }
+  },
+  "public_discovery": {
+    "agent_skills": "/.well-known/agent-skills/index.json",
+    "agents": "/.well-known/agents.json",
+    "ai": "/.well-known/ai",
+    "api_catalog": "/.well-known/api-catalog",
+    "catalog": "/.well-known/agent-catalog.json",
+    "checkout_conformance": "/.well-known/ddg-agent-checkout-conformance.json",
+    "llms": "/llms.txt",
+    "mcp_design": "/.well-known/ddg-agent-swarm-mcp-design.md",
+    "mpp_status": "public_live_settlement_proven",
+    "openapi": "/openapi.json",
+    "pricing": "/.well-known/ddg-agent-pricing.json",
+    "refund_policy": "/.well-known/ddg-agent-refund-policy.json",
+    "enterprise_hardening": "/.well-known/ddg-enterprise-hardening.json",
+    "receipt_verify": "/v1/receipt-verify"
+  },
+  "schema_version": "v0.1.0",
+  "service": "DDG Agent-Payable Services",
+  "service_counts": {
+    "total": 67,
+    "live_runtime": 67,
+    "public_self_serve": 67,
+    "free_or_promo": 13,
+    "nonfree": 54,
+    "operator_fulfilled_live": 39,
+    "automated_or_direct_runtime_live": 28,
+    "automated_self_contained_robotics": 8,
+    "backend_or_provider_proxied": 9,
+    "payment_only_receipt": 5,
+    "openapi_paths": 69,
+    "planned": 0,
+    "manual_fulfillment_beta": 0
+  },
+  "status": "production_live_x402_direct_crypto_mpp_challenge_live",
+  "crypto_payment_options": {
+    "last_synced_at": "2026-06-25T16:35:00Z",
+    "source_of_truth": {
+      "x402": "/openapi.json 402 PAYMENT-REQUIRED accepts[] plus payment_rail_addresses.env",
+      "direct_crypto": "/.well-known/ddg-direct-crypto-addresses.json plus direct_crypto_addresses.env",
+      "mpp": "Public 402 challenge plus /mpp-activation-guide.md; sidecar /health ready:true on active production hosts."
+    },
+    "public_live_protocols": [
+      "mpp",
+      "x402",
+      "direct_crypto_auto",
+      "direct_crypto_manual"
+    ],
+    "pending_protocols": [],
+    "x402": {
+      "status": "public_live",
+      "settlement_default": "Base mainnet USDC for production/x402scan compatibility",
+      "accepted_networks": [
+        {
+          "network": "eip155:8453",
+          "label": "Base mainnet",
+          "asset": "USDC",
+          "asset_contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "amount_decimals": 6
+        },
+        {
+          "network": "eip155:137",
+          "label": "Polygon mainnet",
+          "asset": "USDC",
+          "asset_contract": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+          "amount_decimals": 6
+        },
+        {
+          "network": "eip155:42161",
+          "label": "Arbitrum One",
+          "asset": "USDC",
+          "asset_contract": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+          "amount_decimals": 6
+        },
+        {
+          "network": "eip155:480",
+          "label": "World Chain mainnet",
+          "asset": "USDC",
+          "asset_contract": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
+          "amount_decimals": 6
+        },
+        {
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "label": "Solana mainnet",
+          "asset": "USDC",
+          "asset_contract": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "amount_decimals": 6
+        }
+      ],
+      "amount_unit": "atomic integer strings; USDC has 6 decimals, so $0.01 is \"10000\""
+    },
+    "direct_crypto": {
+      "status": "public_live_auto_for_verifier_supported_assets_manual_operator_confirmed_for_remaining_public_addresses",
+      "public_manifest": "/.well-known/ddg-direct-crypto-addresses.json",
+      "public_env": "direct_crypto_addresses.env",
+      "wallet_count": 13,
+      "assets": [
+        "EVM/stablecoins",
+        "BTC",
+        "BCH",
+        "LTC",
+        "DOGE",
+        "SOL",
+        "TRX",
+        "XRP",
+        "XLM",
+        "ALGO",
+        "DOT",
+        "ZEC",
+        "XMR"
+      ],
+      "address_env": [
+        "DDG_CRYPTO_EVM_ADDRESS",
+        "DDG_CRYPTO_BTC_ADDRESS",
+        "DDG_CRYPTO_BCH_ADDRESS",
+        "DDG_CRYPTO_LTC_ADDRESS",
+        "DDG_CRYPTO_DOGE_ADDRESS",
+        "DDG_CRYPTO_SOL_ADDRESS",
+        "DDG_CRYPTO_TRX_ADDRESS",
+        "DDG_CRYPTO_XRP_ADDRESS",
+        "DDG_CRYPTO_XLM_ADDRESS",
+        "DDG_CRYPTO_ALGO_ADDRESS",
+        "DDG_CRYPTO_DOT_ADDRESS",
+        "DDG_CRYPTO_ZEC_ADDRESS",
+        "DDG_CRYPTO_XMR_ADDRESS"
+      ],
+      "public_address_families": [
+        {
+          "asset": "EVM",
+          "network": "EVM-compatible mainnets/testnets",
+          "address_env": "DDG_CRYPTO_EVM_ADDRESS",
+          "address": "0x25A4B534452372619f841956D64Ce5F45307d834",
+          "description": "ETH/EVM native assets plus operator-confirmed EVM stablecoins (USDC, USDT, DAI, PYUSD, FRAX, FDUSD, GUSD, LUSD, USDP, TUSD, EURC) on supported EVM networks; auto verifier currently supports configured EVM native/USDC paths."
+        },
+        {
+          "asset": "BTC",
+          "network": "Bitcoin mainnet native segwit",
+          "address_env": "DDG_CRYPTO_BTC_ADDRESS",
+          "address": "bc1qswcxsxmlads07gtlunrqm49fmeuc4p3lmk5k0q",
+          "description": "Bitcoin mainnet native segwit."
+        },
+        {
+          "asset": "BCH",
+          "network": "Bitcoin Cash mainnet cashaddr",
+          "address_env": "DDG_CRYPTO_BCH_ADDRESS",
+          "address": "bitcoincash:qze4aj4ns8usydmwlqx8q5nmgpud3x48avpkrqds0x",
+          "description": "Bitcoin Cash mainnet cashaddr."
+        },
+        {
+          "asset": "LTC",
+          "network": "Litecoin mainnet native segwit",
+          "address_env": "DDG_CRYPTO_LTC_ADDRESS",
+          "address": "ltc1qv8yemdhk88zxth95n5s3rnt7nrjg7z52ru2n2y",
+          "description": "Litecoin mainnet native segwit."
+        },
+        {
+          "asset": "DOGE",
+          "network": "Dogecoin mainnet legacy",
+          "address_env": "DDG_CRYPTO_DOGE_ADDRESS",
+          "address": "DEiZ9siBn8pYAhqRf1Ca7eqNNyK2ZrBd1x",
+          "description": "Dogecoin mainnet legacy."
+        },
+        {
+          "asset": "SOL",
+          "network": "Solana mainnet",
+          "address_env": "DDG_CRYPTO_SOL_ADDRESS",
+          "address": "v6ztnrxiyZPF7LSKZrm9AhAJqukWYMFMt6YboofJhGD",
+          "description": "Solana mainnet; SOL and SPL stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "TRX",
+          "network": "Tron mainnet",
+          "address_env": "DDG_CRYPTO_TRX_ADDRESS",
+          "address": "TYMsm7b6YnyD41KSAgZttRUNY3mDwU4yoo",
+          "description": "Tron mainnet; TRX and TRC20 stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "XRP",
+          "network": "XRP Ledger mainnet",
+          "address_env": "DDG_CRYPTO_XRP_ADDRESS",
+          "address": "r4Ub17w7P22kTu33qNvVkQs3XRYJvEiiYD",
+          "description": "XRP Ledger mainnet; destination-tag policy should be checked before high-volume payments."
+        },
+        {
+          "asset": "XLM",
+          "network": "Stellar mainnet",
+          "address_env": "DDG_CRYPTO_XLM_ADDRESS",
+          "address": "GAIJ5MBOB4RUGU2QRR237XX3WFO4ALNV5V42Q7JK6MLGVOBWM4OV6GFK",
+          "description": "Stellar mainnet; XLM and Stellar-issued stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "ALGO",
+          "network": "Algorand mainnet",
+          "address_env": "DDG_CRYPTO_ALGO_ADDRESS",
+          "address": "MLYNV63M76DBHTJZLST6H7SR5Z2DWWRJU2GNCN2BEXBVVVSGEJ3N6ES3YU",
+          "description": "Algorand mainnet; ALGO and ASA stablecoin proof can be operator-confirmed."
+        },
+        {
+          "asset": "DOT",
+          "network": "Polkadot mainnet",
+          "address_env": "DDG_CRYPTO_DOT_ADDRESS",
+          "address": "12WdyrGrNr4tsqa45zdKWXbWx3grrm3tZunbcpVNi96PvvCw",
+          "description": "Polkadot mainnet; manual/operator confirmation unless a Substrate indexer is configured."
+        },
+        {
+          "asset": "ZEC",
+          "network": "Zcash mainnet transparent t-address",
+          "address_env": "DDG_CRYPTO_ZEC_ADDRESS",
+          "address": "t1Nrg3PZAf1w3vKbzV1Rq817oRTLxq9iD5d",
+          "description": "Zcash transparent t-address; shielded payments are not auto-confirmed."
+        },
+        {
+          "asset": "XMR",
+          "network": "Monero mainnet primary address",
+          "address_env": "DDG_CRYPTO_XMR_ADDRESS",
+          "address": "46rEbwqHVMW7at7kBbdtFnRMXSqkUbbpbJZR4k4TUxsVUDdQX7po4HL2F1Nbw7kEM8hZ4F242D4kgQAj1aMU5S9U6TS6ZCy",
+          "description": "Monero primary address; public balance is not visible and auto confirmation requires view-only wallet RPC, otherwise operator confirmation."
+        }
+      ],
+      "auto_verification_scope": [
+        "BTC, BCH, LTC, DOGE, transparent ZEC via public-chain lookups",
+        "EVM native transfers and USDC on configured Ethereum/Base/Polygon RPC paths",
+        "SOL, TRX, XRP, XLM, and ALGO native payment lookups",
+        "XMR only when a view-only monero-wallet-rpc is configured"
+      ],
+      "manual_confirmation_scope": [
+        "DOT until a Substrate/Subscan indexer is configured",
+        "XMR without wallet RPC, shielded ZEC, non-USDC stablecoins, and any supported address family the verifier cannot conclusively confirm"
+      ],
+      "proof_headers": [
+        "X-Direct-Crypto-Proof",
+        "Payment-Proof",
+        "Authorization: Payment direct_crypto <base64url-json>"
+      ],
+      "proof_payload": "payment_proof/proof {asset, network?, txid/hash/transaction_hash, amount, amount_usd?}"
+    },
+    "mpp": {
+      "status": "public_live_settlement_proven",
+      "recipient_address": "0x25A4B534452372619f841956D64Ce5F45307d834",
+      "currency_contract": "0x20c0000000000000000000000000000000000000",
+      "amount_policy": "route-priced from catalog/payment edge; tx-smoke-test is 0.01 USD"
+    },
+    "settlement_proof_pending": [
+      "cdp_x402_bazaar_indexing"
+    ],
+    "settlement_proof_confirmed": [
+      "mpp_tx_smoke_settlement_proven"
+    ]
+  },
+  "last_production_readiness_sync": "2026-06-25T12:45:00Z",
+  "production_readiness_notes": {
+    "operator_fulfilled_services": "Manual/beta SKUs have been promoted to live agent-orderable routes where the path queues a paid operator-reviewed order and returns status/artifact URLs; they are not represented as fully automated execution.",
+    "all_services_agent_orderable": "All public catalog services are now live_runtime; operator-fulfilled services queue paid reviewed work and do not overclaim full automation.",
+    "service_count_accounting": "Catalog reconciled from pricing.json: 55 live_runtime AI-agent-orderable services; 6 free/promo, 49 non-free, 37 operator-fulfilled/order-queue, 19 direct/automated/free runtime surfaces. Do not describe all services as fully automated; operator-fulfilled services queue paid reviewed work and return status/artifact URLs."
+  },
+  "payment_protocol_status": {
+    "x402_facilitator_settlement": "public_live_settlement_proven_self_hosted_qntx",
+    "x402_settlement_proof": {
+      "route": "/v1/tx-smoke-test",
+      "tx_hash": "0xde0805c82b4e705281de6a9fdfb042a5ed70f1766c32bf3de064f75e89080441",
+      "network": "eip155:8453",
+      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "amount_atomic": "10000",
+      "amount_usd": "0.01",
+      "verified_at": "2026-07-01T18:28:56Z",
+      "facilitator": "qntx/self-hosted"
+    }
+  },
+  "enterprise_hardening": {
+    "status": "primary_and_secondary_runtime_guards_active_primary_monitor_active",
+    "latest_checker": "scripts/enterprise_hardening_check.py",
+    "latest_primary_report": "audit/enterprise-hardening-latest.json",
+    "primary_runtime_firewall_guard": "active",
+    "secondary_runtime_firewall_guard": "active",
+    "primary_enterprise_monitor_timer": "active_15min_systemd_timer",
+    "public_agent_access": "payment_edge_only",
+    "raw_runtime_endpoints_public_policy": "blocked_except_loopback_and_trusted_peer",
+    "paid_route_challenge_coverage": "49_of_49_nonfree_routes_passed_no_spend_probe_on_t620",
+    "free_route_count": 6,
+    "nonfree_route_count": 49,
+    "refund_reversal_policy": "/.well-known/ddg-agent-refund-policy.json",
+    "order_status_console": "/v1/orders/{order_id}",
+    "artifact_console": "/v1/orders/{order_id}/artifact",
+    "custody_posture": "production_beta_acceptable_not_treasury_grade",
+    "custody_audit": "audit/enterprise-custody-posture-2026-07-02.md",
+    "latest_service_proof_matrix": "audit/enterprise-service-proof-matrix-2026-07-02.json",
+    "next_enterprise_gate": "representative_paid_fulfillment_proof_by_category_plus_external_alert_channel",
+    "public_status_endpoint": "/.well-known/ddg-enterprise-hardening.json",
+    "latest_public_endpoint_verified": "live_http_200_sanitized_no_forbidden_internal_markers",
+    "backend_proxied_readiness_audit": "audit/backend-proxied-readiness-2026-07-02-post-glm-fallback.md",
+    "site_audit_paid_proof_gate": "no_spend_backend_ready_via_glm_direct_pending_explicit_paid_fulfillment_proof",
+    "safe_low_cost_paid_proof_candidates": [
+      {
+        "path": "/v1/site-audit",
+        "cost_usd": "0.75",
+        "category": "backend_proxied_glm_direct",
+        "requires": "explicit_paid_proof_approval"
+      },
+      {
+        "path": "/v1/ethereum/rpc",
+        "cost_usd": "0.01",
+        "category": "operator_artifact_queue"
+      },
+      {
+        "path": "/v1/local-model-swarm-seat",
+        "cost_usd": "0.25",
+        "category": "operator_artifact_queue"
+      },
+      {
+        "path": "/v1/model/agent-run",
+        "cost_usd": "3.00",
+        "category": "provider_account_backed_agent_run",
+        "requires": "buyer_funds_and_quota_check"
+      }
+    ],
+    "site_audit_backend_mode": "glm_coding_plan_direct_when_Hermes_API_key_absent"
+  },
+  "discovery": {
+    "enterprise_hardening": "/.well-known/ddg-enterprise-hardening.json"
+  },
+  "settlement_proofs": {
+    "mpp_tempo_pathusd_tx": "0x2500f61d2c5e5717edcde2239114d030e57f2a4726cb73028477c79b605fa282",
+    "mpp_tempo_pathusd_amount_atomic": "10000",
+    "mpp_tempo_pathusd_amount_display": "0.01",
+    "mpp_tempo_pathusd_fee_token": "0x20c0000000000000000000000000000000000000"
+  }
+}

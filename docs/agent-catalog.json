@@ -72,7 +72,7 @@
     {
       "id": "model_agent_run",
       "path": "/v1/model/agent-run",
-      "price_usd": "0.05",
+      "price_usd": "0.01",
       "billing": "limited_time_free_for_local_model_routes; per_run_plus_usage_for_account_backed_routes",
       "risk": "sandboxed_agent_execution",
       "description": "Live bounded agent-task endpoint. Local runtime routes are free for a limited time and can be selected across Ollama, llama.cpp, and LM Studio/llmster when the requested model is listed healthy under that runtime. Use route prefixes such as ollama/<model>, llama.cpp/<model>, lm_studio/<model>, or provide model plus runtime. Provider-backed Kimi K2.7 Code and Claude artifact routes remain paid/env-gated/manual-approved and never expose raw credentials/tokens/seats.",
@@ -183,7 +183,7 @@
       "path": "/v1/model/agent-run",
       "route": "kimi-code/k2.7",
       "display_model": "Kimi K2.7 Code",
-      "price_usd": "0.05",
+      "price_usd": "0.01",
       "billing": "per_paid_artifact_result_run",
       "risk": "sandboxed_provider_cli_artifact_execution",
       "description": "Kimi K2.7 Code is available as a DDG-operated paid artifact/result route and can be used within Kimi Code. Buyers receive bounded outputs/artifacts only; DDG never transfers provider credentials, account seats, or raw provider sessions.",
@@ -208,7 +208,7 @@
     {
       "id": "robot_task_authorization_contract_audit",
       "path": "/v1/robot-task/authorization-contract-audit",
-      "price_usd": "0.1",
+      "price_usd": "0.02",
       "tier": "1",
       "billing": "per_audit",
       "risk": "read_only",
@@ -233,7 +233,7 @@
     {
       "id": "robot_task_scope_and_revocation_audit",
       "path": "/v1/robot-task/scope-and-revocation-audit",
-      "price_usd": "0.1",
+      "price_usd": "0.02",
       "tier": "1",
       "billing": "per_audit",
       "risk": "read_only",
@@ -258,7 +258,7 @@
     {
       "id": "robot_task_completion_receipt_validator",
       "path": "/v1/robot-task/completion-receipt-validator",
-      "price_usd": "0.1",
+      "price_usd": "0.02",
       "tier": "1",
       "billing": "per_audit",
       "risk": "read_only",
@@ -283,7 +283,7 @@
     {
       "id": "robot_command_idempotency_audit",
       "path": "/v1/robot-command/idempotency-audit",
-      "price_usd": "0.1",
+      "price_usd": "0.02",
       "tier": "2",
       "billing": "per_audit",
       "risk": "read_only",
@@ -308,7 +308,7 @@
     {
       "id": "robot_authority_intersection_audit",
       "path": "/v1/robot/authority-intersection-audit",
-      "price_usd": "0.1",
+      "price_usd": "0.02",
       "tier": "2",
       "billing": "per_audit",
       "risk": "read_only",
@@ -333,7 +333,7 @@
     {
       "id": "robot_task_deadman_revocation_audit",
       "path": "/v1/robot-task/deadman-revocation-audit",
-      "price_usd": "0.1",
+      "price_usd": "0.02",
       "tier": "2",
       "billing": "per_audit",
       "risk": "read_only",
@@ -358,7 +358,7 @@
     {
       "id": "robot_task_liability_receipt_schema",
       "path": "/v1/robot-task/liability-receipt-schema",
-      "price_usd": "0.1",
+      "price_usd": "0.02",
       "tier": "3",
       "billing": "per_audit",
       "risk": "read_only",
@@ -383,10 +383,10 @@
     {
       "id": "robotics_provenance_bundle",
       "path": "/v1/robot-task/provenance-bundle",
-      "price_usd": "0.1",
+      "price_usd": "0.02",
       "billing": "per_bundle",
       "risk": "read_only",
-      "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant \u2192 scope_check \u2192 execution \u2192 evidence \u2192 receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
+      "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant → scope_check → execution → evidence → receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
       "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "payment_edge",
@@ -471,7 +471,7 @@
       "price_usd": "0",
       "billing": "free_launch_promo",
       "risk": "static_calculation_no_network",
-      "description": "Free rate-limit/retry strategy analyzer for AI agents. Parses standard rate-limit headers, computes optimal cadence, utilization, and projected spend. Pure deterministic math \u2014 no LLM, no network.",
+      "description": "Free rate-limit/retry strategy analyzer for AI agents. Parses standard rate-limit headers, computes optimal cadence, utilization, and projected spend. Pure deterministic math — no LLM, no network.",
       "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "free_deterministic_analyzer_beta",
@@ -494,10 +494,10 @@
     {
       "id": "credential_escrow_proxy",
       "path": "/v1/credential-escrow-proxy",
-      "price_usd": "0.05",
+      "price_usd": "0.01",
       "billing": "per_call",
       "risk": "upstream_proxy_security_sensitive",
-      "description": "Credential escrow proxy \u2014 agent pays DDG, DDG makes the upstream API call with its own credentials, returns result. Agent never sees the API key.",
+      "description": "Credential escrow proxy — agent pays DDG, DDG makes the upstream API call with its own credentials, returns result. Agent never sees the API key.",
       "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "paid_credential_escrow",
@@ -507,10 +507,10 @@
     {
       "id": "test_runner",
       "path": "/v1/test-runner",
-      "price_usd": "0.05",
+      "price_usd": "0.01",
       "billing": "per_call",
       "risk": "sandboxed_execution",
-      "description": "Bounded sandbox test runner \u2014 submit code + tests, run in isolated subprocess with hard timeout and no network, get pass/fail + coverage + stdout.",
+      "description": "Bounded sandbox test runner — submit code + tests, run in isolated subprocess with hard timeout and no network, get pass/fail + coverage + stdout.",
       "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "paid_sandbox_test_runner",
@@ -523,7 +523,7 @@
       "price_usd": "0",
       "billing": "free_launch_promo",
       "risk": "attestation_recording",
-      "description": "Agent attestation \u2014 prove 'I am agent X, I completed task Y' with opentine provenance. Submits a .tine hash, gets back a signed attestation with public verify URL.",
+      "description": "Agent attestation — prove 'I am agent X, I completed task Y' with opentine provenance. Submits a .tine hash, gets back a signed attestation with public verify URL.",
       "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "free_agent_attestation_beta",
@@ -533,10 +533,10 @@
     {
       "id": "code_to_endpoint",
       "path": "/v1/code-to-endpoint",
-      "price_usd": "0.05",
+      "price_usd": "0.01",
       "billing": "per_order",
       "risk": "code_validation_operator_review",
-      "description": "Code-to-payable-endpoint bridge \u2014 wrap a function/script as an x402-payable HTTP endpoint with OpenAPI + receipts. Operator-reviewed.",
+      "description": "Code-to-payable-endpoint bridge — wrap a function/script as an x402-payable HTTP endpoint with OpenAPI + receipts. Operator-reviewed.",
       "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "paid_operator_reviewed",
@@ -549,7 +549,7 @@
       "price_usd": "0.01",
       "billing": "free_launch_promo",
       "risk": "read_only_verification",
-      "description": "Free .tine artifact verification \u2014 parse and verify content-addressed provenance of an opentine run. Checks FORMAT_VERSION, step hashes, tamper detection.",
+      "description": "Free .tine artifact verification — parse and verify content-addressed provenance of an opentine run. Checks FORMAT_VERSION, step hashes, tamper detection.",
       "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "free_tine_verification_beta",
@@ -562,7 +562,7 @@
       "price_usd": "0.01",
       "billing": "per_call",
       "risk": "read_only_comparison",
-      "description": "Diff two .tine artifacts \u2014 structured comparison of agent runs showing added/removed/modified/same steps.",
+      "description": "Diff two .tine artifacts — structured comparison of agent runs showing added/removed/modified/same steps.",
       "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "paid_tine_diff",
@@ -575,7 +575,7 @@
       "price_usd": "0.01",
       "billing": "free_launch_promo",
       "risk": "read_only_metadata_trace",
-      "description": "Trace the fork/parent chain of a .tine artifact \u2014 full provenance lineage from root run to current.",
+      "description": "Trace the fork/parent chain of a .tine artifact — full provenance lineage from root run to current.",
       "runtime_status": "live_runtime",
       "public_self_serve": true,
       "fulfillment_mode": "free_provenance_chain_beta",
@@ -1977,7 +1977,7 @@
       "mpp_tx_smoke_settlement_proven"
     ]
   },
-  "generated_at": "2026-07-03T20:03:30.582923+00:00",
+  "generated_at": "2026-07-05T00:00:00+00:00",
   "enterprise_hardening": {
     "status": "primary_and_secondary_runtime_guards_active_primary_monitor_active",
     "latest_checker": "scripts/enterprise_hardening_check.py",
@@ -2044,5 +2044,6 @@
   },
   "production_readiness_notes": {
     "service_count_accounting": "Catalog reconciled from pricing.json: 55 live_runtime AI-agent-orderable services; 6 free/promo, 49 non-free, 37 operator-fulfilled/order-queue, 19 direct/automated/free runtime surfaces. Do not describe all services as fully automated; operator-fulfilled services queue paid reviewed work and return status/artifact URLs."
-  }
+  },
+  "pricing_version": "2026-07-05-conversion-price-cut"
 }

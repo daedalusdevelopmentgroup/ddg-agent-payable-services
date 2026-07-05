@@ -1,7 +1,7 @@
 <!-- mcp-name: io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp -->
 # DDG Agent-Payable Services
 
-**109 x402/direct-crypto services for AI agents.** The largest agent-payable service surface in the x402 ecosystem — from \$0.001 utilities (DNS, hash, UUID) to \$0.05 AI services (agent registry), all fully automated with zero human in the loop. Includes an **OpenAI-compatible gateway** (`/v1/chat/completions`, `/v1/models`, `/v1/embeddings`).
+**124 x402/direct-crypto services for AI agents.** The largest agent-payable service surface in the x402 ecosystem — from $0.001 utilities (DNS, hash, UUID) to $0.01 social/financial/agent-infra services. All fully automated with zero human in the loop. Includes an **OpenAI-compatible gateway** (`/v1/chat/completions`, `/v1/models`, `/v1/embeddings`).
 
 ```text
 https://agents.daedalusdevelopmentgroup.com
@@ -106,7 +106,34 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | **direct_crypto_manual** | ✅ Live | Operator-confirmed fallback |
 | **MPP/Tempo** | ✅ Live | Settlement-proven |
 
-## Service Catalog (109 services)
+## Service Catalog (124 services)
+
+### Social Data (NEW — demand capture from twit.sh/glim.sh/StableSocial)
+| Service | Price | Description |
+|---|---|---|
+| `/v1/social/twitter-search` | \$0.01 | Search Twitter/X posts via public syndication |
+| `/v1/social/reddit-search` | \$0.01 | Search Reddit posts and comments |
+| `/v1/social/reddit-thread` | \$0.01 | Get a Reddit post with top comments |
+| `/v1/youtube-transcript` | \$0.01 | Get transcript/subtitles for a YouTube video |
+| `/v1/hn-search` | \$0.01 | Search Hacker News stories and comments |
+
+### Financial Data (NEW — demand capture from 2s.io/BlockRun)
+| Service | Price | Description |
+|---|---|---|
+| `/v1/stock-price` | \$0.01 | Current stock price, OHLC, 52-week range (Yahoo Finance) |
+| `/v1/stock-history` | \$0.01 | Historical OHLCV candles (Yahoo Finance) |
+| `/v1/commodity-price` | \$0.01 | Gold, silver, oil, copper, wheat, etc. |
+| `/v1/fx-rate` | \$0.01 | Foreign exchange rates for any pair |
+| `/v1/sec-filings` | \$0.01 | Search SEC EDGAR filings by ticker/query |
+
+### Agent Infrastructure (NEW — unique, no competitor has these)
+| Service | Price | Description |
+|---|---|---|
+| `/v1/webhook-deliver` | \$0.01 | Webhook delivery with retry, HMAC signing, delivery proof |
+| `/v1/scheduled-task` | \$0.01 | Schedule one-shot or recurring HTTP tasks via systemd |
+| `/v1/browser-automate` | \$0.01 | Playwright browser automation: navigate, click, fill, extract |
+| `/v1/structured-extract` | \$0.01 | Extract structured JSON from any URL using fetch + LLM |
+| `/v1/change-detect` | \$0.01 | Detect content changes at a URL (hash-based diff) |
 
 ### AI / ML (GPU-backed on GTX 1080)
 | Service | Price | Description |
@@ -178,7 +205,7 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | `/v1/price-feed` | Crypto/forex prices |
 
 ### Full catalog
-See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 109 services.
+See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 124 services.
 
 ## Discovery
 
@@ -186,7 +213,7 @@ See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-a
 |---|---|
 | AI manifest | `/.well-known/ai` |
 | x402 discovery | `/.well-known/x402` |
-| OpenAPI spec | `/openapi.json` (113 paths) |
+| OpenAPI spec | `/openapi.json` (128 paths) |
 | llms.txt | `/llms.txt` |
 | Pricing | `/.well-known/ddg-agent-pricing.json` |
 | Status | `/.well-known/ddg-agent-status.json` |

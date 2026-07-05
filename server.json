@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
-  "description": "Pay-per-call gateway for AI agents: 90+ x402/direct-crypto tools (utilities, blockchain RPC, market data, security audits) plus an OpenAI-compatible LLM gateway and MCP security/discovery checks. Settles in USDC on Base; most routes grant free-trial calls.",
+  "description": "Pay-per-call x402 gateway: agent tools, OpenAI-compatible LLM, market data, RPC, security audits.",
   "repository": {
     "url": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
     "source": "github"
@@ -13,7 +13,9 @@
       "registryType": "pypi",
       "identifier": "ddg-agent-services-mcp",
       "version": "0.4.1",
-      "transport": { "type": "stdio" },
+      "transport": {
+        "type": "stdio"
+      },
       "environmentVariables": [
         {
           "name": "DDG_AGENT_ID",

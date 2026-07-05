@@ -72,7 +72,7 @@ Server Config: {"transport":{"type":"streamable-http","url":"https://mcp.daedalu
 Official MCP Registry:
 
 ```text
-mcp/server.json includes both remote Streamable HTTP and PyPI stdio metadata.
+server.json includes both remote Streamable HTTP and PyPI stdio metadata.
 Validation endpoint returned valid:true. Publishing is account/OAuth gated through mcp-publisher.
 ```
 

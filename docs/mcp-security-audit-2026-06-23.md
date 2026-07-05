@@ -6,7 +6,7 @@ Scope: public-repo MCP wrapper, package metadata, deployment templates, and loca
 
 Verdict: **source-ready after hardening; public hosted remote still gated**.
 
-The MCP server remains safe to publish as a stdio/package endpoint and safe to deploy behind a loopback-only Streamable HTTP service for final public smoke. Do **not** add the hosted `remotes` block to `mcp/server.json` until the public URL is deployed and passes MCP-client smoke plus leak scan.
+The MCP server remains safe to publish as a stdio/package endpoint and safe to deploy behind a loopback-only Streamable HTTP service for final public smoke. Do **not** add the hosted `remotes` block to `server.json` until the public URL is deployed and passes MCP-client smoke plus leak scan.
 
 Verification completed in this audit pass:
 
@@ -40,7 +40,7 @@ Verification completed in this audit pass:
 - `mcp.daedalusdevelopmentgroup.com` is not an upstream base host by default; it is reserved for the MCP server endpoint.
 - Paid tools still return structured `402 payment_required` when unpaid.
 - MPP is still not advertised live before provider readiness and settlement proof.
-- Public hosted remote remains outside `mcp/server.json`; template is staged separately in `mcp/server.remote-template.json`.
+- Public hosted remote remains outside `server.json`; template is staged separately in `mcp/server.remote-template.json`.
 - `ddg_public_resource_index`, `ddg_fetch_public_resource`, and 10 first-class MCP resources expose only fixed public DDG manifests/docs/OpenAPI.
 - `ddg_agent_distribution_targets`, `ddg_x402_bazaar_readiness`, and 2 source-bundled distribution resources expose agent-radar and x402 Bazaar readiness without claiming Bazaar/hosted MCP go-live early.
 - Upstream JSON bodies, resource text, and HTTP headers are capped/redacted before returning to the MCP client.

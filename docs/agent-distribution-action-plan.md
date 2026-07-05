@@ -93,7 +93,7 @@ Use these terms consistently in repo metadata, descriptions, and listing submiss
    - State that x402scan is live, CDP Bazaar indexing is settlement-gated, and MPP/Tempo is settlement-proven live.
 
 3. **Official MCP Registry**
-   - Validate `mcp/server.json` first.
+   - Validate `server.json` first.
    - Publish only package/stdin metadata until either PyPI package upload or hosted MCP endpoint exists.
    - Do not publish `mcp/server.remote-template.json` as live registry metadata.
 

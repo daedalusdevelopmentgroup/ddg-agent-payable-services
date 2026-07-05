@@ -3,7 +3,7 @@
 Canonical registry metadata:
 
 ```text
-mcp/server.json
+server.json
 ```
 
 Registry name:
@@ -22,7 +22,7 @@ Last sync: `2026-06-25T16:05:00Z`
 
 ## Current status
 
-The MCP server is source/package-ready, locally smoked over stdio, and publicly live over Streamable HTTP at `https://mcp.daedalusdevelopmentgroup.com/mcp`. `mcp/server.json` now includes a `remotes[]` entry for the hosted endpoint and validates with the official registry validation API.
+The MCP server is source/package-ready, locally smoked over stdio, and publicly live over Streamable HTTP at `https://mcp.daedalusdevelopmentgroup.com/mcp`. `server.json` now includes a `remotes[]` entry for the hosted endpoint and validates with the official registry validation API.
 
 Publishing is no longer blocked by endpoint readiness; it is blocked only by official MCP Registry publisher authentication/account flow (`mcp-publisher login github` or domain auth).
 
@@ -39,7 +39,7 @@ Publishing is no longer blocked by endpoint readiness; it is blocked only by off
 ```bash
 cd /path/to/ddg-agent-payable-services
 python3 scripts/validate_submission_sync.py
-python -m json.tool mcp/server.json >/dev/null
+python -m json.tool server.json >/dev/null
 PYTHONDONTWRITEBYTECODE=1 DDG_MCP_AGENT_ID=ddg-mcp-stdio-smoke uv run --extra dev python scripts/smoke_mcp_server.py --transport stdio --source-tree src
 PYTHONDONTWRITEBYTECODE=1 DDG_MCP_AGENT_ID=ddg-mcp-public-smoke uv run --extra dev python scripts/smoke_mcp_server.py --transport streamable-http --http-url https://mcp.daedalusdevelopmentgroup.com/mcp --agent-id ddg-mcp-public-smoke
 uv build --sdist --wheel
@@ -51,7 +51,7 @@ If the MCP Registry validation API is available:
 tmp_validate=$(mktemp)
 curl -fsS -X POST https://registry.modelcontextprotocol.io/v0.1/validate \
   -H 'Content-Type: application/json' \
-  --data-binary @mcp/server.json \
+  --data-binary @server.json \
   -o "$tmp_validate"
 python3 -m json.tool "$tmp_validate"
 ```
@@ -62,7 +62,7 @@ The public endpoint gate is satisfied. Use the official publisher flow from the 
 
 ```bash
 mcp-publisher login github
-mcp-publisher publish mcp/server.json
+mcp-publisher publish server.json
 ```
 
 The exact login method may use GitHub OAuth/OIDC or namespace verification depending on the current MCP Registry publisher release.

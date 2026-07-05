@@ -159,7 +159,7 @@ DISTRIBUTION_TARGETS: tuple[dict[str, Any], ...] = (
             "https://modelcontextprotocol.io/registry/about",
             "https://github.com/modelcontextprotocol/registry",
         ],
-        "next_action": "Publish the stdio package to PyPI or deploy/smoke the public Streamable HTTP endpoint, then publish mcp/server.json with mcp-publisher.",
+        "next_action": "Publish the stdio package to PyPI or deploy/smoke the public Streamable HTTP endpoint, then publish server.json with mcp-publisher.",
         "do_not_claim_until": [
             "PyPI package exists or public remote MCP endpoint is reachable",
             "registry server.json validation passes",
@@ -303,7 +303,7 @@ X402_BAZAAR_READINESS: dict[str, Any] = {
 
 MCP_REGISTRY_READINESS: dict[str, Any] = {
     "status": "public_streamable_http_live_registry_submission_ready",
-    "server_json": "mcp/server.json",
+    "server_json": "server.json",
     "registry_name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
     "package_identifier": "ddg-agent-services-mcp",
     "public_repo": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",

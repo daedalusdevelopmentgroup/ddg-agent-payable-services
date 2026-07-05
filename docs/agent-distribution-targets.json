@@ -75,7 +75,7 @@
       "id": "official_mcp_registry",
       "status": "published_verified_live",
       "url": "https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.daedalusdevelopmentgroup%2Fddg-agent-services-mcp",
-      "next_action": "Official MCP Registry publish verified via GitHub Actions OIDC; bump mcp/server.json version before future registry publishes.",
+      "next_action": "Official MCP Registry publish verified via GitHub Actions OIDC; bump server.json version before future registry publishes.",
       "urls": [
         "https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.daedalusdevelopmentgroup%2Fddg-agent-services-mcp",
         "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services/actions/runs/28451913650",

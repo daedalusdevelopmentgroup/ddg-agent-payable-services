@@ -93,7 +93,7 @@ Expected: `ok: true`, required tools/resources present, and unpaid paid-tool cal
 
 6. Run public leak and payment-ladder checks again before advertising the remote endpoint.
 
-7. Only after the public smoke passes, add a `remotes` entry to `mcp/server.json` and submit/update the official MCP Registry package metadata.
+7. Only after the public smoke passes, add a `remotes` entry to `server.json` and submit/update the official MCP Registry package metadata.
 
 ## Security constraints
 

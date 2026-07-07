@@ -837,6 +837,95 @@ def ddg_ethereum_rpc_query(body: dict[str, Any], agent_id: str | None = None) ->
     return _json_request("/v1/ethereum/rpc", method="POST", payload=body, agent_id=agent_id)
 
 
+# Process-lifetime cache of the DDG service index (fetched from the public
+# pricing manifest). Rebuilt on server restart, which picks up catalog changes.
+_SERVICE_INDEX: list[dict[str, Any]] = []
+
+
+def _load_service_index() -> list[dict[str, Any]]:
+    """Fetch + cache the DDG service catalog into a lightweight search index."""
+    if _SERVICE_INDEX:
+        return _SERVICE_INDEX
+    resp = _json_request("/.well-known/ddg-agent-pricing.json")
+    body = resp.get("body") if isinstance(resp, dict) else None
+    raw = body.get("services") if isinstance(body, dict) else None
+    if not isinstance(raw, list):
+        return []
+    for s in raw:
+        if not isinstance(s, dict):
+            continue
+        path = s.get("path")
+        if not (isinstance(path, str) and path.startswith("/v1/")):
+            continue
+        _SERVICE_INDEX.append({
+            "service_id": s.get("id"),
+            "path": path,
+            "price_usd": s.get("price_usd"),
+            "description": str(s.get("description") or "")[:400],
+            "has_free_tier": bool(s.get("free_policy")),
+        })
+    return _SERVICE_INDEX
+
+
+@mcp.tool()
+def ddg_search_services(need: str, top_k: int = 8) -> dict[str, Any]:
+    """Find DDG agent-callable services matching a natural-language NEED.
+
+    Returns the best-matching services (service_id, path, price, description) so an
+    agent planner can pick the right one and then invoke it with ddg_call(service, args).
+    This is the entry point to all DDG services — search first, then call.
+    """
+    need_s = _bounded_text(need, MAX_PROMPT_CHARS).lower().strip()
+    if not need_s:
+        return {"status": 400, "body": {"error": "provide_a_need_string"}}
+    k = max(1, min(int(top_k or 8), 25))
+    idx = _load_service_index()
+    if not idx:
+        return {"status": 503, "body": {"error": "service_index_unavailable"}}
+    terms = [t for t in re.split(r"[^a-z0-9]+", need_s) if len(t) > 1]
+    scored: list[tuple[int, dict[str, Any]]] = []
+    for s in idx:
+        sid = (s.get("service_id") or "").lower()
+        hay = f"{sid} {s.get('path','').lower()} {s.get('description','').lower()}"
+        score = sum(hay.count(t) for t in terms)
+        score += sum(3 for t in terms if t in sid)  # weight service-id matches
+        if score:
+            scored.append((score, s))
+    scored.sort(key=lambda x: x[0], reverse=True)
+    matches = [s for _, s in scored[:k]]
+    return {
+        "status": 200,
+        "matched": len(matches),
+        "total_services": len(idx),
+        "services": matches,
+        "next_step": "Invoke a match with ddg_call(service=<service_id or /v1/ path>, args={...}). Free-tier services return results directly; paid services return an x402 402 challenge your wallet/x402 client settles, then retry with payment headers.",
+    }
+
+
+@mcp.tool()
+def ddg_call(service: str, args: dict[str, Any] | None = None, agent_id: str | None = None) -> dict[str, Any]:
+    """Invoke any DDG service by service_id or /v1/ path with JSON args.
+
+    Generic executor over the whole DDG catalog. Free/free-trial services return
+    results directly; paid services return a structured x402 402 challenge (settle
+    with your x402 client, then retry with payment headers). Only known DDG catalog
+    paths are accepted — use ddg_search_services(need) to discover valid targets.
+    """
+    if args is not None and not isinstance(args, dict):
+        return {"status": 400, "body": {"error": "args_must_be_object"}}
+    idx = _load_service_index()
+    if not idx:
+        return {"status": 503, "body": {"error": "service_index_unavailable"}}
+    valid_paths = {s["path"] for s in idx}
+    id_to_path = {s["service_id"]: s["path"] for s in idx if s.get("service_id")}
+    svc = str(service or "").strip()
+    path = svc if svc.startswith("/v1/") else id_to_path.get(svc)
+    if not path or path not in valid_paths:
+        return {"status": 404, "body": {"error": "unknown_service", "service": svc,
+                "hint": "Use ddg_search_services(need) to find a valid service_id or /v1/ path."}}
+    return _json_request(path, method="POST", payload=args or {}, agent_id=agent_id)
+
+
 @mcp.resource("ddg://distribution/agent-radar", name="ddg_distribution_agent_radar", mime_type="application/json")
 def ddg_distribution_agent_radar_resource() -> str:
     """DDG AI-agent distribution targets and go-live gates."""

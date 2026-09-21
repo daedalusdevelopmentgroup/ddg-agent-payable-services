@@ -74,7 +74,6 @@ ALLOWED_EXTRA_HEADERS = {
     "idempotency-key": "Idempotency-Key",
 }
 QUOTE_PATHS = {
-    "/v1/model/chat-completions",
     "/v1/model/agent-run",
     "/v1/order-intake",
     "/v1/tx-smoke-test",
@@ -102,6 +101,37 @@ DATA_ENDPOINT_PATHS = {
     "/v1/web-search",
     "/v1/url-fetch",
     "/v1/summarize",
+    # E1 commodities (2026-09-21)
+    "/v1/html-to-structured",
+    "/v1/table-extract",
+    "/v1/regex-builder",
+    "/v1/card-fingerprint",
+    "/v1/address-validate",
+    "/v1/calendar-parse",
+    "/v1/phone-intel",
+    "/v1/domain-age",
+    # E2 trust primitives (2026-09-21)
+    "/v1/agent-reputation-lookup",
+    "/v1/seller-trust-badge",
+    "/v1/dispute-evidence-pack",
+    "/v1/receipt-escrow-release",
+    # E3 robotics expansion (2026-09-21)
+    "/v1/robot-fleet/quota-audit",
+    "/v1/robot-task/geo-fence-audit",
+    "/v1/robot/human-takeover-audit",
+    "/v1/robot-task/multi-robot-contract-audit",
+    # E4 model economy — local models only (2026-09-21)
+    "/v1/model/compare",
+    "/v1/token-estimate",
+    "/v1/prompt-cost-budget",
+    # E5 crypto quick-resolve (2026-09-21)
+    "/v1/eth/gas",
+    "/v1/eth/wallet-snapshot",
+    "/v1/eth/tx-status",
+    "/v1/eth/token-meta",
+    "/v1/crypto/price",
+    "/v1/crypto/gas-multi",
+    "/v1/crypto/portfolio",
 }
 PUBLIC_RESOURCE_SPECS: dict[str, dict[str, str]] = {
     "manifest.ai": {"uri": "ddg://manifest/ai", "path": "/.well-known/ai", "mime_type": "application/json", "title": "DDG AI manifest"},
@@ -1023,7 +1053,7 @@ def ddg_list_models() -> dict[str, Any]:
     """List local/free Ollama models and queryable paid/account-backed route labels."""
     ollama = _json_request("/v1/ollama-models")
     catalog = _json_request("/.well-known/agent-catalog.json")
-    return {"ollama": ollama, "queryable_model_routes": catalog.get("body", {}).get("queryable_model_routes", [])}
+    return {"ollama": ollama, "queryable_model_routes": [], "note": "account-backed routes retired 2026-09-21; local models only"}
 
 
 @mcp.tool()
@@ -1041,7 +1071,7 @@ def ddg_list_local_runtime_options() -> dict[str, Any]:
 
 
 @mcp.tool()
-def ddg_quote_payment(path: str = "/v1/model/chat-completions", agent_id: str | None = None) -> dict[str, Any]:
+def ddg_quote_payment(path: str = "/v1/tx-smoke-test", agent_id: str | None = None) -> dict[str, Any]:
     """Return the payment challenge for a supported DDG protected route without executing backend compute."""
     try:
         safe_path = _safe_quote_path(path)
@@ -1049,15 +1079,19 @@ def ddg_quote_payment(path: str = "/v1/model/chat-completions", agent_id: str | 
         return {"status": 0, "headers": {}, "body": {"error": str(exc)}}
     payload: dict[str, Any]
     if safe_path == "/v1/model/agent-run":
-        payload = {"route": "kimi-code/k2.7", "task": "quote"}
+        payload = {"route": "qwen2.5-coder:7b", "task": "quote"}
     elif safe_path == "/v1/order-intake":
         payload = {"service_id": "agent_payment_readiness_audit", "request": {"quote": True}}
     elif safe_path == "/v1/ai-skill-safety-scan":
         payload = {"label": "quote", "skill_markdown": "# quote"}
     elif safe_path == "/v1/ollama-model-request":
         payload = {"model": "llama3.1:8b", "runtime": "ollama", "reason": "quote"}
+    elif safe_path == "/v1/html-to-structured":
+        payload = {"html": "<p>quote</p>", "selectors": {"text": "p"}}
+    elif safe_path == "/v1/tx-smoke-test":
+        payload = {"input": "quote"}
     else:
-        payload = {"model": "glm-5.2", "messages": [{"role": "user", "content": "quote"}]}
+        payload = {"input": "quote"}
     return _json_request(safe_path, method="POST", payload=payload, agent_id=agent_id)
 
 
@@ -1069,18 +1103,12 @@ def ddg_run_paid_model(route: str, prompt: str, payment_headers: dict[str, str] 
     except ValueError as exc:
         return {"status": 0, "headers": {}, "body": {"error": str(exc)}}
     safe_prompt = _bounded_text(prompt, MAX_PROMPT_CHARS)
-    if safe_route.startswith(("kimi-code/", "claude-code/", "ollama/")):
-        return _json_request(
-            "/v1/model/agent-run",
-            method="POST",
-            payload={"route": safe_route, "task": safe_prompt},
-            headers=payment_headers or {},
-            agent_id=agent_id,
-        )
+    if safe_route.startswith(("kimi-code/", "claude-code/")):
+        return {"status": 503, "headers": {}, "body": {"error": "route_retired_inhouse_only", "message": "Account-backed model routes are no longer sold; DDG keeps that capacity in-house. Use ollama/* routes."}}
     return _json_request(
-        "/v1/model/chat-completions",
+        "/v1/model/agent-run",
         method="POST",
-        payload={"model": safe_route, "messages": [{"role": "user", "content": safe_prompt}]},
+        payload={"route": safe_route, "task": safe_prompt},
         headers=payment_headers or {},
         agent_id=agent_id,
     )
@@ -1237,6 +1265,178 @@ def ddg_data_query(
         return {"status": 0, "headers": {}, "body": {"error": "body_must_be_object"}}
     return _json_request(safe_path, method="POST", payload=body or {}, headers=payment_headers or {}, agent_id=agent_id)
 
+
+
+# ── E1 commodities (2026-09-21) ──────────────────────────────────────────────
+@mcp.tool()
+def ddg_html_to_structured(html: str, selectors: dict[str, str], mode: str = "all", attr: str | None = None, agent_id: str | None = None) -> dict[str, Any]:
+    """Extract structured JSON from raw HTML via CSS selectors ($0.002). selectors={'name': 'css'}."""
+    payload: dict[str, Any] = {"html": _bounded_text(html, 512_000), "selectors": selectors, "mode": mode}
+    if attr:
+        payload["attr"] = attr
+    return _json_request("/v1/html-to-structured", method="POST", payload=payload, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_table_extract(html: str, format: str = "json", agent_id: str | None = None) -> dict[str, Any]:
+    """Extract HTML tables as JSON rows or CSV ($0.003)."""
+    return _json_request("/v1/table-extract", method="POST", payload={"html": _bounded_text(html, 512_000), "format": format}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_regex_builder(kind: str | None = None, text: str | None = None, pattern: str | None = None, samples: list[str] | None = None, ignore_case: bool = False, agent_id: str | None = None) -> dict[str, Any]:
+    """Named regex template (email, url, eth_address, tx_hash, ...) with live matching, or test a pattern against samples with ReDoS risk ($0.002)."""
+    payload: dict[str, Any] = {"ignore_case": ignore_case}
+    if kind:
+        payload.update({"action": "build", "kind": kind, "text": text})
+    else:
+        payload.update({"action": "test", "pattern": pattern, "samples": samples or []})
+    return _json_request("/v1/regex-builder", method="POST", payload=payload, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_card_fingerprint(number: str, agent_id: str | None = None) -> dict[str, Any]:
+    """BIN/IIN fingerprint: network, expected length, Luhn validation. Masked output ($0.002)."""
+    return _json_request("/v1/card-fingerprint", method="POST", payload={"number": number}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_address_validate(address: str, agent_id: str | None = None) -> dict[str, Any]:
+    """US street address parse + normalize with completeness score ($0.003)."""
+    return _json_request("/v1/address-validate", method="POST", payload={"address": address}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_calendar_parse(dates: list[str] | str, assume_timezone: str = "UTC", agent_id: str | None = None) -> dict[str, Any]:
+    """Parse 20+ datetime formats -> ISO/UTC + epoch + day-of-week, optional ICS ($0.001)."""
+    return _json_request("/v1/calendar-parse", method="POST", payload={"dates": dates, "assume_timezone": assume_timezone}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_phone_intel(phone: str, region: str = "US", agent_id: str | None = None) -> dict[str, Any]:
+    """Phone parse/validate: E.164, country, line type, carrier hint ($0.002)."""
+    return _json_request("/v1/phone-intel", method="POST", payload={"phone": phone, "region": region}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_domain_age(domain: str, agent_id: str | None = None) -> dict[str, Any]:
+    """WHOIS domain creation date + age + trust band ($0.001)."""
+    return _json_request("/v1/domain-age", method="POST", payload={"domain": domain}, headers={}, agent_id=agent_id)
+
+
+# ── E2 trust primitives (2026-09-21) ─────────────────────────────────────────
+@mcp.tool()
+def ddg_agent_reputation_lookup(agent_id: str | None = None, endpoint: str | None = None, pay_to: str | None = None, agent_id_hdr: str | None = None) -> dict[str, Any]:
+    """Reputation for an agent id / seller endpoint / payTo: DDG-rail settlement history + public signals, explainable score ($0.002)."""
+    return _json_request("/v1/agent-reputation-lookup", method="POST", payload={"agent_id": agent_id, "endpoint": endpoint, "pay_to": pay_to}, headers={}, agent_id=agent_id_hdr)
+
+
+@mcp.tool()
+def ddg_seller_trust_badge(url: str, agent_id: str | None = None) -> dict[str, Any]:
+    """Live conformance check of a seller endpoint -> gold/silver/bronze badge ($0.003). Checks discovery manifest, real 402, challenge shape, payTo consistency."""
+    return _json_request("/v1/seller-trust-badge", method="POST", payload={"url": url}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_dispute_evidence_pack(receipt_ids: list[str] | None = None, tx_hashes: list[str] | None = None, agent_id: str | None = None) -> dict[str, Any]:
+    """Bundle DDG receipt lookups + Base on-chain tx proofs into a sha256-pinned evidence file ($0.05)."""
+    return _json_request("/v1/dispute-evidence-pack", method="POST", payload={"receipt_ids": receipt_ids or [], "tx_hashes": tx_hashes or []}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_receipt_escrow_release(seller_pay_to: str, evidence_url: str | None = None, payment_headers: dict[str, str] | None = None, agent_id: str | None = None) -> dict[str, Any]:
+    """Open an escrow case: DDG holds the release decision until a completion receipt validates ($0.01, operator-verified)."""
+    payload: dict[str, Any] = {"seller_pay_to": seller_pay_to}
+    if evidence_url:
+        payload["evidence_url"] = evidence_url
+    return _json_request("/v1/receipt-escrow-release", method="POST", payload=payload, headers=payment_headers or {}, agent_id=agent_id)
+
+
+# ── E3 robotics expansion (2026-09-21) ───────────────────────────────────────
+@mcp.tool()
+def ddg_robot_fleet_quota_audit(spec: dict[str, Any], agent_id: str | None = None) -> dict[str, Any]:
+    """Robot fleet spend-quota audit: per-robot caps, aggregate cap, unique ids, rate bound ($0.01)."""
+    return _json_request("/v1/robot-fleet/quota-audit", method="POST", payload={"spec": spec}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_robot_geo_fence_audit(spec: dict[str, Any], agent_id: str | None = None) -> dict[str, Any]:
+    """Physical/geographic authority audit: geofence, vertical bounds, outdoor scoping, speed cap ($0.01)."""
+    return _json_request("/v1/robot-task/geo-fence-audit", method="POST", payload={"spec": spec}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_robot_human_takeover_audit(spec: dict[str, Any], agent_id: str | None = None) -> dict[str, Any]:
+    """Human handback audit: pause signal, handover latency, operator ack, resume policy ($0.01)."""
+    return _json_request("/v1/robot/human-takeover-audit", method="POST", payload={"spec": spec}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_robot_delegation_chain_audit(spec: dict[str, Any], agent_id: str | None = None) -> dict[str, Any]:
+    """Multi-robot delegation-contract audit: monotone caps, per-hop expiry + revocation, chain aggregate ($0.01)."""
+    return _json_request("/v1/robot-task/multi-robot-contract-audit", method="POST", payload={"spec": spec}, headers={}, agent_id=agent_id)
+
+
+# ── E4 model economy — LOCAL MODELS ONLY (2026-09-21) ────────────────────────
+@mcp.tool()
+def ddg_model_compare(prompt: str, models: list[str] | None = None, max_output_tokens: int = 300, agent_id: str | None = None) -> dict[str, Any]:
+    """Same prompt to 2-3 LOCAL models (Ollama) with agreement score ($0.01). Account-backed models are rejected."""
+    return _json_request("/v1/model/compare", method="POST", payload={"prompt": prompt, "models": models, "max_output_tokens": max_output_tokens}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_token_estimate(text: str | list[str], agent_id: str | None = None) -> dict[str, Any]:
+    """Deterministic token estimates per model family before a metered call ($0.001)."""
+    return _json_request("/v1/token-estimate", method="POST", payload={"text": text}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_prompt_cost_budget(calls: int = 1, text: str | None = None, agent_id: str | None = None) -> dict[str, Any]:
+    """Cost ladder for a workload across DDG routes, cheapest first ($0.002)."""
+    return _json_request("/v1/prompt-cost-budget", method="POST", payload={"calls": calls, "text": text}, headers={}, agent_id=agent_id)
+
+
+# ── E5 crypto quick-resolve (2026-09-21) ─────────────────────────────────────
+@mcp.tool()
+def ddg_eth_gas(chain: str = "ethereum", agent_id: str | None = None) -> dict[str, Any]:
+    """Gas price, base fee trend, priority bands, simple-transfer cost USD ($0.001). Chains: ethereum/base/arbitrum/optimism."""
+    return _json_request("/v1/eth/gas", method="POST", payload={"chain": chain}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_wallet_snapshot(address: str, chain: str = "base", tokens: list[str] | None = None, agent_id: str | None = None) -> dict[str, Any]:
+    """Native + USDC balance (+optional extra ERC-20s) for an address ($0.002)."""
+    return _json_request("/v1/eth/wallet-snapshot", method="POST", payload={"address": address, "chain": chain, "tokens": tokens or []}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_tx_status(tx_hash: str, chain: str = "base", agent_id: str | None = None) -> dict[str, Any]:
+    """Transaction receipt: mined?, success?, block, gas, cost ($0.001)."""
+    return _json_request("/v1/eth/tx-status", method="POST", payload={"tx_hash": tx_hash, "chain": chain}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_token_meta(contract: str, chain: str = "base", agent_id: str | None = None) -> dict[str, Any]:
+    """ERC-20 metadata: name, symbol, decimals, total supply ($0.001)."""
+    return _json_request("/v1/eth/token-meta", method="POST", payload={"contract": contract, "chain": chain}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_crypto_price(symbols: list[str] | str, agent_id: str | None = None) -> dict[str, Any]:
+    """USD prices for eth/usdc/usdt/wbtc/aero/degen etc. 60s cached ($0.001)."""
+    return _json_request("/v1/crypto/price", method="POST", payload={"symbols": symbols}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_gas_multi(chains: list[str] | None = None, agent_id: str | None = None) -> dict[str, Any]:
+    """Gas + transfer cost across ethereum/base/arbitrum/optimism in one call ($0.002)."""
+    return _json_request("/v1/crypto/gas-multi", method="POST", payload={"chains": chains}, headers={}, agent_id=agent_id)
+
+
+@mcp.tool()
+def ddg_crypto_portfolio(addresses: list[str] | str, agent_id: str | None = None) -> dict[str, Any]:
+    """Consolidated USD value of 1-10 addresses (native + USDC on ethereum/base) ($0.003)."""
+    return _json_request("/v1/crypto/portfolio", method="POST", payload={"addresses": addresses}, headers={}, agent_id=agent_id)
 
 
 def main() -> None:

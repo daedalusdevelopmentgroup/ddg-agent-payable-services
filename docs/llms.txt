@@ -6,7 +6,7 @@ Contact: 0xcircuitbreaker@protonmail.com
 Buyer-agent summary: DDG Agent Services sells pay-per-call x402/direct-crypto audits, proofs, repair packs, and bounded artifacts for AI agents. Start with `/v1/tx-smoke-test` ($0.01), then `/v1/site-audit` ($0.01), `/v1/agent-readiness-scorecard` ($0.01), /v1/agent-discovery-pack ($0.01), /v1/agent-payment-readiness-audit ($0.01), or /v1/mcp-tool-security-audit ($0.01). DDG is the agent-commerce audit/proof/security layer for x402, MCP, OpenAPI, llms.txt, receipts, and bounded artifacts, not a generic gateway for every operation.
 
 Live payment protocols: MPP, x402, direct_crypto_auto, and direct_crypto_manual. MPP/Tempo is settlement-proven live on /v1/tx-smoke-test (receipt hash c0e160a79ab9376daa6d9f2aed1486e4, 2026-06-30T07:16:57Z). x402 advertises Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC; x402 CDP/Bazaar facilitator settlement and indexing remain pending until CDP business approval or a self-hosted facilitator is integrated. direct crypto publishes receiving addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
-Current OpenAPI surface: 146 discoverable HTTP operations: 107 paid and 39 genuinely free. Fulfillment is 91 automated, 39 operator-queued, and 16 discovery-only operations.
+Current OpenAPI surface: 158 discoverable HTTP operations: 115 paid and 43 genuinely free. Fulfillment is 103 automated, 39 operator-queued, and 16 discovery-only operations.
 Canonical pricing/status catalog: /.well-known/ddg-agent-pricing.json
 AI discovery endpoint: /.well-known/ai (alias /ai)
 API linkset catalog: /.well-known/api-catalog
@@ -26,7 +26,7 @@ DDG sells budgeted application/model-router output and operator-reviewable agent
 
 ## Live runtime endpoints
 
-These routes are implemented in the current payment edge. OpenAPI includes 146 discoverable operations: automated routes, operator-fulfilled live service aliases that queue paid orders and return status/artifact URLs, paid utility/tool services, and intentionally free utility/discovery routes.
+These routes are implemented in the current payment edge. OpenAPI includes 158 discoverable operations: automated routes, operator-fulfilled live service aliases that queue paid orders and return status/artifact URLs, paid utility/tool services, and intentionally free utility/discovery routes.
 
 0. POST /v1/tx-smoke-test — one-cent paid transaction smoke test for AI agents; returns a receipt-only JSON proof that payment worked. Launch price: $0.01.
 1. POST /v1/site-audit — paid automated website audit. Read-only. Launch price: $0.01.
@@ -59,6 +59,21 @@ These routes are implemented in the current payment edge. OpenAPI includes 146 d
 25. POST /v1/wake/schedule ($0.01) — schedule a wake call (webhook at/after a time, retry policy); /v1/wake/feed ($0.001) lists upcoming/delivered wakes; /v1/wake/status (free) + /v1/wake/cancel (free) manage one wake by id.
 26. POST /v1/trust/check ($0.01) — adversarial pre-flight check of any x402 endpoint BEFORE paying it: real 402-handshake probe, payTo-rotation/price/network drift vs last probe, HMAC-signed verdict (ok | drift | payto_rotated | unreachable | invalid), 10-min per-URL cache; /v1/trust/history ($0.001) reads stored probes; /v1/trust/watch (free) lowers a URL's cache TTL.
 27. POST /v1/sla/declare (free, $0.001 edge floor) — declare an SLA for a URL you control in x402-signals vocabulary; domain provenance is proven by hosting a nonce at <url>/.well-known/ddg-sla-verify-<nonce>.txt, then the declaration is signed ACTIVE. POST /v1/sla/breach-check ($0.01) probes a URL once and returns ok | breach{declared, observed}; with payment_ref it issues an HMAC-signed BreachCertificate (evidence only - no funds move, zero custody). /v1/sla/monitor ($0.01 per 7-day window) re-probes every 5 minutes (global cap 100); /v1/sla/report ($0.001 floor) aggregates uptime_pct, p95_ms, breach_count, certificates.
+28. POST /v1/model-demand-tracker (free) — vote for model services you want DDG to offer. Phase 1 tracks qwen-3.8-27b (150k context slot via Tailscale). One vote per agent per model per 24h; DDG stands up the service when distinct-agent demand clears the threshold (25). Zero payment, zero custody.
+
+### Deep research, seller reputation, and run certification (E13-E15)
+
+29. POST /v1/research/search-multi ($0.01) — multi-engine web search: query decomposition (up to 5 variants), SearXNG 20+ engine fan-out, URL dedupe by normalized URL, diversity ranking (engine diversity + position + domain diversity), 5-min cache. Returns structured results with per-engine provenance.
+30. POST /v1/research/page-pack ($0.005) — fetch 1-5 URLs to clean markdown/text (64KB cap/page, SSRF-guarded, sha256 each). Bulk extraction for agent reasoning pipelines.
+31. POST /v1/research/deep ($0.05) — deep research pipeline: sub-query decomposition → multi-engine search → page fetch → cited synthesis (extractive passages by default, optional GLM-LLM 200-word brief with [n] citations). The "do my research" route.
+32. POST /v1/research/status (free) — research tier status, per-route prices, 24h call counts.
+33. POST /v1/reputation/score ($0.01) — seller reputation grade A-F from real E10 probe history: ok-rate, payTo stability, verdict counts. Fail-closed ("unprobed" if no data).
+34. POST /v1/reputation/alert ($0.01/7d) — register a 7-day drift watch with HMAC-signed webhook delivery (alerts on verdict change, back_online, went_dark). Daemon sweep every 5 min, ≤60 probes/hr global.
+35. POST /v1/reputation/alerts (free) — read your watch's alert history.
+36. POST /v1/reputation/leaderboard ($0.01) — top sellers by ok-rate with probe counts and grades. The "who should I buy from" discovery surface.
+37. POST /v1/certify/run ($0.02) — third-party certification of an opentine .tine artifact: format validation, per-step content-address integrity, chain consistency, completeness. HMAC-signed certification (certified or rejected with machine-readable reasons). Fail-closed. Cached 24h.
+38. POST /v1/certify/verify (free) — verify a stored certification by cert_id, or re-verify a statement+sig pair (tamper-rejecting).
+39. POST /v1/certify/verify-remote ($0.01) — fetch a .tine from a URL (SSRF-guarded, 512KB cap), certify it, optionally match expected sha256. The buyer-side flow: certify the sub-agent's work product before paying.
 
 AI-client traffic should send:
 - Idempotency-Key header for POST requests.
@@ -69,8 +84,8 @@ AI-client traffic should send:
   - low (maps to GLM-4.5-Air)
   - budget (maps to GLM-4.5)
   - standard (maps to GLM-5-turbo)
-  - pro (maps to GPT-5.3-Codex)
-  - premium (maps to GPT-5.5)
+  - pro (maps to GPT-6-Luna)
+  - premium (maps to GPT-6-Astra)
 
 Recommended request defaults:
 
@@ -95,7 +110,7 @@ Recommended request defaults:
 - Premium path (for critical/legal quality tasks):
 ```json
 {
-  "model": "gpt-5.5",
+  "model": "gpt-6-astra",
   "x_router": { "max_charge_usd": 1.0, "max_model_tier": "premium" },
   "messages": [{"role":"user","content":"write policy-sensitive production release note"}]
 }
@@ -138,9 +153,9 @@ No public catalog service entries remain planned. Former planned items are now p
 
 ## Model-router offer
 
-Live public chat-completions aliases are API/commercial-route candidates only: auto, mini/ministal/x/y/z, budget, starter, agent-small, agent-standard, agent-pro, agent-max, glm-4.5-air, glm-4.5, glm-4.6, glm-4.7, glm-5, glm-5-turbo, glm-5.1, glm-5.2, gpt-5.3-codex-spark, gpt-5.3-codex, gpt-5.4, gpt-5.5, claude-haiku-4.5, claude-sonnet-4.6, claude-opus-4.8.
+Live public chat-completions aliases are API/commercial-route candidates only: auto, mini/ministal/x/y/z, budget, starter, agent-small, agent-standard, agent-pro, agent-max, glm-4.5-air, glm-4.5, glm-4.6, glm-4.7, glm-5, glm-5-turbo, glm-5.1, glm-5.2, gpt-6-luna, gpt-6-astra (high surcharge), gpt-5.6-luna, gpt-5.6-terra, gpt-5.6-sol (high surcharge), claude-opus-5.5, claude-fable-5.1, claude-sonnet-5, claude-sonnet-4.6. Retired 2026-09-23: gpt-5.3-codex-spark, gpt-5.3-codex, gpt-5.4, gpt-5.5, claude-haiku-4.5, claude-opus-4.8. All models default to MEDIUM effort at list price; any other effort level (low/high/xhigh) accrues a surcharge (2x high, 3x xhigh) so DDG never loses money on usage.
 
-Live agent-run routes are selectable local runtime artifact routes: `ollama/<model>`, `llama.cpp/<model>`, and `lm_studio/<model>` when the requested model is listed healthy in `/v1/ollama-models`. Agents may also pass `{ "model": "...", "runtime": "ollama|llama.cpp|lm_studio" }`. Local runtime routes are FREE FOR A LIMITED TIME as best-effort/no-SLA capacity and use one concurrent local generation seat per healthy configured local runtime endpoint, capped at two by default for a two configured 8GB-VRAM runtime backends. Defaults are 24-hour per-agent lease, 100 requests/lease on the swarm preview, 60s swarm generation timeout, and 120s local agent-run timeout; the same stable agent identity can reuse after lease expiry. After the promo, only local models 4B and smaller remain free and larger local models move to paid/operator-approved capacity. Provider-backed DDG-operated artifact routes are implemented but env-gated/manual-approved: kimi-code/k2.7 and claude-code/default. These are never raw account/API resale: DDG operates the task, enforces payment/budget/sandbox controls, and returns artifacts/results without exposing provider credentials, account credentials, or seats.
+Live agent-run routes are selectable local runtime artifact routes: `ollama/<model>`, `llama.cpp/<model>`, and `lm_studio/<model>` when the requested model is listed healthy in `/v1/ollama-models`. Agents may also pass `{ "model": "...", "runtime": "ollama|llama.cpp|lm_studio" }`. Local runtime routes are FREE FOR A LIMITED TIME as best-effort/no-SLA capacity and use one concurrent local generation seat per healthy configured local runtime endpoint, capped at two by default for a two configured 8GB-VRAM runtime backends. Defaults are 24-hour per-agent lease, 100 requests/lease on the swarm preview, 60s swarm generation timeout, and 120s local agent-run timeout; the same stable agent identity can reuse after lease expiry. After the promo, only local models 4B and smaller remain free and larger local models move to paid/operator-approved capacity. Provider-backed DDG-operated artifact routes are implemented but env-gated/manual-approved: claude-code/default (opus-5.5, fable-5.1, sonnet-5, sonnet-4.6). Kimi Code artifact routes were retired 2026-09-23. These are never raw account/API resale: DDG operates the task, enforces payment/budget/sandbox controls, and returns artifacts/results without exposing provider credentials, account credentials, or seats.
 
 ## Upstream local-model transparency
 
@@ -208,7 +223,6 @@ Priority A/B rollout models:
 Post-promo policy: <=4B local models remain free; >4B local routes become paid/operator-approved capacity. Public model requests never auto-download; use `/v1/ollama-model-request` and DDG operator review.
 
 ## Queryable paid artifact/model routes
-- `kimi-code/k2.7` — Kimi K2.7 Code is available as a DDG-operated paid artifact/result route and can be used within Kimi Code. Use `/v1/model/agent-run`; DDG returns bounded outputs/artifacts only and never transfers provider credentials, account seats, or raw sessions.
 
 ## Agent-swarm MCP and cybersecurity services
 - MCP server design: `/mcp/ddg-agent-swarm-mcp-design.md`; initial stdio skeleton: `sales_artifacts/agent_payments/mcp/ddg_agent_services_mcp_server.py`.

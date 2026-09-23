@@ -25,18 +25,18 @@
     "description": "Machine-payable DDG services for AI agents. Current public live payment rails are x402 multi-chain USDC and direct-crypto auto/manual for public receiving-address families. MPP/Stripe/Tempo is installed but pending live provider env plus penny-settlement proof before any MPP-live advertisement. DDG sells bounded artifacts/results, not raw provider account access.",
     "title": "DDG Agent-Payable Services",
     "version": "0.6.0",
-    "x-guidance": "DDG publishes 146 discoverable HTTP operations from one canonical registry: 107 paid and 39 genuinely free. Use POST /v1/services/search to choose a service. Paid operations return HTTP 402 when called without payment; free operations declare security: []. Send X-Agent-Id for identity and rate limiting. No paid operation grants promotional credits.",
+    "x-guidance": "DDG publishes 158 discoverable HTTP operations from one canonical registry: 115 paid and 43 genuinely free. Use POST /v1/services/search to choose a service. Paid operations return HTTP 402 when called without payment; free operations declare security: []. Send X-Agent-Id for identity and rate limiting. No paid operation grants promotional credits.",
     "x-service-counts": {
       "aliases": 3,
-      "automated_fulfillment_operations": 91,
-      "available_operations": 146,
+      "automated_fulfillment_operations": 103,
+      "available_operations": 158,
       "discovery_operations": 16,
-      "free_operations": 39,
-      "http_operations": 146,
+      "free_operations": 43,
+      "http_operations": 158,
       "operator_fulfilled_operations": 39,
-      "paid_operations": 107,
+      "paid_operations": 115,
       "unavailable_operations": 14,
-      "unique_services": 143
+      "unique_services": 155
     }
   },
   "openapi": "3.1.0",
@@ -3006,6 +3006,162 @@
         "x-price-usd": "0.01",
         "x-risk": "non_spending_or_approval_gated_spending",
         "x-service-id": "buyer_agent_smoke_probe"
+      }
+    },
+    "/v1/certify/run": {
+      "post": {
+        "description": "Body {tine_b64 <= 512KB decoded} or {tine}. Runs the four .tine v2 checks in order (format, step_hashes, chain, completeness); a certified verdict requires all four, any failure is rejected fail closed with reasons[] (step_hash_mismatch@i, duplicate_step_hash@i, chain_link_mismatch@i, chain_root_link_invalid@0, chain_sequence_mismatch, chain_root_hash_mismatch, parent_ref_malformed, parent_step_index_invalid, parent_step_index_out_of_range, dangling_step_ref@i, step_index_mismatch@i, run_id_invalid, artifact_not_json, artifact_not_object, ...). Returns {certification_id:'crt_<16hex>', result:'certified'|'rejected', reason, reasons[], checks:[{name:'format'|'step_hashes'|'chain'|'completeness', pass, detail}], artifact_sha256 (canonical content digest), body_sha256 (exact submitted bytes), steps_verified, issued_at, key_id, sig, statement, cached:false, disclaimer}. Re-certifying the identical artifact inside DDG_CERTIFY_CACHE_TTL_SECONDS (default 24h) returns the stored certification with cached:true and re-signs nothing. Body {tine_hash} (64 hex) reads back a stored certification by digest, 404 when the digest was never certified. Result is a signed fact about provenance, not a judgement about the work.",
+        "operationId": "certify_run",
+        "responses": {
+          "200": {
+            "description": "Signed certification statement: result certified|rejected, the four checks, reasons[] ([] when certified), artifact_sha256, body_sha256, certification_id, issued_at, key_id, sig. A cached:true body is the stored certification re-read (no re-sign)."
+          },
+          "400": {
+            "description": "missing_artifact (neither tine_b64 nor tine_hash), invalid_base64, tine_hash_invalid."
+          },
+          "402": {
+            "description": "Edge x402 challenge (the route is paid at $0.02; a paid tier route is dispatched after the payment gate)."
+          },
+          "404": {
+            "description": "artifact_not_certified (tine_hash not in the registry; bodies are never stored, certify with tine_b64 first)."
+          },
+          "413": {
+            "description": "artifact_too_large (decoded artifact above DDG_CERTIFY_MAX_BYTES, hard ceiling 512KB)."
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ],
+        "summary": "Certify an uploaded .tine v2 artifact ($0.02) or read a stored certification by tine_hash.",
+        "tags": [
+          "provenance",
+          "certification",
+          "opentine",
+          "tine",
+          "paid"
+        ],
+        "x-availability": "available",
+        "x-backend": "opentine_verifier_sqlite",
+        "x-expected-latency": "<1s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": null,
+        "x-payment-info": {
+          "price": {
+            "amount": "0.02",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.02",
+        "x-risk": "low",
+        "x-service-id": "v1_certify_run"
+      }
+    },
+    "/v1/certify/verify": {
+      "post": {
+        "description": "Body {cert_id} (alias certification_id) OR {statement, sig}. By cert_id: reads the stored row and re-verifies the statement against its signature, returning {ok, valid, checks_pass, issued_at, certification_id, result, artifact_sha256, reasons[], key_id, source:'registry', disclaimer}. By statement+sig: recomputes the HMAC over the canonical statement -- a mutated field (result, artifact_sha256, issued_at, steps_verified, key_id, ...) or a flipped sig nibble returns valid:false rather than an error. A stored rejection is a signed fact too: valid:true with result 'rejected' and checks_pass:false. Never writes, never moves funds.",
+        "operationId": "certify_verify",
+        "responses": {
+          "200": {
+            "description": "The re-verified certification: valid, checks_pass, issued_at, certification_id, result, artifact_sha256, reasons[]. valid:false is the fail-closed answer for a tampered statement or row."
+          },
+          "400": {
+            "description": "cert_id_or_statement_required, invalid_statement ('statement' is not an object), missing_sig."
+          },
+          "404": {
+            "description": "certification_not_found (unknown cert_id in this registry)."
+          }
+        },
+        "security": [],
+        "summary": "Verify a stored certification by id, or any {statement, sig} pair independently (free).",
+        "tags": [
+          "provenance",
+          "certification",
+          "verification",
+          "tamper-evident",
+          "free"
+        ],
+        "x-availability": "available",
+        "x-backend": "opentine_verifier_sqlite",
+        "x-expected-latency": "<1s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": null,
+        "x-price-usd": "0",
+        "x-risk": "low",
+        "x-service-id": "v1_certify_verify"
+      }
+    },
+    "/v1/certify/verify-remote": {
+      "post": {
+        "description": "Body {url (https), expect_sha256? (64 hex)}. Fetches the artifact with the e10 SSRF guard and the pinned opener, certifies the fetched bytes and returns the same signed certification body as /v1/certify/run plus {source_url, upstream_status, fetched_bytes, expect_sha256_matched: true|false|null, service:'certify_verify_remote'}; a 512KB+ body is refused before hashing. expect_sha256 matches either artifact_sha256 (canonical content digest) or body_sha256 (exact bytes); a mismatch returns result:'rejected' with reasons[] containing expect_sha256_mismatch, expect_sha256_matched:false and no certification_id/sig (nothing new is attested about the artifact). Re-certifying an artifact already in the registry inside the cache TTL returns the stored certification with cached:true.",
+        "operationId": "certify_verify_remote",
+        "responses": {
+          "200": {
+            "description": "Signed certification of the fetched artifact: result certified|rejected, checks[4], reasons[], artifact_sha256, body_sha256, certification_id, issued_at, key_id, sig, source_url, upstream_status, fetched_bytes, expect_sha256_matched, cached."
+          },
+          "400": {
+            "description": "url_required, expect_sha256_invalid (not 64 hex chars)."
+          },
+          "402": {
+            "description": "Edge x402 challenge (the route is paid at $0.01)."
+          },
+          "413": {
+            "description": "artifact_too_large (fetched body above DDG_CERTIFY_MAX_BYTES, hard ceiling 512KB)."
+          },
+          "422": {
+            "description": "SSRF-policy refusals: target_scheme_not_allowed, target_credentials_not_allowed, target_port_not_allowed, target_private_address_blocked, url_invalid, url_too_long."
+          },
+          "502": {
+            "description": "fetch_failed / fetch_http_error (upstream unreachable, timed out or returned a non-2xx status)."
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ],
+        "summary": "Fetch a .tine from a URL, certify it and compare expect_sha256 before paying ($0.01).",
+        "tags": [
+          "provenance",
+          "certification",
+          "remote",
+          "ssrf-guarded",
+          "agent-to-agent",
+          "paid"
+        ],
+        "x-availability": "available",
+        "x-backend": "opentine_verifier_sqlite",
+        "x-expected-latency": "<10s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": null,
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-risk": "low",
+        "x-service-id": "v1_certify_verify_remote"
       }
     },
     "/v1/code-execution": {
@@ -6746,6 +6902,56 @@
         "x-service-id": "model_consensus"
       }
     },
+    "/v1/model-demand-tracker": {
+      "post": {
+        "description": "Free model-demand tracker: AI agents vote for model services they want DDG to offer. Phase 1 tracks qwen-3.8-27b (150k context Tailscale slot). One vote per agent per model per 24h.",
+        "operationId": "v1_model_demand_tracker",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [],
+        "summary": "Free model-demand tracker: AI agents vote for model services they want DDG to offer. Phase 1 tracks qwen-3.8-27b (150k context Tailscale slot). One vote per age",
+        "x-availability": "available",
+        "x-backend": "local_sqlite",
+        "x-expected-latency": "1-3s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-price-usd": "0",
+        "x-risk": "low",
+        "x-service-id": "v1_model_demand_tracker"
+      }
+    },
     "/v1/model/agent-run": {
       "post": {
         "description": "Runs bounded agent/model tasks. Local Ollama routes are free for a limited ti...",
@@ -9792,6 +9998,254 @@
         "x-service-id": "repo_context_pack"
       }
     },
+    "/v1/reputation/alert": {
+      "post": {
+        "description": "Register a 7-day drift watch with HMAC-signed webhook delivery. Alerts on verdict change, back_online, went_dark. $0.01/window.",
+        "operationId": "reputation_alert",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ],
+        "summary": "Register a 7-day drift watch with HMAC-signed webhook delivery. Alerts on verdict change, back_online, went_dark. $0.01/window.",
+        "x-availability": "available",
+        "x-backend": "local_sqlite",
+        "x-expected-latency": "1-5s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-risk": "low",
+        "x-service-id": "reputation_alert"
+      }
+    },
+    "/v1/reputation/alerts": {
+      "post": {
+        "description": "Read your watch's alert history. Free.",
+        "operationId": "reputation_alerts",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [],
+        "summary": "Read your watch's alert history. Free.",
+        "x-availability": "available",
+        "x-backend": "local_sqlite",
+        "x-expected-latency": "1-3s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-price-usd": "0",
+        "x-risk": "low",
+        "x-service-id": "reputation_alerts"
+      }
+    },
+    "/v1/reputation/leaderboard": {
+      "post": {
+        "description": "Top sellers by ok-rate with probe counts and grades. The 'who should I buy from' surface. $0.01.",
+        "operationId": "reputation_leaderboard",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ],
+        "summary": "Top sellers by ok-rate with probe counts and grades. The 'who should I buy from' surface. $0.01.",
+        "x-availability": "available",
+        "x-backend": "local_sqlite",
+        "x-expected-latency": "1-5s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-risk": "low",
+        "x-service-id": "reputation_leaderboard"
+      }
+    },
+    "/v1/reputation/score": {
+      "post": {
+        "description": "Seller reputation grade A-F from E10 probe history: ok-rate, payTo stability, verdict counts. Fail-closed: 'unprobed' if no data. $0.01.",
+        "operationId": "reputation_score",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ],
+        "summary": "Seller reputation grade A-F from E10 probe history: ok-rate, payTo stability, verdict counts. Fail-closed: 'unprobed' if no data. $0.01.",
+        "x-availability": "available",
+        "x-backend": "local_sqlite",
+        "x-expected-latency": "1-5s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-risk": "low",
+        "x-service-id": "reputation_score"
+      }
+    },
     "/v1/research-pack": {
       "post": {
         "description": "Paid source-linked research brief with citations, confidence notes, and launc...",
@@ -9957,6 +10411,254 @@
         "x-price-usd": "0.01",
         "x-risk": "read_only",
         "x-service-id": "paid_research_pack"
+      }
+    },
+    "/v1/research/deep": {
+      "post": {
+        "description": "Deep research: sub-query decomposition → multi-engine search → page fetch → cited synthesis (extractive or GLM-LLM). $0.05.",
+        "operationId": "research_deep",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ],
+        "summary": "Deep research: sub-query decomposition → multi-engine search → page fetch → cited synthesis (extractive or GLM-LLM). $0.05.",
+        "x-availability": "available",
+        "x-backend": "payment_edge_handler",
+        "x-expected-latency": "10-60s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.05",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.05",
+        "x-risk": "low",
+        "x-service-id": "research_deep"
+      }
+    },
+    "/v1/research/page-pack": {
+      "post": {
+        "description": "Fetch 1-5 URLs to clean markdown/text (64KB cap/page, SSRF-guarded, sha256 each). $0.005.",
+        "operationId": "research_page_pack",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ],
+        "summary": "Fetch 1-5 URLs to clean markdown/text (64KB cap/page, SSRF-guarded, sha256 each). $0.005.",
+        "x-availability": "available",
+        "x-backend": "payment_edge_handler",
+        "x-expected-latency": "3-30s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.005",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.005",
+        "x-risk": "low",
+        "x-service-id": "research_page_pack"
+      }
+    },
+    "/v1/research/search-multi": {
+      "post": {
+        "description": "Multi-engine web search: query decomposition (up to 5 variants), SearXNG 20+ engine fan-out, URL dedupe, diversity ranking, 5-min cache. $0.01.",
+        "operationId": "research_search_multi",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ],
+        "summary": "Multi-engine web search: query decomposition (up to 5 variants), SearXNG 20+ engine fan-out, URL dedupe, diversity ranking, 5-min cache. $0.01.",
+        "x-availability": "available",
+        "x-backend": "payment_edge_handler",
+        "x-expected-latency": "2-15s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-risk": "low",
+        "x-service-id": "research_search_multi"
+      }
+    },
+    "/v1/research/status": {
+      "post": {
+        "description": "Research tier status: per-route prices, 24h call counts. Free.",
+        "operationId": "research_status",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [],
+        "summary": "Research tier status: per-route prices, 24h call counts. Free.",
+        "x-availability": "available",
+        "x-backend": "payment_edge_handler",
+        "x-expected-latency": "1-3s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-price-usd": "0",
+        "x-risk": "low",
+        "x-service-id": "research_status"
       }
     },
     "/v1/robot-command/idempotency-audit": {

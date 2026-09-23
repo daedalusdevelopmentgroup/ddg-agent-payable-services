@@ -3,11 +3,10 @@
 Operator: Daedalus Development Group
 Contact: 0xcircuitbreaker@protonmail.com
 
-Lead: Pay-per-call AI agent services gateway.
-
-Buyer-agent summary: DDG Agent Services gives agents one x402/direct-crypto entry point for callable tools, OpenAI-compatible routes, readiness audits, MCP security checks, discovery repair, receipts, and marketplace-ready proof artifacts. Start with `/v1/tx-smoke-test` ($0.01), then `/v1/site-audit` ($0.03), `/v1/agent-readiness-scorecard` ($0.01), `/v1/agent-discovery-pack` ($0.01), `/v1/agent-payment-readiness-audit` ($0.02), or `/v1/mcp-tool-security-audit` ($0.02). DDG has an OpenAI-compatible gateway, but the defensible wedge is the audit/proof/security layer for x402, MCP, OpenAPI, llms.txt, receipts, and bounded artifacts.
+Buyer-agent summary: DDG Agent Services sells pay-per-call x402/direct-crypto audits, proofs, repair packs, and bounded artifacts for AI agents. Start with `/v1/tx-smoke-test` ($0.01), then `/v1/site-audit` ($0.01), `/v1/agent-readiness-scorecard` ($0.01), /v1/agent-discovery-pack ($0.01), /v1/agent-payment-readiness-audit ($0.01), or /v1/mcp-tool-security-audit ($0.01). DDG is the agent-commerce audit/proof/security layer for x402, MCP, OpenAPI, llms.txt, receipts, and bounded artifacts, not a generic gateway for every operation.
 
 Live payment protocols: MPP, x402, direct_crypto_auto, and direct_crypto_manual. MPP/Tempo is settlement-proven live on /v1/tx-smoke-test (receipt hash c0e160a79ab9376daa6d9f2aed1486e4, 2026-06-30T07:16:57Z). x402 advertises Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC; x402 CDP/Bazaar facilitator settlement and indexing remain pending until CDP business approval or a self-hosted facilitator is integrated. direct crypto publishes receiving addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
+Current OpenAPI surface: 146 discoverable HTTP operations: 107 paid and 39 genuinely free. Fulfillment is 91 automated, 39 operator-queued, and 16 discovery-only operations.
 Canonical pricing/status catalog: /.well-known/ddg-agent-pricing.json
 AI discovery endpoint: /.well-known/ai (alias /ai)
 API linkset catalog: /.well-known/api-catalog
@@ -16,43 +15,21 @@ Wildcard agent manifest: /.well-known/agents.json
 Agent catalog: /.well-known/agent-catalog.json
 Quickstart: /quickstart.md or /.well-known/ddg-agent-quickstart.md
 OpenAPI live-runtime contract: /openapi.json
+MCP one-line stdio install/run: `DDG_MCP_AGENT_ID=your-agent uvx --from ddg-agent-services-mcp ddg-agent-services-mcp`
+PyPI package: https://pypi.org/project/ddg-agent-services-mcp/
+GitHub repo: https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services
 x402 discovery manifest: /.well-known/x402 (the standard endpoint x402 directory scanners and agent crawlers look for; lists payable resources + accepted chains)
-A2A agent card: /.well-known/agent.json (Agent-to-Agent protocol discovery)
+A2A 1.0 Agent Card: /.well-known/agent-card.json; JSON-RPC endpoint: /a2a
 OpenAI plugin manifest: /.well-known/ai-plugin.json (legacy ChatGPT-plugin discovery format; points to OpenAPI)
 
 DDG sells budgeted application/model-router output and operator-reviewable agent-work artifacts to **AI agents only** — not provider credentials, account seats, auth tokens, or raw account access.
 
-## Quickstart integration (one line)
-
-OpenAI-compatible gateway - point any OpenAI SDK at DDG and pay per call via x402:
-
-    from openai import OpenAI
-    client = OpenAI(base_url="https://agents.daedalusdevelopmentgroup.com/v1", api_key="x402")
-    client.models.list()  # GET /v1/models (free, OpenAI format)
-    client.chat.completions.create(model="glm-4.5-air", messages=[{"role":"user","content":"hi"}])
-    # First call returns HTTP 402 with an x402 payment challenge; pay + retry.
-    # Metered, from $0.0002/call, NO cap - you authorize your budget, settled at actual.
-
-MCP server: `pip install ddg-agent-services-mcp` (or `uvx ddg-agent-services-mcp`); also live at https://mcp.daedalusdevelopmentgroup.com/mcp . Includes `ddg_data_query` for the paid data endpoints.
-
-Free discovery: GET /v1/model-catalog (all model tiers + per-1M-token prices) and GET /v1/models (OpenAI format). Free Ethereum RPC: POST /v1/ethereum/rpc (read-only method whitelist, 100 free calls/agent/24h, then $0.002).
-
-## New agent data endpoints (x402 bazaar top-seller categories)
-
-- POST /v1/prediction-markets - live prediction markets (Polymarket): odds, volume, liquidity, outcomes. $0.005; 10 free/agent/24h.
-- POST /v1/dex-pairs - DEX pair/liquidity/price data (DexScreener) by token symbol or contract address. $0.002; 10 free/agent/24h.
-- POST /v1/stock-price, /v1/stock-history, /v1/fx-rate, /v1/commodity-price - markets/FX/commodity data. $0.01.
-- POST /v1/hn-search, /v1/sec-filings - research data (Hacker News, SEC EDGAR). $0.01. (Twitter/Reddit/YouTube data endpoints are temporarily coming-soon while we upgrade their sources.)
-- POST /v1/structured-extract, /v1/change-detect, /v1/browser-automate, /v1/scheduled-task, /v1/webhook-deliver - agent automation primitives. $0.01.
-
-Pricing note (x402-competitive, updated 2026-07-05): utilities $0.0005-$0.005; automated audits/packs/scans capped at $0.10; metered LLM routes (/v1/chat/completions, /v1/model/agent-run) priced from $0.0002 with NO stated cap - pay for what you use. Every paid route grants free-trial calls per agent per 24h.
-
 ## Live runtime endpoints
 
-These routes are implemented in the current payment edge. OpenAPI now includes automated routes plus operator-fulfilled live service aliases that queue paid orders and return status/artifact URLs.
+These routes are implemented in the current payment edge. OpenAPI includes 146 discoverable operations: automated routes, operator-fulfilled live service aliases that queue paid orders and return status/artifact URLs, paid utility/tool services, and intentionally free utility/discovery routes.
 
 0. POST /v1/tx-smoke-test — one-cent paid transaction smoke test for AI agents; returns a receipt-only JSON proof that payment worked. Launch price: $0.01.
-1. POST /v1/site-audit — paid automated website audit. Read-only. Launch price: $0.03.
+1. POST /v1/site-audit — paid automated website audit. Read-only. Launch price: $0.01.
 2. POST /v1/model/chat-completions — paid model-router completion endpoint. OpenAI-compatible body with DDG routing extensions, budget caps, payment receipts, and no provider-key exposure.
 3. POST /v1/model/agent-run — paid bounded agent-task endpoint. Live beta allows local runtime routes across Ollama, llama.cpp, and LM Studio/llmster when the requested model is listed healthy for that runtime. Example route IDs: ollama/qwen2.5-coder:7b, llama.cpp/gemma3:270m, lm_studio/gemma3:270m. Local runtime routes are free for a limited time; provider-backed artifact routes remain paid/manual-approved.
 4. POST /v1/order-intake — paid intake/queue endpoint for all manual/beta DDG agent offerings; stores redacted order metadata and requires operator review before fulfillment or irreversible actions. Successful intake returns `status_url`, `artifact_url`, and `receipt_console_url`.
@@ -71,9 +48,17 @@ These routes are implemented in the current payment edge. OpenAPI now includes a
 17. POST /v1/agent-attestation (free) — prove agent identity + task completion with .tine provenance. Returns signed attestation.
 18. POST /v1/code-to-endpoint (paid) — wrap a function as an x402-payable HTTP endpoint. Operator-reviewed.
 19. POST /v1/tine-verify (free) — verify .tine artifact content-addressed provenance. Checks format, step hashes, tamper detection.
-20. POST /v1/tine-diff (paid) — diff two .tine artifacts. Structured comparison of agent runs.
+20. POST /v1/tine-diff (free) — diff two .tine artifacts. Structured comparison of agent runs.
 21. POST /v1/tine-provenance-chain (free) — trace the fork/parent chain of a .tine artifact. Full provenance lineage.
 22. POST /v1/receipt-verify (free) — verify a DDG receipt hash against redacted live order/audit state. Optional order_id enforces same-agent scope; never returns raw payment tokens or proofs.
+
+### Agent-native tiers (E7-E11): the agent's own commerce infrastructure
+
+23. POST /v1/inbox/{agent_id}/messages ($0.01) + /v1/inbox/messages/list ($0.001) + /v1/inbox/messages/{message_id}/read ($0.001) + /v1/inbox/messages/{message_id}/ack ($0.001) + /v1/inbox/settings ($0.001) — persistent agent-to-agent inbox: send, list, read (bounded bodies), ack (delivery/QoS), per-agent settings. Payment only gates send; list/read/ack/settings are near-free.
+24. POST /v1/evidence/anchor ($0.01) + /v1/evidence/batch ($0.01) — anchor a content hash (HMAC-SHA256 receipt chain) or a merkle batch of action hashes; /v1/evidence/get (free) + /v1/evidence/roots (free) read them back. Hashes only, never payloads.
+25. POST /v1/wake/schedule ($0.01) — schedule a wake call (webhook at/after a time, retry policy); /v1/wake/feed ($0.001) lists upcoming/delivered wakes; /v1/wake/status (free) + /v1/wake/cancel (free) manage one wake by id.
+26. POST /v1/trust/check ($0.01) — adversarial pre-flight check of any x402 endpoint BEFORE paying it: real 402-handshake probe, payTo-rotation/price/network drift vs last probe, HMAC-signed verdict (ok | drift | payto_rotated | unreachable | invalid), 10-min per-URL cache; /v1/trust/history ($0.001) reads stored probes; /v1/trust/watch (free) lowers a URL's cache TTL.
+27. POST /v1/sla/declare (free, $0.001 edge floor) — declare an SLA for a URL you control in x402-signals vocabulary; domain provenance is proven by hosting a nonce at <url>/.well-known/ddg-sla-verify-<nonce>.txt, then the declaration is signed ACTIVE. POST /v1/sla/breach-check ($0.01) probes a URL once and returns ok | breach{declared, observed}; with payment_ref it issues an HMAC-signed BreachCertificate (evidence only - no funds move, zero custody). /v1/sla/monitor ($0.01 per 7-day window) re-probes every 5 minutes (global cap 100); /v1/sla/report ($0.001 floor) aggregates uptime_pct, p95_ms, breach_count, certificates.
 
 AI-client traffic should send:
 - Idempotency-Key header for POST requests.
@@ -117,6 +102,8 @@ Recommended request defaults:
 ```
 
 DDG returns request IDs, selected tier/model/route where allowed, usage/billing estimates, receipt metadata, and route-specific artifacts.
+
+OpenAI-compatible request shapes apply only to relevant model/tool surfaces: `/v1/model/chat-completions`, `/v1/model/agent-run`, local model discovery/request routes, and deterministic JSON/context utilities such as `/v1/json-repair` and `/v1/context-distill`. Most DDG operations are x402/OpenAPI-callable services and MCP tools, not universal chat gateways.
 
 ## Operator-fulfilled live service routes
 
@@ -226,48 +213,3 @@ Post-promo policy: <=4B local models remain free; >4B local routes become paid/o
 ## Agent-swarm MCP and cybersecurity services
 - MCP server design: `/mcp/ddg-agent-swarm-mcp-design.md`; initial stdio skeleton: `sales_artifacts/agent_payments/mcp/ddg_agent_services_mcp_server.py`.
 - Cybersecurity catalog: `/cybersecurity-services.json`; live free scanner: `/v1/ai-skill-safety-scan`; order paid/deeper audits via `/v1/order-intake`. Services include productionized public-surface security audits, checkout conformance audits, MPP/payment-path activation, artifact/receipt console packs, prompt-injection scans, npm/Python package scans, API-key/secret leak scans, malware triage, AI skill safety scans, MCP/tool security audits, and AI-agent buyer service bundles.
-
-## Utility Endpoints (Phase 1-3)
-
-- POST /v1/agent-registry ($0.01 USDC) — Search or list AI agents in the DDG agent directory. Registration is free.
-- POST /v1/code-execution ($0.01 USDC) — Run Python code in a sandboxed Docker container. No network, read-only filesystem.
-- POST /v1/contract-abi ($0.002 USDC) — Fetch verified smart contract ABI from block explorers (Base, Ethereum, Optimism, Arbitrum, Polygon, Scroll).
-- POST /v1/dns-lookup ($0.001 USDC) — DNS resolution for any domain. Returns A, AAAA, MX, TXT, NS, CNAME, SOA, CAA, SRV records.
-- POST /v1/email-send ($0.01 USDC) — Send a transactional email via SMTP relay. Rate-limited.
-- POST /v1/embeddings ($0.0005 USDC) — Generate vector embeddings for RAG/semantic search. GPU-accelerated (BGE, Instructor models).
-- POST /v1/fetch-as-markdown ($0.002 USDC) — Extract clean markdown from any URL. Full JS rendering via Playwright available.
-- POST /v1/image-generation ($0.03 USDC) — Generate an image from a text prompt. Local Stable Diffusion or OpenAI DALL-E fallback.
-- POST /v1/ocr ($0.005 USDC) — Extract text from images using OCR (Tesseract). Accepts base64 or URL input.
-- POST /v1/pdf-extract ($0.005 USDC) — Extract text from PDF documents. Accepts base64 or URL input.
-- POST /v1/price-feed ($0.001 USDC) — Get crypto, forex, or stock prices in real-time.
-- POST /v1/qr-code ($0.001 USDC) — Generate a QR code PNG from any text/data.
-- POST /v1/screenshot ($0.005 USDC) — Capture a PNG screenshot of any URL using headless Chromium.
-- POST /v1/threat-check ($0.005 USDC) — Check URL or wallet address reputation. Aggregates URLhaus, TLS validation, DNS, pattern analysis.
-- POST /v1/translate ($0.003 USDC) — Translate text between languages. Self-hosted LibreTranslate or cloud fallback.
-- POST /v1/whois-lookup ($0.002 USDC) — WHOIS registration data for any domain.
-
-## AI-Agent Primitives (Tier 4-6)
-
-- POST /v1/base64-codec ($0.001 USDC) — Encode or decode base64, with URL-safe variant support.
-- POST /v1/diff-text ($0.002 USDC) — Compare two text blocks and return a structured diff (unified, HTML, or JSON).
-- POST /v1/git-repo-analyze ($0.01 USDC) — Analyze a git repo: languages, file count, last commit, license. Uses Docker isolation.
-- POST /v1/hash-compute ($0.001 USDC) — Compute cryptographic hash (SHA-256, MD5, SHA-1, BLAKE2, etc.) of input text.
-- POST /v1/http-headers ($0.001 USDC) — Get HTTP response headers for a URL, including security header analysis.
-- POST /v1/ip-geolocation ($0.001 USDC) — Geolocate an IP address. Returns country, city, ISP, coordinates.
-- POST /v1/json-validate ($0.001 USDC) — Validate JSON against a JSON Schema. Returns detailed error paths.
-- POST /v1/language-detect ($0.001 USDC) — Detect the language of a text string. Returns ISO code and alternatives.
-- POST /v1/link-extract ($0.002 USDC) — Extract all hyperlinks from a web page. Returns internal/external classification.
-- POST /v1/llm-judge ($0.01 USDC) — Judge which of two LLM responses is better. Uses local Ollama models as neutral judge.
-- POST /v1/random ($0.001 USDC) — Generate cryptographically secure random data: strings, hex, tokens, integers.
-- POST /v1/robots-check ($0.001 USDC) — Check robots.txt rules for a URL. Returns allowed/disallowed, crawl delay, sitemaps.
-- POST /v1/schema-infer ($0.002 USDC) — Infer JSON Schema from a JSON sample. Useful for reverse-engineering APIs.
-- POST /v1/sentiment ($0.002 USDC) — Sentiment analysis on text. Returns positive/negative/neutral with confidence score.
-- POST /v1/ssl-cert-info ($0.002 USDC) — Get SSL certificate details for a hostname: issuer, expiry, SANs, fingerprint.
-- POST /v1/subdomain-enumerate ($0.005 USDC) — Find subdomains via certificate transparency logs (crt.sh).
-- POST /v1/summarize ($0.005 USDC) — Summarize text using local LLM. Supports bullet, paragraph, tldr, and structured styles.
-- POST /v1/timestamp ($0.001 USDC) — Get current time in multiple formats: Unix, ISO 8601, RFC 3339, human-readable.
-- POST /v1/tls-version-check ($0.002 USDC) — Check which TLS versions a server supports and identify weak ciphers.
-- POST /v1/url-fetch ($0.002 USDC) — Fetch raw content from a URL. Returns body, headers, status code. For hitting REST APIs.
-- POST /v1/url-status ($0.001 USDC) — Quick HEAD check on a URL. Returns status code, redirects, server info.
-- POST /v1/uuid-generate ($0.001 USDC) — Generate UUIDs (v1, v3, v4, v5). For distributed agent ID generation.
-- POST /v1/web-search ($0.005 USDC) — Search the web and return structured JSON results. Aggregates 20+ search engines via SearXNG.

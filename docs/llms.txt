@@ -6,7 +6,7 @@ Contact: 0xcircuitbreaker@protonmail.com
 Buyer-agent summary: DDG Agent Services sells pay-per-call x402/direct-crypto audits, proofs, repair packs, and bounded artifacts for AI agents. Start with `/v1/tx-smoke-test` ($0.01), then `/v1/site-audit` ($0.01), `/v1/agent-readiness-scorecard` ($0.01), /v1/agent-discovery-pack ($0.01), /v1/agent-payment-readiness-audit ($0.01), or /v1/mcp-tool-security-audit ($0.01). DDG is the agent-commerce audit/proof/security layer for x402, MCP, OpenAPI, llms.txt, receipts, and bounded artifacts, not a generic gateway for every operation.
 
 Live payment protocols: MPP, x402, direct_crypto_auto, and direct_crypto_manual. MPP/Tempo is settlement-proven live on /v1/tx-smoke-test (receipt hash c0e160a79ab9376daa6d9f2aed1486e4, 2026-06-30T07:16:57Z). x402 advertises Base, Polygon, Arbitrum One, World Chain, and Solana mainnet USDC; x402 CDP/Bazaar facilitator settlement and indexing remain pending until CDP business approval or a self-hosted facilitator is integrated. direct crypto publishes receiving addresses for EVM/stablecoins, BTC, BCH, LTC, DOGE, SOL, TRX, XRP, XLM, ALGO, DOT, ZEC, and XMR.
-Current OpenAPI surface: 158 discoverable HTTP operations: 115 paid and 43 genuinely free. Fulfillment is 103 automated, 39 operator-queued, and 16 discovery-only operations.
+Current OpenAPI surface: 161 discoverable HTTP operations: 118 paid and 43 genuinely free. Fulfillment is 106 automated, 39 operator-queued, and 16 discovery-only operations.
 Canonical pricing/status catalog: /.well-known/ddg-agent-pricing.json
 AI discovery endpoint: /.well-known/ai (alias /ai)
 API linkset catalog: /.well-known/api-catalog
@@ -26,7 +26,7 @@ DDG sells budgeted application/model-router output and operator-reviewable agent
 
 ## Live runtime endpoints
 
-These routes are implemented in the current payment edge. OpenAPI includes 158 discoverable operations: automated routes, operator-fulfilled live service aliases that queue paid orders and return status/artifact URLs, paid utility/tool services, and intentionally free utility/discovery routes.
+These routes are implemented in the current payment edge. OpenAPI includes 161 discoverable operations: automated routes, operator-fulfilled live service aliases that queue paid orders and return status/artifact URLs, paid utility/tool services, and intentionally free utility/discovery routes.
 
 0. POST /v1/tx-smoke-test — one-cent paid transaction smoke test for AI agents; returns a receipt-only JSON proof that payment worked. Launch price: $0.01.
 1. POST /v1/site-audit — paid automated website audit. Read-only. Launch price: $0.01.
@@ -74,6 +74,12 @@ These routes are implemented in the current payment edge. OpenAPI includes 158 d
 37. POST /v1/certify/run ($0.02) — third-party certification of an opentine .tine artifact: format validation, per-step content-address integrity, chain consistency, completeness. HMAC-signed certification (certified or rejected with machine-readable reasons). Fail-closed. Cached 24h.
 38. POST /v1/certify/verify (free) — verify a stored certification by cert_id, or re-verify a statement+sig pair (tamper-rejecting).
 39. POST /v1/certify/verify-remote ($0.01) — fetch a .tine from a URL (SSRF-guarded, 512KB cap), certify it, optionally match expected sha256. The buyer-side flow: certify the sub-agent's work product before paying.
+
+### Zero-key enrichment (E16)
+
+40. POST /v1/enrich/domain ($0.005) — domain intelligence from free public APIs: DNS A/MX/NS/TXT, SSL certificate (issuer, expiry, SANs), HTTP tech signals, Certificate Transparency subdomains, email security (SPF/DMARC). No API keys needed.
+41. POST /v1/enrich/email ($0.005) — email intelligence: syntax validation, MX check, disposable detection (top 50 domains), role-account detection, Gravatar hash + existence check, GitHub noreply username extraction.
+42. POST /v1/enrich/company ($0.01) — company profile: composes domain intel + search-multi for business snippets. The full "who is behind this domain" surface.
 
 AI-client traffic should send:
 - Idempotency-Key header for POST requests.

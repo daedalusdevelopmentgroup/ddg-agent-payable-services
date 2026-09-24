@@ -2011,15 +2011,15 @@
   "service": "DDG Agent-Payable Services",
   "service_counts": {
     "aliases": 3,
-    "automated_fulfillment_operations": 103,
-    "available_operations": 158,
+    "automated_fulfillment_operations": 106,
+    "available_operations": 161,
     "discovery_operations": 16,
     "free_operations": 43,
-    "http_operations": 158,
+    "http_operations": 161,
     "operator_fulfilled_operations": 39,
-    "paid_operations": 115,
+    "paid_operations": 118,
     "unavailable_operations": 14,
-    "unique_services": 155
+    "unique_services": 158
   },
   "services": [
     {
@@ -4879,6 +4879,57 @@
       "price_usd": "0.01",
       "risk": "low",
       "service_id": "reputation_leaderboard"
+    },
+    {
+      "availability": "available",
+      "backend": "payment_edge_handler",
+      "category": "enrichment",
+      "description": "Zero-key enrichment from free public APIs (DNS, SSL cert, CT subdomains, email validation, Gravatar).",
+      "discoverable": true,
+      "expected_latency": "2-30s",
+      "free_quota": null,
+      "fulfillment_mode": "automated",
+      "human_required": false,
+      "last_successful_smoke": "2026-09-23",
+      "method": "POST",
+      "path": "/v1/enrich/domain",
+      "price_usd": "0.005",
+      "risk": "low",
+      "service_id": "enrich_domain"
+    },
+    {
+      "availability": "available",
+      "backend": "payment_edge_handler",
+      "category": "enrichment",
+      "description": "Zero-key enrichment from free public APIs (DNS, SSL cert, CT subdomains, email validation, Gravatar).",
+      "discoverable": true,
+      "expected_latency": "2-30s",
+      "free_quota": null,
+      "fulfillment_mode": "automated",
+      "human_required": false,
+      "last_successful_smoke": "2026-09-23",
+      "method": "POST",
+      "path": "/v1/enrich/email",
+      "price_usd": "0.005",
+      "risk": "low",
+      "service_id": "enrich_email"
+    },
+    {
+      "availability": "available",
+      "backend": "payment_edge_handler",
+      "category": "enrichment",
+      "description": "Zero-key enrichment from free public APIs (DNS, SSL cert, CT subdomains, email validation, Gravatar).",
+      "discoverable": true,
+      "expected_latency": "2-30s",
+      "free_quota": null,
+      "fulfillment_mode": "automated",
+      "human_required": false,
+      "last_successful_smoke": "2026-09-23",
+      "method": "POST",
+      "path": "/v1/enrich/company",
+      "price_usd": "0.01",
+      "risk": "low",
+      "service_id": "enrich_company"
     }
   ],
   "unavailable_services": [

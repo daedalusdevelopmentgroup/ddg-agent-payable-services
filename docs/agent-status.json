@@ -236,9 +236,9 @@
     "latest_public_endpoint_verified": "live_http_200_sanitized_no_forbidden_internal_markers",
     "latest_service_proof_matrix": "audit/enterprise-service-proof-matrix-2026-07-02.json",
     "next_enterprise_gate": "representative_paid_fulfillment_proof_by_category_plus_external_alert_channel",
-    "nonfree_route_count": 115,
+    "nonfree_route_count": 118,
     "order_status_console": "/v1/orders/{order_id}",
-    "paid_route_challenge_coverage": "115 available paid operations generated with AgentIdentity/x402 metadata; post-deploy rescan pending.",
+    "paid_route_challenge_coverage": "118 available paid operations generated with AgentIdentity/x402 metadata; post-deploy rescan pending.",
     "primary_enterprise_monitor_timer": "active_15min_systemd_timer",
     "primary_runtime_firewall_guard": "active",
     "public_agent_access": "payment_edge_only",
@@ -313,16 +313,16 @@
     "MPP verifier reports ready:true, public 402 challenges advertise MPP, invalid tokens fail closed, and tx-smoke settlement is proven with receipt hash c0e160a79ab9376daa6d9f2aed1486e4.",
     "x402 settlement is production-proven on Base USDC via self-hosted qntx; tx 0xde0805c82b4e705281de6a9fdfb042a5ed70f1766c32bf3de064f75e89080441.",
     "Receipt verification endpoint is live at /v1/receipt-verify and exposed through the DDG MCP tool ddg_receipt_verify; responses are redacted and agent/order scoped.",
-    "Canonical registry: 158 discoverable HTTP operations, 155 unique service IDs, 3 aliases, 115 paid, 43 free, 103 automated, 39 operator-queued, and 16 discovery-only."
+    "Canonical registry: 161 discoverable HTTP operations, 158 unique service IDs, 3 aliases, 118 paid, 43 free, 106 automated, 39 operator-queued, and 16 discovery-only."
   ],
   "openapi_operation_counts": {
     "aliases": 3,
-    "automated_fulfillment_operations": 103,
+    "automated_fulfillment_operations": 106,
     "free_endpoints": 43,
-    "http_operations": 158,
+    "http_operations": 161,
     "operator_fulfilled_operations": 39,
-    "paid_endpoints": 115,
-    "unique_services": 155
+    "paid_endpoints": 118,
+    "unique_services": 158
   },
   "operator_contact": "0xcircuitbreaker@protonmail.com",
   "payment_protocol_status": {
@@ -360,7 +360,7 @@
     "all_services_agent_orderable": "All public catalog services are now live_runtime; operator-fulfilled services queue paid reviewed work and do not overclaim full automation.",
     "local_runtime_caps": "Local runtime seats are health-derived and capped at 2; lease 24h; 100 requests/lease; 60s swarm timeout; 120s local agent-run timeout; ordinary public model request cap 25GiB; disk reserve 300GiB; post-promo free local models <=4B only.",
     "operator_fulfilled_services": "Manual/beta SKUs have been promoted to live agent-orderable routes where the path queues a paid operator-reviewed order and returns status/artifact URLs; they are not represented as fully automated execution.",
-    "service_count_accounting": "Canonical registry: 158 discoverable HTTP operations, 155 unique service IDs, 3 aliases, 115 paid, 43 free, 103 automated, 39 operator-queued, and 16 discovery-only.",
+    "service_count_accounting": "Canonical registry: 161 discoverable HTTP operations, 158 unique service IDs, 3 aliases, 118 paid, 43 free, 106 automated, 39 operator-queued, and 16 discovery-only.",
     "x402scan_openapi_normalization": "Paid operations are registerable x402 resources with AgentIdentity security and x-payment metadata; free routes intentionally carry security: [] and x402scan free-route notes so scanners should not warn on the 24 free utilities."
   },
   "public_discovery": {
@@ -383,15 +383,15 @@
   "service": "DDG Agent-Payable Services",
   "service_counts": {
     "aliases": 3,
-    "automated_fulfillment_operations": 103,
-    "available_operations": 158,
+    "automated_fulfillment_operations": 106,
+    "available_operations": 161,
     "discovery_operations": 16,
     "free_operations": 43,
-    "http_operations": 158,
+    "http_operations": 161,
     "operator_fulfilled_operations": 39,
-    "paid_operations": 115,
+    "paid_operations": 118,
     "unavailable_operations": 14,
-    "unique_services": 155
+    "unique_services": 158
   },
   "settlement_proofs": {
     "mpp_tempo_pathusd_amount_atomic": "10000",

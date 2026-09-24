@@ -25,18 +25,18 @@
     "description": "Machine-payable DDG services for AI agents. Current public live payment rails are x402 multi-chain USDC and direct-crypto auto/manual for public receiving-address families. MPP/Stripe/Tempo is installed but pending live provider env plus penny-settlement proof before any MPP-live advertisement. DDG sells bounded artifacts/results, not raw provider account access.",
     "title": "DDG Agent-Payable Services",
     "version": "0.6.0",
-    "x-guidance": "DDG publishes 158 discoverable HTTP operations from one canonical registry: 115 paid and 43 genuinely free. Use POST /v1/services/search to choose a service. Paid operations return HTTP 402 when called without payment; free operations declare security: []. Send X-Agent-Id for identity and rate limiting. No paid operation grants promotional credits.",
+    "x-guidance": "DDG publishes 161 discoverable HTTP operations from one canonical registry: 118 paid and 43 genuinely free. Use POST /v1/services/search to choose a service. Paid operations return HTTP 402 when called without payment; free operations declare security: []. Send X-Agent-Id for identity and rate limiting. No paid operation grants promotional credits.",
     "x-service-counts": {
       "aliases": 3,
-      "automated_fulfillment_operations": 103,
-      "available_operations": 158,
+      "automated_fulfillment_operations": 106,
+      "available_operations": 161,
       "discovery_operations": 16,
       "free_operations": 43,
-      "http_operations": 158,
+      "http_operations": 161,
       "operator_fulfilled_operations": 39,
-      "paid_operations": 115,
+      "paid_operations": 118,
       "unavailable_operations": 14,
-      "unique_services": 155
+      "unique_services": 158
     }
   },
   "openapi": "3.1.0",
@@ -3871,6 +3871,204 @@
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
         "x-x402-price": "$0.001"
+      }
+    },
+    "/v1/enrich/company": {
+      "post": {
+        "description": "Zero-key enrichment from free public APIs (DNS, SSL cert, CT subdomains, email validation, Gravatar).",
+        "operationId": "enrich_company",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ],
+        "summary": "Zero-key enrichment from free public APIs (DNS, SSL cert, CT subdomains, email validation, Gravatar).",
+        "x-availability": "available",
+        "x-backend": "payment_edge_handler",
+        "x-expected-latency": "2-30s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-risk": "low",
+        "x-service-id": "enrich_company"
+      }
+    },
+    "/v1/enrich/domain": {
+      "post": {
+        "description": "Zero-key enrichment from free public APIs (DNS, SSL cert, CT subdomains, email validation, Gravatar).",
+        "operationId": "enrich_domain",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ],
+        "summary": "Zero-key enrichment from free public APIs (DNS, SSL cert, CT subdomains, email validation, Gravatar).",
+        "x-availability": "available",
+        "x-backend": "payment_edge_handler",
+        "x-expected-latency": "2-30s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.005",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.005",
+        "x-risk": "low",
+        "x-service-id": "enrich_domain"
+      }
+    },
+    "/v1/enrich/email": {
+      "post": {
+        "description": "Zero-key enrichment from free public APIs (DNS, SSL cert, CT subdomains, email validation, Gravatar).",
+        "operationId": "enrich_email",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful machine-readable response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "503": {
+            "description": "Backend unavailable; no payment is accepted"
+          }
+        },
+        "security": [
+          {
+            "AgentIdentity": []
+          }
+        ],
+        "summary": "Zero-key enrichment from free public APIs (DNS, SSL cert, CT subdomains, email validation, Gravatar).",
+        "x-availability": "available",
+        "x-backend": "payment_edge_handler",
+        "x-expected-latency": "2-30s",
+        "x-free-quota": null,
+        "x-fulfillment-mode": "automated",
+        "x-human-required": false,
+        "x-last-successful-smoke": "2026-09-23",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.005",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.005",
+        "x-risk": "low",
+        "x-service-id": "enrich_email"
       }
     },
     "/v1/enterprise-hardening": {

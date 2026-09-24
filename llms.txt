@@ -244,3 +244,10 @@ Post-promo policy: <=4B local models remain free; >4B local routes become paid/o
 - POST /v1/url-status ($0.001 USDC) — Quick HEAD check on a URL. Returns status code, redirects, server info.
 - POST /v1/uuid-generate ($0.001 USDC) — Generate UUIDs (v1, v3, v4, v5). For distributed agent ID generation.
 - POST /v1/web-search ($0.005 USDC) — Search the web and return structured JSON results. Aggregates 20+ search engines via SearXNG.
+
+
+## Collaboration tier (TinyFish-ready, live)
+- `/v1/run-proof` ($0.002): any agent run export (TinyFish Run JSON verbatim) -> signed tamper-evident opentine .tine artifact with integrity hash + Ed25519 signature; `tine verify` works offline. Proof-of-execution for auditors / on-chain anchoring.
+- `/v1/research-report` ($0.01): sourced research brief - find (multi-engine or `partner_results` injected verbatim) -> bulk read -> claim extraction -> 3-model verification verdict per claim -> signed proof-of-research artifact.
+- `/v1/page-pack` ($0.01): bulk 1-25 URL -> markdown; pipe `/v1/web-search` results[].url straight in (Search->Fetch handoff shape).
+- Agent inbox (presence tier): `/v1/inbox/register` ($0.01 one-time handle claim), `/v1/inbox/send` ($0.004 paid inbound; OTP/magic-link typed extraction), `/v1/inbox/lookup` ($0.001), free owner reads `/v1/inbox/messages` + `/v1/inbox/status` via inbox_key. Senders pay = spam resistance.

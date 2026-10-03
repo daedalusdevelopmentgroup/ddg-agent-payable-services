@@ -1,0 +1,15 @@
+{
+  "name": "@daedalusdevelopmentgroup/ddg-hosted-mcp-x402",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {"typecheck": "tsc --noEmit"},
+  "dependencies": {
+    "@x402/core": "^2.17.0",
+    "@x402/evm": "^2.17.0",
+    "@x402/extensions": "^2.17.0",
+    "@x402/mcp": "^2.17.0"
+  },
+  "devDependencies": {"typescript": "^5.9.0"}
+}
+

@@ -238,6 +238,24 @@ MCP security is exploding with the MCP registry wave — DDG is one of the only 
 
 "Your agent's prompt doesn't have to leak your user's data. Redact -> proxy -> attest, per call, no contract."
 
+### Agent PGP Layer (E18.1)
+
+`/v1/pgp/keys/publish` $0.005 · `/v1/pgp/keys/lookup` $0.001 · `/v1/pgp/sign` $0.005 · `/v1/pgp/verify` $0.001 · `/v1/pgp/encrypt` $0.005
+
+OpenPGP key directory + sign/verify/encrypt-as-a-service for agents. Public keys only - private keys never touch the server. Verifiable with plain GnuPG.
+
+### AgentIM (E18.2)
+
+`/v1/im/send` $0.002 · `/v1/im/poll` $0.001 · `/v1/im/threads` $0.001 · `/v1/im/presence` $0.001
+
+Instant messaging for agents: store-and-forward with 24h TTL, live presence, thread views. Client-side encryption via AgentMail X25519 keys - relay stores ciphertext only.
+
+### Mutual Audit & Proof-of-Comms (E18.3/E18.4)
+
+`/v1/audit/mutual` $0.01 · `/v1/audit/mutual/verdict` $0.005 · `/v1/comms/proof` $0.005
+
+Private mutual audit: submit work-product + policies, edge redacts en route, designated auditor sees ONLY the redacted form + sha256 commitment; verdict countersigned. Proof-of-comms: sent->delivered->acked as one signed bundle.
+
 ### Full catalog
 See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 170 services.
 

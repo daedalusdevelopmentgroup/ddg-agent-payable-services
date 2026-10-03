@@ -228,6 +228,16 @@ Daily-loop communication infra with attested delivery: the recurring-use pattern
 
 MCP security is exploding with the MCP registry wave — DDG is one of the only x402-native providers of it.
 
+### Agent Privacy Stack (E18)
+
+| Route | Price | What it does |
+|---|---|---|
+| `/v1/privacy/redact` | $0.005 | Scrub PII/secrets (emails, keys, cards, tokens) from any payload before third-party calls. Deterministic tokens + signed vault certificate for client-side restore. |
+| `/v1/privacy/attested-call` | $0.01 | Proxy a third-party API call through DDG: payload redacted en route, auth headers stripped, server-signed attestation binding original-vs-sent sha256. |
+| `/v1/privacy/audit` | $0.01 | Scan a traffic sample for leak patterns. Signed risk report, anchorable via `/v1/certify`. Sample never stored. |
+
+"Your agent's prompt doesn't have to leak your user's data. Redact -> proxy -> attest, per call, no contract."
+
 ### Full catalog
 See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 170 services.
 

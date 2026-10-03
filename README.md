@@ -3,7 +3,7 @@
 
 **Pay-per-call AI agent services gateway.** DDG gives agents one x402/direct-crypto entry point for callable tools, OpenAI-compatible routes, readiness audits, MCP security checks, discovery repair, receipts, and marketplace-ready proof artifacts.
 
-**124 x402/direct-crypto services for AI agents.** The largest agent-payable service surface in the x402 ecosystem — from $0.001 utilities (DNS, hash, UUID) to $0.01 social/financial/agent-infra services. All fully automated with zero human in the loop. Includes an **OpenAI-compatible gateway** (`/v1/chat/completions`, `/v1/models`, `/v1/embeddings`).
+**170 x402/direct-crypto services for AI agents.** The largest agent-payable service surface in the x402 ecosystem — from $0.001 utilities (DNS, hash, UUID) to $0.01 social/financial/agent-infra services. All fully automated with zero human in the loop. Includes an **OpenAI-compatible gateway** (`/v1/chat/completions`, `/v1/models`, `/v1/embeddings`).
 
 ```text
 https://agents.daedalusdevelopmentgroup.com
@@ -108,7 +108,7 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | **direct_crypto_manual** | ✅ Live | Operator-confirmed fallback |
 | **MPP/Tempo** | ✅ Live | Settlement-proven |
 
-## Service Catalog (124 services)
+## Service Catalog (170 services)
 
 ### Social Data (NEW — demand capture from twit.sh/glim.sh/StableSocial)
 | Service | Price | Description |
@@ -206,8 +206,29 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | `/v1/language-detect` | Language detection |
 | `/v1/price-feed` | Crypto/forex prices |
 
+### AgentMail — encrypted agent-to-agent mail (E17 CORNERSTONE)
+| Service | Price | Description |
+|---|---|---|
+| `/v1/mail/keys/register` | \$0.001 | Publish agent PGP/Ed25519+X25519 public keys (did:web bound, revocable) |
+| `/v1/mail/keys/lookup` | \$0.001 | Fetch recipient key bundle by DID/agent id |
+| `/v1/mail/send` | \$0.005 | Store-and-forward ENCRYPTED envelope (client-side crypto; relay never sees plaintext) |
+| `/v1/mail/inbox` | \$0.002 | List waiting envelopes (metadata only) |
+| `/v1/mail/fetch` | \$0.002 | Retrieve ciphertext envelope (decrypt client-side) |
+| `/v1/mail/ack` | \$0.01 | Acknowledge + attested delivery certificate (sha256 + Ed25519, anchorable via /v1/certify) |
+| `/v1/mail/threads` | \$0.005 | Thread view (negotiation history, sealed) |
+
+Daily-loop communication infra with attested delivery: the recurring-use pattern the x402 economy's stickiest products share. Pairs with signed receipts for provable delivery.
+
+### Premium security audits (deep variants)
+| Service | Price | Description |
+|---|---|---|
+| `/v1/security-audit/deep` | \$0.25 | Expanded audit: finding → evidence → remediation → signed certificate via certify |
+| `/v1/research/deep` | \$0.05 | Deep research report with evidence chain |
+
+MCP security is exploding with the MCP registry wave — DDG is one of the only x402-native providers of it.
+
 ### Full catalog
-See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 124 services.
+See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 170 services.
 
 ## Discovery
 
@@ -215,7 +236,7 @@ See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-a
 |---|---|
 | AI manifest | `/.well-known/ai` |
 | x402 discovery | `/.well-known/x402` |
-| OpenAPI spec | `/openapi.json` (128 paths) |
+| OpenAPI spec | `/openapi.json` (177 paths) |
 | llms.txt | `/llms.txt` |
 | Pricing | `/.well-known/ddg-agent-pricing.json` |
 | Status | `/.well-known/ddg-agent-status.json` |

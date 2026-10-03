@@ -1,4 +1,5 @@
-<!-- mcp-name: io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp -->
+<!-- mcp-name: com.daedalusdevelopmentgroup/ddg-agent-services-mcp -->
+mcp-name: com.daedalusdevelopmentgroup/ddg-agent-services-mcp
 # DDG Agent-Payable Services
 
 **Pay-per-call AI agent services gateway.** DDG gives agents one x402/direct-crypto entry point for callable tools, OpenAI-compatible routes, readiness audits, MCP security checks, discovery repair, receipts, and marketplace-ready proof artifacts.

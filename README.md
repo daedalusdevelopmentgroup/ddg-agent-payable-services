@@ -4,7 +4,7 @@ mcp-name: com.daedalusdevelopmentgroup/ddg-agent-services-mcp
 
 **Pay-per-call AI agent services gateway.** DDG gives agents one x402/direct-crypto entry point for callable tools, OpenAI-compatible routes, readiness audits, MCP security checks, discovery repair, receipts, and marketplace-ready proof artifacts.
 
-**170 x402/direct-crypto services for AI agents.** The largest agent-payable service surface in the x402 ecosystem — from $0.001 utilities (DNS, hash, UUID) to $0.01 social/financial/agent-infra services. All fully automated with zero human in the loop. Includes an **OpenAI-compatible gateway** (`/v1/chat/completions`, `/v1/models`, `/v1/embeddings`).
+**214 x402/direct-crypto services for AI agents.** The largest agent-payable service surface in the x402 ecosystem — from $0.001 utilities (DNS, hash, UUID) to $0.01 social/financial/agent-infra services. All fully automated with zero human in the loop. Includes an **OpenAI-compatible gateway** (`/v1/chat/completions`, `/v1/models`, `/v1/embeddings`).
 
 ```text
 https://agents.daedalusdevelopmentgroup.com
@@ -109,7 +109,7 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | **direct_crypto_manual** | ✅ Live | Operator-confirmed fallback |
 | **MPP/Tempo** | ✅ Live | Settlement-proven |
 
-## Service Catalog (170 services)
+## Service Catalog (214 services)
 
 ### Social Data (NEW — demand capture from twit.sh/glim.sh/StableSocial)
 | Service | Price | Description |
@@ -256,8 +256,66 @@ Instant messaging for agents: store-and-forward with 24h TTL, live presence, thr
 
 Private mutual audit: submit work-product + policies, edge redacts en route, designated auditor sees ONLY the redacted form + sha256 commitment; verdict countersigned. Proof-of-comms: sent->delivered->acked as one signed bundle.
 
+### Trust & Compliance Layer (E19)
+
+| Route | Price | What it does |
+|---|---|---|
+| `/v1/compliance/screen-wallet` | $0.01 | OFAC SDN address screening (bare 40-hex, no 0x), signed verdict |
+| `/v1/compliance/screen-batch` | $0.01 | Batch screening, per-item verdicts, signed summary |
+| `/v1/compliance/screen-name` | $0.01 | OFAC SDN name screening |
+| `/v1/compliance/dataset-info` | free | Dataset version/provenance metadata |
+
+Agents moving USDC for clients get on-demand sanctions screening with a countersignable verdict — the checkbox every agentic payments flow is missing.
+
+### Portable Receipts (G1)
+
+| Route | Price | What it does |
+|---|---|---|
+| `/v1/receipts/issue` | $0.005 | Ed25519-signed receipt for any agent action |
+| `/v1/receipts/verify` | $0.001 | Offline-verifiable signature + payload integrity check |
+| `/v1/receipts/bundle` | $0.01 | Merkle root over ≤100 receipts |
+| `/v1/receipts/jwks` | free | Public keys (offline verification) |
+
+### Free Feedback Loop (E20)
+
+| Route | Price | What it does |
+|---|---|---|
+| `/v1/feedback/bug` | free | Signed-ack bug report |
+| `/v1/feedback/status` | free | Check report status |
+| `/v1/feedback/triage` | $0.01 | Priority triage into auto-fix queue |
+
+### Content Credentials (E22)
+
+| Route | Price | What it does |
+|---|---|---|
+| `/v1/credentials/sign` | $0.005 | C2PA-style provenance credential for AI-generated assets (sha256 or inline bytes ≤2MB, lineage via parent_sha256) |
+| `/v1/credentials/verify` | $0.001 | Signature + payload integrity + parent lineage check |
+| `/v1/credentials/bundle` | $0.01 | Merkle root over ≤100 credentials |
+| `/v1/credentials/jwks` | free | Public keys |
+
+### MCP Security Self-Audit (E23)
+
+| Route | Price | What it does |
+|---|---|---|
+| `/v1/mcp-audit/tools` | $0.01 | Static 15-rule audit of MCP tool manifests (prompt-injection patterns, homoglyph obfuscation, wildcard inputs, secret defaults) — graded A–F + Ed25519 attestation |
+| `/v1/mcp-audit/server-json` | $0.01 | Same audit for server.json + tools |
+| `/v1/mcp-audit/rules` | free | Rule catalog (`ddg-mcp-audit-rules-1.2.0`) |
+
+Never contacts the audited server — pure static analysis, so it is safe to run against your own manifests before publishing.
+
+### Agent Spend Control (E24)
+
+| Route | Price | What it does |
+|---|---|---|
+| `/v1/spend/reconcile` | $0.01 | Settlement reconciliation: per-vendor rollups, duplicate-tx rejection, anomaly flags, signed summary |
+| `/v1/spend/check` | $0.005 | Pre-spend budget check → signed allow/deny token (`tine_ref`/`run_id` for opentine provenance binding) |
+| `/v1/spend/record` | $0.005 | Idempotent spend record per tx_hash |
+| `/v1/spend/ledger` | free | Per-vendor ledger read (30-day window) |
+
+Budget enforcement with signed decision tokens: an agent can prove — cryptographically — that its spend was authorized before it happened.
+
 ### Full catalog
-See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 170 services.
+See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 214 services.
 
 ## Discovery
 
@@ -265,7 +323,7 @@ See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-a
 |---|---|
 | AI manifest | `/.well-known/ai` |
 | x402 discovery | `/.well-known/x402` |
-| OpenAPI spec | `/openapi.json` (177 paths) |
+| OpenAPI spec | `/openapi.json` (214 paths) |
 | llms.txt | `/llms.txt` |
 | Pricing | `/.well-known/ddg-agent-pricing.json` |
 | Status | `/.well-known/ddg-agent-status.json` |

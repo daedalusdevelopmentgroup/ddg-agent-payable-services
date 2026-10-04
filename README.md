@@ -109,7 +109,67 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | **direct_crypto_manual** | ✅ Live | Operator-confirmed fallback |
 | **MPP/Tempo** | ✅ Live | Settlement-proven |
 
-## Service Catalog (214 services)
+## Service Catalog (248 services)
+
+### Trust & Identity Verification (wave 5)
+| Route | Price | Description |
+|---|---|---|
+| `/v1/auth/jwt-verify` | \$0.002 | Verify JWT/JWS against issuer JWKS: alg allowlist (no none/symmetric), exp/nbf/aud/iss, kid rotation, SSRF-guarded fetch |
+| `/v1/identity/did-resolve` | \$0.001 | did:web fetch+validate, did:key decode (ed25519/secp256k1), extracted verification keys |
+| `/v1/identity/vc-verify` | \$0.001 | VerifiableCredential verify: JWT-VC (full sig) or JSON-LD (structural + proof when payload supplied) |
+| `/v1/compliance/breach-check` | \$0.001 | HIBP k-anonymity password breach check — only 5 hash chars leave the caller |
+| `/v1/trust/verify-jwks` | free | Public Ed25519 key for offline verification of trust-lane verdicts |
+
+### Agent RAG & Content Ops (wave 5)
+| Route | Price | Description |
+|---|---|---|
+| `/v1/rag/index` | \$0.01 | Named persisted corpus: BM25 + nomic-embed-text embeddings |
+| `/v1/rag/search` | \$0.005 | Hybrid retrieval with tunable weight |
+| `/v1/rag/answer` | \$0.01 | Cited answer generation (qwen2.5:7b) grounded in your corpus |
+| `/v1/rag/status` | free | Corpus list + model availability |
+| `/v1/content/extract` | \$0.005 | Text from PDF/DOCX/TXT/MD (base64 in) |
+| `/v1/content/chunk` | \$0.001 | Size/overlap chunking with per-chunk hashes |
+| `/v1/content/search` | \$0.001 | Stateless BM25 over request-supplied docs |
+| `/v1/content/toolkit` | free | Parser/model/limit manifest |
+
+### C2PA for Audio/Video (wave 5, E22 extension)
+| Route | Price | Description |
+|---|---|---|
+| `/v1/c2pa/sign-av` | \$0.01 | Signed credential for audio/video: segment-hash Merkle root, Ed25519 trust root |
+| `/v1/c2pa/verify-av` | \$0.001 | Signature + rebind + segment-root + duration checks |
+| `/v1/c2pa/av-info` | \$0.005 | Pure-Python container fingerprint (mp4/mp3/ogg/wav/flac/webm) + segment hashes |
+
+### Network & Deliverability Intelligence (wave 5)
+| Route | Price | Description |
+|---|---|---|
+| `/v1/email/preflight` | \$0.01 | DNS-only deliverability: MX + RFC-subset SPF (with sender-IP eval) + DMARC + DKIM probe + rDNS. Never sends mail. |
+| `/v1/email/mx-route` | \$0.005 | Ordered MX precedence chain → A/AAAA endpoints (null-MX aware) |
+| `/v1/moderation/scan` | \$0.005 | Offline deterministic moderation: profanity, PII (SSN/Luhn/cards), wallets, jailbreak patterns |
+| `/v1/infra/security-posture` | \$0.01 | SSRF-guarded fetch + TLS summary + security-header grading |
+| `/v1/infra/tls-verify` | \$0.005 | Leaf cert forensics: expiry, SANs, key type, self-signed, sig algorithm |
+| `/v1/infra/ports` | \$0.005 | Bounded TCP sweep (≤16 ports, no banner probing) |
+| `/v1/net/dns-lookup` | \$0.005 | 10 record types + optional validated public resolver override |
+| `/v1/net/http-probe` | \$0.005 | Probe with timing, body sha256, per-hop redirect chain |
+| `/v1/net/url-lint` | \$0.001 | Offline URL parse/normalize + issue list |
+| `/v1/intel/domain-reputation` | \$0.01 | DNS intel + Spamhaus/SORBS RBL + quick TLS, scored 0-100 |
+| `/v1/intel/url-reputation` | \$0.005 | RBL + SURBL + shortener/phishing heuristics → safe/suspicious/block |
+| `/v1/netops/status` | free | Live dependency status page for the intel lane |
+
+### Threat Intel, IaC Guard & Moderation LLM (wave 5b)
+| Route | Price | Description |
+|---|---|---|
+| `/v1/intel/fusion` | \$0.01 | Confidence-weighted fusion of up to 25 indicators (domain/ip/url/hash/email) + external source labels into one signed verdict |
+| `/v1/intel/tech-fingerprint` | \$0.005 | Web stack fingerprint (CMS/framework/server/CDN) from headers+HTML+cookies, or SSRF-guarded bounded fetch |
+| `/v1/iac/guard` | \$0.005 | Static IaC scan (Terraform/CloudFormation/K8s/Dockerfile): secrets, wildcard IAM, open ingress, privileged containers, :latest |
+| `/v1/intel/redos-scan` | \$0.005 | Structural ReDoS risk analysis of up to 25 regexes (compiles, never matches — analyzer immune) |
+| `/v1/moderation/llm-scan` | \$0.01 | Semantic moderation via local LLM with deterministic heuristic fallback; companion to `/v1/moderation/scan` |
+
+Note: `/v1/intel/fusion` + `/v1/intel/url-reputation` + `/v1/intel/domain-reputation` compose into a full threat-intel desk. Hash-level verdicts fuse via `fusion` (bring labels from any feed).
+
+### Compliance composed (wave 5)
+| Route | Price | Description |
+|---|---|---|
+| `/v1/compliance/token-screen` | \$0.01 | Signed pre-trade token passport: GoPlus heuristics + E19 OFAC screen of deployer/owner — the only x402 rug-check with sanctions composition and a countersignable verdict |
 
 ### Social Data (NEW — demand capture from twit.sh/glim.sh/StableSocial)
 | Service | Price | Description |
@@ -315,7 +375,7 @@ Never contacts the audited server — pure static analysis, so it is safe to run
 Budget enforcement with signed decision tokens: an agent can prove — cryptographically — that its spend was authorized before it happened.
 
 ### Full catalog
-See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 214 services.
+See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 248 services.
 
 ## Discovery
 
@@ -323,7 +383,7 @@ See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-a
 |---|---|
 | AI manifest | `/.well-known/ai` |
 | x402 discovery | `/.well-known/x402` |
-| OpenAPI spec | `/openapi.json` (214 paths) |
+| OpenAPI spec | `/openapi.json` (248 paths) |
 | llms.txt | `/llms.txt` |
 | Pricing | `/.well-known/ddg-agent-pricing.json` |
 | Status | `/.well-known/ddg-agent-status.json` |

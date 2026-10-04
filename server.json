@@ -7,13 +7,13 @@
     "url": "https://github.com/daedalusdevelopmentgroup/ddg-agent-payable-services",
     "source": "github"
   },
-  "version": "0.9.1",
+  "version": "0.9.2",
   "websiteUrl": "https://agents.daedalusdevelopmentgroup.com",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "ddg-agent-services-mcp",
-      "version": "0.9.1",
+      "version": "0.9.2",
       "transport": {
         "type": "stdio"
       },

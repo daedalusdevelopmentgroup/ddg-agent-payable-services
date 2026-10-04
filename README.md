@@ -223,8 +223,8 @@ Daily-loop communication infra with attested delivery: the recurring-use pattern
 ### Premium security audits (deep variants)
 | Service | Price | Description |
 |---|---|---|
-| `/v1/security-audit/deep` | \$0.25 | Expanded audit: finding → evidence → remediation → signed certificate via certify |
-| `/v1/research/deep` | \$0.05 | Deep research report with evidence chain |
+| `/v1/security-audit/deep` | \$0.01 | Expanded audit: finding → evidence → remediation → signed certificate via certify |
+| `/v1/research/deep` | \$0.01 | Deep research report with evidence chain |
 
 MCP security is exploding with the MCP registry wave — DDG is one of the only x402-native providers of it.
 

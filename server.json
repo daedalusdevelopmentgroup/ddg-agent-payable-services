@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.daedalusdevelopmentgroup/ddg-agent-services-mcp",
+  "name": "com.daedalusdevelopmentgroup/ddg-agent-services-mcp",
   "title": "DDG Agent Services",
   "description": "Pay-per-call x402 gateway: agent tools, OpenAI-compatible LLM, market data, RPC, security audits.",
   "repository": {
@@ -32,12 +32,6 @@
           "format": "string"
         }
       ]
-    }
-  ],
-  "remotes": [
-    {
-      "type": "streamable-http",
-      "url": "https://mcp.daedalusdevelopmentgroup.com/mcp"
     }
   ]
 }

@@ -2,9 +2,8 @@ name: publish-mcp-registry
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: ["server.json"]
+  # push trigger removed 2026-10-04: io.github.* remote-URL squat blocks OIDC
+  # publishes; com.* publishes use domain auth (mcp-publisher login http) manually.
 
 jobs:
   publish:

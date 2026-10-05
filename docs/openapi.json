@@ -8030,7 +8030,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9082,7 +9082,7 @@
           "blockchain",
           "x402-payable"
         ],
-        "x-x402-price": "$0.002",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9122,7 +9122,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9144,7 +9144,7 @@
           "network",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9184,7 +9184,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9308,7 +9308,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.0005"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9330,7 +9330,7 @@
           "utility",
           "x402-payable"
         ],
-        "x-x402-price": "$0.002",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9370,7 +9370,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9454,7 +9454,7 @@
           "document",
           "x402-payable"
         ],
-        "x-x402-price": "$0.005",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9494,7 +9494,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.005"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9516,7 +9516,7 @@
           "document",
           "x402-payable"
         ],
-        "x-x402-price": "$0.005",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9556,7 +9556,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.005"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9578,7 +9578,7 @@
           "data",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9618,7 +9618,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9640,7 +9640,7 @@
           "utility",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9680,7 +9680,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9702,7 +9702,7 @@
           "visual",
           "x402-payable"
         ],
-        "x-x402-price": "$0.005",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9742,7 +9742,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.005"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9764,7 +9764,7 @@
           "security",
           "x402-payable"
         ],
-        "x-x402-price": "$0.005",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9804,7 +9804,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.005"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9826,7 +9826,7 @@
           "ai",
           "x402-payable"
         ],
-        "x-x402-price": "$0.003",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9866,7 +9866,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.003"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9888,7 +9888,7 @@
           "network",
           "x402-payable"
         ],
-        "x-x402-price": "$0.002",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9928,7 +9928,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -9950,7 +9950,7 @@
           "utility",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -9983,7 +9983,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10005,7 +10005,7 @@
           "utility",
           "x402-payable"
         ],
-        "x-x402-price": "$0.002",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10038,7 +10038,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10115,7 +10115,7 @@
           "utility",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10148,7 +10148,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10170,7 +10170,7 @@
           "security",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10203,7 +10203,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10225,7 +10225,7 @@
           "network",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10258,7 +10258,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10280,7 +10280,7 @@
           "utility",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10313,7 +10313,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10335,7 +10335,7 @@
           "analysis",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10368,7 +10368,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10390,7 +10390,7 @@
           "network",
           "x402-payable"
         ],
-        "x-x402-price": "$0.002",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10423,7 +10423,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10500,7 +10500,7 @@
           "utility",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10533,7 +10533,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10555,7 +10555,7 @@
           "network",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10588,7 +10588,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10610,7 +10610,7 @@
           "utility",
           "x402-payable"
         ],
-        "x-x402-price": "$0.002",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10643,7 +10643,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10665,7 +10665,7 @@
           "analysis",
           "x402-payable"
         ],
-        "x-x402-price": "$0.002",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10698,7 +10698,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10720,7 +10720,7 @@
           "security",
           "x402-payable"
         ],
-        "x-x402-price": "$0.002",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10753,7 +10753,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10775,7 +10775,7 @@
           "security",
           "x402-payable"
         ],
-        "x-x402-price": "$0.005",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10808,7 +10808,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.005"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10830,7 +10830,7 @@
           "ai",
           "x402-payable"
         ],
-        "x-x402-price": "$0.005",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10863,7 +10863,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.005"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10885,7 +10885,7 @@
           "utility",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10918,7 +10918,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10940,7 +10940,7 @@
           "security",
           "x402-payable"
         ],
-        "x-x402-price": "$0.002",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -10973,7 +10973,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -10995,7 +10995,7 @@
           "network",
           "x402-payable"
         ],
-        "x-x402-price": "$0.002",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -11028,7 +11028,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -11050,7 +11050,7 @@
           "network",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -11083,7 +11083,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -11105,7 +11105,7 @@
           "utility",
           "x402-payable"
         ],
-        "x-x402-price": "$0.001",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -11138,7 +11138,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.001"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -11160,7 +11160,7 @@
           "search",
           "x402-payable"
         ],
-        "x-x402-price": "$0.005",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -11193,7 +11193,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.005"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -11215,7 +11215,7 @@
           "data",
           "x402-payable"
         ],
-        "x-x402-price": "$0.005",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -11302,7 +11302,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.005"
+            "amount": "0.01"
           },
           "protocols": [
             {
@@ -11324,7 +11324,7 @@
           "data",
           "x402-payable"
         ],
-        "x-x402-price": "$0.002",
+        "x-x402-price": "$0.01",
         "x-x402-network": "eip155:8453",
         "x-x402-asset": "USDC",
         "requestBody": {
@@ -11396,7 +11396,7 @@
           "price": {
             "mode": "fixed",
             "currency": "USD",
-            "amount": "0.002"
+            "amount": "0.01"
           },
           "protocols": [
             {

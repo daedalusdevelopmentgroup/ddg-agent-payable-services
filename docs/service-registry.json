@@ -1,6 +1,6 @@
 {
   "$schema": "https://agents.daedalusdevelopmentgroup.com/schemas/service-registry-v1.json",
-  "generated_at": "2026-09-24T16:29:34Z",
+  "generated_at": "2026-10-05T22:04:07Z",
   "schema_version": "1.0.0",
   "services": [
     {
@@ -670,7 +670,7 @@
       "availability": "available",
       "backend": "opentine",
       "category": "agent-services",
-      "description": "Agent attestation — prove 'I am agent X, I completed task Y' with opentine provenance. Submits a .tine hash, gets back a signed attestation with public verify URL.",
+      "description": "Agent attestation \u2014 prove 'I am agent X, I completed task Y' with opentine provenance. Submits a .tine hash, gets back a signed attestation with public verify URL.",
       "discoverable": true,
       "expected_latency": "subsecond",
       "free_quota": null,
@@ -1694,7 +1694,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -2974,7 +2974,7 @@
         "summary": "Base address balance, nonce, and code presence."
       },
       "path": "/v1/base/address",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_address",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -3038,10 +3038,10 @@
         "summary": "Base block summary; full transactions cost $0.002."
       },
       "path": "/v1/base/block",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "pricing_variants": {
-        "full_transactions": "0.002",
-        "summary": "0.001"
+        "full_transactions": "0.01",
+        "summary": "0.01"
       },
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_block",
@@ -3106,7 +3106,7 @@
         "summary": "Bounded eth_call against recent Base state."
       },
       "path": "/v1/base/call",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_call",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -3170,7 +3170,7 @@
         "summary": "Base contract bytecode lookup."
       },
       "path": "/v1/base/contract-code",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_contract_code",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -3234,7 +3234,7 @@
         "summary": "Base fee and gas summary."
       },
       "path": "/v1/base/gas",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_gas",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -3298,7 +3298,7 @@
         "summary": "Recent Base logs capped at 10,000 blocks and 5,000 results."
       },
       "path": "/v1/base/logs",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_logs",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -3362,7 +3362,7 @@
         "summary": "Verify a bounded Base payment proof."
       },
       "path": "/v1/base/payment-proof",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_payment_proof",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -3426,7 +3426,7 @@
         "summary": "Allowlisted read-only Base JSON-RPC."
       },
       "path": "/v1/base/rpc",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_rpc",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -3539,7 +3539,7 @@
         "summary": "Recent ERC-20 transfers capped at 10,000 blocks and 5,000 results."
       },
       "path": "/v1/base/token-transfers",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_token_transfers",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -3603,7 +3603,7 @@
         "summary": "Base transaction and receipt lookup."
       },
       "path": "/v1/base/transaction",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_transaction",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -3693,7 +3693,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/base64-codec",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_base64_codec"
     },
@@ -4310,7 +4310,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -4362,7 +4362,7 @@
       "availability": "available",
       "backend": "operator_queue",
       "category": "agent-services",
-      "description": "Code-to-payable-endpoint bridge — wrap a function/script as an x402-payable HTTP endpoint with OpenAPI + receipts. Operator-reviewed.",
+      "description": "Code-to-payable-endpoint bridge \u2014 wrap a function/script as an x402-payable HTTP endpoint with OpenAPI + receipts. Operator-reviewed.",
       "discoverable": true,
       "expected_latency": "hours_to_days",
       "free_quota": null,
@@ -4398,7 +4398,7 @@
             "description": "Endpoint path + deploy status"
           },
           "402": {
-            "description": "Payment Required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment Required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -4644,7 +4644,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -4688,7 +4688,7 @@
         "x-x402-price": "$0.002"
       },
       "path": "/v1/contract-abi",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "blockchain",
       "service_id": "v1_contract_abi"
     },
@@ -4696,7 +4696,7 @@
       "availability": "available",
       "backend": "payment_edge",
       "category": "agent-services",
-      "description": "Credential escrow proxy — agent pays DDG, DDG makes the upstream API call with its own credentials, returns result. Agent never sees the API key.",
+      "description": "Credential escrow proxy \u2014 agent pays DDG, DDG makes the upstream API call with its own credentials, returns result. Agent never sees the API key.",
       "discoverable": true,
       "expected_latency": "under_120_seconds",
       "free_quota": null,
@@ -4732,7 +4732,7 @@
             "description": "Upstream response"
           },
           "402": {
-            "description": "Payment Required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment Required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -4857,7 +4857,7 @@
         "x-x402-price": "$0.002"
       },
       "path": "/v1/diff-text",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_diff_text"
     },
@@ -4909,7 +4909,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -4953,7 +4953,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/dns-lookup",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_dns_lookup"
     },
@@ -5005,7 +5005,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -5101,7 +5101,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -5145,7 +5145,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/embeddings",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "ai",
       "service_id": "v1_embeddings"
     },
@@ -5307,7 +5307,7 @@
         "x-service-id": "enrich_domain"
       },
       "path": "/v1/enrich/domain",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "enrich_domain"
     },
@@ -5388,7 +5388,7 @@
         "x-service-id": "enrich_email"
       },
       "path": "/v1/enrich/email",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "enrich_email"
     },
@@ -6095,7 +6095,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -6139,7 +6139,7 @@
         "x-x402-price": "$0.002"
       },
       "path": "/v1/fetch-as-markdown",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_fetch_as_markdown"
     },
@@ -6402,7 +6402,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/hash-compute",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_hash_compute"
     },
@@ -6673,7 +6673,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/http-headers",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "security",
       "service_id": "v1_http_headers"
     },
@@ -6725,7 +6725,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -6828,7 +6828,7 @@
         "summary": "Check whether an agent inbox handle exists and accepts paid inbound before sending (?handle=...)."
       },
       "path": "/v1/inbox/lookup",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "presence",
       "service_id": "inbox_lookup"
     },
@@ -6949,7 +6949,7 @@
         "x-service-id": "v1_inbox_messages_list"
       },
       "path": "/v1/inbox/messages/list",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "v1_inbox_messages_list"
     },
@@ -7067,7 +7067,7 @@
         "summary": "Send a message to an agent inbox (target handle in the JSON body). Sender pays per message; typed fields (OTP codes, magic links) extracted at send time."
       },
       "path": "/v1/inbox/send",
-      "price_usd": "0.004",
+      "price_usd": "0.01",
       "risk": "presence",
       "service_id": "inbox_send"
     },
@@ -7133,7 +7133,7 @@
         "x-service-id": "v1_inbox_settings"
       },
       "path": "/v1/inbox/settings",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "v1_inbox_settings"
     },
@@ -7277,7 +7277,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/ip-geolocation",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_ip_geolocation"
     },
@@ -7324,7 +7324,7 @@
             "description": "Input too large (max 64KB)"
           },
           "422": {
-            "description": "Repair failed — all strategies exhausted"
+            "description": "Repair failed \u2014 all strategies exhausted"
           }
         },
         "security": [],
@@ -7439,7 +7439,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/json-validate",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_json_validate"
     },
@@ -7710,7 +7710,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/language-detect",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "analysis",
       "service_id": "v1_language_detect"
     },
@@ -7981,7 +7981,7 @@
         "x-x402-price": "$0.002"
       },
       "path": "/v1/link-extract",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_link_extract"
     },
@@ -9345,7 +9345,7 @@
             "description": "Consensus result with individual responses"
           },
           "402": {
-            "description": "Payment Required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment Required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -10487,7 +10487,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -10531,7 +10531,7 @@
         "x-x402-price": "$0.005"
       },
       "path": "/v1/ocr",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "document",
       "service_id": "v1_ocr"
     },
@@ -11527,7 +11527,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -11571,7 +11571,7 @@
         "x-x402-price": "$0.005"
       },
       "path": "/v1/pdf-extract",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "document",
       "service_id": "v1_pdf_extract"
     },
@@ -11623,7 +11623,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -11667,7 +11667,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/price-feed",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "data",
       "service_id": "v1_price_feed"
     },
@@ -12514,7 +12514,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -12558,7 +12558,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/qr-code",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_qr_code"
     },
@@ -12647,7 +12647,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/random",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_random"
     },
@@ -12655,7 +12655,7 @@
       "availability": "available",
       "backend": "payment_edge",
       "category": "agent-services",
-      "description": "Free rate-limit/retry strategy analyzer for AI agents. Parses standard rate-limit headers, computes optimal cadence, utilization, and projected spend. Pure deterministic math — no LLM, no network.",
+      "description": "Free rate-limit/retry strategy analyzer for AI agents. Parses standard rate-limit headers, computes optimal cadence, utilization, and projected spend. Pure deterministic math \u2014 no LLM, no network.",
       "discoverable": true,
       "expected_latency": "under_120_seconds",
       "free_quota": null,
@@ -13529,7 +13529,7 @@
       "availability": "available",
       "backend": "payment_edge",
       "category": "general",
-      "description": "Deep research: sub-query decomposition → multi-engine search → page fetch → cited synthesis (extractive or GLM-LLM). $0.05.",
+      "description": "Deep research: sub-query decomposition \u2192 multi-engine search \u2192 page fetch \u2192 cited synthesis (extractive or GLM-LLM). $0.05.",
       "discoverable": true,
       "expected_latency": "under_120_seconds",
       "free_quota": null,
@@ -13538,7 +13538,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "operation": {
-        "description": "Deep research: sub-query decomposition → multi-engine search → page fetch → cited synthesis (extractive or GLM-LLM). $0.05.",
+        "description": "Deep research: sub-query decomposition \u2192 multi-engine search \u2192 page fetch \u2192 cited synthesis (extractive or GLM-LLM). $0.05.",
         "operationId": "research_deep",
         "requestBody": {
           "content": {
@@ -13577,7 +13577,7 @@
             "AgentIdentity": []
           }
         ],
-        "summary": "Deep research: sub-query decomposition → multi-engine search → page fetch → cited synthesis (extractive or GLM-LLM). $0.05.",
+        "summary": "Deep research: sub-query decomposition \u2192 multi-engine search \u2192 page fetch \u2192 cited synthesis (extractive or GLM-LLM). $0.05.",
         "x-availability": "available",
         "x-backend": "payment_edge_handler",
         "x-expected-latency": "10-60s",
@@ -13683,7 +13683,7 @@
         "x-service-id": "research_page_pack"
       },
       "path": "/v1/research/page-pack",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "research_page_pack"
     },
@@ -14242,7 +14242,7 @@
       "availability": "available",
       "backend": "payment_edge",
       "category": "general",
-      "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant → scope_check → execution → evidence → receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
+      "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant \u2192 scope_check \u2192 execution \u2192 evidence \u2192 receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
       "discoverable": true,
       "expected_latency": "under_120_seconds",
       "free_quota": null,
@@ -14251,7 +14251,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "operation": {
-        "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant → scope_check → execution → evidence → receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
+        "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant \u2192 scope_check \u2192 execution \u2192 evidence \u2192 receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
         "operationId": "robotics_provenance_bundle",
         "requestBody": {
           "content": {
@@ -14290,7 +14290,7 @@
             "AgentIdentity": []
           }
         ],
-        "summary": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant → scope_check → execution → evidence → receipt). In",
+        "summary": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant \u2192 scope_check \u2192 execution \u2192 evidence \u2192 receipt). In",
         "x-availability": "available",
         "x-backend": "payment_edge",
         "x-expected-latency": "under_60_seconds",
@@ -14566,7 +14566,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/robots-check",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_robots_check"
     },
@@ -14625,7 +14625,7 @@
         "summary": "TinyFish (or any) agent run export -> signed, tamper-evident opentine .tine artifact with integrity hash + Ed25519 signature. Verifiable proof-of-execution for "
       },
       "path": "/v1/run-proof",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "provenance",
       "service_id": "run_proof"
     },
@@ -14881,7 +14881,7 @@
         "x-x402-price": "$0.002"
       },
       "path": "/v1/schema-infer",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_schema_infer"
     },
@@ -14933,7 +14933,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -14977,7 +14977,7 @@
         "x-x402-price": "$0.005"
       },
       "path": "/v1/screenshot",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "visual",
       "service_id": "v1_screenshot"
     },
@@ -15248,7 +15248,7 @@
         "x-x402-price": "$0.002"
       },
       "path": "/v1/sentiment",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "analysis",
       "service_id": "v1_sentiment"
     },
@@ -15804,7 +15804,7 @@
         "x-service-id": "v1_sla_declare"
       },
       "path": "/v1/sla/declare",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "v1_sla_declare"
     },
@@ -15937,7 +15937,7 @@
         "x-service-id": "v1_sla_report"
       },
       "path": "/v1/sla/report",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "v1_sla_report"
     },
@@ -16026,7 +16026,7 @@
         "x-x402-price": "$0.002"
       },
       "path": "/v1/ssl-cert-info",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "security",
       "service_id": "v1_ssl_cert_info"
     },
@@ -16285,7 +16285,7 @@
         "x-x402-price": "$0.005"
       },
       "path": "/v1/subdomain-enumerate",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "security",
       "service_id": "v1_subdomain_enumerate"
     },
@@ -16374,7 +16374,7 @@
         "x-x402-price": "$0.005"
       },
       "path": "/v1/summarize",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "ai",
       "service_id": "v1_summarize"
     },
@@ -16382,7 +16382,7 @@
       "availability": "available",
       "backend": "payment_edge",
       "category": "agent-services",
-      "description": "Bounded sandbox test runner — submit code + tests, run in isolated subprocess with hard timeout and no network, get pass/fail + coverage + stdout.",
+      "description": "Bounded sandbox test runner \u2014 submit code + tests, run in isolated subprocess with hard timeout and no network, get pass/fail + coverage + stdout.",
       "discoverable": true,
       "expected_latency": "under_120_seconds",
       "free_quota": null,
@@ -16418,7 +16418,7 @@
             "description": "Test results with pass/fail counts"
           },
           "402": {
-            "description": "Payment Required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment Required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -16506,7 +16506,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -16550,7 +16550,7 @@
         "x-x402-price": "$0.005"
       },
       "path": "/v1/threat-check",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "security",
       "service_id": "v1_threat_check"
     },
@@ -16639,7 +16639,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/timestamp",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_timestamp"
     },
@@ -16706,7 +16706,7 @@
       "availability": "available",
       "backend": "opentine",
       "category": "opentine",
-      "description": "Diff two .tine artifacts — structured comparison of agent runs showing added/removed/modified/same steps.",
+      "description": "Diff two .tine artifacts \u2014 structured comparison of agent runs showing added/removed/modified/same steps.",
       "discoverable": true,
       "expected_latency": "subsecond",
       "free_quota": {
@@ -16896,7 +16896,7 @@
       "availability": "available",
       "backend": "opentine",
       "category": "opentine",
-      "description": "Trace the fork/parent chain of a .tine artifact — full provenance lineage from root run to current.",
+      "description": "Trace the fork/parent chain of a .tine artifact \u2014 full provenance lineage from root run to current.",
       "discoverable": true,
       "expected_latency": "subsecond",
       "free_quota": {
@@ -16965,7 +16965,7 @@
       "availability": "available",
       "backend": "opentine",
       "category": "opentine",
-      "description": "Free .tine artifact verification — parse and verify content-addressed provenance of an opentine run. Checks FORMAT_VERSION, step hashes, tamper detection.",
+      "description": "Free .tine artifact verification \u2014 parse and verify content-addressed provenance of an opentine run. Checks FORMAT_VERSION, step hashes, tamper detection.",
       "discoverable": true,
       "expected_latency": "subsecond",
       "free_quota": {
@@ -17115,7 +17115,7 @@
         "x-x402-price": "$0.002"
       },
       "path": "/v1/tls-version-check",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "security",
       "service_id": "v1_tls_version_check"
     },
@@ -17167,7 +17167,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -17211,7 +17211,7 @@
         "x-x402-price": "$0.003"
       },
       "path": "/v1/translate",
-      "price_usd": "0.003",
+      "price_usd": "0.01",
       "risk": "ai",
       "service_id": "v1_translate"
     },
@@ -17341,7 +17341,7 @@
         "x-service-id": "v1_trust_history"
       },
       "path": "/v1/trust/history",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "v1_trust_history"
     },
@@ -17632,7 +17632,7 @@
         "x-x402-price": "$0.002"
       },
       "path": "/v1/url-fetch",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_url_fetch"
     },
@@ -17721,7 +17721,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/url-status",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_url_status"
     },
@@ -17810,7 +17810,7 @@
         "x-x402-price": "$0.001"
       },
       "path": "/v1/uuid-generate",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_uuid_generate"
     },
@@ -17926,7 +17926,7 @@
         "x-service-id": "v1_wake_feed"
       },
       "path": "/v1/wake/feed",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "medium",
       "service_id": "v1_wake_feed"
     },
@@ -18131,7 +18131,7 @@
         "x-x402-price": "$0.005"
       },
       "path": "/v1/web-search",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "search",
       "service_id": "v1_web_search"
     },
@@ -18183,7 +18183,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -18227,7 +18227,7 @@
         "x-x402-price": "$0.002"
       },
       "path": "/v1/whois-lookup",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_whois_lookup"
     }

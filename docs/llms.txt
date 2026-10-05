@@ -204,50 +204,50 @@ Post-promo policy: <=4B local models remain free; >4B local routes become paid/o
 
 - POST /v1/agent-registry ($0.01 USDC) — Search or list AI agents in the DDG agent directory. Registration is free.
 - POST /v1/code-execution ($0.01 USDC) — Run Python code in a sandboxed Docker container. No network, read-only filesystem.
-- POST /v1/contract-abi ($0.002 USDC) — Fetch verified smart contract ABI from block explorers (Base, Ethereum, Optimism, Arbitrum, Polygon, Scroll).
-- POST /v1/dns-lookup ($0.001 USDC) — DNS resolution for any domain. Returns A, AAAA, MX, TXT, NS, CNAME, SOA, CAA, SRV records.
+- POST /v1/contract-abi ($0.01 USDC) — Fetch verified smart contract ABI from block explorers (Base, Ethereum, Optimism, Arbitrum, Polygon, Scroll).
+- POST /v1/dns-lookup ($0.01 USDC) — DNS resolution for any domain. Returns A, AAAA, MX, TXT, NS, CNAME, SOA, CAA, SRV records.
 - POST /v1/email-send ($0.01 USDC) — Send a transactional email via SMTP relay. Rate-limited.
 - POST /v1/embeddings ($0.0005 USDC) — Generate vector embeddings for RAG/semantic search. GPU-accelerated (BGE, Instructor models).
-- POST /v1/fetch-as-markdown ($0.002 USDC) — Extract clean markdown from any URL. Full JS rendering via Playwright available.
+- POST /v1/fetch-as-markdown ($0.01 USDC) — Extract clean markdown from any URL. Full JS rendering via Playwright available.
 - POST /v1/image-generation ($0.03 USDC) — Generate an image from a text prompt. Local Stable Diffusion or OpenAI DALL-E fallback.
-- POST /v1/ocr ($0.005 USDC) — Extract text from images using OCR (Tesseract). Accepts base64 or URL input.
-- POST /v1/pdf-extract ($0.005 USDC) — Extract text from PDF documents. Accepts base64 or URL input.
-- POST /v1/price-feed ($0.001 USDC) — Get crypto, forex, or stock prices in real-time.
-- POST /v1/qr-code ($0.001 USDC) — Generate a QR code PNG from any text/data.
-- POST /v1/screenshot ($0.005 USDC) — Capture a PNG screenshot of any URL using headless Chromium.
-- POST /v1/threat-check ($0.005 USDC) — Check URL or wallet address reputation. Aggregates URLhaus, TLS validation, DNS, pattern analysis.
-- POST /v1/translate ($0.003 USDC) — Translate text between languages. Self-hosted LibreTranslate or cloud fallback.
-- POST /v1/whois-lookup ($0.002 USDC) — WHOIS registration data for any domain.
+- POST /v1/ocr ($0.01 USDC) — Extract text from images using OCR (Tesseract). Accepts base64 or URL input.
+- POST /v1/pdf-extract ($0.01 USDC) — Extract text from PDF documents. Accepts base64 or URL input.
+- POST /v1/price-feed ($0.01 USDC) — Get crypto, forex, or stock prices in real-time.
+- POST /v1/qr-code ($0.01 USDC) — Generate a QR code PNG from any text/data.
+- POST /v1/screenshot ($0.01 USDC) — Capture a PNG screenshot of any URL using headless Chromium.
+- POST /v1/threat-check ($0.01 USDC) — Check URL or wallet address reputation. Aggregates URLhaus, TLS validation, DNS, pattern analysis.
+- POST /v1/translate ($0.01 USDC) — Translate text between languages. Self-hosted LibreTranslate or cloud fallback.
+- POST /v1/whois-lookup ($0.01 USDC) — WHOIS registration data for any domain.
 
 ## AI-Agent Primitives (Tier 4-6)
 
-- POST /v1/base64-codec ($0.001 USDC) — Encode or decode base64, with URL-safe variant support.
-- POST /v1/diff-text ($0.002 USDC) — Compare two text blocks and return a structured diff (unified, HTML, or JSON).
+- POST /v1/base64-codec ($0.01 USDC) — Encode or decode base64, with URL-safe variant support.
+- POST /v1/diff-text ($0.01 USDC) — Compare two text blocks and return a structured diff (unified, HTML, or JSON).
 - POST /v1/git-repo-analyze ($0.01 USDC) — Analyze a git repo: languages, file count, last commit, license. Uses Docker isolation.
-- POST /v1/hash-compute ($0.001 USDC) — Compute cryptographic hash (SHA-256, MD5, SHA-1, BLAKE2, etc.) of input text.
-- POST /v1/http-headers ($0.001 USDC) — Get HTTP response headers for a URL, including security header analysis.
-- POST /v1/ip-geolocation ($0.001 USDC) — Geolocate an IP address. Returns country, city, ISP, coordinates.
-- POST /v1/json-validate ($0.001 USDC) — Validate JSON against a JSON Schema. Returns detailed error paths.
-- POST /v1/language-detect ($0.001 USDC) — Detect the language of a text string. Returns ISO code and alternatives.
-- POST /v1/link-extract ($0.002 USDC) — Extract all hyperlinks from a web page. Returns internal/external classification.
+- POST /v1/hash-compute ($0.01 USDC) — Compute cryptographic hash (SHA-256, MD5, SHA-1, BLAKE2, etc.) of input text.
+- POST /v1/http-headers ($0.01 USDC) — Get HTTP response headers for a URL, including security header analysis.
+- POST /v1/ip-geolocation ($0.01 USDC) — Geolocate an IP address. Returns country, city, ISP, coordinates.
+- POST /v1/json-validate ($0.01 USDC) — Validate JSON against a JSON Schema. Returns detailed error paths.
+- POST /v1/language-detect ($0.01 USDC) — Detect the language of a text string. Returns ISO code and alternatives.
+- POST /v1/link-extract ($0.01 USDC) — Extract all hyperlinks from a web page. Returns internal/external classification.
 - POST /v1/llm-judge ($0.01 USDC) — Judge which of two LLM responses is better. Uses local Ollama models as neutral judge.
-- POST /v1/random ($0.001 USDC) — Generate cryptographically secure random data: strings, hex, tokens, integers.
-- POST /v1/robots-check ($0.001 USDC) — Check robots.txt rules for a URL. Returns allowed/disallowed, crawl delay, sitemaps.
-- POST /v1/schema-infer ($0.002 USDC) — Infer JSON Schema from a JSON sample. Useful for reverse-engineering APIs.
-- POST /v1/sentiment ($0.002 USDC) — Sentiment analysis on text. Returns positive/negative/neutral with confidence score.
-- POST /v1/ssl-cert-info ($0.002 USDC) — Get SSL certificate details for a hostname: issuer, expiry, SANs, fingerprint.
-- POST /v1/subdomain-enumerate ($0.005 USDC) — Find subdomains via certificate transparency logs (crt.sh).
-- POST /v1/summarize ($0.005 USDC) — Summarize text using local LLM. Supports bullet, paragraph, tldr, and structured styles.
-- POST /v1/timestamp ($0.001 USDC) — Get current time in multiple formats: Unix, ISO 8601, RFC 3339, human-readable.
-- POST /v1/tls-version-check ($0.002 USDC) — Check which TLS versions a server supports and identify weak ciphers.
-- POST /v1/url-fetch ($0.002 USDC) — Fetch raw content from a URL. Returns body, headers, status code. For hitting REST APIs.
-- POST /v1/url-status ($0.001 USDC) — Quick HEAD check on a URL. Returns status code, redirects, server info.
-- POST /v1/uuid-generate ($0.001 USDC) — Generate UUIDs (v1, v3, v4, v5). For distributed agent ID generation.
-- POST /v1/web-search ($0.005 USDC) — Search the web and return structured JSON results. Aggregates 20+ search engines via SearXNG.
+- POST /v1/random ($0.01 USDC) — Generate cryptographically secure random data: strings, hex, tokens, integers.
+- POST /v1/robots-check ($0.01 USDC) — Check robots.txt rules for a URL. Returns allowed/disallowed, crawl delay, sitemaps.
+- POST /v1/schema-infer ($0.01 USDC) — Infer JSON Schema from a JSON sample. Useful for reverse-engineering APIs.
+- POST /v1/sentiment ($0.01 USDC) — Sentiment analysis on text. Returns positive/negative/neutral with confidence score.
+- POST /v1/ssl-cert-info ($0.01 USDC) — Get SSL certificate details for a hostname: issuer, expiry, SANs, fingerprint.
+- POST /v1/subdomain-enumerate ($0.01 USDC) — Find subdomains via certificate transparency logs (crt.sh).
+- POST /v1/summarize ($0.01 USDC) — Summarize text using local LLM. Supports bullet, paragraph, tldr, and structured styles.
+- POST /v1/timestamp ($0.01 USDC) — Get current time in multiple formats: Unix, ISO 8601, RFC 3339, human-readable.
+- POST /v1/tls-version-check ($0.01 USDC) — Check which TLS versions a server supports and identify weak ciphers.
+- POST /v1/url-fetch ($0.01 USDC) — Fetch raw content from a URL. Returns body, headers, status code. For hitting REST APIs.
+- POST /v1/url-status ($0.01 USDC) — Quick HEAD check on a URL. Returns status code, redirects, server info.
+- POST /v1/uuid-generate ($0.01 USDC) — Generate UUIDs (v1, v3, v4, v5). For distributed agent ID generation.
+- POST /v1/web-search ($0.01 USDC) — Search the web and return structured JSON results. Aggregates 20+ search engines via SearXNG.
 
 
 ## Collaboration tier (TinyFish-ready, live)
-- `/v1/run-proof` ($0.002): any agent run export (TinyFish Run JSON verbatim) -> signed tamper-evident opentine .tine artifact with integrity hash + Ed25519 signature; `tine verify` works offline. Proof-of-execution for auditors / on-chain anchoring.
+- `/v1/run-proof` ($0.01): any agent run export (TinyFish Run JSON verbatim) -> signed tamper-evident opentine .tine artifact with integrity hash + Ed25519 signature; `tine verify` works offline. Proof-of-execution for auditors / on-chain anchoring.
 - `/v1/research-report` ($0.01): sourced research brief - find (multi-engine or `partner_results` injected verbatim) -> bulk read -> claim extraction -> 3-model verification verdict per claim -> signed proof-of-research artifact.
 - `/v1/page-pack` ($0.01): bulk 1-25 URL -> markdown; pipe `/v1/web-search` results[].url straight in (Search->Fetch handoff shape).
-- Agent inbox (presence tier): `/v1/inbox/register` ($0.01 one-time handle claim), `/v1/inbox/send` ($0.004 paid inbound; OTP/magic-link typed extraction), `/v1/inbox/lookup` ($0.001), free owner reads `/v1/inbox/messages` + `/v1/inbox/status` via inbox_key. Senders pay = spam resistance.
+- Agent inbox (presence tier): `/v1/inbox/register` ($0.01 one-time handle claim), `/v1/inbox/send` ($0.01 paid inbound; OTP/magic-link typed extraction), `/v1/inbox/lookup` ($0.01), free owner reads `/v1/inbox/messages` + `/v1/inbox/status` via inbox_key. Senders pay = spam resistance.

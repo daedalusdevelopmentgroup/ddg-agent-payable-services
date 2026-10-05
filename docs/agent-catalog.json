@@ -559,7 +559,7 @@
       }
     ]
   },
-  "generated_at": "2026-07-10T15:04:02Z",
+  "generated_at": "2026-10-05T22:04:08Z",
   "ha_note": "Production Cloudflare tunnel/edge is anchored on durable runtime backend for 24/7 uptime. The free local-model pool now supports selectable local runtimes: Ollama, llama.cpp, and LM Studio/llmster. The public catalog reports only healthy/listed runtime models and hides raw LAN endpoints.",
   "live_runtime_services": [
     {
@@ -926,7 +926,7 @@
       ],
       "bundle_savings_usd": "75.00",
       "consumer_class": "ai_agent",
-      "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant → scope_check → execution → evidence → receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
+      "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant \u2192 scope_check \u2192 execution \u2192 evidence \u2192 receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
       "fulfillment_mode": "payment_edge",
       "id": "robotics_provenance_bundle",
       "individual_total_usd": "225.00",
@@ -1001,7 +1001,7 @@
       "audience": "ai_agents_only",
       "billing": "free_launch_promo",
       "consumer_class": "ai_agent",
-      "description": "Free rate-limit/retry strategy analyzer for AI agents. Parses standard rate-limit headers, computes optimal cadence, utilization, and projected spend. Pure deterministic math — no LLM, no network.",
+      "description": "Free rate-limit/retry strategy analyzer for AI agents. Parses standard rate-limit headers, computes optimal cadence, utilization, and projected spend. Pure deterministic math \u2014 no LLM, no network.",
       "fulfillment_mode": "free_deterministic_analyzer_beta",
       "id": "rate_limit_analyzer",
       "path": "/v1/rate-limit-analyzer",
@@ -1027,7 +1027,7 @@
       "audience": "ai_agents_only",
       "billing": "per_call",
       "consumer_class": "ai_agent",
-      "description": "Credential escrow proxy — agent pays DDG, DDG makes the upstream API call with its own credentials, returns result. Agent never sees the API key.",
+      "description": "Credential escrow proxy \u2014 agent pays DDG, DDG makes the upstream API call with its own credentials, returns result. Agent never sees the API key.",
       "fulfillment_mode": "paid_credential_escrow",
       "id": "credential_escrow_proxy",
       "path": "/v1/credential-escrow-proxy",
@@ -1040,7 +1040,7 @@
       "audience": "ai_agents_only",
       "billing": "per_call",
       "consumer_class": "ai_agent",
-      "description": "Bounded sandbox test runner — submit code + tests, run in isolated subprocess with hard timeout and no network, get pass/fail + coverage + stdout.",
+      "description": "Bounded sandbox test runner \u2014 submit code + tests, run in isolated subprocess with hard timeout and no network, get pass/fail + coverage + stdout.",
       "fulfillment_mode": "paid_sandbox_test_runner",
       "id": "test_runner",
       "path": "/v1/test-runner",
@@ -1053,7 +1053,7 @@
       "audience": "ai_agents_only",
       "billing": "free_launch_promo",
       "consumer_class": "ai_agent",
-      "description": "Agent attestation — prove 'I am agent X, I completed task Y' with opentine provenance. Submits a .tine hash, gets back a signed attestation with public verify URL.",
+      "description": "Agent attestation \u2014 prove 'I am agent X, I completed task Y' with opentine provenance. Submits a .tine hash, gets back a signed attestation with public verify URL.",
       "fulfillment_mode": "free_agent_attestation_beta",
       "id": "agent_attestation",
       "path": "/v1/agent-attestation",
@@ -1066,7 +1066,7 @@
       "audience": "ai_agents_only",
       "billing": "per_order",
       "consumer_class": "ai_agent",
-      "description": "Code-to-payable-endpoint bridge — wrap a function/script as an x402-payable HTTP endpoint with OpenAPI + receipts. Operator-reviewed.",
+      "description": "Code-to-payable-endpoint bridge \u2014 wrap a function/script as an x402-payable HTTP endpoint with OpenAPI + receipts. Operator-reviewed.",
       "fulfillment_mode": "paid_operator_reviewed",
       "id": "code_to_endpoint",
       "path": "/v1/code-to-endpoint",
@@ -1079,7 +1079,7 @@
       "audience": "ai_agents_only",
       "billing": "free_launch_promo",
       "consumer_class": "ai_agent",
-      "description": "Free .tine artifact verification — parse and verify content-addressed provenance of an opentine run. Checks FORMAT_VERSION, step hashes, tamper detection.",
+      "description": "Free .tine artifact verification \u2014 parse and verify content-addressed provenance of an opentine run. Checks FORMAT_VERSION, step hashes, tamper detection.",
       "fulfillment_mode": "free_tine_verification_beta",
       "id": "tine_verify",
       "path": "/v1/tine-verify",
@@ -1092,7 +1092,7 @@
       "audience": "ai_agents_only",
       "billing": "per_call",
       "consumer_class": "ai_agent",
-      "description": "Diff two .tine artifacts — structured comparison of agent runs showing added/removed/modified/same steps.",
+      "description": "Diff two .tine artifacts \u2014 structured comparison of agent runs showing added/removed/modified/same steps.",
       "fulfillment_mode": "paid_tine_diff",
       "id": "tine_diff",
       "path": "/v1/tine-diff",
@@ -1105,7 +1105,7 @@
       "audience": "ai_agents_only",
       "billing": "free_launch_promo",
       "consumer_class": "ai_agent",
-      "description": "Trace the fork/parent chain of a .tine artifact — full provenance lineage from root run to current.",
+      "description": "Trace the fork/parent chain of a .tine artifact \u2014 full provenance lineage from root run to current.",
       "fulfillment_mode": "free_provenance_chain_beta",
       "id": "tine_provenance_chain",
       "path": "/v1/tine-provenance-chain",
@@ -2213,7 +2213,7 @@
       "availability": "available",
       "backend": "opentine",
       "category": "agent-services",
-      "description": "Agent attestation — prove 'I am agent X, I completed task Y' with opentine provenance. Submits a .tine hash, gets back a signed attestation with public verify URL.",
+      "description": "Agent attestation \u2014 prove 'I am agent X, I completed task Y' with opentine provenance. Submits a .tine hash, gets back a signed attestation with public verify URL.",
       "discoverable": true,
       "expected_latency": "subsecond",
       "free_quota": null,
@@ -2468,7 +2468,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/base64-codec",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_base64_codec"
     },
@@ -2531,7 +2531,7 @@
       "availability": "available",
       "backend": "operator_queue",
       "category": "agent-services",
-      "description": "Code-to-payable-endpoint bridge — wrap a function/script as an x402-payable HTTP endpoint with OpenAPI + receipts. Operator-reviewed.",
+      "description": "Code-to-payable-endpoint bridge \u2014 wrap a function/script as an x402-payable HTTP endpoint with OpenAPI + receipts. Operator-reviewed.",
       "discoverable": true,
       "expected_latency": "hours_to_days",
       "free_quota": null,
@@ -2595,7 +2595,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/contract-abi",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "blockchain",
       "service_id": "v1_contract_abi"
     },
@@ -2603,7 +2603,7 @@
       "availability": "available",
       "backend": "payment_edge",
       "category": "agent-services",
-      "description": "Credential escrow proxy — agent pays DDG, DDG makes the upstream API call with its own credentials, returns result. Agent never sees the API key.",
+      "description": "Credential escrow proxy \u2014 agent pays DDG, DDG makes the upstream API call with its own credentials, returns result. Agent never sees the API key.",
       "discoverable": true,
       "expected_latency": "under_120_seconds",
       "free_quota": null,
@@ -2633,7 +2633,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/diff-text",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_diff_text"
     },
@@ -2654,7 +2654,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/dns-lookup",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_dns_lookup"
     },
@@ -2696,7 +2696,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/embeddings",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "ai",
       "service_id": "v1_embeddings"
     },
@@ -2751,7 +2751,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/fetch-as-markdown",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_fetch_as_markdown"
     },
@@ -2810,7 +2810,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/hash-compute",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_hash_compute"
     },
@@ -2848,7 +2848,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/http-headers",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "security",
       "service_id": "v1_http_headers"
     },
@@ -2890,7 +2890,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/ip-geolocation",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_ip_geolocation"
     },
@@ -2928,7 +2928,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/json-validate",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_json_validate"
     },
@@ -2966,7 +2966,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/language-detect",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "analysis",
       "service_id": "v1_language_detect"
     },
@@ -3004,7 +3004,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/link-extract",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_link_extract"
     },
@@ -3267,7 +3267,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/ocr",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "document",
       "service_id": "v1_ocr"
     },
@@ -3407,7 +3407,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/pdf-extract",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "document",
       "service_id": "v1_pdf_extract"
     },
@@ -3428,7 +3428,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/price-feed",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "data",
       "service_id": "v1_price_feed"
     },
@@ -3534,7 +3534,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/qr-code",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_qr_code"
     },
@@ -3555,7 +3555,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/random",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_random"
     },
@@ -3563,7 +3563,7 @@
       "availability": "available",
       "backend": "payment_edge",
       "category": "agent-services",
-      "description": "Free rate-limit/retry strategy analyzer for AI agents. Parses standard rate-limit headers, computes optimal cadence, utilization, and projected spend. Pure deterministic math — no LLM, no network.",
+      "description": "Free rate-limit/retry strategy analyzer for AI agents. Parses standard rate-limit headers, computes optimal cadence, utilization, and projected spend. Pure deterministic math \u2014 no LLM, no network.",
       "discoverable": true,
       "expected_latency": "under_120_seconds",
       "free_quota": null,
@@ -3716,7 +3716,7 @@
       "availability": "available",
       "backend": "payment_edge",
       "category": "robotics",
-      "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant → scope_check → execution → evidence → receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
+      "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant \u2192 scope_check \u2192 execution \u2192 evidence \u2192 receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
       "discoverable": true,
       "expected_latency": "under_60_seconds",
       "free_quota": null,
@@ -3780,7 +3780,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/robots-check",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_robots_check"
     },
@@ -3818,7 +3818,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/schema-infer",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_schema_infer"
     },
@@ -3839,7 +3839,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/screenshot",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "visual",
       "service_id": "v1_screenshot"
     },
@@ -3877,7 +3877,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/sentiment",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "analysis",
       "service_id": "v1_sentiment"
     },
@@ -3966,7 +3966,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/ssl-cert-info",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "security",
       "service_id": "v1_ssl_cert_info"
     },
@@ -4021,7 +4021,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/subdomain-enumerate",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "security",
       "service_id": "v1_subdomain_enumerate"
     },
@@ -4042,7 +4042,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/summarize",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "ai",
       "service_id": "v1_summarize"
     },
@@ -4050,7 +4050,7 @@
       "availability": "available",
       "backend": "payment_edge",
       "category": "agent-services",
-      "description": "Bounded sandbox test runner — submit code + tests, run in isolated subprocess with hard timeout and no network, get pass/fail + coverage + stdout.",
+      "description": "Bounded sandbox test runner \u2014 submit code + tests, run in isolated subprocess with hard timeout and no network, get pass/fail + coverage + stdout.",
       "discoverable": true,
       "expected_latency": "under_120_seconds",
       "free_quota": null,
@@ -4080,7 +4080,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/threat-check",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "security",
       "service_id": "v1_threat_check"
     },
@@ -4101,7 +4101,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/timestamp",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_timestamp"
     },
@@ -4126,7 +4126,7 @@
       "availability": "available",
       "backend": "opentine",
       "category": "opentine",
-      "description": "Diff two .tine artifacts — structured comparison of agent runs showing added/removed/modified/same steps.",
+      "description": "Diff two .tine artifacts \u2014 structured comparison of agent runs showing added/removed/modified/same steps.",
       "discoverable": true,
       "expected_latency": "subsecond",
       "free_quota": {
@@ -4185,7 +4185,7 @@
       "availability": "available",
       "backend": "opentine",
       "category": "opentine",
-      "description": "Trace the fork/parent chain of a .tine artifact — full provenance lineage from root run to current.",
+      "description": "Trace the fork/parent chain of a .tine artifact \u2014 full provenance lineage from root run to current.",
       "discoverable": true,
       "expected_latency": "subsecond",
       "free_quota": {
@@ -4206,7 +4206,7 @@
       "availability": "available",
       "backend": "opentine",
       "category": "opentine",
-      "description": "Free .tine artifact verification — parse and verify content-addressed provenance of an opentine run. Checks FORMAT_VERSION, step hashes, tamper detection.",
+      "description": "Free .tine artifact verification \u2014 parse and verify content-addressed provenance of an opentine run. Checks FORMAT_VERSION, step hashes, tamper detection.",
       "discoverable": true,
       "expected_latency": "subsecond",
       "free_quota": {
@@ -4240,7 +4240,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/tls-version-check",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "security",
       "service_id": "v1_tls_version_check"
     },
@@ -4261,7 +4261,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/translate",
-      "price_usd": "0.003",
+      "price_usd": "0.01",
       "risk": "ai",
       "service_id": "v1_translate"
     },
@@ -4299,7 +4299,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/url-fetch",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_url_fetch"
     },
@@ -4320,7 +4320,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/url-status",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_url_status"
     },
@@ -4341,7 +4341,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/uuid-generate",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "utility",
       "service_id": "v1_uuid_generate"
     },
@@ -4362,7 +4362,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/web-search",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "search",
       "service_id": "v1_web_search"
     },
@@ -4383,7 +4383,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/whois-lookup",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_whois_lookup"
     },
@@ -4400,7 +4400,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/inbox/messages/list",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "v1_inbox_messages_list"
     },
@@ -4417,7 +4417,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/inbox/settings",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "v1_inbox_settings"
     },
@@ -4519,7 +4519,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/wake/feed",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "medium",
       "service_id": "v1_wake_feed"
     },
@@ -4587,7 +4587,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/trust/history",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "v1_trust_history"
     },
@@ -4621,7 +4621,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/sla/declare",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "v1_sla_declare"
     },
@@ -4672,7 +4672,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/sla/report",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "v1_sla_report"
     },
@@ -4774,7 +4774,7 @@
       "last_successful_smoke": "2026-09-23",
       "method": "POST",
       "path": "/v1/research/page-pack",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "research_page_pack"
     },
@@ -4782,7 +4782,7 @@
       "availability": "available",
       "backend": "payment_edge_handler",
       "category": "search",
-      "description": "Deep research: sub-query decomposition → multi-engine search → page fetch → cited synthesis (extractive or GLM-LLM). $0.05.",
+      "description": "Deep research: sub-query decomposition \u2192 multi-engine search \u2192 page fetch \u2192 cited synthesis (extractive or GLM-LLM). $0.05.",
       "discoverable": true,
       "expected_latency": "10-60s",
       "free_quota": null,
@@ -4893,7 +4893,7 @@
       "last_successful_smoke": "2026-09-23",
       "method": "POST",
       "path": "/v1/enrich/domain",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "enrich_domain"
     },
@@ -4910,7 +4910,7 @@
       "last_successful_smoke": "2026-09-23",
       "method": "POST",
       "path": "/v1/enrich/email",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "enrich_email"
     },
@@ -4950,7 +4950,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/base/address",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_address",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -4972,10 +4972,10 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/base/block",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "pricing_variants": {
-        "full_transactions": "0.002",
-        "summary": "0.001"
+        "full_transactions": "0.01",
+        "summary": "0.01"
       },
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_block",
@@ -4998,7 +4998,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/base/call",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_call",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -5020,7 +5020,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/base/contract-code",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_contract_code",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -5042,7 +5042,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/base/gas",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_gas",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -5064,7 +5064,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/base/logs",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_logs",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -5086,7 +5086,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/base/payment-proof",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_payment_proof",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -5108,7 +5108,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/base/rpc",
-      "price_usd": "0.002",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_rpc",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -5152,7 +5152,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/base/token-transfers",
-      "price_usd": "0.005",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_token_transfers",
       "unavailable_reason": "base_node_sync_gate_not_met"
@@ -5174,7 +5174,7 @@
       "last_successful_smoke": null,
       "method": "POST",
       "path": "/v1/base/transaction",
-      "price_usd": "0.001",
+      "price_usd": "0.01",
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_transaction",
       "unavailable_reason": "base_node_sync_gate_not_met"

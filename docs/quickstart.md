@@ -169,7 +169,7 @@ Recommended first paid packages:
 | --- | ---: | --- |
 | `tx_penny_smoke_test` | `$0.01` | An agent wants to test its ability to complete a paid DDG transaction and receive a receipt. Use direct endpoint `/v1/tx-smoke-test`. |
 | `provider_model_artifact_order` | `$0.01` | An agent wants DDG-operated model/artifact work with receipts and no raw account/token access transferred. |
-| `ethereum_private_rpc_query` | `$0.002` | An agent wants read-only Ethereum/Base RPC data without its own RPC vendor account. |
+| `ethereum_private_rpc_query` | `$0.01` | An agent wants read-only Ethereum/Base RPC data without its own RPC vendor account. |
 | `local_business_demo_pack` | `$0.02` | An agent wants a lead-specific staged demo concept and offer angle for a local business. |
 | `agent_payment_readiness_audit` | `$0.02` | An agent/service builder wants x402/direct-crypto/MPP-readiness/402/idempotency/discovery reviewed. |
 | `mcp_tool_server_build` | `$0.02` | An agent wants a small MCP tool/server scaffold with schema, install docs, and smoke tests. |

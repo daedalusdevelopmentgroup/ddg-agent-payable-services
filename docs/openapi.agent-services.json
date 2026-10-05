@@ -2,7 +2,7 @@
   "components": {
     "securitySchemes": {
       "AgentIdentity": {
-        "description": "Optional stable AI-agent identifier (X-Agent-Id). Not required for x402 payment probes — the 402 challenge fires without it.",
+        "description": "Optional stable AI-agent identifier (X-Agent-Id). Not required for x402 payment probes \u2014 the 402 challenge fires without it.",
         "in": "header",
         "name": "X-Agent-Id",
         "type": "apiKey"
@@ -1492,7 +1492,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -2656,7 +2656,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -2666,12 +2666,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "utility",
         "x-service-id": "v1_base64_codec",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/browser-proof": {
@@ -3197,7 +3197,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -3270,7 +3270,7 @@
             "description": "Endpoint path + deploy status"
           },
           "402": {
-            "description": "Payment Required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment Required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -3463,7 +3463,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -3489,7 +3489,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.002",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -3499,12 +3499,12 @@
             }
           ]
         },
-        "x-price-usd": "0.002",
+        "x-price-usd": "0.01",
         "x-risk": "blockchain",
         "x-service-id": "v1_contract_abi",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.002"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/credential-escrow-proxy": {
@@ -3536,7 +3536,7 @@
             "description": "Upstream response"
           },
           "402": {
-            "description": "Payment Required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment Required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -3624,7 +3624,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.002",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -3634,12 +3634,12 @@
             }
           ]
         },
-        "x-price-usd": "0.002",
+        "x-price-usd": "0.01",
         "x-risk": "utility",
         "x-service-id": "v1_diff_text",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.002"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/dns-lookup": {
@@ -3675,7 +3675,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -3701,7 +3701,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -3711,12 +3711,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "network",
         "x-service-id": "v1_dns_lookup",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/email-send": {
@@ -3752,7 +3752,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -3829,7 +3829,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -3855,7 +3855,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -3865,12 +3865,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "ai",
         "x-service-id": "v1_embeddings",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/enrich/company": {
@@ -3990,7 +3990,7 @@
         "x-last-successful-smoke": "2026-09-23",
         "x-payment-info": {
           "price": {
-            "amount": "0.005",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -4000,7 +4000,7 @@
             }
           ]
         },
-        "x-price-usd": "0.005",
+        "x-price-usd": "0.01",
         "x-risk": "low",
         "x-service-id": "enrich_domain"
       }
@@ -4056,7 +4056,7 @@
         "x-last-successful-smoke": "2026-09-23",
         "x-payment-info": {
           "price": {
-            "amount": "0.005",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -4066,7 +4066,7 @@
             }
           ]
         },
-        "x-price-usd": "0.005",
+        "x-price-usd": "0.01",
         "x-risk": "low",
         "x-service-id": "enrich_email"
       }
@@ -4501,7 +4501,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -4527,7 +4527,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.002",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -4537,12 +4537,12 @@
             }
           ]
         },
-        "x-price-usd": "0.002",
+        "x-price-usd": "0.01",
         "x-risk": "utility",
         "x-service-id": "v1_fetch_as_markdown",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.002"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/fx-rate": {
@@ -4733,7 +4733,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -4743,12 +4743,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "utility",
         "x-service-id": "v1_hash_compute",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/hermes-skill-workflow-dev": {
@@ -4970,7 +4970,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -4980,12 +4980,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "security",
         "x-service-id": "v1_http_headers",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/image-generation": {
@@ -5021,7 +5021,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -5101,7 +5101,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -5111,7 +5111,7 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "low",
         "x-service-id": "v1_inbox_messages_list"
       }
@@ -5152,7 +5152,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -5162,7 +5162,7 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "low",
         "x-service-id": "v1_inbox_settings"
       }
@@ -5219,7 +5219,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -5229,12 +5229,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "network",
         "x-service-id": "v1_ip_geolocation",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/json-repair": {
@@ -5269,7 +5269,7 @@
             "description": "Input too large (max 64KB)"
           },
           "422": {
-            "description": "Repair failed — all strategies exhausted"
+            "description": "Repair failed \u2014 all strategies exhausted"
           }
         },
         "security": [],
@@ -5347,7 +5347,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -5357,12 +5357,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "utility",
         "x-service-id": "v1_json_validate",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/landing-page-conversion-diff": {
@@ -5584,7 +5584,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -5594,12 +5594,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "analysis",
         "x-service-id": "v1_language_detect",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/lead-pack": {
@@ -5821,7 +5821,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.002",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -5831,12 +5831,12 @@
             }
           ]
         },
-        "x-price-usd": "0.002",
+        "x-price-usd": "0.01",
         "x-risk": "network",
         "x-service-id": "v1_link_extract",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.002"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/llm-judge": {
@@ -7064,7 +7064,7 @@
             "description": "Consensus result with individual responses"
           },
           "402": {
-            "description": "Payment Required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment Required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -8097,7 +8097,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -8123,7 +8123,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.005",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -8133,12 +8133,12 @@
             }
           ]
         },
-        "x-price-usd": "0.005",
+        "x-price-usd": "0.01",
         "x-risk": "document",
         "x-service-id": "v1_ocr",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.005"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/ollama-model-request": {
@@ -8928,7 +8928,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -8954,7 +8954,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.005",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -8964,12 +8964,12 @@
             }
           ]
         },
-        "x-price-usd": "0.005",
+        "x-price-usd": "0.01",
         "x-risk": "document",
         "x-service-id": "v1_pdf_extract",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.005"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/price-feed": {
@@ -9005,7 +9005,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -9031,7 +9031,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -9041,12 +9041,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "data",
         "x-service-id": "v1_price_feed",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/production-security-audit": {
@@ -9802,7 +9802,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -9828,7 +9828,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -9838,12 +9838,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "utility",
         "x-service-id": "v1_qr_code",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/random": {
@@ -9898,7 +9898,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -9908,12 +9908,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "utility",
         "x-service-id": "v1_random",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/rate-limit-analyzer": {
@@ -10613,7 +10613,7 @@
     },
     "/v1/research/deep": {
       "post": {
-        "description": "Deep research: sub-query decomposition → multi-engine search → page fetch → cited synthesis (extractive or GLM-LLM). $0.05.",
+        "description": "Deep research: sub-query decomposition \u2192 multi-engine search \u2192 page fetch \u2192 cited synthesis (extractive or GLM-LLM). $0.05.",
         "operationId": "research_deep",
         "requestBody": {
           "content": {
@@ -10652,7 +10652,7 @@
             "AgentIdentity": []
           }
         ],
-        "summary": "Deep research: sub-query decomposition → multi-engine search → page fetch → cited synthesis (extractive or GLM-LLM). $0.05.",
+        "summary": "Deep research: sub-query decomposition \u2192 multi-engine search \u2192 page fetch \u2192 cited synthesis (extractive or GLM-LLM). $0.05.",
         "x-availability": "available",
         "x-backend": "payment_edge_handler",
         "x-expected-latency": "10-60s",
@@ -10679,7 +10679,7 @@
     },
     "/v1/research/page-pack": {
       "post": {
-        "description": "Fetch 1-5 URLs to clean markdown/text (64KB cap/page, SSRF-guarded, sha256 each). $0.005.",
+        "description": "Fetch 1-5 URLs to clean markdown/text (64KB cap/page, SSRF-guarded, sha256 each). $0.01.",
         "operationId": "research_page_pack",
         "requestBody": {
           "content": {
@@ -10718,7 +10718,7 @@
             "AgentIdentity": []
           }
         ],
-        "summary": "Fetch 1-5 URLs to clean markdown/text (64KB cap/page, SSRF-guarded, sha256 each). $0.005.",
+        "summary": "Fetch 1-5 URLs to clean markdown/text (64KB cap/page, SSRF-guarded, sha256 each). $0.01.",
         "x-availability": "available",
         "x-backend": "payment_edge_handler",
         "x-expected-latency": "3-30s",
@@ -10728,7 +10728,7 @@
         "x-last-successful-smoke": "2026-09-23",
         "x-payment-info": {
           "price": {
-            "amount": "0.005",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -10738,7 +10738,7 @@
             }
           ]
         },
-        "x-price-usd": "0.005",
+        "x-price-usd": "0.01",
         "x-risk": "low",
         "x-service-id": "research_page_pack"
       }
@@ -11191,7 +11191,7 @@
     },
     "/v1/robot-task/provenance-bundle": {
       "post": {
-        "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant → scope_check → execution → evidence → receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
+        "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant \u2192 scope_check \u2192 execution \u2192 evidence \u2192 receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validator, idempotency, authority-intersection, deadman-revocation, and liability-receipt-schema. Saves $75 vs individual purchase.",
         "operationId": "robotics_provenance_bundle",
         "requestBody": {
           "content": {
@@ -11230,7 +11230,7 @@
             "AgentIdentity": []
           }
         ],
-        "summary": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant → scope_check → execution → evidence → receipt). In",
+        "summary": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant \u2192 scope_check \u2192 execution \u2192 evidence \u2192 receipt). In",
         "x-availability": "available",
         "x-backend": "payment_edge",
         "x-expected-latency": "under_60_seconds",
@@ -11439,7 +11439,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -11449,12 +11449,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "network",
         "x-service-id": "v1_robots_check",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/sandboxed-cli-agent-run": {
@@ -11661,7 +11661,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.002",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -11671,12 +11671,12 @@
             }
           ]
         },
-        "x-price-usd": "0.002",
+        "x-price-usd": "0.01",
         "x-risk": "utility",
         "x-service-id": "v1_schema_infer",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.002"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/screenshot": {
@@ -11712,7 +11712,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -11738,7 +11738,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.005",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -11748,12 +11748,12 @@
             }
           ]
         },
-        "x-price-usd": "0.005",
+        "x-price-usd": "0.01",
         "x-risk": "visual",
         "x-service-id": "v1_screenshot",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.005"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/secret-leak-api-key-scan": {
@@ -11975,7 +11975,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.002",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -11985,12 +11985,12 @@
             }
           ]
         },
-        "x-price-usd": "0.002",
+        "x-price-usd": "0.01",
         "x-risk": "analysis",
         "x-service-id": "v1_sentiment",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.002"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/services/search": {
@@ -12464,7 +12464,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -12474,7 +12474,7 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "low",
         "x-service-id": "v1_sla_declare"
       }
@@ -12567,7 +12567,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -12577,7 +12577,7 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "low",
         "x-service-id": "v1_sla_report"
       }
@@ -12634,7 +12634,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.002",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -12644,12 +12644,12 @@
             }
           ]
         },
-        "x-price-usd": "0.002",
+        "x-price-usd": "0.01",
         "x-risk": "security",
         "x-service-id": "v1_ssl_cert_info",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.002"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/stock-history": {
@@ -12836,7 +12836,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.005",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -12846,12 +12846,12 @@
             }
           ]
         },
-        "x-price-usd": "0.005",
+        "x-price-usd": "0.01",
         "x-risk": "security",
         "x-service-id": "v1_subdomain_enumerate",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.005"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/summarize": {
@@ -12906,7 +12906,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.005",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -12916,12 +12916,12 @@
             }
           ]
         },
-        "x-price-usd": "0.005",
+        "x-price-usd": "0.01",
         "x-risk": "ai",
         "x-service-id": "v1_summarize",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.005"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/test-runner": {
@@ -12953,7 +12953,7 @@
             "description": "Test results with pass/fail counts"
           },
           "402": {
-            "description": "Payment Required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment Required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -13022,7 +13022,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -13048,7 +13048,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.005",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -13058,12 +13058,12 @@
             }
           ]
         },
-        "x-price-usd": "0.005",
+        "x-price-usd": "0.01",
         "x-risk": "security",
         "x-service-id": "v1_threat_check",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.005"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/timestamp": {
@@ -13118,7 +13118,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -13128,12 +13128,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "utility",
         "x-service-id": "v1_timestamp",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/tine-artifacts/{artifact_id}": {
@@ -13511,7 +13511,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.002",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -13521,12 +13521,12 @@
             }
           ]
         },
-        "x-price-usd": "0.002",
+        "x-price-usd": "0.01",
         "x-risk": "security",
         "x-service-id": "v1_tls_version_check",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.002"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/translate": {
@@ -13562,7 +13562,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -13588,7 +13588,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.003",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -13598,12 +13598,12 @@
             }
           ]
         },
-        "x-price-usd": "0.003",
+        "x-price-usd": "0.01",
         "x-risk": "ai",
         "x-service-id": "v1_translate",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.003"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/trust/check": {
@@ -13691,7 +13691,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -13701,7 +13701,7 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "low",
         "x-service-id": "v1_trust_history"
       }
@@ -13930,7 +13930,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.002",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -13940,12 +13940,12 @@
             }
           ]
         },
-        "x-price-usd": "0.002",
+        "x-price-usd": "0.01",
         "x-risk": "network",
         "x-service-id": "v1_url_fetch",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.002"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/url-status": {
@@ -14000,7 +14000,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -14010,12 +14010,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "network",
         "x-service-id": "v1_url_status",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/uuid-generate": {
@@ -14070,7 +14070,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -14080,12 +14080,12 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "utility",
         "x-service-id": "v1_uuid_generate",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.001"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/wake/cancel": {
@@ -14159,7 +14159,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.001",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -14169,7 +14169,7 @@
             }
           ]
         },
-        "x-price-usd": "0.001",
+        "x-price-usd": "0.01",
         "x-risk": "medium",
         "x-service-id": "v1_wake_feed"
       }
@@ -14312,7 +14312,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.005",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -14322,12 +14322,12 @@
             }
           ]
         },
-        "x-price-usd": "0.005",
+        "x-price-usd": "0.01",
         "x-risk": "search",
         "x-service-id": "v1_web_search",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.005"
+        "x-x402-price": "$0.01"
       }
     },
     "/v1/whois-lookup": {
@@ -14363,7 +14363,7 @@
                 }
               }
             },
-            "description": "Payment required — retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
+            "description": "Payment required \u2014 retry with x402 PAYMENT-SIGNATURE or direct-crypto proof"
           }
         },
         "security": [
@@ -14389,7 +14389,7 @@
         "x-last-successful-smoke": null,
         "x-payment-info": {
           "price": {
-            "amount": "0.002",
+            "amount": "0.01",
             "currency": "USD",
             "mode": "fixed"
           },
@@ -14399,12 +14399,12 @@
             }
           ]
         },
-        "x-price-usd": "0.002",
+        "x-price-usd": "0.01",
         "x-risk": "network",
         "x-service-id": "v1_whois_lookup",
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453",
-        "x-x402-price": "$0.002"
+        "x-x402-price": "$0.01"
       }
     }
   },

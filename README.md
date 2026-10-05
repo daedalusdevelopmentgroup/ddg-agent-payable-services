@@ -109,7 +109,7 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | **direct_crypto_manual** | ✅ Live | Operator-confirmed fallback |
 | **MPP/Tempo** | ✅ Live | Settlement-proven |
 
-## Service Catalog (248 services)
+## Service Catalog (257 services)
 
 ### Trust & Identity Verification (wave 5)
 | Route | Price | Description |
@@ -165,6 +165,19 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | `/v1/moderation/llm-scan` | \$0.01 | Semantic moderation via local LLM with deterministic heuristic fallback; companion to `/v1/moderation/scan` |
 
 Note: `/v1/intel/fusion` + `/v1/intel/url-reputation` + `/v1/intel/domain-reputation` compose into a full threat-intel desk. Hash-level verdicts fuse via `fusion` (bring labels from any feed).
+
+### Payment forensics, MCP conformance, runtime postmortem & archive preflight (wave 6)
+| Route | Price | Description |
+|---|---|---|
+| `/v1/payments/retry-advice` | \$0.005 | Signed safe-to-retry / double-spend-risk verdict for failed x402 payments (CDP facilitator reason-code ruleset, optional Base nonce read) |
+| `/v1/x402/explain` | \$0.002 | Plain-English root cause + failing rule + fix for any failed x402/402 payment response |
+| `/v1/mcp/conformance` | \$0.01 | Live MCP spec-conformance probe: real JSON-RPC handshake, wire-revision detection (2025-11-25 vs 2026-07-28), graded checks, signed verdict |
+| `/v1/mcp/conformance/spec-versions` | free | Supported MCP spec revisions + conformance check catalog |
+| `/v1/runtime/postmortem` | \$0.005 | Agent trace failure diagnosis: loop/truncation/cascade/hallucinated-tool detection + prose diagnosis (local LLM), signed |
+| `/v1/runtime/cluster` | \$0.01 | 10–200 traces -> failure-mode clustering + dominant root-cause distribution, signed |
+| `/v1/file/archive-preflight` | \$0.005 | zip-slip + zip-bomb structure scan of untrusted archives (metadata only, no extraction), signed |
+| `/v1/web/wayback-lookup` | \$0.002 | Internet Archive CDX lookup: was this URL archived, closest snapshot (1–50 urls) |
+| `/v1/web/wayback-report` | \$0.005 | Batch link-rot report (1–500 urls): coverage %, per-url status, signed |
 
 ### Compliance composed (wave 5)
 | Route | Price | Description |
@@ -375,7 +388,7 @@ Never contacts the audited server — pure static analysis, so it is safe to run
 Budget enforcement with signed decision tokens: an agent can prove — cryptographically — that its spend was authorized before it happened.
 
 ### Full catalog
-See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 248 services.
+See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 257 services.
 
 ## Discovery
 
@@ -383,7 +396,7 @@ See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-a
 |---|---|
 | AI manifest | `/.well-known/ai` |
 | x402 discovery | `/.well-known/x402` |
-| OpenAPI spec | `/openapi.json` (248 paths) |
+| OpenAPI spec | `/openapi.json` (257 paths) |
 | llms.txt | `/llms.txt` |
 | Pricing | `/.well-known/ddg-agent-pricing.json` |
 | Status | `/.well-known/ddg-agent-status.json` |

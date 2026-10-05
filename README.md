@@ -109,7 +109,7 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | **direct_crypto_manual** | ✅ Live | Operator-confirmed fallback |
 | **MPP/Tempo** | ✅ Live | Settlement-proven |
 
-## Service Catalog (257 services)
+## Service Catalog (269 services)
 
 ### Trust & Identity Verification (wave 5)
 | Route | Price | Description |
@@ -179,6 +179,22 @@ Note: `/v1/intel/fusion` + `/v1/intel/url-reputation` + `/v1/intel/domain-reputa
 | `/v1/web/wayback-lookup` | \$0.002 | Internet Archive CDX lookup: was this URL archived, closest snapshot (1–50 urls) |
 | `/v1/web/wayback-report` | \$0.005 | Batch link-rot report (1–500 urls): coverage %, per-url status, signed |
 
+### EU e-invoice, image C2PA, SEPA MVR, comms guard (wave 7)
+| Route | Price | Description |
+|---|---|---|
+| `/v1/validate-ubl` | \$0.005 | UBL 2.1 e-invoice validation: XSD vs cached OASIS schema, EN 16931 structural rules, VAT math. Signed verdict |
+| `/v1/validate-cii` | \$0.005 | Cross-Industry Invoice (EN 16931 binding) structural subset validation |
+| `/v1/einvoice/specs` | free | Supported profiles + cached standards (versions, sha256) |
+| `/v1/c2pa/sign-image` | \$0.005 | Embed signed DDG content credential into PNG/JPEG/WebP (PNG tEXt, JPEG APP1, sidecar) |
+| `/v1/c2pa/verify-image` | \$0.001 | Verify image credential: signature + pixel-hash + claim intactness. Signed verdict |
+| `/v1/c2pa/image-info` | \$0.001 | Format sniff, dimensions, chunk map, has-credential probe |
+| `/v1/payment/mvr` | \$0.01 | SEPA ISO 20022 business rules (pain.001/pain.008): IBAN mod-97, control sums, EPC MVR rejects |
+| `/v1/payment/mvr/rules` | free | SEPA MVR rule catalog |
+| `/v1/email/scam-screen` | \$0.005 | Received-mail BEC/scam screen: reply-to mismatch, homoglyphs, cousin domains, BEC language. Signed verdict |
+| `/v1/email/scam-batch` | \$0.01 | Scam-screen up to 50 emails, per-message + summary |
+| `/v1/lint-webhook` | \$0.01 | Webhook replay-safety linter: signature preset, timestamp tolerance, idempotency, dedupe |
+| `/v1/lint-webhook/provider-checks` | free | Provider webhook signature presets (stripe/github/shopify/ucp/generic) |
+
 ### Compliance composed (wave 5)
 | Route | Price | Description |
 |---|---|---|
@@ -217,9 +233,9 @@ Note: `/v1/intel/fusion` + `/v1/intel/url-reputation` + `/v1/intel/domain-reputa
 | `/v1/chat/completions` | pay-per-call | OpenAI-compatible chat completions gateway |
 | `/v1/models` | free | List available model aliases |
 | `/v1/embeddings` | \$0.0005 | 768-dim vectors (Ollama nomic-embed-text) |
-| `/v1/image-generation` | \$0.03 | Stable Diffusion v1.5 on GPU |
+| `/v1/image-generation` | \$0.01 | Stable Diffusion v1.5 on GPU |
 | `/v1/model/agent-run` | pay-per-call | Bounded agent-task endpoint (local runtime) |
-| `/v1/model-consensus` | \$0.02 | Multi-model consensus via llm-judge |
+| `/v1/model-consensus` | \$0.01 | Multi-model consensus via llm-judge |
 | `/v1/llm-judge` | \$0.01 | Neutral judge for multi-model consensus |
 | `/v1/summarize` | \$0.005 | Local LLM summarization |
 | `/v1/sentiment` | \$0.002 | Sentiment analysis |
@@ -249,7 +265,7 @@ Note: `/v1/intel/fusion` + `/v1/intel/url-reputation` + `/v1/intel/domain-reputa
 | `/v1/subdomain-enumerate` | \$0.005 | Subdomain discovery via CT logs |
 | `/v1/tls-version-check` | \$0.002 | TLS version + cipher suite audit |
 | `/v1/prompt-injection-scan` | \$0.01 | Prompt injection vulnerability scan |
-| `/v1/mcp-tool-security-audit` | \$0.05 | MCP server security audit |
+| `/v1/mcp-tool-security-audit` | \$0.01 | MCP server security audit |
 
 ### Blockchain
 | Service | Price | Description |
@@ -264,7 +280,7 @@ Note: `/v1/intel/fusion` + `/v1/intel/url-reputation` + `/v1/intel/domain-reputa
 | `/v1/pdf-extract` | \$0.005 | Text extraction from PDFs |
 | `/v1/ocr` | \$0.005 | Image text extraction (Tesseract) |
 | `/v1/qr-code` | \$0.001 | QR code PNG generation |
-| `/v1/image-generation` | \$0.03 | Text-to-image (Stable Diffusion) |
+| `/v1/image-generation` | \$0.01 | Text-to-image (Stable Diffusion) |
 
 ### Utilities (\$0.001 each)
 | Service | Description |
@@ -388,7 +404,7 @@ Never contacts the audited server — pure static analysis, so it is safe to run
 Budget enforcement with signed decision tokens: an agent can prove — cryptographically — that its spend was authorized before it happened.
 
 ### Full catalog
-See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 257 services.
+See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 269 services.
 
 ## Discovery
 

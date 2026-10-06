@@ -360,3 +360,34 @@ Post-promo policy: <=4B local models remain free; >4B local routes become paid/o
 - POST /v1/ucp/spec (free) - Machine-readable UCP check summary. Free.
 - POST /v1/macro/latest ($0.01 USDC) - Latest official macro print (cpi|nfp|unemployment) from BLS. Signed.
 - POST /v1/macro/series (free) - Supported macro series catalog. Free.
+
+## Agent Primitives (Wave 2, E31-E38, 2026-10)
+
+- POST /v1/ap2/verify-mandates ($0.01 USDC) - AP2 mandate verifier: verify a pair of AP2 SD-JWT+KB checkout/payment mandates (signature, key binding, disclosures, constraints vs terms) and get a signed verdict + dispute-ready evidence.
+- POST /v1/ap2/verify ($0.01 USDC) - AP2 single-mandate verifier: parse + verify one SD-JWT+KB payment mandate (signature, disclosures, expiry, key binding). Signed verdict.
+- GET /v1/ap2/spec (free) - AP2 verifier spec: accepted vct types, constraint checks, rules, verdicts. Free.
+- POST /v1/escrow/condition ($0.01 USDC) - Escrow-condition oracle (NO custody): deal spec + evidence -> signed release|refund|extend verdict for x402-v2/MPP-session/hash-lock escrows.
+- POST /v1/escrow/dispute-period ($0.01 USDC) - Escrow dispute-window clock: opened_at + period vs evaluation time -> dispute_open|dispute_expired. Signed verdict.
+- GET /v1/escrow/rules (free) - Escrow oracle: supported escrow types, condition kinds, evidence shapes, rules. Free.
+- POST /v1/export/verdict ($0.01 USDC) - Export-control verdict: ECCN x destination -> license_required|no_license_required with rule-table version + optional live Entity-List cross-check. Signed.
+- POST /v1/export/exceptions ($0.01 USDC) - Export-control license-exception finder: ECCN x destination -> ranked applicable exceptions (NAC/TMP/RPL/GOV/TSR/SVC/BAG/AVS/STA). Signed.
+- GET /v1/export/rule-table-version (free) - Export rule-table version + row count + categories. Free.
+- GET /v1/export/destinations (free) - Export D-group/E-group destination reference. Free.
+- POST /v1/markets/snapshot ($0.01 USDC) - Cross-venue prediction-market matched snapshot: Polymarket+Kalshi+Manifold+PredictIt -> matched questions, cross-venue spread, consensus probability. Signed.
+- POST /v1/markets/spread ($0.01 USDC) - Best cross-venue prediction-market match for a query: spread % + arbitrage note + per-venue prices. Signed.
+- GET /v1/markets/venues (free) - Supported prediction-market venues + price semantics. Free.
+- GET /v1/markets/health (free) - Per-venue prediction-market API reachability. Free.
+- POST /v1/payroll/ledger ($0.01 USDC) - Sub-agent payroll ledger: normalize payment proofs (x402/MPP/AP2/manual) into per-sub-agent spend ledger + anomaly alerts. Signed export.
+- POST /v1/payroll/cap-check ($0.01 USDC) - Payroll budget gate: under_cap|over_cap verdict for a coordinator/sub-agent vs cap using recorded ledger rows. Signed.
+- GET /v1/payroll/ledger-summary (free) - Read-only per-sub-agent payroll rollup for a coordinator. Free.
+- GET /v1/payroll/rules (free) - Payroll lane: proof schema, alert rules, cap semantics. Free.
+- POST /v1/bridges/health ($0.01 USDC) - Bridge-health composite: exploit history (DefiLlama) + TVL component -> healthy|elevated_risk|exploit_history signed verdict.
+- GET /v1/bridges/exploits (free) - Recent bridge exploits from DefiLlama hacks dataset. Free.
+- GET /v1/bridges/rules (free) - Bridge-health rules + verdict semantics + alias map. Free.
+- POST /v1/bounty/verify-deliverable ($0.01 USDC) - Neutral bounty-fulfillment verification: bounty spec vs submitted deliverable -> conformant|non_conformant signed verdict (hash/commit/signed-outcome).
+- POST /v1/bounty/payout-manifest ($0.01 USDC) - Bounty payout-manifest builder: winners vs pot -> validated, deduped, per-recipient signed instruction rows. No custody.
+- GET /v1/bounty/rules (free) - Bounty lane conformance + manifest validation rules. Free.
+- GET /v1/bounty/proof-schema (free) - Exact accepted request shapes for bounty verification + manifests. Free.
+- POST /v1/llm/audit-bill ($0.01 USDC) - LLM bill line-item audit: usage rows vs source-published pricing (OpenRouter, 24h cache) -> bill_correct|overcharge|undercharge + per-row math. Signed.
+- POST /v1/llm/price-lookup ($0.01 USDC) - Published LLM pricing lookup (OpenRouter): per-token + per-1M USD rates for a model. Signed.
+- GET /v1/llm/audit-rules (free) - LLM audit lane: tolerance rules, cache semantics, supported providers. Free.

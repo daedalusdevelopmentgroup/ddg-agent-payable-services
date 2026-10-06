@@ -18946,6 +18946,1126 @@
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453"
       }
+    },
+    "/v1/ap2/verify-mandates": {
+      "post": {
+        "operationId": "ap2_verify_mandates",
+        "summary": "AP2 mandate verifier: verify a pair of AP2 SD-JWT+KB checkout/payment mandates (signature, key binding, disclosures, con",
+        "description": "AP2 mandate verifier: verify a pair of AP2 SD-JWT+KB checkout/payment mandates (signature, key binding, disclosures, constraints vs terms) and get a signed verdict + dispute-ready evidence.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/ap2/verify": {
+      "post": {
+        "operationId": "ap2_verify_single",
+        "summary": "AP2 single-mandate verifier: parse + verify one SD-JWT+KB payment mandate (signature, disclosures, expiry, key binding).",
+        "description": "AP2 single-mandate verifier: parse + verify one SD-JWT+KB payment mandate (signature, disclosures, expiry, key binding). Signed verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/ap2/spec": {
+      "get": {
+        "operationId": "ap2_spec",
+        "summary": "AP2 verifier spec: accepted vct types, constraint checks, rules, verdicts. Free.",
+        "description": "AP2 verifier spec: accepted vct types, constraint checks, rules, verdicts. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/escrow/condition": {
+      "post": {
+        "operationId": "escrow_condition",
+        "summary": "Escrow-condition oracle (NO custody): deal spec + evidence -> signed release|refund|extend verdict for x402-v2/MPP-sessi",
+        "description": "Escrow-condition oracle (NO custody): deal spec + evidence -> signed release|refund|extend verdict for x402-v2/MPP-session/hash-lock escrows.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/escrow/dispute-period": {
+      "post": {
+        "operationId": "escrow_dispute_period",
+        "summary": "Escrow dispute-window clock: opened_at + period vs evaluation time -> dispute_open|dispute_expired. Signed verdict.",
+        "description": "Escrow dispute-window clock: opened_at + period vs evaluation time -> dispute_open|dispute_expired. Signed verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/escrow/rules": {
+      "get": {
+        "operationId": "escrow_rules",
+        "summary": "Escrow oracle: supported escrow types, condition kinds, evidence shapes, rules. Free.",
+        "description": "Escrow oracle: supported escrow types, condition kinds, evidence shapes, rules. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/export/verdict": {
+      "post": {
+        "operationId": "export_verdict",
+        "summary": "Export-control verdict: ECCN x destination -> license_required|no_license_required with rule-table version + optional li",
+        "description": "Export-control verdict: ECCN x destination -> license_required|no_license_required with rule-table version + optional live Entity-List cross-check. Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/export/exceptions": {
+      "post": {
+        "operationId": "export_exceptions",
+        "summary": "Export-control license-exception finder: ECCN x destination -> ranked applicable exceptions (NAC/TMP/RPL/GOV/TSR/SVC/BAG",
+        "description": "Export-control license-exception finder: ECCN x destination -> ranked applicable exceptions (NAC/TMP/RPL/GOV/TSR/SVC/BAG/AVS/STA). Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/export/rule-table-version": {
+      "get": {
+        "operationId": "export_rule_table_version",
+        "summary": "Export rule-table version + row count + categories. Free.",
+        "description": "Export rule-table version + row count + categories. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/export/destinations": {
+      "get": {
+        "operationId": "export_destinations",
+        "summary": "Export D-group/E-group destination reference. Free.",
+        "description": "Export D-group/E-group destination reference. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/markets/snapshot": {
+      "post": {
+        "operationId": "markets_snapshot",
+        "summary": "Cross-venue prediction-market matched snapshot: Polymarket+Kalshi+Manifold+PredictIt -> matched questions, cross-venue s",
+        "description": "Cross-venue prediction-market matched snapshot: Polymarket+Kalshi+Manifold+PredictIt -> matched questions, cross-venue spread, consensus probability. Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/markets/spread": {
+      "post": {
+        "operationId": "markets_spread",
+        "summary": "Best cross-venue prediction-market match for a query: spread % + arbitrage note + per-venue prices. Signed.",
+        "description": "Best cross-venue prediction-market match for a query: spread % + arbitrage note + per-venue prices. Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/markets/venues": {
+      "get": {
+        "operationId": "markets_venues",
+        "summary": "Supported prediction-market venues + price semantics. Free.",
+        "description": "Supported prediction-market venues + price semantics. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/markets/health": {
+      "get": {
+        "operationId": "markets_health",
+        "summary": "Per-venue prediction-market API reachability. Free.",
+        "description": "Per-venue prediction-market API reachability. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/payroll/ledger": {
+      "post": {
+        "operationId": "payroll_ledger",
+        "summary": "Sub-agent payroll ledger: normalize payment proofs (x402/MPP/AP2/manual) into per-sub-agent spend ledger + anomaly alert",
+        "description": "Sub-agent payroll ledger: normalize payment proofs (x402/MPP/AP2/manual) into per-sub-agent spend ledger + anomaly alerts. Signed export.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/payroll/cap-check": {
+      "post": {
+        "operationId": "payroll_cap_check",
+        "summary": "Payroll budget gate: under_cap|over_cap verdict for a coordinator/sub-agent vs cap using recorded ledger rows. Signed.",
+        "description": "Payroll budget gate: under_cap|over_cap verdict for a coordinator/sub-agent vs cap using recorded ledger rows. Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/payroll/ledger-summary": {
+      "get": {
+        "operationId": "payroll_ledger_summary",
+        "summary": "Read-only per-sub-agent payroll rollup for a coordinator. Free.",
+        "description": "Read-only per-sub-agent payroll rollup for a coordinator. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/payroll/rules": {
+      "get": {
+        "operationId": "payroll_rules",
+        "summary": "Payroll lane: proof schema, alert rules, cap semantics. Free.",
+        "description": "Payroll lane: proof schema, alert rules, cap semantics. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/bridges/health": {
+      "post": {
+        "operationId": "bridge_health",
+        "summary": "Bridge-health composite: exploit history (DefiLlama) + TVL component -> healthy|elevated_risk|exploit_history signed ver",
+        "description": "Bridge-health composite: exploit history (DefiLlama) + TVL component -> healthy|elevated_risk|exploit_history signed verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/bridges/exploits": {
+      "get": {
+        "operationId": "bridges_exploits",
+        "summary": "Recent bridge exploits from DefiLlama hacks dataset. Free.",
+        "description": "Recent bridge exploits from DefiLlama hacks dataset. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/bridges/rules": {
+      "get": {
+        "operationId": "bridges_rules",
+        "summary": "Bridge-health rules + verdict semantics + alias map. Free.",
+        "description": "Bridge-health rules + verdict semantics + alias map. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/bounty/verify-deliverable": {
+      "post": {
+        "operationId": "bounty_verify_deliverable",
+        "summary": "Neutral bounty-fulfillment verification: bounty spec vs submitted deliverable -> conformant|non_conformant signed verdic",
+        "description": "Neutral bounty-fulfillment verification: bounty spec vs submitted deliverable -> conformant|non_conformant signed verdict (hash/commit/signed-outcome).",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/bounty/payout-manifest": {
+      "post": {
+        "operationId": "bounty_payout_manifest",
+        "summary": "Bounty payout-manifest builder: winners vs pot -> validated, deduped, per-recipient signed instruction rows. No custody.",
+        "description": "Bounty payout-manifest builder: winners vs pot -> validated, deduped, per-recipient signed instruction rows. No custody.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/bounty/rules": {
+      "get": {
+        "operationId": "bounty_rules",
+        "summary": "Bounty lane conformance + manifest validation rules. Free.",
+        "description": "Bounty lane conformance + manifest validation rules. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/bounty/proof-schema": {
+      "get": {
+        "operationId": "bounty_proof_schema",
+        "summary": "Exact accepted request shapes for bounty verification + manifests. Free.",
+        "description": "Exact accepted request shapes for bounty verification + manifests. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/llm/audit-bill": {
+      "post": {
+        "operationId": "llm_audit_bill",
+        "summary": "LLM bill line-item audit: usage rows vs source-published pricing (OpenRouter, 24h cache) -> bill_correct|overcharge|unde",
+        "description": "LLM bill line-item audit: usage rows vs source-published pricing (OpenRouter, 24h cache) -> bill_correct|overcharge|undercharge + per-row math. Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/llm/price-lookup": {
+      "post": {
+        "operationId": "llm_price_lookup",
+        "summary": "Published LLM pricing lookup (OpenRouter): per-token + per-1M USD rates for a model. Signed.",
+        "description": "Published LLM pricing lookup (OpenRouter): per-token + per-1M USD rates for a model. Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/llm/audit-rules": {
+      "get": {
+        "operationId": "llm_audit_rules",
+        "summary": "LLM audit lane: tolerance rules, cache semantics, supported providers. Free.",
+        "description": "LLM audit lane: tolerance rules, cache semantics, supported providers. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
     }
   },
   "servers": [

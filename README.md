@@ -109,7 +109,7 @@ Or direct HTTP: `https://mcp.daedalusdevelopmentgroup.com/mcp`
 | **direct_crypto_manual** | ✅ Live | Operator-confirmed fallback |
 | **MPP/Tempo** | ✅ Live | Settlement-proven |
 
-## Service Catalog (269 services)
+## Service Catalog (328 services)
 
 ### Trust & Identity Verification (wave 5)
 | Route | Price | Description |
@@ -403,8 +403,41 @@ Never contacts the audited server — pure static analysis, so it is safe to run
 
 Budget enforcement with signed decision tokens: an agent can prove — cryptographically — that its spend was authorized before it happened.
 
+### Agent Primitives (Wave 9, E25-E29 + E31-E38)
+
+| Route | Price | Description |
+|---|---|---|
+| `/v1/verify/claim` | \$0.01 | Verify any claim against a source URL (fetch + rule verdict). Signed |
+| `/v1/verify/action` | \$0.01 | Verify an action/outcome contract (E25). Signed |
+| `/v1/resolve/outcome` | \$0.01 | Neutral outcome resolution for disputes. Signed |
+| `/v1/heartbeat/*` | \$0.01 | Agent uptime monitoring: register, status, alerts, leaderboard (E26) |
+| `/v1/chains` | free | Multi-chain RPC lane: 8 chains keyless (E27); `/v1/chains/rpc|address|gas` \$0.01 |
+| `/v1/compliance/sanctions` | \$0.01 | Sanctions screen, PINNED list versions (OFAC+EU). Signed |
+| `/v1/compliance/sanctions-delta` | \$0.01 | Sanctions delta feed since YYYY-MM-DD. Signed |
+| `/v1/402/preflight` | \$0.01 | x402 challenge pre-flight: v1/v2+MPP shape verdict. Signed |
+| `/v1/crypto/drainer-check` | \$0.01 | Wallet/URL drainer & abuse check (Chainabuse). Signed |
+| `/v1/macro/latest` | \$0.01 | Official macro prints (CPI/NFP/unemployment, BLS). Signed |
+| `/v1/ucp/verify` | \$0.01 | UCP `/.well-known/ucp` conformance verifier. Signed |
+| `/v1/ap2/verify-mandates` | \$0.01 | AP2 SD-JWT+KB mandate pair verifier (signature, key binding, disclosures, constraints). Signed |
+| `/v1/ap2/verify` | \$0.01 | AP2 single-mandate verify. Signed |
+| `/v1/escrow/condition` | \$0.01 | Escrow-condition oracle (NO custody): release/refund/extend. Signed |
+| `/v1/escrow/dispute-period` | \$0.01 | Dispute-window clock verdict. Signed |
+| `/v1/export/verdict` | \$0.01 | Export-control verdict: ECCN × destination → license required? (pinned rule table + live CSL cross-check). Signed |
+| `/v1/export/exceptions` | \$0.01 | Ranked license-exception finder. Signed |
+| `/v1/markets/snapshot` | \$0.01 | Cross-venue prediction-market matched snapshot (Polymarket/Kalshi/Manifold/PredictIt). Signed |
+| `/v1/markets/spread` | \$0.01 | Best cross-venue match: spread % + arbitrage note. Signed |
+| `/v1/payroll/ledger` | \$0.01 | Sub-agent payroll ledger: multi-protocol proofs → per-worker rollups + anomaly alerts. Signed |
+| `/v1/payroll/cap-check` | \$0.01 | Buyer-side budget gate: under_cap/over_cap. Signed |
+| `/v1/bridges/health` | \$0.01 | Bridge-health composite: exploit history + TVL. Signed |
+| `/v1/bounty/verify-deliverable` | \$0.01 | Neutral bounty-fulfillment verification. Signed |
+| `/v1/bounty/payout-manifest` | \$0.01 | Payout-manifest builder with per-recipient instruction hashes. No custody |
+| `/v1/llm/audit-bill` | \$0.01 | LLM bill line-item audit vs OpenRouter published pricing. Signed |
+| `/v1/llm/price-lookup` | \$0.01 | Published per-token/per-1M pricing lookup. Signed |
+
+Every verdict in this lane embeds a JWKS-verifiable Ed25519 attestation (kid `ddg-ed25519-202080d92336667a`, key at `/.well-known/ddg-attestation-jwks.json`) — the signed-verdict layer no competitor ships.
+
 ### Full catalog
-See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 269 services.
+See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-agent-pricing.json) for all 328 services.
 
 ## Discovery
 
@@ -412,7 +445,7 @@ See [pricing.json](https://agents.daedalusdevelopmentgroup.com/.well-known/ddg-a
 |---|---|
 | AI manifest | `/.well-known/ai` |
 | x402 discovery | `/.well-known/x402` |
-| OpenAPI spec | `/openapi.json` (257 paths) |
+| OpenAPI spec | `/openapi.json` (319 paths) |
 | llms.txt | `/llms.txt` |
 | Pricing | `/.well-known/ddg-agent-pricing.json` |
 | Status | `/.well-known/ddg-agent-status.json` |

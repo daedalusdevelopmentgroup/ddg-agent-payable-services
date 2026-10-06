@@ -1,8 +1,8 @@
 {
   "ok": true,
   "service": "ddg_discovery_index",
-  "generated_at": "2026-10-06T19:39:28Z",
-  "total": 335,
+  "generated_at": "2026-10-06T20:23:32Z",
+  "total": 337,
   "category_count": 42,
   "categories": [
     {
@@ -292,7 +292,7 @@
         {
           "path": "/v1/embeddings",
           "method": "POST",
-          "price_usd": "0.0005",
+          "price_usd": "0.01",
           "service_id": "v1_embeddings",
           "description": "Generate vector embeddings for RAG/semantic search. GPU-accelerated (BGE, Instructor models)."
         },
@@ -320,7 +320,7 @@
         {
           "path": "/v1/translate",
           "method": "POST",
-          "price_usd": "0.003",
+          "price_usd": "0.01",
           "service_id": "v1_translate",
           "description": "Translate text between languages. Self-hosted LibreTranslate or cloud fallback."
         }
@@ -595,7 +595,7 @@
         {
           "path": "/v1/wake/feed",
           "method": "POST",
-          "price_usd": "0.001",
+          "price_usd": "0.01",
           "service_id": "v1_wake_feed",
           "description": "Feed a dead-man timer (re-arms next_fire_at to now + interval + grace and restores the retry budget), or fire a job immediately with {\"trigger\": \"now\"}. Returns the new next_fire_at."
         },
@@ -873,7 +873,7 @@
     },
     {
       "category": "discovery",
-      "count": 7,
+      "count": 9,
       "routes": [
         {
           "path": "/.well-known/agent-card.json",
@@ -909,6 +909,20 @@
           "price_usd": "0.01",
           "service_id": "v1_agent_registry",
           "description": "Search or list AI agents in the DDG agent directory. Registration is free."
+        },
+        {
+          "path": "/v1/discovery/chunk",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_discovery_chunk",
+          "description": "Paginated discovery chunk: one category slice per read (?category=<cat>&cursor=<int>&limit=<int>) for bounded concurrent crawls."
+        },
+        {
+          "path": "/v1/discovery/index",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_discovery_index",
+          "description": "Sequenced discovery index: all services grouped by category with composition seams (related routes) for planning agents."
         },
         {
           "path": "/v1/services/search",
@@ -1007,14 +1021,14 @@
         {
           "path": "/v1/enrich/domain",
           "method": "POST",
-          "price_usd": "0.005",
+          "price_usd": "0.01",
           "service_id": "enrich_domain",
           "description": "Zero-key domain intel from free public sources only: DNS (A/AAAA/MX/NS/TXT via a minimal stdlib resolver), TLS certificate facts (issuer, validity window, days_until_expiry, SANs), HTTP header technology signals, subdomains from Certificate"
         },
         {
           "path": "/v1/enrich/email",
           "method": "POST",
-          "price_usd": "0.005",
+          "price_usd": "0.01",
           "service_id": "enrich_email",
           "description": "Zero-key address intel: RFC 5322 basic syntax with local/domain split, MX existence, disposable-domain verdict against a hardcoded list, role-account verdict (admin, info, support, sales, contact, help, security, postmaster, noreply, no-rep"
         }
@@ -2141,7 +2155,7 @@
         {
           "path": "/v1/research/page-pack",
           "method": "POST",
-          "price_usd": "0.005",
+          "price_usd": "0.01",
           "service_id": "research_page_pack",
           "description": "Fetch 1-5 URLs server-side and return readable text per page: {url, status, title, text_markdown (capped), sha256, fetched_at, error?}. 10s timeout, 64KB read cap, max 3 redirects, no cookies, scripts/styles stripped, SSRF-guarded (http/htt"
         },

@@ -559,7 +559,7 @@
       }
     ]
   },
-  "generated_at": "2026-10-06T19:39:28Z",
+  "generated_at": "2026-10-06T20:23:32Z",
   "ha_note": "Production Cloudflare tunnel/edge is anchored on durable runtime backend for 24/7 uptime. The free local-model pool now supports selectable local runtimes: Ollama, llama.cpp, and LM Studio/llmster. The public catalog reports only healthy/listed runtime models and hides raw LAN endpoints.",
   "live_runtime_services": [
     {
@@ -5359,9 +5359,9 @@
       "fulfillment_mode": "automated_fulfillment",
       "human_required": false,
       "last_successful_smoke": null,
-      "method": "GET",
+      "method": "POST",
       "path": "/v1/compliance/screen-batch",
-      "price_usd": "0",
+      "price_usd": "0.01",
       "public_self_serve": true,
       "risk": "read_only",
       "runtime_status": "live_runtime",
@@ -5378,9 +5378,9 @@
       "fulfillment_mode": "automated_fulfillment",
       "human_required": false,
       "last_successful_smoke": null,
-      "method": "GET",
+      "method": "POST",
       "path": "/v1/compliance/screen-name",
-      "price_usd": "0",
+      "price_usd": "0.01",
       "public_self_serve": true,
       "risk": "read_only",
       "runtime_status": "live_runtime",
@@ -5397,9 +5397,9 @@
       "fulfillment_mode": "automated_fulfillment",
       "human_required": false,
       "last_successful_smoke": null,
-      "method": "GET",
+      "method": "POST",
       "path": "/v1/compliance/screen-wallet",
-      "price_usd": "0",
+      "price_usd": "0.01",
       "public_self_serve": true,
       "risk": "read_only",
       "runtime_status": "live_runtime",
@@ -8331,6 +8331,60 @@
       "risk": "read_only",
       "runtime_status": "live_runtime",
       "service_id": "v1_x402_explain"
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "discovery",
+      "description": "Paginated discovery chunk: one category slice per read (?category=<cat>&cursor=<int>&limit=<int>) for bounded concurrent crawls.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "GET",
+      "path": "/v1/discovery/chunk",
+      "price_usd": "0.00",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "v1_discovery_chunk",
+      "methods": [
+        "GET"
+      ],
+      "x-x402scan": {
+        "exclude_from_paid_probe": true,
+        "free_route": true,
+        "scanner_note": "Intentional free/public discovery route."
+      }
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "discovery",
+      "description": "Sequenced discovery index: all services grouped by category with composition seams (related routes) for planning agents.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "GET",
+      "path": "/v1/discovery/index",
+      "price_usd": "0.00",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "v1_discovery_index",
+      "methods": [
+        "GET"
+      ],
+      "x-x402scan": {
+        "exclude_from_paid_probe": true,
+        "free_route": true,
+        "scanner_note": "Intentional free/public discovery route."
+      }
     }
   ],
   "unavailable_services": [

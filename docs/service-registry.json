@@ -1,6 +1,6 @@
 {
   "$schema": "https://agents.daedalusdevelopmentgroup.com/schemas/service-registry-v1.json",
-  "generated_at": "2026-10-05T22:04:07Z",
+  "generated_at": "2026-10-06T04:49:01Z",
   "schema_version": "1.0.0",
   "services": [
     {
@@ -3040,8 +3040,8 @@
       "path": "/v1/base/block",
       "price_usd": "0.01",
       "pricing_variants": {
-        "full_transactions": "0.01",
-        "summary": "0.01"
+        "full_transactions": "0.002",
+        "summary": "0.001"
       },
       "risk": "read_only_blockchain_rpc_proxy",
       "service_id": "base_block",
@@ -4130,7 +4130,7 @@
         "x-service-id": "v1_certify_run"
       },
       "path": "/v1/certify/run",
-      "price_usd": "0.02",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "v1_certify_run"
     },
@@ -8419,7 +8419,7 @@
         "x-service-id": "local_model_swarm_seat_beta"
       },
       "path": "/v1/local-model-swarm-seat",
-      "price_usd": "0.05",
+      "price_usd": "0.01",
       "risk": "local_inference_best_effort",
       "service_id": "local_model_swarm_seat_beta"
     },
@@ -13602,7 +13602,7 @@
         "x-service-id": "research_deep"
       },
       "path": "/v1/research/deep",
-      "price_usd": "0.05",
+      "price_usd": "0.01",
       "risk": "low",
       "service_id": "research_deep"
     },
@@ -18230,6 +18230,828 @@
       "price_usd": "0.01",
       "risk": "network",
       "service_id": "v1_whois_lookup"
+    },
+    {
+      "id": "content_credentials_sign",
+      "path": "/v1/credentials/sign",
+      "price_usd": "0.01",
+      "summary": "Sign C2PA-style content credentials for a digital asset (by hash or inline bytes); Ed25519, offline-verifiable.",
+      "status": "available"
+    },
+    {
+      "id": "content_credentials_verify",
+      "path": "/v1/credentials/verify",
+      "price_usd": "0.01",
+      "summary": "Verify a content-credentials token: signature validity + optional asset-bytes rebinding + lineage check.",
+      "status": "available"
+    },
+    {
+      "id": "content_credentials_bundle",
+      "path": "/v1/credentials/bundle",
+      "price_usd": 0.01,
+      "summary": "Merkle-bundle up to 100 signed credentials into one publishable root.",
+      "status": "available"
+    },
+    {
+      "id": "content_credentials_jwks",
+      "path": "/v1/credentials/jwks",
+      "price_usd": 0.0,
+      "summary": "Public keys for offline credential verification (free).",
+      "status": "available"
+    },
+    {
+      "id": "mcp_audit_tools",
+      "path": "/v1/mcp-audit/tools",
+      "price_usd": 0.01,
+      "summary": "Audit an MCP tools/list manifest: over-privilege, injection patterns, schema hygiene; graded + signed report.",
+      "status": "available"
+    },
+    {
+      "id": "mcp_audit_server_json",
+      "path": "/v1/mcp-audit/server-json",
+      "price_usd": 0.01,
+      "summary": "Audit server.json + inline tools array (same checks as /tools).",
+      "status": "available"
+    },
+    {
+      "id": "mcp_audit_rules",
+      "path": "/v1/mcp-audit/rules",
+      "price_usd": 0.0,
+      "summary": "Rule catalog + scoring model (free).",
+      "status": "available"
+    },
+    {
+      "id": "spend_reconcile",
+      "path": "/v1/spend/reconcile",
+      "price_usd": 0.01,
+      "summary": "Reconcile x402 settlements: verified per-vendor rollups, duplicate/anomaly flags, signed summary.",
+      "status": "available"
+    },
+    {
+      "id": "spend_check",
+      "path": "/v1/spend/check",
+      "price_usd": "0.01",
+      "summary": "Pre-spend budget enforcement: signed allow/deny decision token (embeddable in opentine tines).",
+      "status": "available"
+    },
+    {
+      "id": "spend_record",
+      "path": "/v1/spend/record",
+      "price_usd": "0.01",
+      "summary": "Record a completed spend into the agent's ledger (idempotent per tx_hash).",
+      "status": "available"
+    },
+    {
+      "id": "spend_ledger",
+      "path": "/v1/spend/ledger",
+      "price_usd": 0.0,
+      "summary": "Read back the agent's ledger summary by vendor (free).",
+      "status": "available"
+    },
+    {
+      "id": "trust_jwt_verify",
+      "path": "/v1/auth/jwt-verify",
+      "price_usd": "0.01",
+      "summary": "Verify a JWT/JWS against the issuer's remote JWKS: alg allowlist (no none/no symmetric), kid rotation, exp/nbf/aud/iss checks, optional max age; Ed25519-signed verdict, offline-verifiable via free JWKS route.",
+      "status": "available"
+    },
+    {
+      "id": "content_ops_c2pa_av_info",
+      "path": "/v1/c2pa/av-info",
+      "price_usd": "0.01",
+      "summary": "Fingerprint audio/video containers (mp4/mp3/ogg/wav/flac/webm) + coarse segment sha256 hashes \u2014 pure Python, no ffmpeg.",
+      "status": "available"
+    },
+    {
+      "id": "content_ops_c2pa_sign_av",
+      "path": "/v1/c2pa/sign-av",
+      "price_usd": 0.01,
+      "summary": "C2PA-style signed credential for audio/video assets: AV metadata + segment-hash Merkle root (Ed25519, same trust root as E22/E19/G1).",
+      "status": "available"
+    },
+    {
+      "id": "content_ops_c2pa_verify_av",
+      "path": "/v1/c2pa/verify-av",
+      "price_usd": "0.01",
+      "summary": "Verify an AV credential: signature, optional asset-bytes rebinding, segment-root recompute, duration check.",
+      "status": "available"
+    },
+    {
+      "id": "trust_breach_check",
+      "path": "/v1/compliance/breach-check",
+      "price_usd": "0.01",
+      "summary": "HaveIBeenPwned k-anonymity range check: are this password's SHA-1 hash suffixes in breach data? Only the first 5 hex chars ever leave the host; signed verdict.",
+      "status": "available"
+    },
+    {
+      "id": "compliance_token_screen",
+      "path": "/v1/compliance/token-screen",
+      "price_usd": 0.01,
+      "summary": "Signed pre-trade token passport: GoPlus heuristics + E19 OFAC screening of deployer/owner, one Ed25519 verdict.",
+      "status": "available"
+    },
+    {
+      "id": "content_ops_content_chunk",
+      "path": "/v1/content/chunk",
+      "price_usd": "0.01",
+      "summary": "Chunk text with configurable size/overlap; deterministic per-chunk sha256 for downstream indexing.",
+      "status": "available"
+    },
+    {
+      "id": "content_ops_content_extract",
+      "path": "/v1/content/extract",
+      "price_usd": "0.01",
+      "summary": "Extract text from PDF (pypdf), DOCX (python-docx), TXT/MD via base64; pages/paragraphs stats + sha256.",
+      "status": "available"
+    },
+    {
+      "id": "content_ops_content_search",
+      "path": "/v1/content/search",
+      "price_usd": "0.01",
+      "summary": "Stateless BM25 full-text search over documents supplied in the request (no persistence).",
+      "status": "available"
+    },
+    {
+      "id": "content_ops_content_toolkit",
+      "path": "/v1/content/toolkit",
+      "price_usd": 0.0,
+      "summary": "Free: parser/model/limit manifest for the document toolkit (discovery).",
+      "status": "available"
+    },
+    {
+      "id": "email_mx_route",
+      "path": "/v1/email/mx-route",
+      "price_usd": "0.01",
+      "summary": "Resolve the ordered MX precedence chain to A/AAAA endpoints. DNS-only; never connects to port 25.",
+      "status": "available"
+    },
+    {
+      "id": "email_preflight",
+      "path": "/v1/email/preflight",
+      "price_usd": 0.01,
+      "summary": "DNS-only email deliverability preflight: MX, SPF (with include-chain + optional IP evaluation), DMARC parse, DKIM selector probe, rDNS. NEVER sends mail.",
+      "status": "available"
+    },
+    {
+      "id": "trust_did_resolve",
+      "path": "/v1/identity/did-resolve",
+      "price_usd": "0.01",
+      "summary": "Resolve and validate a W3C did:web document (fetch + structural validation, extracted verification keys) or decode did:key locally (ed25519/secp256k1); signed verdict.",
+      "status": "available"
+    },
+    {
+      "id": "trust_vc_verify",
+      "path": "/v1/identity/vc-verify",
+      "price_usd": "0.01",
+      "summary": "Verify a VerifiableCredential: JWT-VC (signature + claims + expiry) or JSON-LD VC (proof signature against did:web/did:key keys, issuer, expiry); signed verdict.",
+      "status": "available"
+    },
+    {
+      "id": "infra_ports",
+      "path": "/v1/infra/ports",
+      "price_usd": "0.01",
+      "summary": "Bounded TCP-connect port sweep of a single public host (default 10 common ports, max 16). No banner probing.",
+      "status": "available"
+    },
+    {
+      "id": "infra_security_posture",
+      "path": "/v1/infra/security-posture",
+      "price_usd": 0.01,
+      "summary": "SSRF-guarded HTTP fetch + leaf TLS summary + security-header grading (HSTS/CSP/XFO/nosniff/\u2026) into a pass/warn/fail posture.",
+      "status": "available"
+    },
+    {
+      "id": "infra_tls_verify",
+      "path": "/v1/infra/tls-verify",
+      "price_usd": "0.01",
+      "summary": "Inspect the leaf TLS certificate presented by host:port \u2014 expiry, SANs, key type, self-signed, signature algorithm.",
+      "status": "available"
+    },
+    {
+      "id": "intel_domain_reputation",
+      "path": "/v1/intel/domain-reputation",
+      "price_usd": 0.01,
+      "summary": "DNS-based domain reputation: A/MX/SPF/DMARC, Spamhaus+SORBS RBL probes on resolved IPs, TLS cert, score 0-100.",
+      "status": "available"
+    },
+    {
+      "id": "intel_url_reputation",
+      "path": "/v1/intel/url-reputation",
+      "price_usd": "0.01",
+      "summary": "URL risk score: RBL on resolved IPs, SURBL on host, shortener + phishing-term heuristics.",
+      "status": "available"
+    },
+    {
+      "id": "moderation_scan",
+      "path": "/v1/moderation/scan",
+      "price_usd": "0.01",
+      "summary": "Offline deterministic moderation: profanity/NSFW, wallets, PII (email/SSN/Luhn-CC/phone), URLs, jailbreak patterns, spam heuristics. Verdict pass/warn/block.",
+      "status": "available"
+    },
+    {
+      "id": "net_dns_lookup",
+      "path": "/v1/net/dns-lookup",
+      "price_usd": "0.01",
+      "summary": "DNS lookup (A/AAAA/MX/TXT/NS/SOA/CNAME/PTR/CAA/SRV) with optional validated public nameserver override.",
+      "status": "available"
+    },
+    {
+      "id": "net_http_probe",
+      "path": "/v1/net/http-probe",
+      "price_usd": "0.01",
+      "summary": "SSRF-guarded request probe: status, timing, size, body hash, per-hop redirect chain, security headers.",
+      "status": "available"
+    },
+    {
+      "id": "net_url_lint",
+      "path": "/v1/net/url-lint",
+      "price_usd": "0.01",
+      "summary": "Offline URL parse/normalize with an issue list (IDNA, userinfo, port range, fragments) \u2014 no network.",
+      "status": "available"
+    },
+    {
+      "id": "netops_status",
+      "path": "/v1/netops/status",
+      "price_usd": 0.0,
+      "summary": "FREE status page: module uptime/version + live dependency checks (DNS resolver, HTTP egress, local Postfix listener, edge signing key, runtime libs).",
+      "status": "available"
+    },
+    {
+      "id": "content_ops_rag_answer",
+      "path": "/v1/rag/answer",
+      "price_usd": 0.01,
+      "summary": "Retrieval-augmented answer grounded in a named corpus (qwen2.5:7b, cited chunks).",
+      "status": "available"
+    },
+    {
+      "id": "content_ops_rag_index",
+      "path": "/v1/rag/index",
+      "price_usd": 0.01,
+      "summary": "Index documents into a named BM25 + local-embedding (nomic-embed-text) corpus for agents; reusable retrieval without any external vector service.",
+      "status": "available"
+    },
+    {
+      "id": "content_ops_rag_search",
+      "path": "/v1/rag/search",
+      "price_usd": "0.01",
+      "summary": "Hybrid BM25 + embedding retrieval over a named corpus with tunable hybrid_weight.",
+      "status": "available"
+    },
+    {
+      "id": "content_ops_rag_status",
+      "path": "/v1/rag/status",
+      "price_usd": 0.0,
+      "summary": "Free: list RAG corpora, chunk counts, and local Ollama model availability.",
+      "status": "available"
+    },
+    {
+      "id": "trust_verify_jwks",
+      "path": "/v1/trust/verify-jwks",
+      "price_usd": 0.0,
+      "summary": "Public Ed25519 verification key for this lane's signed verdicts (free).",
+      "status": "available"
+    },
+    {
+      "id": "iac_guard",
+      "path": "/v1/iac/guard",
+      "price_usd": "0.01",
+      "summary": "Static IaC misconfiguration scan (Terraform/CFN/K8s/Dockerfile): hardcoded secrets, wildcard IAM, open security groups, public S3, disabled encryption, privileged containers, :latest images.",
+      "status": "available"
+    },
+    {
+      "id": "intel_fusion",
+      "path": "/v1/intel/fusion",
+      "price_usd": 0.01,
+      "summary": "Fuse up to 25 threat indicators (domain/ip/url/hash/email) with optional external-source labels into one confidence-weighted verdict + score.",
+      "status": "available"
+    },
+    {
+      "id": "intel_redos_scan",
+      "path": "/v1/intel/redos-scan",
+      "price_usd": "0.01",
+      "summary": "Structural ReDoS risk analysis of regex patterns: nested quantifiers, ambiguous alternations, unanchored unbounded runs. Never matches input.",
+      "status": "available"
+    },
+    {
+      "id": "intel_tech_fingerprint",
+      "path": "/v1/intel/tech-fingerprint",
+      "price_usd": "0.01",
+      "summary": "Fingerprint a web stack from HTTP response headers + HTML (CMS, server, framework, CDN). Inline evidence, or optional SSRF-guarded fetch.",
+      "status": "available"
+    },
+    {
+      "id": "moderation_llm_scan",
+      "path": "/v1/moderation/llm-scan",
+      "price_usd": 0.01,
+      "summary": "Semantic moderation tier via local Ollama (qwen2.5): category severities + rationale. Fails open to built-in heuristics when the model is down.",
+      "status": "available"
+    },
+    {
+      "id": "file_preflight_archive",
+      "path": "/v1/file/archive-preflight",
+      "price_usd": "0.01",
+      "summary": "Metadata-only zip/tar preflight: zip-slip path containment, decompression-ratio zip-bomb flags (>100x), entry types, exec/encrypted flags, signed verdict. Archive via archive_b64u (<=48MB decoded) or URL (SSRF-guarded, 15s, 1MB). Never extracts entries to disk.",
+      "status": "available"
+    },
+    {
+      "id": "mcp_conformance_run",
+      "path": "/v1/mcp/conformance",
+      "price_usd": 0.01,
+      "summary": "Live MCP spec-conformance probe over Streamable HTTP: initialize version negotiation (2025-11-25 stateful vs 2026-07-28 stateless era detection), tools/list, ping and optional resources/list; SSRF-guarded, 1 MiB body cap, 10s probes; Ed25519-signed verdict {spec_revision_detected, conformance, checks, score}.",
+      "status": "available"
+    },
+    {
+      "id": "mcp_conformance_spec_versions",
+      "path": "/v1/mcp/conformance/spec-versions",
+      "price_usd": 0.0,
+      "summary": "Free: supported MCP protocol revisions (with era classification) and the conformance check catalog used by the probe.",
+      "status": "available"
+    },
+    {
+      "id": "pay_ops_retry_advice",
+      "path": "/v1/payments/retry-advice",
+      "price_usd": "0.01",
+      "summary": "x402 payment-failure forensics: signed retry-advice verdict (safe_to_retry, double-spend risk, backoff hint, evidence) from a failed CDP facilitator response, grounded in the CDP reason-code table.",
+      "status": "available"
+    },
+    {
+      "id": "runtime_cluster",
+      "path": "/v1/runtime/cluster",
+      "price_usd": 0.01,
+      "summary": "Cluster 10-200 agent traces by lexical failure signature and report the dominant root-cause distribution (deterministic, offline, signed).",
+      "status": "available"
+    },
+    {
+      "id": "runtime_postmortem",
+      "path": "/v1/runtime/postmortem",
+      "price_usd": "0.01",
+      "summary": "Diagnose ONE agent trace (OpenAI messages / OTel spans / tool-log / JSONL / text, auto-detected): repetition loops, context truncation, tool-error cascades, hallucinated tools, wrong-target actions, prompt regression. Local-Ollama prose diagnosis + fix, fails open. Signed Ed25519 verdict.",
+      "status": "available"
+    },
+    {
+      "id": "file_preflight_wayback_lookup",
+      "path": "/v1/web/wayback-lookup",
+      "price_usd": "0.01",
+      "summary": "Per-URL Internet Archive CDX lookup (1-50 URLs): archived?, closest snapshot URL, capture timestamp, HTTP status. Keyless, 15s timeout, 1h in-process cache, 429 backoff.",
+      "status": "available"
+    },
+    {
+      "id": "file_preflight_wayback_report",
+      "path": "/v1/web/wayback-report",
+      "price_usd": "0.01",
+      "summary": "Batch link-rot report (1-500 URLs): alive/rot counts, coverage %, per-URL details, signed. Rot model: 200-status capture within 730 days.",
+      "status": "available"
+    },
+    {
+      "id": "pay_ops_x402_explain",
+      "path": "/v1/x402/explain",
+      "price_usd": "0.01",
+      "summary": "Plain-English root cause, rule name and fix for a failed x402/402 payment body \u2014 covers the full CDP facilitator reason-code table.",
+      "status": "available"
+    },
+    {
+      "path": "/v1/validate-ubl",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "einvoice",
+      "description": "Validate a UBL 2.1 e-invoice: XML well-formedness, XSD vs cached OASIS UBL 2.1 Invoice schema, EN 16931 Schematron attempt, and structural rules (mandatory fields, VAT math, dates, currencies). Signed",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "path": "/v1/validate-cii",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "einvoice",
+      "description": "Validate a Cross-Industry Invoice (CII) structural subset: mandatory elements, VAT breakdown math, dates, currency consistency.",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "path": "/v1/einvoice/specs",
+      "method": "POST",
+      "price_usd": 0.0,
+      "category": "einvoice",
+      "description": "Free: supported e-invoice profiles, cached-standard versions/hashes, limits, and advisory framing.",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "path": "/v1/c2pa/sign-image",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "wave7",
+      "description": "Sign image content credentials (ddg-credential-v1, Ed25519 E22 trust root) and embed: PNG -> tEXt chunk, JPEG -> APP1 when safe else sidecar, WebP -> sidecar. Not CAI/JUMBF-interoperable (honest label",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "path": "/v1/c2pa/verify-image",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "wave7",
+      "description": "Verify an image credential (embedded PNG tEXt / JPEG APP1, sidecar JSON, or provided object): Ed25519 sig over canonical credential + image rehash -> sig_valid, hash_match, signed_verdict.",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "path": "/v1/c2pa/image-info",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "wave7",
+      "description": "Image fingerprint: format, dimensions, chunk/segment map, has-credential, sha256 \u2014 pure Python.",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "path": "/v1/payment/mvr",
+      "method": "POST",
+      "price_usd": 0.01,
+      "category": "wave7",
+      "description": "SEPA ISO 20022 message validation (business-rule layer): native EPC MVR best-effort checks for pain.001 credit transfers and pain.008 direct debits \u2014 root/message-type detection, GrpHdr and PmtInf cou",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "path": "/v1/payment/mvr/rules",
+      "method": "POST",
+      "price_usd": 0.0,
+      "category": "wave7",
+      "description": "Free: rule catalog + supported message types for the SEPA MVR validator (discovery).",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "path": "/v1/email/scam-screen",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "email-security",
+      "description": "Received-mail BEC/scam screen: reply-to/from mismatch, cousin domains, punycode, homoglyph display names, return-path mismatch, freemail reply-to, BEC body language, header anomalies, SPF/DKIM/DMARC a",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "path": "/v1/email/scam-batch",
+      "method": "POST",
+      "price_usd": 0.01,
+      "category": "email-security",
+      "description": "Scam-screen up to 50 received emails in one call: per-message verdicts + summary counts.",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "path": "/v1/lint-webhook",
+      "method": "POST",
+      "price_usd": 0.01,
+      "category": "webhooks",
+      "description": "Webhook replay-safety linter (spec-mode static analysis): signature header vs provider preset (stripe/github/shopify/ucp/generic), timestamp tolerance, idempotency guidance, dedupe/event-id store, ret",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "path": "/v1/lint-webhook/provider-checks",
+      "method": "POST",
+      "price_usd": 0.0,
+      "category": "webhooks",
+      "description": "Free catalog of webhook provider presets (signature header names + schemes) used by /v1/lint-webhook.",
+      "availability": "available",
+      "discoverable": true,
+      "backend": "wave7"
+    },
+    {
+      "id": "verify_claim",
+      "service_id": "verify_claim",
+      "path": "/v1/verify/claim",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "verification",
+      "description": "Deterministic claim-vs-source verification (CVE real? package vulnerable/exists? domain resolves? TLS cert valid? URL reachable?) against authoritative sources. Boolean verdict + evidence, no LLM.",
+      "automation_status": "automatic",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "fulfillment_mode": "automatic",
+      "human_required": false,
+      "backend": "static",
+      "risk": "state_recording",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "last_successful_smoke": null,
+      "discoverable": true,
+      "operation": {
+        "bodyType": "json"
+      }
+    },
+    {
+      "id": "verify_action",
+      "service_id": "verify_action",
+      "path": "/v1/verify/action",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "verification",
+      "description": "Post-action side-effect verification: re-read claimed real-world state (HTTP JSON fields, status code) and compare to expected.",
+      "automation_status": "automatic",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "fulfillment_mode": "automatic",
+      "human_required": false,
+      "backend": "static",
+      "risk": "state_recording",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "last_successful_smoke": null,
+      "discoverable": true,
+      "operation": {
+        "bodyType": "json"
+      }
+    },
+    {
+      "id": "resolve_outcome",
+      "service_id": "resolve_outcome",
+      "path": "/v1/resolve/outcome",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "verification",
+      "description": "Timeout-outcome resolution: idempotency-keyed verdict replay without re-execution.",
+      "automation_status": "automatic",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "fulfillment_mode": "automatic",
+      "human_required": false,
+      "backend": "static",
+      "risk": "state_recording",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "last_successful_smoke": null,
+      "discoverable": true,
+      "operation": {
+        "bodyType": "json"
+      }
+    },
+    {
+      "id": "verify_schema_drift",
+      "service_id": "verify_schema_drift",
+      "path": "/v1/verify/schema-drift",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "verification",
+      "description": "Live API-contract drift probe: fingerprint the live OpenAPI doc vs a pinned fingerprint. match|drifted|unreachable.",
+      "automation_status": "automatic",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "fulfillment_mode": "automatic",
+      "human_required": false,
+      "backend": "static",
+      "risk": "state_recording",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "last_successful_smoke": null,
+      "discoverable": true,
+      "operation": {
+        "bodyType": "json"
+      }
+    },
+    {
+      "id": "verify_rules",
+      "service_id": "verify_rules",
+      "path": "/v1/verify/rules",
+      "method": "GET",
+      "price_usd": "0",
+      "category": "verification",
+      "description": "Machine-readable rule catalog for all verification check types. Free.",
+      "automation_status": "automatic",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "fulfillment_mode": "automatic",
+      "human_required": false,
+      "backend": "static",
+      "risk": "read_only",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "last_successful_smoke": null,
+      "discoverable": true,
+      "operation": {}
+    },
+    {
+      "id": "heartbeat_register",
+      "service_id": "heartbeat_register",
+      "path": "/v1/heartbeat/register",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "compute",
+      "description": "Register a heartbeat watch for an agent URL ($0.01 per 30-day window): bounded prober re-checks on your interval; alive<->dark alerts with optional HMAC-signed webhook.",
+      "automation_status": "automatic",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "fulfillment_mode": "automatic",
+      "human_required": false,
+      "backend": "static",
+      "risk": "state_recording",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "last_successful_smoke": null,
+      "discoverable": true,
+      "operation": {
+        "bodyType": "json"
+      }
+    },
+    {
+      "id": "heartbeat_status",
+      "service_id": "heartbeat_status",
+      "path": "/v1/heartbeat/status",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "compute",
+      "description": "Watch state: last verdict, uptime_30d and all-time ratios, consecutive fails, alert count.",
+      "automation_status": "automatic",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "fulfillment_mode": "automatic",
+      "human_required": false,
+      "backend": "static",
+      "risk": "state_recording",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "last_successful_smoke": null,
+      "discoverable": true,
+      "operation": {
+        "bodyType": "json"
+      }
+    },
+    {
+      "id": "heartbeat_alerts",
+      "service_id": "heartbeat_alerts",
+      "path": "/v1/heartbeat/alerts",
+      "method": "POST",
+      "price_usd": "0",
+      "category": "compute",
+      "description": "Read your own watch's alerts (went_dark|back_alive|flap). Free.",
+      "automation_status": "automatic",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "fulfillment_mode": "automatic",
+      "human_required": false,
+      "backend": "static",
+      "risk": "state_recording",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "last_successful_smoke": null,
+      "discoverable": true,
+      "operation": {
+        "bodyType": "json"
+      }
+    },
+    {
+      "id": "heartbeat_leaderboard",
+      "service_id": "heartbeat_leaderboard",
+      "path": "/v1/heartbeat/leaderboard",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "compute",
+      "description": "Highest-uptime watched agents (>= min_probes).",
+      "automation_status": "automatic",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "fulfillment_mode": "automatic",
+      "human_required": false,
+      "backend": "static",
+      "risk": "state_recording",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "last_successful_smoke": null,
+      "discoverable": true,
+      "operation": {
+        "bodyType": "json"
+      }
+    },
+    {
+      "id": "heartbeat_rules",
+      "service_id": "heartbeat_rules",
+      "path": "/v1/heartbeat/rules",
+      "method": "GET",
+      "price_usd": "0",
+      "category": "compute",
+      "description": "Machine-readable heartbeat config contract. Free.",
+      "automation_status": "automatic",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "fulfillment_mode": "automatic",
+      "human_required": false,
+      "backend": "static",
+      "risk": "read_only",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "last_successful_smoke": null,
+      "discoverable": true,
+      "operation": {}
+    },
+    {
+      "id": "chains",
+      "service_id": "chains",
+      "path": "/v1/chains",
+      "method": "GET",
+      "price_usd": "0",
+      "category": "blockchain",
+      "description": "Supported chains + live backend health (chainId-gated): head, backend kind (local_reth|public), availability. Free.",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "automation_status": "automatic",
+      "fulfillment_mode": "automated_fulfillment",
+      "backend": "static",
+      "risk": "read_only",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "human_required": false,
+      "last_successful_smoke": null,
+      "operation": {},
+      "discoverable": true
+    },
+    {
+      "id": "chains_rpc",
+      "service_id": "chains_rpc",
+      "path": "/v1/chains/rpc",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "blockchain",
+      "description": "One gate-verified keyless read op on one chain (ethereum, base, polygon, arbitrum, optimism, avalanche, bnb, unichain). Read-only method allowlist, chainId-verified endpoints, local reth first for Ethereum when healthy. 1 MiB cap, 8s timeout.",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "automation_status": "automatic",
+      "fulfillment_mode": "automated_fulfillment",
+      "backend": "static",
+      "risk": "read_only",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "human_required": false,
+      "last_successful_smoke": null,
+      "operation": {},
+      "discoverable": true
+    },
+    {
+      "id": "chains_address",
+      "service_id": "chains_address",
+      "path": "/v1/chains/address",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "blockchain",
+      "description": "Address snapshot on any supported chain: balance_wei, nonce, is_contract (chainId-gated backend).",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "automation_status": "automatic",
+      "fulfillment_mode": "automated_fulfillment",
+      "backend": "static",
+      "risk": "read_only",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "human_required": false,
+      "last_successful_smoke": null,
+      "operation": {},
+      "discoverable": true
+    },
+    {
+      "id": "chains_gas",
+      "service_id": "chains_gas",
+      "path": "/v1/chains/gas",
+      "method": "POST",
+      "price_usd": "0.01",
+      "category": "blockchain",
+      "description": "Gas snapshot on any supported chain: gas_price, max_priority_fee, short fee_history (chainId-gated backend).",
+      "availability": "available",
+      "public_self_serve": true,
+      "runtime_status": "live_runtime",
+      "automation_status": "automatic",
+      "fulfillment_mode": "automated_fulfillment",
+      "backend": "static",
+      "risk": "read_only",
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "human_required": false,
+      "last_successful_smoke": null,
+      "operation": {},
+      "discoverable": true
     }
   ],
   "source": "canonical_ddg_service_registry"

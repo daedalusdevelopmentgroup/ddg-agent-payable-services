@@ -251,3 +251,101 @@ Post-promo policy: <=4B local models remain free; >4B local routes become paid/o
 - `/v1/research-report` ($0.01): sourced research brief - find (multi-engine or `partner_results` injected verbatim) -> bulk read -> claim extraction -> 3-model verification verdict per claim -> signed proof-of-research artifact.
 - `/v1/page-pack` ($0.01): bulk 1-25 URL -> markdown; pipe `/v1/web-search` results[].url straight in (Search->Fetch handoff shape).
 - Agent inbox (presence tier): `/v1/inbox/register` ($0.01 one-time handle claim), `/v1/inbox/send` ($0.01 paid inbound; OTP/magic-link typed extraction), `/v1/inbox/lookup` ($0.01), free owner reads `/v1/inbox/messages` + `/v1/inbox/status` via inbox_key. Senders pay = spam resistance.
+
+## AgentMail — private encrypted mail for AI agents (E17, live)
+- POST /v1/mail/keys/register ($0.01): Publish or rotate your agent's public key bundle (X25519 encryption + Ed25519 signing, base64url). Identity = X-Agent-Id; DID/A2A-compatible key model.
+- POST /v1/mail/keys/lookup ($0.01): Fetch a recipient agent's public key bundle to encrypt before sending.
+- POST /v1/mail/send ($0.01): Store-and-forward ENCRYPTED envelope (<=64KB ciphertext, 7-day TTL). The relay stores ciphertext only — plaintext never touches DDG. Encrypt client-side to the recipient's X25519 key.
+- POST /v1/mail/inbox ($0.01): List waiting encrypted envelopes (metadata only).
+- POST /v1/mail/fetch ($0.01): Retrieve one encrypted envelope; decrypt client-side.
+- POST /v1/mail/ack ($0.01): Acknowledge delivery + receive a server-signed, independently verifiable delivery certificate (sha256-bound; anchorable via /v1/certify/run).
+- POST /v1/mail/threads ($0.01): Thread view between two agents across the encrypted channel.
+
+## Deep Security Audit (premium tier, live)
+- POST /v1/security-audit/deep ($0.25): Deep static security audit of agent-supplied code or MCP tool configs. 16 detector families (hardcoded secrets, private keys, injection surfaces, unsafe deserialization, TLS bypass, prompt-injection surface, tool-permission drift), evidence with line context, per-finding remediation, 0-100 risk score, server-signed certificate. Premium tier above the $0.01 penny scans.
+
+## Wave 5 — trust, content, intel lanes (2026-10-04)
+
+23. POST /v1/auth/jwt-verify ($0.01) - Verify a JWT/JWS against the issuer's remote JWKS: alg allowlist (no none/no symmetric), kid rotation, exp/nbf/aud/iss checks, optional max age; Ed25519-signed verdict, offline-verifiable via free JWKS route. [auth lane, wave-5 2026-10-04]
+24. POST /v1/c2pa/av-info ($0.01) - Fingerprint audio/video containers (mp4/mp3/ogg/wav/flac/webm) + coarse segment sha256 hashes — pure Python, no ffmpeg. [c2pa lane, wave-5 2026-10-04]
+25. POST /v1/c2pa/sign-av ($0.01) - C2PA-style signed credential for audio/video assets: AV metadata + segment-hash Merkle root (Ed25519, same trust root as E22/E19/G1). [c2pa lane, wave-5 2026-10-04]
+26. POST /v1/c2pa/verify-av ($0.01) - Verify an AV credential: signature, optional asset-bytes rebinding, segment-root recompute, duration check. [c2pa lane, wave-5 2026-10-04]
+27. POST /v1/compliance/breach-check ($0.01) - HaveIBeenPwned k-anonymity range check: are this password's SHA-1 hash suffixes in breach data? Only the first 5 hex chars ever leave the host; signed verdict. [compliance lane, wave-5 2026-10-04]
+28. POST /v1/compliance/token-screen ($0.01) - Signed pre-trade token passport: GoPlus heuristics + E19 OFAC screening of deployer/owner, one Ed25519 verdict. [compliance lane, wave-5 2026-10-04]
+29. POST /v1/content/chunk ($0.01) - Chunk text with configurable size/overlap; deterministic per-chunk sha256 for downstream indexing. [content lane, wave-5 2026-10-04]
+30. POST /v1/content/extract ($0.01) - Extract text from PDF (pypdf), DOCX (python-docx), TXT/MD via base64; pages/paragraphs stats + sha256. [content lane, wave-5 2026-10-04]
+31. POST /v1/content/search ($0.01) - Stateless BM25 full-text search over documents supplied in the request (no persistence). [content lane, wave-5 2026-10-04]
+32. GET /v1/content/toolkit (free) - Free: parser/model/limit manifest for the document toolkit (discovery). [content lane, wave-5 2026-10-04]
+33. POST /v1/email/mx-route ($0.01) - Resolve the ordered MX precedence chain to A/AAAA endpoints. DNS-only; never connects to port 25. [email lane, wave-5 2026-10-04]
+34. POST /v1/email/preflight ($0.01) - DNS-only email deliverability preflight: MX, SPF (with include-chain + optional IP evaluation), DMARC parse, DKIM selector probe, rDNS. NEVER sends mail. [email lane, wave-5 2026-10-04]
+35. POST /v1/identity/did-resolve ($0.01) - Resolve and validate a W3C did:web document (fetch + structural validation, extracted verification keys) or decode did:key locally (ed25519/secp256k1); signed verdict. [identity lane, wave-5 2026-10-04]
+36. POST /v1/identity/vc-verify ($0.01) - Verify a VerifiableCredential: JWT-VC (signature + claims + expiry) or JSON-LD VC (proof signature against did:web/did:key keys, issuer, expiry); signed verdict. [identity lane, wave-5 2026-10-04]
+37. POST /v1/infra/ports ($0.01) - Bounded TCP-connect port sweep of a single public host (default 10 common ports, max 16). No banner probing. [infra lane, wave-5 2026-10-04]
+38. POST /v1/infra/security-posture ($0.01) - SSRF-guarded HTTP fetch + leaf TLS summary + security-header grading (HSTS/CSP/XFO/nosniff/…) into a pass/warn/fail posture. [infra lane, wave-5 2026-10-04]
+39. POST /v1/infra/tls-verify ($0.01) - Inspect the leaf TLS certificate presented by host:port — expiry, SANs, key type, self-signed, signature algorithm. [infra lane, wave-5 2026-10-04]
+40. POST /v1/intel/domain-reputation ($0.01) - DNS-based domain reputation: A/MX/SPF/DMARC, Spamhaus+SORBS RBL probes on resolved IPs, TLS cert, score 0-100. [intel lane, wave-5 2026-10-04]
+41. POST /v1/intel/url-reputation ($0.01) - URL risk score: RBL on resolved IPs, SURBL on host, shortener + phishing-term heuristics. [intel lane, wave-5 2026-10-04]
+42. POST /v1/moderation/scan ($0.01) - Offline deterministic moderation: profanity/NSFW, wallets, PII (email/SSN/Luhn-CC/phone), URLs, jailbreak patterns, spam heuristics. Verdict pass/warn/block. [moderation lane, wave-5 2026-10-04]
+43. POST /v1/net/dns-lookup ($0.01) - DNS lookup (A/AAAA/MX/TXT/NS/SOA/CNAME/PTR/CAA/SRV) with optional validated public nameserver override. [net lane, wave-5 2026-10-04]
+44. POST /v1/net/http-probe ($0.01) - SSRF-guarded request probe: status, timing, size, body hash, per-hop redirect chain, security headers. [net lane, wave-5 2026-10-04]
+45. POST /v1/net/url-lint ($0.01) - Offline URL parse/normalize with an issue list (IDNA, userinfo, port range, fragments) — no network. [net lane, wave-5 2026-10-04]
+46. GET /v1/netops/status (free) - FREE status page: module uptime/version + live dependency checks (DNS resolver, HTTP egress, local Postfix listener, edge signing key, runtime libs). [netops lane, wave-5 2026-10-04]
+47. POST /v1/rag/answer ($0.01) - Retrieval-augmented answer grounded in a named corpus (qwen2.5:7b, cited chunks). [rag lane, wave-5 2026-10-04]
+48. POST /v1/rag/index ($0.01) - Index documents into a named BM25 + local-embedding (nomic-embed-text) corpus for agents; reusable retrieval without any external vector service. [rag lane, wave-5 2026-10-04]
+49. POST /v1/rag/search ($0.01) - Hybrid BM25 + embedding retrieval over a named corpus with tunable hybrid_weight. [rag lane, wave-5 2026-10-04]
+50. GET /v1/rag/status (free) - Free: list RAG corpora, chunk counts, and local Ollama model availability. [rag lane, wave-5 2026-10-04]
+51. GET /v1/trust/verify-jwks (free) - Public Ed25519 verification key for this lane's signed verdicts (free). [trust lane, wave-5 2026-10-04]
+
+## Wave 5b — intel & moderation lanes (2026-10-04)
+
+52. POST /v1/iac/guard ($0.01) - Static IaC misconfiguration scan (Terraform/CFN/K8s/Dockerfile): hardcoded secrets, wildcard IAM, open security groups, public S3, disabled encryption, privileged containers, :latest images. [iac lane, wave-5 2026-10-04]
+53. POST /v1/intel/fusion ($0.01) - Fuse up to 25 threat indicators (domain/ip/url/hash/email) with optional external-source labels into one confidence-weighted verdict + score. [intel lane, wave-5 2026-10-04]
+54. POST /v1/intel/redos-scan ($0.01) - Structural ReDoS risk analysis of regex patterns: nested quantifiers, ambiguous alternations, unanchored unbounded runs. Never matches input. [intel lane, wave-5 2026-10-04]
+55. POST /v1/intel/tech-fingerprint ($0.01) - Fingerprint a web stack from HTTP response headers + HTML (CMS, server, framework, CDN). Inline evidence, or optional SSRF-guarded fetch. [intel lane, wave-5 2026-10-04]
+56. POST /v1/moderation/llm-scan ($0.01) - Semantic moderation tier via local Ollama (qwen2.5): category severities + rationale. Fails open to built-in heuristics when the model is down. [moderation lane, wave-5 2026-10-04]
+
+## Wave 6 — payment forensics, MCP conformance, runtime postmortem, archive preflight (2026-10-05)
+
+57. POST /v1/file/archive-preflight ($0.01) - Metadata-only zip/tar preflight: zip-slip path containment, decompression-ratio zip-bomb flags (>100x), entry types, exec/encrypted flags, signed verdict. Archive via archive_b64u (<=48MB decoded) or URL (SSRF-guarded, 15s, 1MB). Never extracts entries to disk. [file lane, wave-6 2026-10-05]
+58. POST /v1/mcp/conformance ($0.01) - Live MCP spec-conformance probe over Streamable HTTP: initialize version negotiation (2025-11-25 stateful vs 2026-07-28 stateless era detection), tools/list, ping and optional resources/list; SSRF-guarded, 1 MiB body cap, 10s probes; Ed25519-signed verdict {spec_revision_detected, conformance, checks, score}. [mcp lane, wave-6 2026-10-05]
+59. GET /v1/mcp/conformance/spec-versions (free) - Free: supported MCP protocol revisions (with era classification) and the conformance check catalog used by the probe. [mcp lane, wave-6 2026-10-05]
+60. POST /v1/payments/retry-advice ($0.01) - x402 payment-failure forensics: signed retry-advice verdict (safe_to_retry, double-spend risk, backoff hint, evidence) from a failed CDP facilitator response, grounded in the CDP reason-code table. [payments lane, wave-6 2026-10-05]
+61. POST /v1/runtime/cluster ($0.01) - Cluster 10-200 agent traces by lexical failure signature and report the dominant root-cause distribution (deterministic, offline, signed). [runtime lane, wave-6 2026-10-05]
+62. POST /v1/runtime/postmortem ($0.01) - Diagnose ONE agent trace (OpenAI messages / OTel spans / tool-log / JSONL / text, auto-detected): repetition loops, context truncation, tool-error cascades, hallucinated tools, wrong-target actions, prompt regression. Local-Ollama prose diagnosis + fix, fails open. Signed Ed25519 verdict. [runtime lane, wave-6 2026-10-05]
+63. POST /v1/web/wayback-lookup ($0.01) - Per-URL Internet Archive CDX lookup (1-50 URLs): archived?, closest snapshot URL, capture timestamp, HTTP status. Keyless, 15s timeout, 1h in-process cache, 429 backoff. [web lane, wave-6 2026-10-05]
+64. POST /v1/web/wayback-report ($0.01) - Batch link-rot report (1-500 URLs): alive/rot counts, coverage %, per-URL details, signed. Rot model: 200-status capture within 730 days. [web lane, wave-6 2026-10-05]
+65. POST /v1/x402/explain ($0.01) - Plain-English root cause, rule name and fix for a failed x402/402 payment body — covers the full CDP facilitator reason-code table. [x402 lane, wave-6 2026-10-05]
+
+## Wave 7 (2026-10-05): EU e-invoice, image C2PA, SEPA MVR, comms guard
+- `POST /v1/c2pa/image-info` ($0.01) — Image fingerprint: format, dimensions, chunk/segment map, has-credential, sha256 — pure Python.
+- `POST /v1/c2pa/sign-image` ($0.01) — Sign image content credentials (ddg-credential-v1, Ed25519 E22 trust root) and embed: PNG -> tEXt chunk, JPEG -> APP1 when safe else sidecar, WebP -> 
+- `POST /v1/c2pa/verify-image` ($0.01) — Verify an image credential (embedded PNG tEXt / JPEG APP1, sidecar JSON, or provided object): Ed25519 sig over canonical credential + image rehash -> 
+- `POST /v1/einvoice/specs` (free) — Free: supported e-invoice profiles, cached-standard versions/hashes, limits, and advisory framing.
+- `POST /v1/email/scam-batch` ($0.01) — Scam-screen up to 50 received emails in one call: per-message verdicts + summary counts.
+- `POST /v1/email/scam-screen` ($0.01) — Received-mail BEC/scam screen: reply-to/from mismatch, cousin domains, punycode, homoglyph display names, return-path mismatch, freemail reply-to, BEC
+- `POST /v1/lint-webhook` ($0.01) — Webhook replay-safety linter (spec-mode static analysis): signature header vs provider preset (stripe/github/shopify/ucp/generic), timestamp tolerance
+- `POST /v1/lint-webhook/provider-checks` (free) — Free catalog of webhook provider presets (signature header names + schemes) used by /v1/lint-webhook.
+- `POST /v1/payment/mvr` ($0.01) — SEPA ISO 20022 message validation (business-rule layer): native EPC MVR best-effort checks for pain.001 credit transfers and pain.008 direct debits — 
+- `POST /v1/payment/mvr/rules` (free) — Free: rule catalog + supported message types for the SEPA MVR validator (discovery).
+- `POST /v1/validate-cii` ($0.01) — Validate a Cross-Industry Invoice (CII) structural subset: mandatory elements, VAT breakdown math, dates, currency consistency.
+- `POST /v1/validate-ubl` ($0.01) — Validate a UBL 2.1 e-invoice: XML well-formedness, XSD vs cached OASIS UBL 2.1 Invoice schema, EN 16931 Schematron attempt, and structural rules (mand
+
+## Verification & Heartbeat (E25/E26, 2026-10)
+
+- POST /v1/verify/claim ($0.01 USDC) - Deterministic claim-vs-source verification (CVE real? package vulnerable/exists? domain resolves? TLS cert valid? URL reachable?) against authoritative sources (NVD/CVE.org, OSV.dev, PyPI/npm, DNS, TLS). Boolean verdict + evidence snapshot; no LLM anywhere.
+- POST /v1/verify/action ($0.01 USDC) - Post-action side-effect verification: deterministically re-read a claimed real-world state (HTTP JSON endpoint fields, status code) and compare to expected. Answers did-it-actually-happen independent of the acting agent's narration.
+- POST /v1/resolve/outcome ($0.01 USDC) - Timeout-outcome resolution: idempotency-keyed verdict replay without re-executing anything (TTL-cached). Ends double-execution and blind-retry loops after tool-call timeouts.
+- POST /v1/verify/schema-drift ($0.01 USDC) - API-contract drift probe: fingerprint the live OpenAPI/JSON doc (sorted path/method list, sha256) vs pinned. Verdict match|drifted|unreachable + current fingerprint.
+- POST /v1/verify/rules (free) - Machine-readable rule catalog for all verification check types (input shapes, evidence schema, limits). Free.
+- POST /v1/heartbeat/register ($0.01 USDC) - Register a heartbeat watch for an agent URL ($0.01 per 30-day window): bounded prober re-checks on your interval (300s..24h); alive->dark / dark->alive / flap alerts, optional HMAC-signed webhook delivery.
+- POST /v1/heartbeat/status ($0.01 USDC) - Watch state: last verdict, last probe time, consecutive fails, uptime_30d and uptime_all_time ratios, alert count.
+- POST /v1/heartbeat/alerts (free) - Read your own watch's alerts (went_dark|back_alive|flap). Webhook-protected watches require webhook_secret. Free.
+- POST /v1/heartbeat/leaderboard ($0.01 USDC) - Highest-uptime watched agents (>= min_probes), uptime ratios and probe counts.
+- POST /v1/heartbeat/rules (free) - Machine-readable heartbeat config contract (interval bounds, expect shapes, caps, alert kinds, webhook signing). Free.
+
+## Multi-Chain Reads (E27, 2026-10)
+
+- POST /v1/chains (free) - Supported chains + live backend health (chainId-gated): head, backend kind (local_reth|public), availability. Free.
+- POST /v1/chains/rpc ($0.01 USDC) - One gate-verified keyless read op on one chain (ethereum, base, polygon, arbitrum, optimism, avalanche, bnb, unichain). Read-only allowlist, local reth first for Ethereum when healthy.
+- POST /v1/chains/address ($0.01 USDC) - Address snapshot on any supported chain: balance_wei, nonce, is_contract.
+- POST /v1/chains/gas ($0.01 USDC) - Gas snapshot on any supported chain: gas_price, max_priority_fee, short fee_history.

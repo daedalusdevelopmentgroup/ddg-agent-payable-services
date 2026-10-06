@@ -349,3 +349,14 @@ Post-promo policy: <=4B local models remain free; >4B local routes become paid/o
 - POST /v1/chains/rpc ($0.01 USDC) - One gate-verified keyless read op on one chain (ethereum, base, polygon, arbitrum, optimism, avalanche, bnb, unichain). Read-only allowlist, local reth first for Ethereum when healthy.
 - POST /v1/chains/address ($0.01 USDC) - Address snapshot on any supported chain: balance_wei, nonce, is_contract.
 - POST /v1/chains/gas ($0.01 USDC) - Gas snapshot on any supported chain: gas_price, max_priority_fee, short fee_history.
+
+## Compliance & Facts (E28/E29, 2026-10)
+
+- POST /v1/compliance/sanctions ($0.01 USDC) - Sanctions screen with PINNED list versions (OFAC SDN + EU list): verdict clear|match + per-list version/rows/matches. Signed receipt.
+- POST /v1/compliance/sanctions-delta ($0.01 USDC) - Sanctions DELTA feed since YYYY-MM-DD (OFAC recent actions). Signed.
+- POST /v1/402/preflight ($0.01 USDC) - x402 challenge compliance pre-flight: verdict an endpoint's 402 envelope against v1/v2 + MPP shape rules. Signed.
+- POST /v1/crypto/drainer-check ($0.01 USDC) - Wallet/URL drainer & abuse check (Chainabuse): reported|no_reports + scam types. Signed.
+- POST /v1/ucp/verify ($0.01 USDC) - UCP conformance verifier: /.well-known/ucp manifest fetch + spec-rule verdict. Signed.
+- POST /v1/ucp/spec (free) - Machine-readable UCP check summary. Free.
+- POST /v1/macro/latest ($0.01 USDC) - Latest official macro print (cpi|nfp|unemployment) from BLS. Signed.
+- POST /v1/macro/series (free) - Supported macro series catalog. Free.

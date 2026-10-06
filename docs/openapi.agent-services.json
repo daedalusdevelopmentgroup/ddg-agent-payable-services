@@ -18626,6 +18626,326 @@
         "x-x402-asset": "USDC",
         "x-x402-network": "eip155:8453"
       }
+    },
+    "/v1/compliance/sanctions": {
+      "post": {
+        "operationId": "sanctions_screen",
+        "summary": "Sanctions screen with PINNED list versions (OFAC SDN + EU list): verdict clear|match + per-list version/rows/matches. Si",
+        "description": "Sanctions screen with PINNED list versions (OFAC SDN + EU list): verdict clear|match + per-list version/rows/matches. Signed receipt.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/compliance/sanctions-delta": {
+      "post": {
+        "operationId": "sanctions_delta",
+        "summary": "Sanctions DELTA feed since YYYY-MM-DD (OFAC recent actions). Signed.",
+        "description": "Sanctions DELTA feed since YYYY-MM-DD (OFAC recent actions). Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/402/preflight": {
+      "post": {
+        "operationId": "preflight_402",
+        "summary": "x402 challenge compliance pre-flight: verdict an endpoint's 402 envelope against v1/v2 + MPP shape rules. Signed.",
+        "description": "x402 challenge compliance pre-flight: verdict an endpoint's 402 envelope against v1/v2 + MPP shape rules. Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/crypto/drainer-check": {
+      "post": {
+        "operationId": "drainer_check",
+        "summary": "Wallet/URL drainer & abuse check (Chainabuse): reported|no_reports + scam types. Signed.",
+        "description": "Wallet/URL drainer & abuse check (Chainabuse): reported|no_reports + scam types. Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/ucp/verify": {
+      "post": {
+        "operationId": "ucp_verify",
+        "summary": "UCP conformance verifier: /.well-known/ucp manifest fetch + spec-rule verdict. Signed.",
+        "description": "UCP conformance verifier: /.well-known/ucp manifest fetch + spec-rule verdict. Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/ucp/spec": {
+      "get": {
+        "operationId": "ucp_spec",
+        "summary": "Machine-readable UCP check summary. Free.",
+        "description": "Machine-readable UCP check summary. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/macro/latest": {
+      "post": {
+        "operationId": "macro_latest",
+        "summary": "Latest official macro print (cpi|nfp|unemployment) from BLS. Signed.",
+        "description": "Latest official macro print (cpi|nfp|unemployment) from BLS. Signed.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
+    },
+    "/v1/macro/series": {
+      "get": {
+        "operationId": "macro_series",
+        "summary": "Supported macro series catalog. Free.",
+        "description": "Supported macro series catalog. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-payment-info": {
+          "price": {
+            "amount": "0",
+            "currency": "USD",
+            "mode": "free"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453"
+      }
     }
   },
   "servers": [

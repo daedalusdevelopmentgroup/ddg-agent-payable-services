@@ -1,3 +1,5 @@
+<!-- mcp-name: com.daedalusdevelopmentgroup/ddg-agent-services-mcp -->
+mcp-name: com.daedalusdevelopmentgroup/ddg-agent-services-mcp
 # DDG Agent-Payable Revenue Launch Pack
 
 This directory contains the machine-readable launch artifacts and local scaffold for turning Hermes/DDG into a paid service surface for other AI agents.

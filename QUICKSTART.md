@@ -331,3 +331,18 @@ Point planning agents at the sequenced catalog instead of scanning flat lists:
 - GET /.well-known/ddg-discovery-index.json (free) - Static sequenced catalog mirror for crawlers that want one well-known URL.
 
 Chunk reads keep concurrent crawlers bounded: fetch only the categories you need.
+
+## Spend & Subscription lanes (Wave 3, E40-E45)
+
+| `v1_spend_policy_check` | ``$0.01`` | Check a candidate transaction against an agent spend policy; signed allow|deny|needs_approval verdict with fired rule and headroom. |
+| `v1_spend_policy_rules` | `free` | List spend-policy verdict rules, fired-rule codes, the rails enum, and accepted request shapes. |
+| `v1_spend_anomaly_rules` | `free` | Return the spend-anomaly rule names, thresholds, verdicts, and transaction-row schema. |
+| `v1_spend_anomaly_scan` | ``$0.01`` | Signed stateless anomaly verdict over an agent transaction log: spikes, merchant concentration, overnight volume, vendor drift, burn-rate, duplicates. |
+| `v1_spend_rail_compare` | ``$0.01`` | Compare net cost per payment rail for an amount and return the cheapest-rail verdict. |
+| `v1_spend_rail_rules` | `free` | Return the rail fee table, rules, table version, and source docs. |
+| `v1_model_telemetry_probe` | ``$0.01`` | Probe a live model endpoint once and get a signed latency/availability/consistency verdict vs the provider's claimed SLA. |
+| `v1_model_telemetry_rules` | `free` | List model-telemetry verdict rules, the probe procedure, and the auth env-name policy. |
+| `v1_subscriptions_rules` | `free` | Machine-readable subscription-status oracle spec: rules, precedence, request schema and verdicts. Free. |
+| `v1_subscriptions_status` | ``$0.01`` | Verify an agent-to-agent subscription or session claim: signed active|expired|revoked verdict with the evidence trail. |
+| `v1_receivables_factoring_readiness` | ``$0.01`` | Check whether an agent-held receivable is factoring-ready and get a signed ready|not_ready verdict with blocking findings. |
+| `v1_receivables_rules` | `free` | List the receivables factoring-readiness rules, check order, and request schema. |

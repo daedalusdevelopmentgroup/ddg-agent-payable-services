@@ -559,7 +559,7 @@
       }
     ]
   },
-  "generated_at": "2026-10-06T20:23:32Z",
+  "generated_at": "2026-10-07T00:18:07Z",
   "ha_note": "Production Cloudflare tunnel/edge is anchored on durable runtime backend for 24/7 uptime. The free local-model pool now supports selectable local runtimes: Ollama, llama.cpp, and LM Studio/llmster. The public catalog reports only healthy/listed runtime models and hides raw LAN endpoints.",
   "live_runtime_services": [
     {
@@ -8385,6 +8385,282 @@
         "free_route": true,
         "scanner_note": "Intentional free/public discovery route."
       }
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "data",
+      "description": "Probe a live model endpoint once and get a signed latency/availability/consistency verdict vs the provider's claimed SLA.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "POST",
+      "path": "/v1/model/telemetry-probe",
+      "price_usd": "0.01",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "v1_model_telemetry_probe"
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "data",
+      "description": "List model-telemetry verdict rules, the probe procedure, and the auth env-name policy.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "GET",
+      "path": "/v1/model/telemetry-rules",
+      "price_usd": "0.00",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "v1_model_telemetry_rules",
+      "methods": [
+        "GET"
+      ],
+      "x-x402scan": {
+        "exclude_from_paid_probe": true,
+        "free_route": true,
+        "scanner_note": "Intentional free/public discovery route."
+      }
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "compliance",
+      "description": "Check whether an agent-held receivable is factoring-ready and get a signed ready|not_ready verdict with blocking findings.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "POST",
+      "path": "/v1/receivables/factoring-readiness",
+      "price_usd": "0.01",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "v1_receivables_factoring_readiness"
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "compliance",
+      "description": "List the receivables factoring-readiness rules, check order, and request schema.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "GET",
+      "path": "/v1/receivables/rules",
+      "price_usd": "0.00",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "v1_receivables_rules",
+      "methods": [
+        "GET"
+      ],
+      "x-x402scan": {
+        "exclude_from_paid_probe": true,
+        "free_route": true,
+        "scanner_note": "Intentional free/public discovery route."
+      }
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "security",
+      "description": "Return the spend-anomaly rule names, thresholds, verdicts, and transaction-row schema.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "GET",
+      "path": "/v1/spend/anomaly-rules",
+      "price_usd": "0.00",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "spend_anomaly_rules",
+      "methods": [
+        "GET"
+      ],
+      "x-x402scan": {
+        "exclude_from_paid_probe": true,
+        "free_route": true,
+        "scanner_note": "Intentional free/public discovery route."
+      }
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "security",
+      "description": "Signed stateless anomaly verdict over an agent transaction log: spikes, merchant concentration, overnight volume, vendor drift, burn-rate, duplicates.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "POST",
+      "path": "/v1/spend/anomaly-scan",
+      "price_usd": "0.01",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "spend_anomaly_scan"
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "compliance",
+      "description": "Check a candidate transaction against an agent spend policy; signed allow|deny|needs_approval verdict with fired rule and headroom.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "POST",
+      "path": "/v1/spend/policy-check",
+      "price_usd": "0.01",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "v1_spend_policy_check"
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "compliance",
+      "description": "List spend-policy verdict rules, fired-rule codes, the rails enum, and accepted request shapes.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "GET",
+      "path": "/v1/spend/policy-rules",
+      "price_usd": "0.00",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "v1_spend_policy_rules",
+      "methods": [
+        "GET"
+      ],
+      "x-x402scan": {
+        "exclude_from_paid_probe": true,
+        "free_route": true,
+        "scanner_note": "Intentional free/public discovery route."
+      }
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "data",
+      "description": "Compare net cost per payment rail for an amount and return the cheapest-rail verdict.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "POST",
+      "path": "/v1/spend/rail-compare",
+      "price_usd": "0.01",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "spend_rail_compare"
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "data",
+      "description": "Return the rail fee table, rules, table version, and source docs.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "GET",
+      "path": "/v1/spend/rail-rules",
+      "price_usd": "0.00",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "spend_rail_rules",
+      "methods": [
+        "GET"
+      ],
+      "x-x402scan": {
+        "exclude_from_paid_probe": true,
+        "free_route": true,
+        "scanner_note": "Intentional free/public discovery route."
+      }
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "verification",
+      "description": "Machine-readable subscription-status oracle spec: rules, precedence, request schema and verdicts. Free.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "GET",
+      "path": "/v1/subscriptions/rules",
+      "price_usd": "0.00",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "subscriptions_rules",
+      "methods": [
+        "GET"
+      ],
+      "x-x402scan": {
+        "exclude_from_paid_probe": true,
+        "free_route": true,
+        "scanner_note": "Intentional free/public discovery route."
+      }
+    },
+    {
+      "availability": "available",
+      "backend": "static",
+      "category": "verification",
+      "description": "Verify an agent-to-agent subscription or session claim: signed active|expired|revoked verdict with the evidence trail.",
+      "discoverable": true,
+      "expected_latency": "seconds",
+      "free_quota": null,
+      "fulfillment_mode": "automated_fulfillment",
+      "human_required": false,
+      "last_successful_smoke": null,
+      "method": "POST",
+      "path": "/v1/subscriptions/status",
+      "price_usd": "0.01",
+      "public_self_serve": true,
+      "risk": "read_only",
+      "runtime_status": "live_runtime",
+      "service_id": "subscriptions_status"
     }
   ],
   "unavailable_services": [

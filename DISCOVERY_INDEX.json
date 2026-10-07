@@ -1,8 +1,8 @@
 {
   "ok": true,
   "service": "ddg_discovery_index",
-  "generated_at": "2026-10-06T20:23:32Z",
-  "total": 337,
+  "generated_at": "2026-10-07T00:18:07Z",
+  "total": 349,
   "category_count": 42,
   "categories": [
     {
@@ -479,7 +479,7 @@
     },
     {
       "category": "compliance",
-      "count": 8,
+      "count": 12,
       "routes": [
         {
           "path": "/v1/402/preflight",
@@ -536,6 +536,34 @@
           "price_usd": "0.01",
           "service_id": "export_verdict",
           "description": "Return a deterministic export-license verdict from pinned EAR rules and a CSL corroboration check."
+        },
+        {
+          "path": "/v1/receivables/factoring-readiness",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_receivables_factoring_readiness",
+          "description": "Check whether an agent-held receivable is factoring-ready and get a signed ready|not_ready verdict with blocking findings."
+        },
+        {
+          "path": "/v1/receivables/rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_receivables_rules",
+          "description": "List the receivables factoring-readiness rules, check order, and request schema."
+        },
+        {
+          "path": "/v1/spend/policy-check",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_spend_policy_check",
+          "description": "Check a candidate transaction against an agent spend policy; signed allow|deny|needs_approval verdict with fired rule and headroom."
+        },
+        {
+          "path": "/v1/spend/policy-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_spend_policy_rules",
+          "description": "List spend-policy verdict rules, fired-rule codes, the rails enum, and accepted request shapes."
         }
       ]
     },
@@ -617,7 +645,7 @@
     },
     {
       "category": "data",
-      "count": 29,
+      "count": 33,
       "routes": [
         {
           "path": "/v1/bridges/exploits",
@@ -753,6 +781,20 @@
           "description": "List supported prediction-market venues."
         },
         {
+          "path": "/v1/model/telemetry-probe",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_model_telemetry_probe",
+          "description": "Probe a live model endpoint once and get a signed latency/availability/consistency verdict vs the provider's claimed SLA."
+        },
+        {
+          "path": "/v1/model/telemetry-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_model_telemetry_rules",
+          "description": "List model-telemetry verdict rules, the probe procedure, and the auth env-name policy."
+        },
+        {
           "path": "/v1/payroll/cap-check",
           "method": "POST",
           "price_usd": "0.01",
@@ -793,6 +835,20 @@
           "price_usd": "0.01",
           "service_id": "v1_price_feed",
           "description": "Get crypto, forex, or stock prices in real-time."
+        },
+        {
+          "path": "/v1/spend/rail-compare",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "spend_rail_compare",
+          "description": "Compare net cost per payment rail for an amount and return the cheapest-rail verdict."
+        },
+        {
+          "path": "/v1/spend/rail-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "spend_rail_rules",
+          "description": "Return the rail fee table, rules, table version, and source docs."
         },
         {
           "path": "/v1/stock-history",
@@ -2184,7 +2240,7 @@
     },
     {
       "category": "security",
-      "count": 6,
+      "count": 8,
       "routes": [
         {
           "path": "/v1/http-headers",
@@ -2199,6 +2255,20 @@
           "price_usd": "0.01",
           "service_id": "v1_security_audit_deep",
           "description": "Premium deep security audit of agent-supplied code or MCP tool configs: 16 detector families (secrets, injection surfaces, unsafe deserialization, TLS, prompt-injection surface, tool-permission drift), evidence with line context, per-findin"
+        },
+        {
+          "path": "/v1/spend/anomaly-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "spend_anomaly_rules",
+          "description": "Return the spend-anomaly rule names, thresholds, verdicts, and transaction-row schema."
+        },
+        {
+          "path": "/v1/spend/anomaly-scan",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "spend_anomaly_scan",
+          "description": "Signed stateless anomaly verdict over an agent transaction log: spikes, merchant concentration, overnight volume, vendor drift, burn-rate, duplicates."
         },
         {
           "path": "/v1/ssl-cert-info",
@@ -2321,7 +2391,7 @@
     },
     {
       "category": "verification",
-      "count": 30,
+      "count": 32,
       "routes": [
         {
           "path": "/v1/ap2/spec",
@@ -2483,6 +2553,20 @@
           "price_usd": "0.00",
           "service_id": "v1_sla_report",
           "description": "Aggregate one monitoring window into the numbers a paying agent needs: uptime_pct (reachable samples / samples in the window), p95_ms (nearest-rank over reachable samples, no interpolation, p95_sample_size reported), sample counts, coverage"
+        },
+        {
+          "path": "/v1/subscriptions/rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "subscriptions_rules",
+          "description": "Machine-readable subscription-status oracle spec: rules, precedence, request schema and verdicts. Free."
+        },
+        {
+          "path": "/v1/subscriptions/status",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "subscriptions_status",
+          "description": "Verify an agent-to-agent subscription or session claim: signed active|expired|revoked verdict with the evidence trail."
         },
         {
           "path": "/v1/trust/check",

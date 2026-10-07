@@ -396,3 +396,17 @@ Post-promo policy: <=4B local models remain free; >4B local routes become paid/o
 - GET /v1/discovery/index (free) - Sequenced discovery index: all services grouped by category with composition seams (related routes) for planning agents.
 - GET /v1/discovery/chunk (free) - Paginated discovery chunk: one category slice per read (?category=<cat>&cursor=<int>&limit=<int>) for bounded concurrent crawls.
 - GET /.well-known/ddg-discovery-index.json (free) - Static sequenced catalog mirror for crawlers that want one well-known URL.
+
+## Spend & Subscription lanes (Wave 3, E40-E45)
+- POST /v1/spend/policy-check ($0.01 USDC) - Check a candidate transaction against an agent spend policy; signed allow|deny|needs_approval verdict with fired rule and headroom.
+- GET /v1/spend/policy-rules (free) - List spend-policy verdict rules, fired-rule codes, the rails enum, and accepted request shapes.
+- GET /v1/spend/anomaly-rules (free) - Return the spend-anomaly rule names, thresholds, verdicts, and transaction-row schema.
+- POST /v1/spend/anomaly-scan ($0.01 USDC) - Signed stateless anomaly verdict over an agent transaction log: spikes, merchant concentration, overnight volume, vendor drift, burn-rate, duplicates.
+- POST /v1/spend/rail-compare ($0.01 USDC) - Compare net cost per payment rail for an amount and return the cheapest-rail verdict.
+- GET /v1/spend/rail-rules (free) - Return the rail fee table, rules, table version, and source docs.
+- POST /v1/model/telemetry-probe ($0.01 USDC) - Probe a live model endpoint once and get a signed latency/availability/consistency verdict vs the provider's claimed SLA.
+- GET /v1/model/telemetry-rules (free) - List model-telemetry verdict rules, the probe procedure, and the auth env-name policy.
+- GET /v1/subscriptions/rules (free) - Machine-readable subscription-status oracle spec: rules, precedence, request schema and verdicts. Free.
+- POST /v1/subscriptions/status ($0.01 USDC) - Verify an agent-to-agent subscription or session claim: signed active|expired|revoked verdict with the evidence trail.
+- POST /v1/receivables/factoring-readiness ($0.01 USDC) - Check whether an agent-held receivable is factoring-ready and get a signed ready|not_ready verdict with blocking findings.
+- GET /v1/receivables/rules (free) - List the receivables factoring-readiness rules, check order, and request schema.

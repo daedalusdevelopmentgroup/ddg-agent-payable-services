@@ -20150,6 +20150,444 @@
           "scanner_note": "Intentional free/public discovery surface."
         }
       }
+    },
+    "/v1/spend/policy-check": {
+      "post": {
+        "operationId": "v1_spend_policy_check",
+        "summary": "Check a candidate transaction against an agent spend policy; signed allow|deny|needs_approval verdict with fired rule an",
+        "description": "Check a candidate transaction against an agent spend policy; signed allow|deny|needs_approval verdict with fired rule and headroom.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/spend/policy-rules": {
+      "get": {
+        "operationId": "v1_spend_policy_rules",
+        "summary": "List spend-policy verdict rules, fired-rule codes, the rails enum, and accepted request shapes.",
+        "description": "List spend-policy verdict rules, fired-rule codes, the rails enum, and accepted request shapes.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public rules route."
+        }
+      }
+    },
+    "/v1/spend/anomaly-rules": {
+      "get": {
+        "operationId": "v1_spend_anomaly_rules",
+        "summary": "Return the spend-anomaly rule names, thresholds, verdicts, and transaction-row schema.",
+        "description": "Return the spend-anomaly rule names, thresholds, verdicts, and transaction-row schema.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public rules route."
+        }
+      }
+    },
+    "/v1/spend/anomaly-scan": {
+      "post": {
+        "operationId": "v1_spend_anomaly_scan",
+        "summary": "Signed stateless anomaly verdict over an agent transaction log: spikes, merchant concentration, overnight volume, vendor",
+        "description": "Signed stateless anomaly verdict over an agent transaction log: spikes, merchant concentration, overnight volume, vendor drift, burn-rate, duplicates.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/spend/rail-compare": {
+      "post": {
+        "operationId": "v1_spend_rail_compare",
+        "summary": "Compare net cost per payment rail for an amount and return the cheapest-rail verdict.",
+        "description": "Compare net cost per payment rail for an amount and return the cheapest-rail verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/spend/rail-rules": {
+      "get": {
+        "operationId": "v1_spend_rail_rules",
+        "summary": "Return the rail fee table, rules, table version, and source docs.",
+        "description": "Return the rail fee table, rules, table version, and source docs.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public rules route."
+        }
+      }
+    },
+    "/v1/model/telemetry-probe": {
+      "post": {
+        "operationId": "v1_model_telemetry_probe",
+        "summary": "Probe a live model endpoint once and get a signed latency/availability/consistency verdict vs the provider's claimed SLA",
+        "description": "Probe a live model endpoint once and get a signed latency/availability/consistency verdict vs the provider's claimed SLA.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/model/telemetry-rules": {
+      "get": {
+        "operationId": "v1_model_telemetry_rules",
+        "summary": "List model-telemetry verdict rules, the probe procedure, and the auth env-name policy.",
+        "description": "List model-telemetry verdict rules, the probe procedure, and the auth env-name policy.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public rules route."
+        }
+      }
+    },
+    "/v1/subscriptions/rules": {
+      "get": {
+        "operationId": "v1_subscriptions_rules",
+        "summary": "Machine-readable subscription-status oracle spec: rules, precedence, request schema and verdicts. Free.",
+        "description": "Machine-readable subscription-status oracle spec: rules, precedence, request schema and verdicts. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public rules route."
+        }
+      }
+    },
+    "/v1/subscriptions/status": {
+      "post": {
+        "operationId": "v1_subscriptions_status",
+        "summary": "Verify an agent-to-agent subscription or session claim: signed active|expired|revoked verdict with the evidence trail.",
+        "description": "Verify an agent-to-agent subscription or session claim: signed active|expired|revoked verdict with the evidence trail.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/receivables/factoring-readiness": {
+      "post": {
+        "operationId": "v1_receivables_factoring_readiness",
+        "summary": "Check whether an agent-held receivable is factoring-ready and get a signed ready|not_ready verdict with blocking finding",
+        "description": "Check whether an agent-held receivable is factoring-ready and get a signed ready|not_ready verdict with blocking findings.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/receivables/rules": {
+      "get": {
+        "operationId": "v1_receivables_rules",
+        "summary": "List the receivables factoring-readiness rules, check order, and request schema.",
+        "description": "List the receivables factoring-readiness rules, check order, and request schema.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public rules route."
+        }
+      }
     }
   },
   "servers": [

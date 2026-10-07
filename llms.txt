@@ -410,3 +410,48 @@ Post-promo policy: <=4B local models remain free; >4B local routes become paid/o
 - POST /v1/subscriptions/status ($0.01 USDC) - Verify an agent-to-agent subscription or session claim: signed active|expired|revoked verdict with the evidence trail.
 - POST /v1/receivables/factoring-readiness ($0.01 USDC) - Check whether an agent-held receivable is factoring-ready and get a signed ready|not_ready verdict with blocking findings.
 - GET /v1/receivables/rules (free) - List the receivables factoring-readiness rules, check order, and request schema.
+
+## Per-chain reads & token data (Wave 4, E46-E49)
+- GET /v1/chains/polygon (free) - polygon status (chainId 137): verified endpoint kind + head block. chainId-gated, 60s cache. Free.
+- POST /v1/chains/polygon/gas ($0.01 USDC) - polygon gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.
+- POST /v1/chains/polygon/rpc ($0.01 USDC) - polygon read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.
+- POST /v1/chains/polygon/address ($0.01 USDC) - polygon address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.
+- POST /v1/chains/polygon/tx ($0.01 USDC) - polygon tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.
+- GET /v1/chains/arbitrum (free) - arbitrum status (chainId 42161): verified endpoint kind + head block. chainId-gated, 60s cache. Free.
+- POST /v1/chains/arbitrum/gas ($0.01 USDC) - arbitrum gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.
+- POST /v1/chains/arbitrum/rpc ($0.01 USDC) - arbitrum read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.
+- POST /v1/chains/arbitrum/address ($0.01 USDC) - arbitrum address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.
+- POST /v1/chains/arbitrum/tx ($0.01 USDC) - arbitrum tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.
+- GET /v1/chains/optimism (free) - optimism status (chainId 10): verified endpoint kind + head block. chainId-gated, 60s cache. Free.
+- POST /v1/chains/optimism/gas ($0.01 USDC) - optimism gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.
+- POST /v1/chains/optimism/rpc ($0.01 USDC) - optimism read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.
+- POST /v1/chains/optimism/address ($0.01 USDC) - optimism address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.
+- POST /v1/chains/optimism/tx ($0.01 USDC) - optimism tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.
+- GET /v1/chains/avalanche (free) - avalanche status (chainId 43114): verified endpoint kind + head block. chainId-gated, 60s cache. Free.
+- POST /v1/chains/avalanche/gas ($0.01 USDC) - avalanche gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.
+- POST /v1/chains/avalanche/rpc ($0.01 USDC) - avalanche read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.
+- POST /v1/chains/avalanche/address ($0.01 USDC) - avalanche address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.
+- POST /v1/chains/avalanche/tx ($0.01 USDC) - avalanche tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.
+- GET /v1/chains/bnb (free) - bnb status (chainId 56): verified endpoint kind + head block. chainId-gated, 60s cache. Free.
+- POST /v1/chains/bnb/gas ($0.01 USDC) - bnb gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.
+- POST /v1/chains/bnb/rpc ($0.01 USDC) - bnb read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.
+- POST /v1/chains/bnb/address ($0.01 USDC) - bnb address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.
+- POST /v1/chains/bnb/tx ($0.01 USDC) - bnb tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.
+- GET /v1/chains/unichain (free) - unichain status (chainId 130): verified endpoint kind + head block. chainId-gated, 60s cache. Free.
+- POST /v1/chains/unichain/gas ($0.01 USDC) - unichain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.
+- POST /v1/chains/unichain/rpc ($0.01 USDC) - unichain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.
+- POST /v1/chains/unichain/address ($0.01 USDC) - unichain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.
+- POST /v1/chains/unichain/tx ($0.01 USDC) - unichain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.
+- GET /v1/chains/worldchain (free) - worldchain status (chainId 480): verified endpoint kind + head block. chainId-gated, 60s cache. Free.
+- POST /v1/chains/worldchain/gas ($0.01 USDC) - worldchain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.
+- POST /v1/chains/worldchain/rpc ($0.01 USDC) - worldchain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.
+- POST /v1/chains/worldchain/address ($0.01 USDC) - worldchain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.
+- POST /v1/chains/worldchain/tx ($0.01 USDC) - worldchain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.
+- GET /v1/chains/reads-rules (free) - Chain read rules: alias/chainId table, RPC allowlists, address/hash shapes, verdict semantics. Free.
+- POST /v1/chains/token-balance ($0.01 USDC) - ERC-20 balanceOf + metadata (symbol/decimals/name) on any supported chain, gate-verified eth_call, exact formatted amount.
+- POST /v1/chains/token-meta ($0.01 USDC) - ERC-20 metadata on any supported chain: name/symbol/decimals/totalSupply via gate-verified eth_call.
+- GET /v1/chains/token-rules (free) - ERC-20 token-read spec: chains, ABI signatures/selectors, request schema, rules and verdict semantics. Free.
+- POST /v1/tokens/launch-digest ($0.01 USDC) - New token-pair digest since a timestamp with a signed pre-trade risk verdict per pair (liquidity/freshness).
+- GET /v1/tokens/launch-rules (free) - Machine-readable launch-digest spec: monitored venues, chains, freshness window and the risk-rule table. Free.
+- POST /v1/stablecoin/reserves ($0.01 USDC) - Signed reserve digest for USDC, USDT, EURC and DAI: latest reserve figures, attestation timestamps and a per-issuer staleness verdict.
+- GET /v1/stablecoin/reserve-rules (free) - Machine-readable stablecoin reserve-digest spec: sources, staleness thresholds and the verdict table. Free.

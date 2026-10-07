@@ -1,8 +1,8 @@
 {
   "ok": true,
   "service": "ddg_discovery_index",
-  "generated_at": "2026-10-07T00:18:07Z",
-  "total": 349,
+  "generated_at": "2026-10-07T01:21:08Z",
+  "total": 392,
   "category_count": 42,
   "categories": [
     {
@@ -438,7 +438,7 @@
     },
     {
       "category": "blockchain",
-      "count": 5,
+      "count": 44,
       "routes": [
         {
           "path": "/v1/chains",
@@ -455,6 +455,111 @@
           "description": "Address snapshot on any supported chain: balance_wei, nonce, is_contract (chainId-gated backend)."
         },
         {
+          "path": "/v1/chains/arbitrum",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_arbitrum",
+          "description": "arbitrum status (chainId 42161): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/arbitrum/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_arbitrum_address",
+          "description": "arbitrum address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/arbitrum/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_arbitrum_gas",
+          "description": "arbitrum gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/arbitrum/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_arbitrum_rpc",
+          "description": "arbitrum read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/arbitrum/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_arbitrum_tx",
+          "description": "arbitrum tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/chains/avalanche",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_avalanche",
+          "description": "avalanche status (chainId 43114): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/avalanche/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_avalanche_address",
+          "description": "avalanche address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/avalanche/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_avalanche_gas",
+          "description": "avalanche gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/avalanche/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_avalanche_rpc",
+          "description": "avalanche read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/avalanche/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_avalanche_tx",
+          "description": "avalanche tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/chains/bnb",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_bnb",
+          "description": "bnb status (chainId 56): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/bnb/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_bnb_address",
+          "description": "bnb address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/bnb/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_bnb_gas",
+          "description": "bnb gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/bnb/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_bnb_rpc",
+          "description": "bnb read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/bnb/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_bnb_tx",
+          "description": "bnb tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
           "path": "/v1/chains/gas",
           "method": "POST",
           "price_usd": "0.01",
@@ -462,11 +567,179 @@
           "description": "Gas snapshot on any supported chain: gas_price, max_priority_fee, short fee_history (chainId-gated backend)."
         },
         {
+          "path": "/v1/chains/optimism",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_optimism",
+          "description": "optimism status (chainId 10): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/optimism/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_optimism_address",
+          "description": "optimism address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/optimism/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_optimism_gas",
+          "description": "optimism gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/optimism/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_optimism_rpc",
+          "description": "optimism read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/optimism/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_optimism_tx",
+          "description": "optimism tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/chains/polygon",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_polygon",
+          "description": "polygon status (chainId 137): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/polygon/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_polygon_address",
+          "description": "polygon address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/polygon/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_polygon_gas",
+          "description": "polygon gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/polygon/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_polygon_rpc",
+          "description": "polygon read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/polygon/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_polygon_tx",
+          "description": "polygon tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/chains/reads-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_reads_rules",
+          "description": "Chain read rules: alias/chainId table, RPC allowlists, address/hash shapes, verdict semantics. Free."
+        },
+        {
           "path": "/v1/chains/rpc",
           "method": "POST",
           "price_usd": "0.01",
           "service_id": "chains_rpc",
           "description": "One gate-verified keyless read op on one chain (ethereum/base/polygon/arbitrum/optimism/avalanche/bnb/unichain/worldchain). Read-only method allowlist, chainId-verified endpoints, local reth first for Ethereum when healthy. 1 MiB cap, 8s ti"
+        },
+        {
+          "path": "/v1/chains/token-balance",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "token_balance",
+          "description": "ERC-20 balanceOf + metadata (symbol/decimals/name) on any supported chain, gate-verified eth_call, exact formatted amount."
+        },
+        {
+          "path": "/v1/chains/token-meta",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "token_meta",
+          "description": "ERC-20 metadata on any supported chain: name/symbol/decimals/totalSupply via gate-verified eth_call."
+        },
+        {
+          "path": "/v1/chains/token-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "token_rules",
+          "description": "ERC-20 token-read spec: chains, ABI signatures/selectors, request schema, rules and verdict semantics. Free."
+        },
+        {
+          "path": "/v1/chains/unichain",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_unichain",
+          "description": "unichain status (chainId 130): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/unichain/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_unichain_address",
+          "description": "unichain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/unichain/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_unichain_gas",
+          "description": "unichain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/unichain/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_unichain_rpc",
+          "description": "unichain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/unichain/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_unichain_tx",
+          "description": "unichain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/chains/worldchain",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_worldchain",
+          "description": "worldchain status (chainId 480): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/worldchain/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_worldchain_address",
+          "description": "worldchain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/worldchain/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_worldchain_gas",
+          "description": "worldchain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/worldchain/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_worldchain_rpc",
+          "description": "worldchain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/worldchain/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_worldchain_tx",
+          "description": "worldchain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
         },
         {
           "path": "/v1/contract-abi",
@@ -645,7 +918,7 @@
     },
     {
       "category": "data",
-      "count": 33,
+      "count": 37,
       "routes": [
         {
           "path": "/v1/bridges/exploits",
@@ -851,6 +1124,20 @@
           "description": "Return the rail fee table, rules, table version, and source docs."
         },
         {
+          "path": "/v1/stablecoin/reserve-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "stablecoin_reserve_rules",
+          "description": "Machine-readable stablecoin reserve-digest spec: sources, staleness thresholds and the verdict table. Free."
+        },
+        {
+          "path": "/v1/stablecoin/reserves",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "stablecoin_reserve_digest",
+          "description": "Signed reserve digest for USDC, USDT, EURC and DAI: latest reserve figures, attestation timestamps and a per-issuer staleness verdict."
+        },
+        {
           "path": "/v1/stock-history",
           "method": "POST",
           "price_usd": "0.01",
@@ -863,6 +1150,20 @@
           "price_usd": "0.01",
           "service_id": "stock_price",
           "description": "Get the latest stock/ETF price via Yahoo Finance chart data."
+        },
+        {
+          "path": "/v1/tokens/launch-digest",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "tokens_launch_digest",
+          "description": "New token-pair digest since a timestamp with a signed pre-trade risk verdict per pair (liquidity/freshness)."
+        },
+        {
+          "path": "/v1/tokens/launch-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "tokens_launch_rules",
+          "description": "Machine-readable launch-digest spec: monitored venues, chains, freshness window and the risk-rule table. Free."
         },
         {
           "path": "/v1/ucp/spec",

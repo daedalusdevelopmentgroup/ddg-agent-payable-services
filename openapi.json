@@ -20588,6 +20588,1649 @@
           "scanner_note": "Intentional free/public rules route."
         }
       }
+    },
+    "/v1/chains/polygon": {
+      "get": {
+        "operationId": "v1_chains_polygon",
+        "summary": "polygon status (chainId 137): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "description": "polygon status (chainId 137): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public discovery or rules route."
+        }
+      }
+    },
+    "/v1/chains/polygon/gas": {
+      "post": {
+        "operationId": "v1_chains_polygon_gas",
+        "summary": "polygon gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "description": "polygon gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/polygon/rpc": {
+      "post": {
+        "operationId": "v1_chains_polygon_rpc",
+        "summary": "polygon read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.",
+        "description": "polygon read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/polygon/address": {
+      "post": {
+        "operationId": "v1_chains_polygon_address",
+        "summary": "polygon address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "description": "polygon address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/polygon/tx": {
+      "post": {
+        "operationId": "v1_chains_polygon_tx",
+        "summary": "polygon tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "description": "polygon tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/arbitrum": {
+      "get": {
+        "operationId": "v1_chains_arbitrum",
+        "summary": "arbitrum status (chainId 42161): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "description": "arbitrum status (chainId 42161): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public discovery or rules route."
+        }
+      }
+    },
+    "/v1/chains/arbitrum/gas": {
+      "post": {
+        "operationId": "v1_chains_arbitrum_gas",
+        "summary": "arbitrum gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "description": "arbitrum gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/arbitrum/rpc": {
+      "post": {
+        "operationId": "v1_chains_arbitrum_rpc",
+        "summary": "arbitrum read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap",
+        "description": "arbitrum read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/arbitrum/address": {
+      "post": {
+        "operationId": "v1_chains_arbitrum_address",
+        "summary": "arbitrum address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "description": "arbitrum address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/arbitrum/tx": {
+      "post": {
+        "operationId": "v1_chains_arbitrum_tx",
+        "summary": "arbitrum tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "description": "arbitrum tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/optimism": {
+      "get": {
+        "operationId": "v1_chains_optimism",
+        "summary": "optimism status (chainId 10): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "description": "optimism status (chainId 10): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public discovery or rules route."
+        }
+      }
+    },
+    "/v1/chains/optimism/gas": {
+      "post": {
+        "operationId": "v1_chains_optimism_gas",
+        "summary": "optimism gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "description": "optimism gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/optimism/rpc": {
+      "post": {
+        "operationId": "v1_chains_optimism_rpc",
+        "summary": "optimism read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap",
+        "description": "optimism read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/optimism/address": {
+      "post": {
+        "operationId": "v1_chains_optimism_address",
+        "summary": "optimism address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "description": "optimism address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/optimism/tx": {
+      "post": {
+        "operationId": "v1_chains_optimism_tx",
+        "summary": "optimism tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "description": "optimism tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/avalanche": {
+      "get": {
+        "operationId": "v1_chains_avalanche",
+        "summary": "avalanche status (chainId 43114): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "description": "avalanche status (chainId 43114): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public discovery or rules route."
+        }
+      }
+    },
+    "/v1/chains/avalanche/gas": {
+      "post": {
+        "operationId": "v1_chains_avalanche_gas",
+        "summary": "avalanche gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "description": "avalanche gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/avalanche/rpc": {
+      "post": {
+        "operationId": "v1_chains_avalanche_rpc",
+        "summary": "avalanche read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB ca",
+        "description": "avalanche read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/avalanche/address": {
+      "post": {
+        "operationId": "v1_chains_avalanche_address",
+        "summary": "avalanche address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "description": "avalanche address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/avalanche/tx": {
+      "post": {
+        "operationId": "v1_chains_avalanche_tx",
+        "summary": "avalanche tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "description": "avalanche tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/bnb": {
+      "get": {
+        "operationId": "v1_chains_bnb",
+        "summary": "bnb status (chainId 56): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "description": "bnb status (chainId 56): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public discovery or rules route."
+        }
+      }
+    },
+    "/v1/chains/bnb/gas": {
+      "post": {
+        "operationId": "v1_chains_bnb_gas",
+        "summary": "bnb gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "description": "bnb gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/bnb/rpc": {
+      "post": {
+        "operationId": "v1_chains_bnb_rpc",
+        "summary": "bnb read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.",
+        "description": "bnb read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/bnb/address": {
+      "post": {
+        "operationId": "v1_chains_bnb_address",
+        "summary": "bnb address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "description": "bnb address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/bnb/tx": {
+      "post": {
+        "operationId": "v1_chains_bnb_tx",
+        "summary": "bnb tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "description": "bnb tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/unichain": {
+      "get": {
+        "operationId": "v1_chains_unichain",
+        "summary": "unichain status (chainId 130): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "description": "unichain status (chainId 130): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public discovery or rules route."
+        }
+      }
+    },
+    "/v1/chains/unichain/gas": {
+      "post": {
+        "operationId": "v1_chains_unichain_gas",
+        "summary": "unichain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "description": "unichain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/unichain/rpc": {
+      "post": {
+        "operationId": "v1_chains_unichain_rpc",
+        "summary": "unichain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap",
+        "description": "unichain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/unichain/address": {
+      "post": {
+        "operationId": "v1_chains_unichain_address",
+        "summary": "unichain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "description": "unichain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/unichain/tx": {
+      "post": {
+        "operationId": "v1_chains_unichain_tx",
+        "summary": "unichain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "description": "unichain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/worldchain": {
+      "get": {
+        "operationId": "v1_chains_worldchain",
+        "summary": "worldchain status (chainId 480): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "description": "worldchain status (chainId 480): verified endpoint kind + head block. chainId-gated, 60s cache. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public discovery or rules route."
+        }
+      }
+    },
+    "/v1/chains/worldchain/gas": {
+      "post": {
+        "operationId": "v1_chains_worldchain_gas",
+        "summary": "worldchain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "description": "worldchain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/worldchain/rpc": {
+      "post": {
+        "operationId": "v1_chains_worldchain_rpc",
+        "summary": "worldchain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB c",
+        "description": "worldchain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/worldchain/address": {
+      "post": {
+        "operationId": "v1_chains_worldchain_address",
+        "summary": "worldchain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "description": "worldchain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/worldchain/tx": {
+      "post": {
+        "operationId": "v1_chains_worldchain_tx",
+        "summary": "worldchain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "description": "worldchain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/reads-rules": {
+      "get": {
+        "operationId": "v1_chains_reads_rules",
+        "summary": "Chain read rules: alias/chainId table, RPC allowlists, address/hash shapes, verdict semantics. Free.",
+        "description": "Chain read rules: alias/chainId table, RPC allowlists, address/hash shapes, verdict semantics. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public discovery or rules route."
+        }
+      }
+    },
+    "/v1/chains/token-balance": {
+      "post": {
+        "operationId": "v1_chains_token_balance",
+        "summary": "ERC-20 balanceOf + metadata (symbol/decimals/name) on any supported chain, gate-verified eth_call, exact formatted amoun",
+        "description": "ERC-20 balanceOf + metadata (symbol/decimals/name) on any supported chain, gate-verified eth_call, exact formatted amount.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/token-meta": {
+      "post": {
+        "operationId": "v1_chains_token_meta",
+        "summary": "ERC-20 metadata on any supported chain: name/symbol/decimals/totalSupply via gate-verified eth_call.",
+        "description": "ERC-20 metadata on any supported chain: name/symbol/decimals/totalSupply via gate-verified eth_call.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/chains/token-rules": {
+      "get": {
+        "operationId": "v1_chains_token_rules",
+        "summary": "ERC-20 token-read spec: chains, ABI signatures/selectors, request schema, rules and verdict semantics. Free.",
+        "description": "ERC-20 token-read spec: chains, ABI signatures/selectors, request schema, rules and verdict semantics. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public discovery or rules route."
+        }
+      }
+    },
+    "/v1/tokens/launch-digest": {
+      "post": {
+        "operationId": "v1_tokens_launch_digest",
+        "summary": "New token-pair digest since a timestamp with a signed pre-trade risk verdict per pair (liquidity/freshness).",
+        "description": "New token-pair digest since a timestamp with a signed pre-trade risk verdict per pair (liquidity/freshness).",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/tokens/launch-rules": {
+      "get": {
+        "operationId": "v1_tokens_launch_rules",
+        "summary": "Machine-readable launch-digest spec: monitored venues, chains, freshness window and the risk-rule table. Free.",
+        "description": "Machine-readable launch-digest spec: monitored venues, chains, freshness window and the risk-rule table. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public discovery or rules route."
+        }
+      }
+    },
+    "/v1/stablecoin/reserves": {
+      "post": {
+        "operationId": "v1_stablecoin_reserves",
+        "summary": "Signed reserve digest for USDC, USDT, EURC and DAI: latest reserve figures, attestation timestamps and a per-issuer stal",
+        "description": "Signed reserve digest for USDC, USDT, EURC and DAI: latest reserve figures, attestation timestamps and a per-issuer staleness verdict.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.01",
+        "x-x402-price": "$0.01",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-payment-info": {
+          "price": {
+            "amount": "0.01",
+            "currency": "USD",
+            "mode": "fixed"
+          },
+          "protocols": [
+            {
+              "x402": {}
+            }
+          ]
+        }
+      }
+    },
+    "/v1/stablecoin/reserve-rules": {
+      "get": {
+        "operationId": "v1_stablecoin_reserve_rules",
+        "summary": "Machine-readable stablecoin reserve-digest spec: sources, staleness thresholds and the verdict table. Free.",
+        "description": "Machine-readable stablecoin reserve-digest spec: sources, staleness thresholds and the verdict table. Free.",
+        "responses": {
+          "200": {
+            "description": "Result"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "402": {
+            "description": "Payment required"
+          },
+          "403": {
+            "description": "Agent identity required"
+          },
+          "503": {
+            "description": "Source unavailable, no payment accepted"
+          }
+        },
+        "x-price-usd": "0.00",
+        "x-x402-price": "$0.00",
+        "x-x402-asset": "USDC",
+        "x-x402-network": "eip155:8453",
+        "x-x402scan": {
+          "exclude_from_paid_probe": true,
+          "free_route": true,
+          "scanner_note": "Intentional free/public discovery or rules route."
+        }
+      }
     }
   },
   "servers": [

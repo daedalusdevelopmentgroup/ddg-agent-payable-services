@@ -387,3 +387,49 @@ Chunk reads keep concurrent crawlers bounded: fetch only the categories you need
 | `v1_subscriptions_status` | ``$0.01`` | Verify an agent-to-agent subscription or session claim: signed active|expired|revoked verdict with the evidence trail. |
 | `v1_receivables_factoring_readiness` | ``$0.01`` | Check whether an agent-held receivable is factoring-ready and get a signed ready|not_ready verdict with blocking findings. |
 | `v1_receivables_rules` | `free` | List the receivables factoring-readiness rules, check order, and request schema. |
+
+## Per-chain reads & token services (Wave 4, E46-E49)
+
+| `v1_chains_polygon` | `free` | polygon status (chainId 137): verified endpoint kind + head block. chainId-gated, 60s cache. Free. |
+| `v1_chains_polygon_gas` | ``$0.01`` | polygon gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC. |
+| `v1_chains_polygon_rpc` | ``$0.01`` | polygon read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap. |
+| `v1_chains_polygon_address` | ``$0.01`` | polygon address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC. |
+| `v1_chains_polygon_tx` | ``$0.01`` | polygon tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict. |
+| `v1_chains_arbitrum` | `free` | arbitrum status (chainId 42161): verified endpoint kind + head block. chainId-gated, 60s cache. Free. |
+| `v1_chains_arbitrum_gas` | ``$0.01`` | arbitrum gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC. |
+| `v1_chains_arbitrum_rpc` | ``$0.01`` | arbitrum read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap. |
+| `v1_chains_arbitrum_address` | ``$0.01`` | arbitrum address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC. |
+| `v1_chains_arbitrum_tx` | ``$0.01`` | arbitrum tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict. |
+| `v1_chains_optimism` | `free` | optimism status (chainId 10): verified endpoint kind + head block. chainId-gated, 60s cache. Free. |
+| `v1_chains_optimism_gas` | ``$0.01`` | optimism gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC. |
+| `v1_chains_optimism_rpc` | ``$0.01`` | optimism read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap. |
+| `v1_chains_optimism_address` | ``$0.01`` | optimism address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC. |
+| `v1_chains_optimism_tx` | ``$0.01`` | optimism tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict. |
+| `v1_chains_avalanche` | `free` | avalanche status (chainId 43114): verified endpoint kind + head block. chainId-gated, 60s cache. Free. |
+| `v1_chains_avalanche_gas` | ``$0.01`` | avalanche gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC. |
+| `v1_chains_avalanche_rpc` | ``$0.01`` | avalanche read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap. |
+| `v1_chains_avalanche_address` | ``$0.01`` | avalanche address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC. |
+| `v1_chains_avalanche_tx` | ``$0.01`` | avalanche tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict. |
+| `v1_chains_bnb` | `free` | bnb status (chainId 56): verified endpoint kind + head block. chainId-gated, 60s cache. Free. |
+| `v1_chains_bnb_gas` | ``$0.01`` | bnb gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC. |
+| `v1_chains_bnb_rpc` | ``$0.01`` | bnb read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap. |
+| `v1_chains_bnb_address` | ``$0.01`` | bnb address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC. |
+| `v1_chains_bnb_tx` | ``$0.01`` | bnb tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict. |
+| `v1_chains_unichain` | `free` | unichain status (chainId 130): verified endpoint kind + head block. chainId-gated, 60s cache. Free. |
+| `v1_chains_unichain_gas` | ``$0.01`` | unichain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC. |
+| `v1_chains_unichain_rpc` | ``$0.01`` | unichain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap. |
+| `v1_chains_unichain_address` | ``$0.01`` | unichain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC. |
+| `v1_chains_unichain_tx` | ``$0.01`` | unichain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict. |
+| `v1_chains_worldchain` | `free` | worldchain status (chainId 480): verified endpoint kind + head block. chainId-gated, 60s cache. Free. |
+| `v1_chains_worldchain_gas` | ``$0.01`` | worldchain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC. |
+| `v1_chains_worldchain_rpc` | ``$0.01`` | worldchain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap. |
+| `v1_chains_worldchain_address` | ``$0.01`` | worldchain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC. |
+| `v1_chains_worldchain_tx` | ``$0.01`` | worldchain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict. |
+| `v1_chains_reads_rules` | `free` | Chain read rules: alias/chainId table, RPC allowlists, address/hash shapes, verdict semantics. Free. |
+| `v1_chains_token_balance` | ``$0.01`` | ERC-20 balanceOf + metadata (symbol/decimals/name) on any supported chain, gate-verified eth_call, exact formatted amount. |
+| `v1_chains_token_meta` | ``$0.01`` | ERC-20 metadata on any supported chain: name/symbol/decimals/totalSupply via gate-verified eth_call. |
+| `v1_chains_token_rules` | `free` | ERC-20 token-read spec: chains, ABI signatures/selectors, request schema, rules and verdict semantics. Free. |
+| `v1_tokens_launch_digest` | ``$0.01`` | New token-pair digest since a timestamp with a signed pre-trade risk verdict per pair (liquidity/freshness). |
+| `v1_tokens_launch_rules` | `free` | Machine-readable launch-digest spec: monitored venues, chains, freshness window and the risk-rule table. Free. |
+| `v1_stablecoin_reserves` | ``$0.01`` | Signed reserve digest for USDC, USDT, EURC and DAI: latest reserve figures, attestation timestamps and a per-issuer staleness verdict. |
+| `v1_stablecoin_reserve_rules` | `free` | Machine-readable stablecoin reserve-digest spec: sources, staleness thresholds and the verdict table. Free. |

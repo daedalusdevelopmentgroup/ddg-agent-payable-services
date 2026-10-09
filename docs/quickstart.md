@@ -6,6 +6,24 @@ Pay-per-call AI agent services gateway: one x402/direct-crypto entry point for c
 
 This API is for AI-agent callers only. Humans or scripts without an agent identity header are rejected before payment handling.
 
+Current surface: **109 services** exposed as **114 OpenAPI operations**: **90 paid x402/direct-crypto operations** and **24 intentionally free discovery/utility operations**.
+
+MCP one-liner:
+
+```bash
+DDG_MCP_AGENT_ID=your-agent uvx --from ddg-agent-services-mcp ddg-agent-services-mcp
+```
+
+## Fast path for buyer agents
+
+1. Start with `/v1/tx-smoke-test` for a `$0.01` paid receipt proof.
+2. Try `/v1/site-audit` for a `$0.03` read-only artifact.
+3. Use `/v1/chat/completions`, `/v1/models`, or `/v1/embeddings` for OpenAI-compatible gateway calls.
+4. Buy `/v1/agent-readiness-scorecard` or `/v1/agent-discovery-pack` for `$0.01` when a service needs better machine-readable discovery.
+5. Buy `/v1/agent-payment-readiness-audit` or `/v1/mcp-tool-security-audit` for `$0.02` when the service needs paid-agent or MCP security hardening.
+
+Recommended starting budget: `$1` is enough to test the one-cent smoke route, the low-cost site audit, and several free discovery/utility calls.
+
 ## Discover
 
 ```bash
@@ -169,7 +187,7 @@ Recommended first paid packages:
 | --- | ---: | --- |
 | `tx_penny_smoke_test` | `$0.01` | An agent wants to test its ability to complete a paid DDG transaction and receive a receipt. Use direct endpoint `/v1/tx-smoke-test`. |
 | `provider_model_artifact_order` | `$0.01` | An agent wants DDG-operated model/artifact work with receipts and no raw account/token access transferred. |
-| `ethereum_private_rpc_query` | `$0.002` | An agent wants read-only Ethereum/Base RPC data without its own RPC vendor account. |
+| `ethereum_private_rpc_query` | `$0.01` | An agent wants read-only Ethereum/Base RPC data without its own RPC vendor account. |
 | `local_business_demo_pack` | `$0.02` | An agent wants a lead-specific staged demo concept and offer angle for a local business. |
 | `agent_payment_readiness_audit` | `$0.02` | An agent/service builder wants x402/direct-crypto/MPP-readiness/402/idempotency/discovery reviewed. |
 | `mcp_tool_server_build` | `$0.02` | An agent wants a small MCP tool/server scaffold with schema, install docs, and smoke tests. |
@@ -246,3 +264,58 @@ Priority A/B rollout models:
 - `mradermacher/dolphin-mistral-24b-venice:iq3_xs` — 24B IQ3_XS; native ctx 32,768; DDG free-slot ctx 32,768; Dolphin/Mistral Venice-style route.
 
 Post-promo policy: <=4B local models remain free; >4B local routes become paid/operator-approved capacity. Public model requests never auto-download; use `/v1/ollama-model-request` and DDG operator review.
+
+## Verification & heartbeat (new)
+
+| `verify_claim` | ``$0.01`` | Deterministic claim-vs-source verification (CVE real? package vulnerable/exists? domain resolves? TLS cert valid? URL reachable?) against authoritative sources (NVD/CVE.org, OSV.dev, PyPI/npm, DNS, TLS). Boolean verdict + evidence snapshot; no LLM anywhere. |
+| `verify_action` | ``$0.01`` | Post-action side-effect verification: deterministically re-read a claimed real-world state (HTTP JSON endpoint fields, status code) and compare to expected. Answers did-it-actually-happen independent of the acting agent's narration. |
+| `resolve_outcome` | ``$0.01`` | Timeout-outcome resolution: idempotency-keyed verdict replay without re-executing anything (TTL-cached). Ends double-execution and blind-retry loops after tool-call timeouts. |
+| `verify_schema_drift` | ``$0.01`` | API-contract drift probe: fingerprint the live OpenAPI/JSON doc (sorted path/method list, sha256) vs pinned. Verdict match|drifted|unreachable + current fingerprint. |
+| `verify_rules` | `free` | Machine-readable rule catalog for all verification check types (input shapes, evidence schema, limits). Free. |
+| `heartbeat_register` | ``$0.01`` | Register a heartbeat watch for an agent URL ($0.01 per 30-day window): bounded prober re-checks on your interval (300s..24h); alive->dark / dark->alive / flap alerts, optional HMAC-signed webhook delivery. |
+| `heartbeat_status` | ``$0.01`` | Watch state: last verdict, last probe time, consecutive fails, uptime_30d and uptime_all_time ratios, alert count. |
+| `heartbeat_alerts` | `free` | Read your own watch's alerts (went_dark|back_alive|flap). Webhook-protected watches require webhook_secret. Free. |
+| `heartbeat_leaderboard` | ``$0.01`` | Highest-uptime watched agents (>= min_probes), uptime ratios and probe counts. |
+| `heartbeat_rules` | `free` | Machine-readable heartbeat config contract (interval bounds, expect shapes, caps, alert kinds, webhook signing). Free. |
+
+## Compliance & Facts (E28/E29)
+
+| `sanctions_screen` | ``$0.01`` | Sanctions screen with PINNED list versions (OFAC SDN + EU list): verdict clear|match + per-list version/rows/matches. Signed receipt. |
+| `sanctions_delta` | ``$0.01`` | Sanctions DELTA feed since YYYY-MM-DD (OFAC recent actions). Signed. |
+| `preflight_402` | ``$0.01`` | x402 challenge compliance pre-flight: verdict an endpoint's 402 envelope against v1/v2 + MPP shape rules. Signed. |
+| `drainer_check` | ``$0.01`` | Wallet/URL drainer & abuse check (Chainabuse): reported|no_reports + scam types. Signed. |
+| `ucp_verify` | ``$0.01`` | UCP conformance verifier: /.well-known/ucp manifest fetch + spec-rule verdict. Signed. |
+| `ucp_spec` | `free` | Machine-readable UCP check summary. Free. |
+| `macro_latest` | ``$0.01`` | Latest official macro print (cpi|nfp|unemployment) from BLS. Signed. |
+| `macro_series` | `free` | Supported macro series catalog. Free. |
+
+## Agent Primitives (Wave 2, E31-E38)
+
+| `ap2_verify_mandates` | ``$0.01`` | AP2 mandate verifier: verify a pair of AP2 SD-JWT+KB checkout/payment mandates (signature, key binding, disclosures, constraints vs terms) and get a signed verdict + dispute-ready evidence. |
+| `ap2_verify_single` | ``$0.01`` | AP2 single-mandate verifier: parse + verify one SD-JWT+KB payment mandate (signature, disclosures, expiry, key binding). Signed verdict. |
+| `ap2_spec` | `free` | AP2 verifier spec: accepted vct types, constraint checks, rules, verdicts. Free. |
+| `escrow_condition` | ``$0.01`` | Escrow-condition oracle (NO custody): deal spec + evidence -> signed release|refund|extend verdict for x402-v2/MPP-session/hash-lock escrows. |
+| `escrow_dispute_period` | ``$0.01`` | Escrow dispute-window clock: opened_at + period vs evaluation time -> dispute_open|dispute_expired. Signed verdict. |
+| `escrow_rules` | `free` | Escrow oracle: supported escrow types, condition kinds, evidence shapes, rules. Free. |
+| `export_verdict` | ``$0.01`` | Export-control verdict: ECCN x destination -> license_required|no_license_required with rule-table version + optional live Entity-List cross-check. Signed. |
+| `export_exceptions` | ``$0.01`` | Export-control license-exception finder: ECCN x destination -> ranked applicable exceptions (NAC/TMP/RPL/GOV/TSR/SVC/BAG/AVS/STA). Signed. |
+| `export_rule_table_version` | `free` | Export rule-table version + row count + categories. Free. |
+| `export_destinations` | `free` | Export D-group/E-group destination reference. Free. |
+| `markets_snapshot` | ``$0.01`` | Cross-venue prediction-market matched snapshot: Polymarket+Kalshi+Manifold+PredictIt -> matched questions, cross-venue spread, consensus probability. Signed. |
+| `markets_spread` | ``$0.01`` | Best cross-venue prediction-market match for a query: spread % + arbitrage note + per-venue prices. Signed. |
+| `markets_venues` | `free` | Supported prediction-market venues + price semantics. Free. |
+| `markets_health` | `free` | Per-venue prediction-market API reachability. Free. |
+| `payroll_ledger` | ``$0.01`` | Sub-agent payroll ledger: normalize payment proofs (x402/MPP/AP2/manual) into per-sub-agent spend ledger + anomaly alerts. Signed export. |
+| `payroll_cap_check` | ``$0.01`` | Payroll budget gate: under_cap|over_cap verdict for a coordinator/sub-agent vs cap using recorded ledger rows. Signed. |
+| `payroll_ledger_summary` | `free` | Read-only per-sub-agent payroll rollup for a coordinator. Free. |
+| `payroll_rules` | `free` | Payroll lane: proof schema, alert rules, cap semantics. Free. |
+| `bridge_health` | ``$0.01`` | Bridge-health composite: exploit history (DefiLlama) + TVL component -> healthy|elevated_risk|exploit_history signed verdict. |
+| `bridges_exploits` | `free` | Recent bridge exploits from DefiLlama hacks dataset. Free. |
+| `bridges_rules` | `free` | Bridge-health rules + verdict semantics + alias map. Free. |
+| `bounty_verify_deliverable` | ``$0.01`` | Neutral bounty-fulfillment verification: bounty spec vs submitted deliverable -> conformant|non_conformant signed verdict (hash/commit/signed-outcome). |
+| `bounty_payout_manifest` | ``$0.01`` | Bounty payout-manifest builder: winners vs pot -> validated, deduped, per-recipient signed instruction rows. No custody. |
+| `bounty_rules` | `free` | Bounty lane conformance + manifest validation rules. Free. |
+| `bounty_proof_schema` | `free` | Exact accepted request shapes for bounty verification + manifests. Free. |
+| `llm_audit_bill` | ``$0.01`` | LLM bill line-item audit: usage rows vs source-published pricing (OpenRouter, 24h cache) -> bill_correct|overcharge|undercharge + per-row math. Signed. |
+| `llm_price_lookup` | ``$0.01`` | Published LLM pricing lookup (OpenRouter): per-token + per-1M USD rates for a model. Signed. |
+| `llm_audit_rules` | `free` | LLM audit lane: tolerance rules, cache semantics, supported providers. Free. |

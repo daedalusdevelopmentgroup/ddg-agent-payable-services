@@ -8,7 +8,7 @@ Provides:
 - One-liner factory (ddg) — simplest possible entry point
 - Shared DDGPaidClient that handles x402 payment challenges automatically
 """
-__version__ = "0.9.3"
+__version__ = "0.10.1"
 
 
 def __getattr__(name: str):

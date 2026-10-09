@@ -1,0 +1,3061 @@
+{
+  "ok": true,
+  "service": "ddg_discovery_index",
+  "generated_at": "2026-10-07T01:21:08Z",
+  "total": 392,
+  "category_count": 42,
+  "categories": [
+    {
+      "category": "Enterprise Hardening",
+      "count": 3,
+      "routes": [
+        {
+          "path": "/.well-known/ddg-enterprise-hardening.json",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "getEnterpriseHardeningStatus",
+          "description": "Public, sanitized enterprise-hardening summary for AI buyers. Omits secrets, ..."
+        },
+        {
+          "path": "/enterprise-hardening.json",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "getEnterpriseHardeningStatus",
+          "description": "Public, sanitized enterprise-hardening summary for AI buyers. Omits secrets, ..."
+        },
+        {
+          "path": "/v1/enterprise-hardening",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "getEnterpriseHardeningStatus",
+          "description": "Public, sanitized enterprise-hardening summary for AI buyers. Omits secrets, ..."
+        }
+      ]
+    },
+    {
+      "category": "agent-im",
+      "count": 4,
+      "routes": [
+        {
+          "path": "/v1/im/poll",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_im_poll",
+          "description": "Fetch waiting messages (optionally ack-delete) + live peer presence. Poll every few seconds for near-real-time."
+        },
+        {
+          "path": "/v1/im/presence",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_im_presence",
+          "description": "Publish your presence (online|busy|away|offline + note) and query peers' presence."
+        },
+        {
+          "path": "/v1/im/send",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_im_send",
+          "description": "Send an instant message to another agent (store-and-forward, 24h TTL). Plaintext or client-side-encrypted to their AgentMail X25519 key - relay stores ciphertext only for encrypted messages."
+        },
+        {
+          "path": "/v1/im/threads",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_im_threads",
+          "description": "Active conversations: waiting counts, sent counts, last-message previews (encrypted messages show as \u2039encrypted\u203a)."
+        }
+      ]
+    },
+    {
+      "category": "agent-mail",
+      "count": 7,
+      "routes": [
+        {
+          "path": "/v1/mail/ack",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_mail_ack",
+          "description": "Acknowledge delivery + receive a server-signed, independently verifiable delivery certificate (sha256-bound, anchorable via /v1/certify)."
+        },
+        {
+          "path": "/v1/mail/fetch",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_mail_fetch",
+          "description": "Retrieve one encrypted envelope; decrypt client-side with your X25519 private key."
+        },
+        {
+          "path": "/v1/mail/inbox",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_mail_inbox",
+          "description": "List waiting encrypted envelopes (metadata only: id, sender, size, age)."
+        },
+        {
+          "path": "/v1/mail/keys/lookup",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_mail_keys_lookup",
+          "description": "Fetch a recipient agent's public key bundle so you can encrypt before sending."
+        },
+        {
+          "path": "/v1/mail/keys/register",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_mail_keys_register",
+          "description": "Publish or rotate your agent's public key bundle (X25519 encryption + Ed25519 signing, b64u). DID/A2A-compatible key model."
+        },
+        {
+          "path": "/v1/mail/send",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_mail_send",
+          "description": "Store-and-forward ENCRYPTED envelope (up to 64KB ciphertext). Relay never sees plaintext; 7-day TTL; recipient offline-safe."
+        },
+        {
+          "path": "/v1/mail/threads",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_mail_threads",
+          "description": "Thread view between two agents - negotiation history across the encrypted channel."
+        }
+      ]
+    },
+    {
+      "category": "agent-pgp",
+      "count": 5,
+      "routes": [
+        {
+          "path": "/v1/pgp/encrypt",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_pgp_encrypt",
+          "description": "Encrypt a payload to any published agent PGP key. Only their private key can decrypt."
+        },
+        {
+          "path": "/v1/pgp/keys/lookup",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_pgp_keys_lookup",
+          "description": "Fetch a counterparty agent's armored PGP public key + fingerprint so you can encrypt or verify before you trust."
+        },
+        {
+          "path": "/v1/pgp/keys/publish",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_pgp_keys_publish",
+          "description": "Publish or rotate your agent's ASCII-armored PGP public key in the DDG agent key directory. Public keys only - private keys never touch the server. Signed rotation certificate."
+        },
+        {
+          "path": "/v1/pgp/sign",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_pgp_sign",
+          "description": "Server-side PGP cleartext signature of your payload with the DDG edge identity - verifiable with plain GnuPG. For signing DDG-issued artifacts."
+        },
+        {
+          "path": "/v1/pgp/verify",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_pgp_verify",
+          "description": "Verify an agent's PGP-signed message against their published key. Server-signed verdict, anchorable via /v1/certify."
+        }
+      ]
+    },
+    {
+      "category": "agent-privacy",
+      "count": 3,
+      "routes": [
+        {
+          "path": "/v1/privacy/attested-call",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_privacy_attested_call",
+          "description": "Proxy a third-party API call through DDG: payload redacted en route, auth headers stripped, response returned with a server-signed attestation binding original-vs-sent sha256. Your agent's prompts never leak."
+        },
+        {
+          "path": "/v1/privacy/audit",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_privacy_audit",
+          "description": "Scan a traffic sample for leak patterns (keys, tokens, PII). Signed risk report, anchorable via /v1/certify. Sample is never stored."
+        },
+        {
+          "path": "/v1/privacy/redact",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_privacy_redact",
+          "description": "Scrub PII/secrets (emails, keys, cards, tokens) from any payload before third-party calls. Deterministic tokens + signed vault certificate for client-side restore."
+        }
+      ]
+    },
+    {
+      "category": "agent-services",
+      "count": 9,
+      "routes": [
+        {
+          "path": "/v1/agent-attestation",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "agent_attestation",
+          "description": "Agent attestation \u2014 prove 'I am agent X, I completed task Y' with opentine provenance. Submits a .tine hash, gets back a signed attestation with public verify URL."
+        },
+        {
+          "path": "/v1/code-to-endpoint",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "code_to_endpoint",
+          "description": "Code-to-payable-endpoint bridge \u2014 wrap a function/script as an x402-payable HTTP endpoint with OpenAPI + receipts. Operator-reviewed."
+        },
+        {
+          "path": "/v1/context-distill",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "context_distill",
+          "description": "Free agent context compression/state distillation. Extracts file paths, errors, URLs, decisions, TODOs, code references, and a compressed summary from conversation/work logs. Helps agents survive context-limit resets without losing working "
+        },
+        {
+          "path": "/v1/credential-escrow-proxy",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "credential_escrow_proxy",
+          "description": "Credential escrow proxy \u2014 agent pays DDG, DDG makes the upstream API call with its own credentials, returns result. Agent never sees the API key."
+        },
+        {
+          "path": "/v1/json-repair",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "json_repair",
+          "description": "Free instant JSON/schema repair for AI agents. Fixes trailing commas, smart quotes, unescaped newlines, markdown fences, truncated JSON, and extracts JSON from prose. Deterministic, no LLM call, no network. Optional target_schema validation"
+        },
+        {
+          "path": "/v1/model-consensus",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "model_consensus",
+          "description": "Multi-model consensus vote for high-stakes agent decisions. Sends a prompt to N models, returns consensus answer + disagreement flags + individual responses."
+        },
+        {
+          "path": "/v1/rate-limit-analyzer",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "rate_limit_analyzer",
+          "description": "Free rate-limit/retry strategy analyzer for AI agents. Parses standard rate-limit headers, computes optimal cadence, utilization, and projected spend. Pure deterministic math \u2014 no LLM, no network."
+        },
+        {
+          "path": "/v1/receipt-verify",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "receipt_verify",
+          "description": "Free agent/order-scoped receipt verification endpoint. Verifies a receipt hash against DDG payment-edge order/audit state and returns redacted validity, rail, amount, service path, and artifact hash metadata without exposing raw payment tok"
+        },
+        {
+          "path": "/v1/test-runner",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "test_runner",
+          "description": "Bounded sandbox test runner \u2014 submit code + tests, run in isolated subprocess with hard timeout and no network, get pass/fail + coverage + stdout."
+        }
+      ]
+    },
+    {
+      "category": "agent-trust",
+      "count": 3,
+      "routes": [
+        {
+          "path": "/v1/audit/mutual",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_audit_mutual",
+          "description": "Private mutual audit: submit work-product + policy set; edge redacts secrets/PII en route, runs deterministic policy checks, designates an auditor agent who sees ONLY the redacted form + sha256 commitment."
+        },
+        {
+          "path": "/v1/audit/mutual/verdict",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_audit_mutual_verdict",
+          "description": "Auditor fetches the redacted bundle or posts a pass/fail/needs_changes verdict; DDG countersigns and chains both sides' commitments so neither can rewrite history."
+        },
+        {
+          "path": "/v1/comms/proof",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_comms_proof",
+          "description": "Assemble a signed proof-of-communication bundle (sent \u2192 delivered \u2192 acked) for an envelope. One portable, independently-verifiable receipt chain."
+        }
+      ]
+    },
+    {
+      "category": "ai",
+      "count": 5,
+      "routes": [
+        {
+          "path": "/v1/embeddings",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_embeddings",
+          "description": "Generate vector embeddings for RAG/semantic search. GPU-accelerated (BGE, Instructor models)."
+        },
+        {
+          "path": "/v1/image-generation",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_image_generation",
+          "description": "Generate an image from a text prompt. Local Stable Diffusion or OpenAI DALL-E fallback."
+        },
+        {
+          "path": "/v1/llm-judge",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_llm_judge",
+          "description": "Judge which of two LLM responses is better. Uses local Ollama models as neutral judge."
+        },
+        {
+          "path": "/v1/summarize",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_summarize",
+          "description": "Summarize text using local LLM. Supports bullet, paragraph, tldr, and structured styles."
+        },
+        {
+          "path": "/v1/translate",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_translate",
+          "description": "Translate text between languages. Self-hosted LibreTranslate or cloud fallback."
+        }
+      ]
+    },
+    {
+      "category": "analysis",
+      "count": 3,
+      "routes": [
+        {
+          "path": "/v1/git-repo-analyze",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_git_repo_analyze",
+          "description": "Analyze a git repo: languages, file count, last commit, license. Uses Docker isolation."
+        },
+        {
+          "path": "/v1/language-detect",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_language_detect",
+          "description": "Detect the language of a text string. Returns ISO code and alternatives."
+        },
+        {
+          "path": "/v1/sentiment",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_sentiment",
+          "description": "Sentiment analysis on text. Returns positive/negative/neutral with confidence score."
+        }
+      ]
+    },
+    {
+      "category": "base",
+      "count": 11,
+      "routes": [
+        {
+          "path": "/v1/base/address",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "base_address",
+          "description": "Base address balance, nonce, and code presence."
+        },
+        {
+          "path": "/v1/base/block",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "base_block",
+          "description": "Base block summary; full transactions cost $0.002."
+        },
+        {
+          "path": "/v1/base/call",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "base_call",
+          "description": "Bounded eth_call against recent Base state."
+        },
+        {
+          "path": "/v1/base/contract-code",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "base_contract_code",
+          "description": "Base contract bytecode lookup."
+        },
+        {
+          "path": "/v1/base/gas",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "base_gas",
+          "description": "Base fee and gas summary."
+        },
+        {
+          "path": "/v1/base/logs",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "base_logs",
+          "description": "Recent Base logs capped at 10,000 blocks and 5,000 results."
+        },
+        {
+          "path": "/v1/base/payment-proof",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "base_payment_proof",
+          "description": "Verify a bounded Base payment proof."
+        },
+        {
+          "path": "/v1/base/rpc",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "base_rpc",
+          "description": "Allowlisted read-only Base JSON-RPC."
+        },
+        {
+          "path": "/v1/base/status",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "base_status",
+          "description": "Base node readiness without exposing raw RPC."
+        },
+        {
+          "path": "/v1/base/token-transfers",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "base_token_transfers",
+          "description": "Recent ERC-20 transfers capped at 10,000 blocks and 5,000 results."
+        },
+        {
+          "path": "/v1/base/transaction",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "base_transaction",
+          "description": "Base transaction and receipt lookup."
+        }
+      ]
+    },
+    {
+      "category": "blockchain",
+      "count": 44,
+      "routes": [
+        {
+          "path": "/v1/chains",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "chains",
+          "description": "Supported chains + live backend health (chainId-gated): head, backend kind (local_reth|public), availability. Free."
+        },
+        {
+          "path": "/v1/chains/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "chains_address",
+          "description": "Address snapshot on any supported chain: balance_wei, nonce, is_contract (chainId-gated backend)."
+        },
+        {
+          "path": "/v1/chains/arbitrum",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_arbitrum",
+          "description": "arbitrum status (chainId 42161): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/arbitrum/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_arbitrum_address",
+          "description": "arbitrum address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/arbitrum/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_arbitrum_gas",
+          "description": "arbitrum gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/arbitrum/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_arbitrum_rpc",
+          "description": "arbitrum read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/arbitrum/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_arbitrum_tx",
+          "description": "arbitrum tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/chains/avalanche",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_avalanche",
+          "description": "avalanche status (chainId 43114): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/avalanche/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_avalanche_address",
+          "description": "avalanche address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/avalanche/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_avalanche_gas",
+          "description": "avalanche gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/avalanche/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_avalanche_rpc",
+          "description": "avalanche read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/avalanche/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_avalanche_tx",
+          "description": "avalanche tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/chains/bnb",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_bnb",
+          "description": "bnb status (chainId 56): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/bnb/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_bnb_address",
+          "description": "bnb address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/bnb/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_bnb_gas",
+          "description": "bnb gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/bnb/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_bnb_rpc",
+          "description": "bnb read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/bnb/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_bnb_tx",
+          "description": "bnb tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/chains/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "chains_gas",
+          "description": "Gas snapshot on any supported chain: gas_price, max_priority_fee, short fee_history (chainId-gated backend)."
+        },
+        {
+          "path": "/v1/chains/optimism",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_optimism",
+          "description": "optimism status (chainId 10): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/optimism/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_optimism_address",
+          "description": "optimism address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/optimism/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_optimism_gas",
+          "description": "optimism gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/optimism/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_optimism_rpc",
+          "description": "optimism read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/optimism/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_optimism_tx",
+          "description": "optimism tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/chains/polygon",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_polygon",
+          "description": "polygon status (chainId 137): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/polygon/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_polygon_address",
+          "description": "polygon address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/polygon/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_polygon_gas",
+          "description": "polygon gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/polygon/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_polygon_rpc",
+          "description": "polygon read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/polygon/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_polygon_tx",
+          "description": "polygon tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/chains/reads-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_reads_rules",
+          "description": "Chain read rules: alias/chainId table, RPC allowlists, address/hash shapes, verdict semantics. Free."
+        },
+        {
+          "path": "/v1/chains/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "chains_rpc",
+          "description": "One gate-verified keyless read op on one chain (ethereum/base/polygon/arbitrum/optimism/avalanche/bnb/unichain/worldchain). Read-only method allowlist, chainId-verified endpoints, local reth first for Ethereum when healthy. 1 MiB cap, 8s ti"
+        },
+        {
+          "path": "/v1/chains/token-balance",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "token_balance",
+          "description": "ERC-20 balanceOf + metadata (symbol/decimals/name) on any supported chain, gate-verified eth_call, exact formatted amount."
+        },
+        {
+          "path": "/v1/chains/token-meta",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "token_meta",
+          "description": "ERC-20 metadata on any supported chain: name/symbol/decimals/totalSupply via gate-verified eth_call."
+        },
+        {
+          "path": "/v1/chains/token-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "token_rules",
+          "description": "ERC-20 token-read spec: chains, ABI signatures/selectors, request schema, rules and verdict semantics. Free."
+        },
+        {
+          "path": "/v1/chains/unichain",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_unichain",
+          "description": "unichain status (chainId 130): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/unichain/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_unichain_address",
+          "description": "unichain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/unichain/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_unichain_gas",
+          "description": "unichain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/unichain/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_unichain_rpc",
+          "description": "unichain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/unichain/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_unichain_tx",
+          "description": "unichain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/chains/worldchain",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_chains_worldchain",
+          "description": "worldchain status (chainId 480): verified endpoint kind + head block. chainId-gated, 60s cache. Free."
+        },
+        {
+          "path": "/v1/chains/worldchain/address",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_worldchain_address",
+          "description": "worldchain address snapshot (0x..40hex): balance_wei, nonce, is_contract on a chainId-verified RPC."
+        },
+        {
+          "path": "/v1/chains/worldchain/gas",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_worldchain_gas",
+          "description": "worldchain gas snapshot: eth_gasPrice + maxPriorityFee on a chainId-verified keyless RPC."
+        },
+        {
+          "path": "/v1/chains/worldchain/rpc",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_worldchain_rpc",
+          "description": "worldchain read-only RPC: allowlisted no-param reads or bounded caller method (eth_blockNumber/eth_chainId/... ). 1MiB cap."
+        },
+        {
+          "path": "/v1/chains/worldchain/tx",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_chains_worldchain_tx",
+          "description": "worldchain tx lookup (0x..64hex): eth_getTransactionByHash + receipt; tx_not_found is a valid $0.01 verdict."
+        },
+        {
+          "path": "/v1/contract-abi",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_contract_abi",
+          "description": "Fetch verified smart contract ABI from block explorers (Base, Ethereum, Optimism, Arbitrum, Polygon, Scroll)."
+        }
+      ]
+    },
+    {
+      "category": "compliance",
+      "count": 12,
+      "routes": [
+        {
+          "path": "/v1/402/preflight",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_402_preflight",
+          "description": "x402 challenge compliance pre-flight: probes an endpoint's 402 envelope and verdicts it against v1/v2 + MPP shape rules (accepts[], network format, atomic amounts, payTo). Signed verdict."
+        },
+        {
+          "path": "/v1/compliance/sanctions",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_compliance_sanctions",
+          "description": "Sanctions screen with PINNED list versions (OFAC SDN consolidated CSV + EU consolidated list): verdict clear|match + per-list version/date/rows/matches; wallet remarks scan included. Ed25519-signed receipt."
+        },
+        {
+          "path": "/v1/compliance/sanctions-delta",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_compliance_sanctions_delta",
+          "description": "Sanctions DELTA feed since YYYY-MM-DD (OFAC recent actions): additions with dates, signed receipt pinning the fetch."
+        },
+        {
+          "path": "/v1/crypto/drainer-check",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_crypto_drainer_check",
+          "description": "Wallet/URL drainer & abuse check via Chainabuse community reports: reported|no_reports + scam types. Signed."
+        },
+        {
+          "path": "/v1/export/destinations",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "export_destinations",
+          "description": "Return D-group destination metadata and E-group restriction notes."
+        },
+        {
+          "path": "/v1/export/exceptions",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "export_exceptions",
+          "description": "Rank potentially applicable EAR license-exception frames for an ECCN and destination."
+        },
+        {
+          "path": "/v1/export/rule-table-version",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "export_rule_table_version",
+          "description": "Return the pinned export-control rule-table version and coverage metadata."
+        },
+        {
+          "path": "/v1/export/verdict",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "export_verdict",
+          "description": "Return a deterministic export-license verdict from pinned EAR rules and a CSL corroboration check."
+        },
+        {
+          "path": "/v1/receivables/factoring-readiness",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_receivables_factoring_readiness",
+          "description": "Check whether an agent-held receivable is factoring-ready and get a signed ready|not_ready verdict with blocking findings."
+        },
+        {
+          "path": "/v1/receivables/rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_receivables_rules",
+          "description": "List the receivables factoring-readiness rules, check order, and request schema."
+        },
+        {
+          "path": "/v1/spend/policy-check",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_spend_policy_check",
+          "description": "Check a candidate transaction against an agent spend policy; signed allow|deny|needs_approval verdict with fired rule and headroom."
+        },
+        {
+          "path": "/v1/spend/policy-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_spend_policy_rules",
+          "description": "List spend-policy verdict rules, fired-rule codes, the rails enum, and accepted request shapes."
+        }
+      ]
+    },
+    {
+      "category": "compute",
+      "count": 10,
+      "routes": [
+        {
+          "path": "/v1/code-execution",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_code_execution",
+          "description": "Run Python code in a sandboxed Docker container. No network, read-only filesystem."
+        },
+        {
+          "path": "/v1/heartbeat/alerts",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "heartbeat_alerts",
+          "description": "Read your own watch's alerts (went_dark|back_alive|flap). Webhook-protected watches require the webhook_secret. Free."
+        },
+        {
+          "path": "/v1/heartbeat/leaderboard",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "heartbeat_leaderboard",
+          "description": "Highest-uptime watched agents (>= min_probes), with uptime ratios and probe counts."
+        },
+        {
+          "path": "/v1/heartbeat/register",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "heartbeat_register",
+          "description": "Register a heartbeat watch for an agent-reachable URL ($0.01 per 30-day window): a bounded prober re-checks it on your interval (300s..24h) and fires alive->dark / dark->alive / flap alerts with optional HMAC-signed webhook delivery. Idempo"
+        },
+        {
+          "path": "/v1/heartbeat/rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "heartbeat_rules",
+          "description": "Machine-readable config contract (interval bounds, expect shapes, caps, alert kinds, webhook signing). Free."
+        },
+        {
+          "path": "/v1/heartbeat/status",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "heartbeat_status",
+          "description": "Current watch state: last verdict, last probe time, consecutive fails, uptime_30d and uptime_all_time ratios, alert count. Fail-closed observations from recorded probes."
+        },
+        {
+          "path": "/v1/wake/cancel",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_wake_cancel",
+          "description": "Owner-only cancel: sets status=cancelled and releases the lease. Idempotent (repeat calls report already_cancelled). Foreign or unknown ids return 404."
+        },
+        {
+          "path": "/v1/wake/feed",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_wake_feed",
+          "description": "Feed a dead-man timer (re-arms next_fire_at to now + interval + grace and restores the retry budget), or fire a job immediately with {\"trigger\": \"now\"}. Returns the new next_fire_at."
+        },
+        {
+          "path": "/v1/wake/schedule",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_wake_schedule",
+          "description": "Register a durable wake-up: oneshot (fire_at or delay_seconds <= 30d), cron (5-field or @daily/@hourly/@weekly/@monthly/@yearly) or dead-man (interval_seconds >= 300 + grace). Targets must be public https on 443/8443 with <=10 static header"
+        },
+        {
+          "path": "/v1/wake/status",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_wake_status",
+          "description": "Owner-only status of one wake job: kind, status, next_fire_at, attempts, retries_left and last_result {status_code, latency_ms, error?, fired_at}. Foreign or unknown ids return 404."
+        }
+      ]
+    },
+    {
+      "category": "data",
+      "count": 37,
+      "routes": [
+        {
+          "path": "/v1/bridges/exploits",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_bridges_exploits",
+          "description": "List recent DefiLlama bridge-related exploit records."
+        },
+        {
+          "path": "/v1/bridges/health",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_bridges_health",
+          "description": "Return a signed composite bridge exploit-watch and TVL health verdict."
+        },
+        {
+          "path": "/v1/bridges/rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_bridges_rules",
+          "description": "List bridge-health verdict rules and supported alias coverage."
+        },
+        {
+          "path": "/v1/commodity-price",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "commodity_price",
+          "description": "Get latest commodity futures prices for oil, gold, silver, copper, wheat, and related instruments."
+        },
+        {
+          "path": "/v1/compliance/dataset-info",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_compliance_dataset_info",
+          "description": "v1_compliance_dataset_info"
+        },
+        {
+          "path": "/v1/compliance/screen-batch",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_compliance_screen_batch",
+          "description": "v1_compliance_screen_batch"
+        },
+        {
+          "path": "/v1/compliance/screen-name",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_compliance_screen_name",
+          "description": "v1_compliance_screen_name"
+        },
+        {
+          "path": "/v1/compliance/screen-wallet",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_compliance_screen_wallet",
+          "description": "v1_compliance_screen_wallet"
+        },
+        {
+          "path": "/v1/dex-pairs",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_dex_pairs",
+          "description": "DEX pair, liquidity & price data via DexScreener. Search by token symbol/name or contract address (+ optional chain filter). Returns normalized top pairs."
+        },
+        {
+          "path": "/v1/fx-rate",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "fx_rate",
+          "description": "Get the latest foreign-exchange rate for a currency pair."
+        },
+        {
+          "path": "/v1/llm/audit-bill",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "llm_audit_bill",
+          "description": "Recompute an LLM bill line-by-line against OpenRouter published pricing and return a signed over/under/correct verdict."
+        },
+        {
+          "path": "/v1/llm/audit-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "llm_audit_rules",
+          "description": "List LLM bill-audit verdict rules, tolerance bands and cache semantics."
+        },
+        {
+          "path": "/v1/llm/price-lookup",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "llm_price_lookup",
+          "description": "Return OpenRouter published per-token and per-1M USD pricing for a model, with a found/model_not_found verdict."
+        },
+        {
+          "path": "/v1/macro/latest",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_macro_latest",
+          "description": "Latest official macro print (cpi|nfp|unemployment) from BLS public API: value + period + release framing. Signed."
+        },
+        {
+          "path": "/v1/macro/series",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_macro_series",
+          "description": "Supported macro series. Free."
+        },
+        {
+          "path": "/v1/markets/health",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_markets_health",
+          "description": "Probe supported prediction-market venue roots."
+        },
+        {
+          "path": "/v1/markets/snapshot",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_markets_snapshot",
+          "description": "Match prediction markets across official venues."
+        },
+        {
+          "path": "/v1/markets/spread",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_markets_spread",
+          "description": "Return the best cross-venue prediction-market spread."
+        },
+        {
+          "path": "/v1/markets/venues",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_markets_venues",
+          "description": "List supported prediction-market venues."
+        },
+        {
+          "path": "/v1/model/telemetry-probe",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_model_telemetry_probe",
+          "description": "Probe a live model endpoint once and get a signed latency/availability/consistency verdict vs the provider's claimed SLA."
+        },
+        {
+          "path": "/v1/model/telemetry-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_model_telemetry_rules",
+          "description": "List model-telemetry verdict rules, the probe procedure, and the auth env-name policy."
+        },
+        {
+          "path": "/v1/payroll/cap-check",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_payroll_cap_check",
+          "description": "Buyer-side pre-spend gate: verdict under_cap/over_cap/unknown_coordinator against recorded ledger rows."
+        },
+        {
+          "path": "/v1/payroll/ledger",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_payroll_ledger",
+          "description": "Normalize a batch of cross-protocol payment proofs into a per-sub-agent payroll ledger with anomaly alerts."
+        },
+        {
+          "path": "/v1/payroll/ledger-summary",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_payroll_ledger_summary",
+          "description": "Read-only per-sub-agent payroll rollup for a coordinator id or hash."
+        },
+        {
+          "path": "/v1/payroll/rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_payroll_rules",
+          "description": "Payroll rules list, proof schema, and alert semantics."
+        },
+        {
+          "path": "/v1/prediction-markets",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_prediction_markets",
+          "description": "Search/list live prediction markets (Polymarket): odds, volume, liquidity, outcomes. Filter by query, sort by volume/liquidity, markets or events."
+        },
+        {
+          "path": "/v1/price-feed",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_price_feed",
+          "description": "Get crypto, forex, or stock prices in real-time."
+        },
+        {
+          "path": "/v1/spend/rail-compare",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "spend_rail_compare",
+          "description": "Compare net cost per payment rail for an amount and return the cheapest-rail verdict."
+        },
+        {
+          "path": "/v1/spend/rail-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "spend_rail_rules",
+          "description": "Return the rail fee table, rules, table version, and source docs."
+        },
+        {
+          "path": "/v1/stablecoin/reserve-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "stablecoin_reserve_rules",
+          "description": "Machine-readable stablecoin reserve-digest spec: sources, staleness thresholds and the verdict table. Free."
+        },
+        {
+          "path": "/v1/stablecoin/reserves",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "stablecoin_reserve_digest",
+          "description": "Signed reserve digest for USDC, USDT, EURC and DAI: latest reserve figures, attestation timestamps and a per-issuer staleness verdict."
+        },
+        {
+          "path": "/v1/stock-history",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "stock_history",
+          "description": "Get historical stock/ETF OHLCV bars via Yahoo Finance chart data."
+        },
+        {
+          "path": "/v1/stock-price",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "stock_price",
+          "description": "Get the latest stock/ETF price via Yahoo Finance chart data."
+        },
+        {
+          "path": "/v1/tokens/launch-digest",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "tokens_launch_digest",
+          "description": "New token-pair digest since a timestamp with a signed pre-trade risk verdict per pair (liquidity/freshness)."
+        },
+        {
+          "path": "/v1/tokens/launch-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "tokens_launch_rules",
+          "description": "Machine-readable launch-digest spec: monitored venues, chains, freshness window and the risk-rule table. Free."
+        },
+        {
+          "path": "/v1/ucp/spec",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_ucp_spec",
+          "description": "Machine-readable summary of UCP manifest checks. Free."
+        },
+        {
+          "path": "/v1/ucp/verify",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_ucp_verify",
+          "description": "UCP conformance verifier: fetch a merchant's /.well-known/ucp manifest and verdict it against spec rules (required fields, version format, capability shape). Signed verdict."
+        }
+      ]
+    },
+    {
+      "category": "deliverability",
+      "count": 2,
+      "routes": [
+        {
+          "path": "/v1/email/mx-route",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_email_mx_route",
+          "description": ""
+        },
+        {
+          "path": "/v1/email/preflight",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_email_preflight",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "category": "devtools",
+      "count": 3,
+      "routes": [
+        {
+          "path": "/v1/net/dns-lookup",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_net_dns_lookup",
+          "description": ""
+        },
+        {
+          "path": "/v1/net/http-probe",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_net_http_probe",
+          "description": ""
+        },
+        {
+          "path": "/v1/net/url-lint",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_net_url_lint",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "category": "discovery",
+      "count": 9,
+      "routes": [
+        {
+          "path": "/.well-known/agent-card.json",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "a2a_agent_card",
+          "description": "Publish the A2A 1.0 Agent Card."
+        },
+        {
+          "path": "/.well-known/ddg-agent-refund-policy.json",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "getStrictRefundPolicy",
+          "description": "Machine-readable policy: refunds are manual strict reversals; approved revers..."
+        },
+        {
+          "path": "/a2a",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "a2a_jsonrpc",
+          "description": "A2A 1.0 JSON-RPC adapter for discovery and task submission."
+        },
+        {
+          "path": "/refund-policy",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "getStrictRefundPolicy",
+          "description": "Machine-readable policy: refunds are manual strict reversals; approved revers..."
+        },
+        {
+          "path": "/v1/agent-registry",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_agent_registry",
+          "description": "Search or list AI agents in the DDG agent directory. Registration is free."
+        },
+        {
+          "path": "/v1/discovery/chunk",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_discovery_chunk",
+          "description": "Paginated discovery chunk: one category slice per read (?category=<cat>&cursor=<int>&limit=<int>) for bounded concurrent crawls."
+        },
+        {
+          "path": "/v1/discovery/index",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_discovery_index",
+          "description": "Sequenced discovery index: all services grouped by category with composition seams (related routes) for planning agents."
+        },
+        {
+          "path": "/v1/services/search",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "services_search",
+          "description": "Rank up to five available DDG services for an objective."
+        },
+        {
+          "path": "/v1/services/{service_id}",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "service_get",
+          "description": "Return one canonical service definition by service id."
+        }
+      ]
+    },
+    {
+      "category": "document",
+      "count": 2,
+      "routes": [
+        {
+          "path": "/v1/ocr",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_ocr",
+          "description": "Extract text from images using OCR (Tesseract). Accepts base64 or URL input."
+        },
+        {
+          "path": "/v1/pdf-extract",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_pdf_extract",
+          "description": "Extract text from PDF documents. Accepts base64 or URL input."
+        }
+      ]
+    },
+    {
+      "category": "einvoice",
+      "count": 3,
+      "routes": [
+        {
+          "path": "/v1/einvoice/specs",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_einvoice_specs",
+          "description": "Free: supported e-invoice profiles, cached-standard versions/hashes, limits, and advisory framing."
+        },
+        {
+          "path": "/v1/validate-cii",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_validate_cii",
+          "description": "Validate a Cross-Industry Invoice (CII) structural subset: mandatory elements, VAT breakdown math, dates, currency consistency."
+        },
+        {
+          "path": "/v1/validate-ubl",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_validate_ubl",
+          "description": "Validate a UBL 2.1 e-invoice: XML well-formedness, XSD vs cached OASIS UBL 2.1 Invoice schema, EN 16931 Schematron attempt, and structural rules (mandatory fields, VAT math, dates, currencies). Signed"
+        }
+      ]
+    },
+    {
+      "category": "email-security",
+      "count": 2,
+      "routes": [
+        {
+          "path": "/v1/email/scam-batch",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_email_scam_batch",
+          "description": "Scam-screen up to 50 received emails in one call: per-message verdicts + summary counts."
+        },
+        {
+          "path": "/v1/email/scam-screen",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_email_scam_screen",
+          "description": "Received-mail BEC/scam screen: reply-to/from mismatch, cousin domains, punycode, homoglyph display names, return-path mismatch, freemail reply-to, BEC body language, header anomalies, SPF/DKIM/DMARC a"
+        }
+      ]
+    },
+    {
+      "category": "enrichment",
+      "count": 3,
+      "routes": [
+        {
+          "path": "/v1/enrich/company",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "enrich_company",
+          "description": "Company intel for a domain: full domain intel (route 1) merged with business snippets from DDG's own research tier (search-multi called as a DIRECT in-process function call, never an HTTP request back into this edge) for the domain and the "
+        },
+        {
+          "path": "/v1/enrich/domain",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "enrich_domain",
+          "description": "Zero-key domain intel from free public sources only: DNS (A/AAAA/MX/NS/TXT via a minimal stdlib resolver), TLS certificate facts (issuer, validity window, days_until_expiry, SANs), HTTP header technology signals, subdomains from Certificate"
+        },
+        {
+          "path": "/v1/enrich/email",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "enrich_email",
+          "description": "Zero-key address intel: RFC 5322 basic syntax with local/domain split, MX existence, disposable-domain verdict against a hardcoded list, role-account verdict (admin, info, support, sales, contact, help, security, postmaster, noreply, no-rep"
+        }
+      ]
+    },
+    {
+      "category": "ethereum",
+      "count": 3,
+      "routes": [
+        {
+          "path": "/v1/ethereum/archive-state",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "ethereum_archive_state",
+          "description": "Ethereum archive-state reads."
+        },
+        {
+          "path": "/v1/ethereum/historical-logs",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "ethereum_historical_logs",
+          "description": "Unbounded historical Ethereum log search."
+        },
+        {
+          "path": "/v1/ethereum/trace",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "ethereum_trace",
+          "description": "Ethereum transaction/debug tracing."
+        }
+      ]
+    },
+    {
+      "category": "general",
+      "count": 106,
+      "routes": [
+        {
+          "path": "/.well-known/ddg-agent-checkout-conformance.json",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "well_known_ddg_agent_checkout_conformance_json",
+          "description": "Machine-readable expectations for validating DDG agent checkout gates: 403 id..."
+        },
+        {
+          "path": "/.well-known/ddg-mpp-activation-guide.md",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "well_known_ddg_mpp_activation_guide_md",
+          "description": "Step-by-step guide for creating/preparing Stripe Machine Payments, Tempo/mppx..."
+        },
+        {
+          "path": "/agent-checkout-conformance.json",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "agent_checkout_conformance_json",
+          "description": "Machine-readable expectations for validating DDG agent checkout gates: 403 id..."
+        },
+        {
+          "path": "/mpp-activation-guide.md",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "mpp_activation_guide_md",
+          "description": "Step-by-step guide for creating/preparing Stripe Machine Payments, Tempo/mppx..."
+        },
+        {
+          "path": "/v1/agent-checkout-conformance-audit",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "agent_checkout_conformance_audit",
+          "description": "Agent checkout conformance audit for machine-payable services: validates 403->402->200->receipt flow, protocol advertisement, spend caps, idempotency replay, fake-token fail-closed behavior, and receipt/artifact semantics."
+        },
+        {
+          "path": "/v1/agent-discovery-pack",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "llms_txt_openapi_pack",
+          "description": "Create or repair llms.txt, OpenAPI, pricing/catalog JSON, and agent-readable service docs."
+        },
+        {
+          "path": "/v1/agent-marketplace-listing-pack",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "agent_marketplace_listing_pack",
+          "description": "Prepare agent-marketplace submissions and PR/issue copy for x402 directories, MCP registries, agent-ready scanners, GitHub README/listing pages, and search-indexable service docs. No spam or unauthorized posting; operator approval required "
+        },
+        {
+          "path": "/v1/agent-payment-readiness-audit",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "agent_payment_readiness_audit",
+          "description": "Audit an API/service for x402/MPP/402 paid-agent readiness, idempotency, receipts, and discovery assets."
+        },
+        {
+          "path": "/v1/agent-readiness-scorecard",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "agent_readiness_scorecard",
+          "description": "Score a domain/API for agent readiness: discovery endpoints, OpenAPI, llms.txt, agent-skill index, API catalog linkset, payment 402 behavior, auth docs, MCP status, sitemap/robots, and machine-readable commerce signals."
+        },
+        {
+          "path": "/v1/agent-service-distribution-pack",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "agent_service_distribution_pack",
+          "description": "Create/polish an AI-agent service distribution packet: /.well-known/ai, API linkset, agent-skills index, agents.json, llms.txt/OpenAPI/catalog alignment, sitemap/robots, and registry/marketplace listing copy for MCP/x402/agent directories."
+        },
+        {
+          "path": "/v1/agent-supply-chain-baseline",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "agent_supply_chain_baseline",
+          "description": "Agent swarm supply-chain baseline bundle: combined prompt/package/secret/MCP findings, prioritized remediation plan, CI scanner starter config."
+        },
+        {
+          "path": "/v1/agent-tool-schema-repair",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "agent_tool_schema_repair",
+          "description": "Repair OpenAPI/MCP/tool schemas so agents can reliably call them, with examples and validation."
+        },
+        {
+          "path": "/v1/ai-agent-buyer-service-bundle",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "ai_agent_buyer_service_bundle",
+          "description": "Bundled launch package for AI-agent buyers and sellers: security_preflight, checkout_conformance, agent_readability_upgrade, mcp_tool_audit, and local_model_runtime_setup scoped into one paid order."
+        },
+        {
+          "path": "/v1/ai-agent-skill-port",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "ai_agent_skill_port",
+          "description": "Use DDG-operated models to convert a procedure into a skill/workflow usable by Claude, Codex, Cursor, OpenCode, Hermes, or another agent."
+        },
+        {
+          "path": "/v1/ai-skill-safety-scan",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "ai_skill_safety_scan",
+          "description": "Free static AI skill safety scanner for prompt-injection, credential-exfiltration, dangerous tool-use, package lifecycle, install-script, and broad file/network access red flags. Best-effort/no-SLA; raw secret-like values are redacted."
+        },
+        {
+          "path": "/v1/artifact-receipt-console-pack",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "artifact_receipt_console_pack",
+          "description": "Buyer-facing artifact and receipt console pack for paid agent services. Base order status/artifact URLs are now live for every /v1/order-intake order; this paid pack adds a richer app/table/component spec, receipt schema, budget/rail metada"
+        },
+        {
+          "path": "/v1/auth/jwt-verify",
+          "method": "POST",
+          "price_usd": "0.002",
+          "service_id": "v1_auth_jwt_verify",
+          "description": ""
+        },
+        {
+          "path": "/v1/buyer-agent-smoke-probe",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "buyer_agent_smoke_probe",
+          "description": "Run a DDG buyer-agent simulation against a target service: discover capabilities, verify 403/402/payment challenge behavior, fake-payment fail-closed, idempotency, and artifact/status usability. Spending tests require explicit operator-appr"
+        },
+        {
+          "path": "/v1/c2pa/av-info",
+          "method": "POST",
+          "price_usd": "0.005",
+          "service_id": "v1_c2pa_av_info",
+          "description": ""
+        },
+        {
+          "path": "/v1/c2pa/sign-av",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_c2pa_sign_av",
+          "description": ""
+        },
+        {
+          "path": "/v1/c2pa/verify-av",
+          "method": "POST",
+          "price_usd": "0.001",
+          "service_id": "v1_c2pa_verify_av",
+          "description": ""
+        },
+        {
+          "path": "/v1/compliance/breach-check",
+          "method": "POST",
+          "price_usd": "0.001",
+          "service_id": "v1_compliance_breach_check",
+          "description": ""
+        },
+        {
+          "path": "/v1/compliance/token-screen",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_compliance_token_screen",
+          "description": ""
+        },
+        {
+          "path": "/v1/content/chunk",
+          "method": "POST",
+          "price_usd": "0.001",
+          "service_id": "v1_content_chunk",
+          "description": ""
+        },
+        {
+          "path": "/v1/content/extract",
+          "method": "POST",
+          "price_usd": "0.005",
+          "service_id": "v1_content_extract",
+          "description": ""
+        },
+        {
+          "path": "/v1/content/search",
+          "method": "POST",
+          "price_usd": "0.001",
+          "service_id": "v1_content_search",
+          "description": ""
+        },
+        {
+          "path": "/v1/content/toolkit",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_content_toolkit",
+          "description": ""
+        },
+        {
+          "path": "/v1/credentials/bundle",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_credentials_bundle",
+          "description": ""
+        },
+        {
+          "path": "/v1/credentials/jwks",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_credentials_jwks",
+          "description": ""
+        },
+        {
+          "path": "/v1/credentials/sign",
+          "method": "POST",
+          "price_usd": "0.005",
+          "service_id": "v1_credentials_sign",
+          "description": ""
+        },
+        {
+          "path": "/v1/credentials/verify",
+          "method": "POST",
+          "price_usd": "0.001",
+          "service_id": "v1_credentials_verify",
+          "description": ""
+        },
+        {
+          "path": "/v1/ethereum/rpc",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "ethereum_private_rpc_query",
+          "description": "Free launch-beta read-only Ethereum full-node query endpoint behind the DDG AI-agent edge. It is implemented with method whitelist, sync readiness gate, fair-use lease timer, per-agent request caps, and upstream max-concurrency cap; public "
+        },
+        {
+          "path": "/v1/feedback/bug",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_feedback_bug",
+          "description": ""
+        },
+        {
+          "path": "/v1/feedback/status",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_feedback_status",
+          "description": ""
+        },
+        {
+          "path": "/v1/feedback/triage",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_feedback_triage",
+          "description": ""
+        },
+        {
+          "path": "/v1/file/archive-preflight",
+          "method": "POST",
+          "price_usd": "0.005",
+          "service_id": "v1_file_archive_preflight",
+          "description": ""
+        },
+        {
+          "path": "/v1/hermes-skill-workflow-dev",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "hermes_skill_workflow_dev",
+          "description": "Build a Hermes skill, generic agent skill, or reusable workflow for the buyer's existing AI/agent stack."
+        },
+        {
+          "path": "/v1/iac/guard",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_iac_guard",
+          "description": ""
+        },
+        {
+          "path": "/v1/identity/did-resolve",
+          "method": "POST",
+          "price_usd": "0.001",
+          "service_id": "v1_identity_did_resolve",
+          "description": ""
+        },
+        {
+          "path": "/v1/identity/vc-verify",
+          "method": "POST",
+          "price_usd": "0.001",
+          "service_id": "v1_identity_vc_verify",
+          "description": ""
+        },
+        {
+          "path": "/v1/intel/fusion",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_intel_fusion",
+          "description": ""
+        },
+        {
+          "path": "/v1/intel/redos-scan",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_intel_redos_scan",
+          "description": ""
+        },
+        {
+          "path": "/v1/intel/tech-fingerprint",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_intel_tech_fingerprint",
+          "description": ""
+        },
+        {
+          "path": "/v1/landing-page-conversion-diff",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "landing_page_conversion_diff",
+          "description": "Compare a current/proposed page and return conversion, trust, copy, and agent-readability improvements."
+        },
+        {
+          "path": "/v1/lead-pack",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "lead_pack_micro",
+          "description": "Small curated local-business lead pack with evidence URLs and outreach angles."
+        },
+        {
+          "path": "/v1/local-business-demo-pack",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "local_business_demo_pack",
+          "description": "Create a private lead-specific prototype/demo concept for a local business, with evidence and staged offer angle."
+        },
+        {
+          "path": "/v1/local-model-swarm-seat",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "local_model_swarm_seat_beta",
+          "description": "Named paid lease remains planned; the current live local free-seat pool is exposed through /v1/micro-model-swarm-preview and local Ollama routes under /v1/model/agent-run. Candidate menu includes Qwen/Qwen-derived coder, abliterated/less-re"
+        },
+        {
+          "path": "/v1/malware-triage-scan",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "malware_triage_scan",
+          "description": "Malware/suspicious-code triage for agent workflows: suspicious_behaviors, network/file/process indicators, safe containment notes."
+        },
+        {
+          "path": "/v1/mcp-audit/rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_mcp_audit_rules",
+          "description": ""
+        },
+        {
+          "path": "/v1/mcp-audit/server-json",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_mcp_audit_server_json",
+          "description": ""
+        },
+        {
+          "path": "/v1/mcp-audit/tools",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_mcp_audit_tools",
+          "description": ""
+        },
+        {
+          "path": "/v1/mcp-server-audit",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "mcp_server_audit",
+          "description": "Audit an MCP server or tool surface for installability, schema quality, auth, and prompt-injection risk."
+        },
+        {
+          "path": "/v1/mcp-tool-security-audit",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "mcp_tool_security_audit",
+          "description": "MCP/tool permission and auth-boundary audit: tool-risk matrix, dangerous capability flags, prompt-injection exposure."
+        },
+        {
+          "path": "/v1/mcp-tool-server-build",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "mcp_tool_server_build",
+          "description": "Design and scaffold an MCP tool/server from a plain-English goal, including schema, install docs, and smoke tests."
+        },
+        {
+          "path": "/v1/mcp/conformance",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_mcp_conformance",
+          "description": ""
+        },
+        {
+          "path": "/v1/mcp/conformance/spec-versions",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_mcp_conformance_spec_versions",
+          "description": ""
+        },
+        {
+          "path": "/v1/micro-model-swarm-preview",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "micro_model_swarm_preview",
+          "description": "Live free/best-effort local model swarm preview with strict identity, lease, request, and local-runtime seat caps. Agents may select Ollama, llama.cpp, or LM Studio/llmster when the model is listed healthy for that runtime; combos default t"
+        },
+        {
+          "path": "/v1/model-demand-tracker",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_model_demand_tracker",
+          "description": "Free model-demand tracker: AI agents vote for model services they want DDG to offer. Phase 1 tracks qwen-3.8-27b (150k context Tailscale slot). One vote per agent per model per 24h."
+        },
+        {
+          "path": "/v1/model/agent-run",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "kimi_k27_code_artifact_run",
+          "description": "Kimi K2.7 Code is available as a DDG-operated paid artifact/result route and can be used within Kimi Code. Buyers receive bounded outputs/artifacts only; DDG never transfers provider credentials, account seats, or raw provider sessions."
+        },
+        {
+          "path": "/v1/model/artifact-order",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "provider_model_artifact_order",
+          "description": "Operator-reviewed DDG-operated model/artifact run using available backend capacity, including account/API/subscription-backed coding tools where technically and commercially eligible. Buyers receive bounded outputs/artifacts only; DDG never"
+        },
+        {
+          "path": "/v1/model/chat-completions",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "model_chat_completions",
+          "description": "Live OpenAI-compatible paid model-router completion endpoint for AI agents. Supports conversation, analysis, code/help prompts, DDG routing extensions, payment gating, budget caps, and receipts. Eligible launch model prices target 75% of co"
+        },
+        {
+          "path": "/v1/moderation/llm-scan",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_moderation_llm_scan",
+          "description": ""
+        },
+        {
+          "path": "/v1/mpp-onboarding-path-activation",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "mpp_onboarding_path_activation",
+          "description": "MPP/payment-rail onboarding package for AI-agent sellers: verifies provider/currency configuration, sidecar health, 402 protocol ordering, penny smoke path, replay protection, fake-proof rejection, and go-live checklist."
+        },
+        {
+          "path": "/v1/npm-dependency-risk-scan",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "npm_dependency_risk_scan",
+          "description": "npm/package-lock dependency risk scan: known_vulnerabilities, maintainer/supply-chain risk signals, install-script risk."
+        },
+        {
+          "path": "/v1/ollama-model-request",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "ollama_model_request",
+          "description": "AI agents can request a new local model/runtime (Ollama, llama.cpp GGUF, LM Studio/llmster, OpenAI-compatible local server, or vLLM). Public requests never auto-download; DDG checks disk/safety/license, binding/auth posture, reserve/max-siz"
+        },
+        {
+          "path": "/v1/ollama-models",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "local_runtime_model_catalog",
+          "description": "Lists currently available local-runtime models for Ollama plus healthy OpenAI-compatible llama.cpp and LM Studio/llmster servers, free-seat policy, lease/request caps, and requestable local runtimes. Public requests never trigger model down"
+        },
+        {
+          "path": "/v1/order-intake",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "order_intake",
+          "description": "Paid order-intake endpoint for all manual/beta DDG agent offerings. Records a redacted order queue item after payment and requires operator review before fulfillment or any irreversible action."
+        },
+        {
+          "path": "/v1/order-status/{order_id}",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_order_status_order_id",
+          "description": "Returns redacted order, payment, status, expected-deliverable, and artifact-l..."
+        },
+        {
+          "path": "/v1/orders/{order_id}",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_orders_order_id",
+          "description": "Returns redacted order, payment, status, expected-deliverable, and artifact-l..."
+        },
+        {
+          "path": "/v1/orders/{order_id}/artifact",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_orders_order_id_artifact",
+          "description": "Returns the JSON or Markdown artifact attached by the operator for an order. ..."
+        },
+        {
+          "path": "/v1/outreach-brief",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "outreach_brief",
+          "description": "Personalized outreach brief/draft. Does not send messages without human approval."
+        },
+        {
+          "path": "/v1/production-security-audit",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "production_security_audit",
+          "description": "Productionized public-surface security audit for AI-agent services, MCP/tool servers, OpenAPI/llms.txt catalogs, dependency manifests, prompt-injection exposure, public endpoints, and payment/check-out safety. Ordered by AI agents through /"
+        },
+        {
+          "path": "/v1/prompt-injection-red-team",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "prompt_injection_red_team",
+          "description": "Probe an agent-facing website/API/MCP/tool for prompt injection, data exfiltration, unsafe tool-use, and mitigation notes."
+        },
+        {
+          "path": "/v1/prompt-injection-scan",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "prompt_injection_scan",
+          "description": "Prompt-injection and tool-exfiltration scan: risk_summary, exploit_reproduction_steps, prompt/tool-boundary mitigations."
+        },
+        {
+          "path": "/v1/provenance-first-run-discount",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "provenance_first_run_discount",
+          "description": "First provenance-tier audit free for any new agent identity. Get one .tine-producing endpoint at no cost to verify the artifact format, fork it, replay it. After the first run, standard pricing applies. Limited to one per agent identity (en"
+        },
+        {
+          "path": "/v1/python-dependency-risk-scan",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "python_dependency_risk_scan",
+          "description": "Python dependency and import-risk scan: known_vulnerabilities, dependency confusion risk, setup/install hooks."
+        },
+        {
+          "path": "/v1/rag/answer",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_rag_answer",
+          "description": ""
+        },
+        {
+          "path": "/v1/rag/index",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_rag_index",
+          "description": ""
+        },
+        {
+          "path": "/v1/rag/search",
+          "method": "POST",
+          "price_usd": "0.005",
+          "service_id": "v1_rag_search",
+          "description": ""
+        },
+        {
+          "path": "/v1/rag/status",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_rag_status",
+          "description": ""
+        },
+        {
+          "path": "/v1/receipts/bundle",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_receipts_bundle",
+          "description": ""
+        },
+        {
+          "path": "/v1/receipts/issue",
+          "method": "POST",
+          "price_usd": "0.005",
+          "service_id": "v1_receipts_issue",
+          "description": ""
+        },
+        {
+          "path": "/v1/receipts/jwks",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_receipts_jwks",
+          "description": ""
+        },
+        {
+          "path": "/v1/receipts/verify",
+          "method": "POST",
+          "price_usd": "0.001",
+          "service_id": "v1_receipts_verify",
+          "description": ""
+        },
+        {
+          "path": "/v1/repo-context-pack",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "repo_context_pack",
+          "description": "Turn a repo/docs/SOP corpus into an agent-ready context pack, skill, workflow, or implementation guide."
+        },
+        {
+          "path": "/v1/research-pack",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "paid_research_pack",
+          "description": "Paid source-linked research brief with citations, confidence notes, and launch recommendation."
+        },
+        {
+          "path": "/v1/robot-command/idempotency-audit",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "robot_command_idempotency_audit",
+          "description": "Detect double-actuation risk in a robot command pipeline: missing idempotency keys, no dedup store, and non-reversible physical actions without single-execution enforcement. One network retry should never equal two real-world effects."
+        },
+        {
+          "path": "/v1/robot-task/authorization-contract-audit",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "robot_task_authorization_contract_audit",
+          "description": "Audit a robot task delegation spec: is delegated authority bounded (force cap, motion scope, object class, zone), does it expire (TTL), can it be revoked instantly, does it leak authority beyond task scope, and can untrusted inputs trigger "
+        },
+        {
+          "path": "/v1/robot-task/completion-receipt-validator",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "robot_task_completion_receipt_validator",
+          "description": "Validate a claimed robot task-completion receipt: before/after state hashes, sensor-evidence hash, side-effect class, rollback path, and the action->evidence->state binding. A robot reporting 'done' from its own state is a self-graded exam."
+        },
+        {
+          "path": "/v1/robot-task/deadman-revocation-audit",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "robot_task_deadman_revocation_audit",
+          "description": "Verify an auditable software heartbeat/dead-man exists for autonomous physical actions, that heartbeat loss triggers a safe state, and that revocation latency is numerically bounded. Teleop has hardware e-stops; autonomous AI needs a softwa"
+        },
+        {
+          "path": "/v1/robot-task/liability-receipt-schema",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "robot_task_liability_receipt_schema",
+          "description": "Premium/liability tier: emit a liability-grade, tamper-evident action audit schema for a robot fleet sufficient for EU Product Liability Directive exposure. Checks authorizer, scope-of-authority, evidence hash, timestamp, jurisdiction, rece"
+        },
+        {
+          "path": "/v1/robot-task/provenance-bundle",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "robotics_provenance_bundle",
+          "description": "All 7 robotics task-authority audits as a provenance bundle. Each audit ships a 5-node .tine artifact (grant \u2192 scope_check \u2192 execution \u2192 evidence \u2192 receipt). Includes authorization-contract, scope-and-revocation, completion-receipt-validato"
+        },
+        {
+          "path": "/v1/robot-task/scope-and-revocation-audit",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "robot_task_scope_and_revocation_audit",
+          "description": "Audit a ROS2/robot config for unrevoked authority, missing TTLs, over-broad topic grants (wildcards), and authority that outlives the task. Flags delegation that persists after the job ends (consent-chain degradation)."
+        },
+        {
+          "path": "/v1/robot/authority-intersection-audit",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "robot_authority_intersection_audit",
+          "description": "Check that effective authority = robot-identity AND user-delegation (intersection, not union), and that untrusted inputs (detected QR codes, voice commands) cannot authorize physical action. Maps to the confused-deputy problem."
+        },
+        {
+          "path": "/v1/sandboxed-cli-agent-run",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "sandboxed_cli_agent_run",
+          "description": "Run a bounded CLI-agent/model task in a sandbox and return the artifact/report, never provider credentials."
+        },
+        {
+          "path": "/v1/secret-leak-api-key-scan",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "secret_leak_api_key_scan",
+          "description": "API-key/secret leak and credential boundary scan: redacted_secret_findings, leak_paths, rotation_priority."
+        },
+        {
+          "path": "/v1/site-audit",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "site_audit_auto",
+          "description": "Automated website audit for agents evaluating local-business opportunities. Intro price lowered for settlement testing."
+        },
+        {
+          "path": "/v1/site-audit/reviewed",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "site_audit_reviewed",
+          "description": "Human-reviewed audit with stronger client-facing recommendations."
+        },
+        {
+          "path": "/v1/spend/check",
+          "method": "POST",
+          "price_usd": "0.005",
+          "service_id": "v1_spend_check",
+          "description": ""
+        },
+        {
+          "path": "/v1/spend/ledger",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_spend_ledger",
+          "description": ""
+        },
+        {
+          "path": "/v1/spend/reconcile",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_spend_reconcile",
+          "description": ""
+        },
+        {
+          "path": "/v1/spend/record",
+          "method": "POST",
+          "price_usd": "0.005",
+          "service_id": "v1_spend_record",
+          "description": ""
+        },
+        {
+          "path": "/v1/trust/verify-jwks",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_trust_verify_jwks",
+          "description": ""
+        },
+        {
+          "path": "/v1/tx-smoke-test",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "tx_penny_smoke_test",
+          "description": "One-cent receipt-only payment smoke-test endpoint for AI agents to prove their own x402/direct-crypto/payment-client flow can complete a DDG paid request. This is infrastructure validation, not a meaningful revenue product, and has no exter"
+        },
+        {
+          "path": "/v1/web/wayback-lookup",
+          "method": "POST",
+          "price_usd": "0.002",
+          "service_id": "v1_web_wayback_lookup",
+          "description": ""
+        },
+        {
+          "path": "/v1/web/wayback-report",
+          "method": "POST",
+          "price_usd": "0.005",
+          "service_id": "v1_web_wayback_report",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "category": "infra",
+      "count": 3,
+      "routes": [
+        {
+          "path": "/v1/infra/ports",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_infra_ports",
+          "description": ""
+        },
+        {
+          "path": "/v1/infra/security-posture",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_infra_security_posture",
+          "description": ""
+        },
+        {
+          "path": "/v1/infra/tls-verify",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_infra_tls_verify",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "category": "intel",
+      "count": 2,
+      "routes": [
+        {
+          "path": "/v1/intel/domain-reputation",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_intel_domain_reputation",
+          "description": ""
+        },
+        {
+          "path": "/v1/intel/url-reputation",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_intel_url_reputation",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "category": "messaging",
+      "count": 3,
+      "routes": [
+        {
+          "path": "/v1/email-send",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_email_send",
+          "description": "Send a transactional email via SMTP relay. Rate-limited."
+        },
+        {
+          "path": "/v1/inbox/messages/list",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_inbox_messages_list",
+          "description": "Owner inbox listing for the calling X-Agent-Id: metadata only (no bodies), optional kind/unseen/since filters, limit <=100, and a lazy purge of expired messages. Marks nothing as seen."
+        },
+        {
+          "path": "/v1/inbox/settings",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_inbox_settings",
+          "description": "Owner inbox settings: blocklist add/remove/list, allow_kinds filter and max_daily_msgs (<=200), persisted in inboxes.settings_json. Free in the service spec; priced at the $0.001 edge floor (see MANIFEST.md free-route deviation)."
+        }
+      ]
+    },
+    {
+      "category": "moderation",
+      "count": 1,
+      "routes": [
+        {
+          "path": "/v1/moderation/scan",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_moderation_scan",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "category": "network",
+      "count": 7,
+      "routes": [
+        {
+          "path": "/v1/dns-lookup",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_dns_lookup",
+          "description": "DNS resolution for any domain. Returns A, AAAA, MX, TXT, NS, CNAME, SOA, CAA, SRV records."
+        },
+        {
+          "path": "/v1/ip-geolocation",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_ip_geolocation",
+          "description": "Geolocate an IP address. Returns country, city, ISP, coordinates."
+        },
+        {
+          "path": "/v1/link-extract",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_link_extract",
+          "description": "Extract all hyperlinks from a web page. Returns internal/external classification."
+        },
+        {
+          "path": "/v1/robots-check",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_robots_check",
+          "description": "Check robots.txt rules for a URL. Returns allowed/disallowed, crawl delay, sitemaps."
+        },
+        {
+          "path": "/v1/url-fetch",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_url_fetch",
+          "description": "Fetch raw content from a URL. Returns body, headers, status code. For hitting REST APIs."
+        },
+        {
+          "path": "/v1/url-status",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_url_status",
+          "description": "Quick HEAD check on a URL. Returns status code, redirects, server info."
+        },
+        {
+          "path": "/v1/whois-lookup",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_whois_lookup",
+          "description": "WHOIS registration data for any domain."
+        }
+      ]
+    },
+    {
+      "category": "opentine",
+      "count": 3,
+      "routes": [
+        {
+          "path": "/v1/tine-diff",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "tine_diff",
+          "description": "Diff two .tine artifacts \u2014 structured comparison of agent runs showing added/removed/modified/same steps."
+        },
+        {
+          "path": "/v1/tine-provenance-chain",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "tine_provenance_chain",
+          "description": "Trace the fork/parent chain of a .tine artifact \u2014 full provenance lineage from root run to current."
+        },
+        {
+          "path": "/v1/tine-verify",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "tine_verify",
+          "description": "Free .tine artifact verification \u2014 parse and verify content-addressed provenance of an opentine run. Checks FORMAT_VERSION, step hashes, tamper detection."
+        }
+      ]
+    },
+    {
+      "category": "payments",
+      "count": 2,
+      "routes": [
+        {
+          "path": "/v1/payments/retry-advice",
+          "method": "POST",
+          "price_usd": "0.005",
+          "service_id": "v1_payments_retry_advice",
+          "description": ""
+        },
+        {
+          "path": "/v1/x402/explain",
+          "method": "POST",
+          "price_usd": "0.002",
+          "service_id": "v1_x402_explain",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "category": "presence",
+      "count": 5,
+      "routes": [
+        {
+          "path": "/v1/inbox/lookup",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "inbox_lookup",
+          "description": "Check whether an agent inbox handle exists and accepts paid inbound before sending (?handle=...)."
+        },
+        {
+          "path": "/v1/inbox/messages",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "inbox_messages",
+          "description": "Owner read: list messages for a handle. Authenticated by inbox_key (free). Supports wait_seconds long-poll (max 25)."
+        },
+        {
+          "path": "/v1/inbox/register",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "inbox_register",
+          "description": "Claim an agent inbox handle and receive the owner inbox_key. One-time, paid to prevent sybil flood."
+        },
+        {
+          "path": "/v1/inbox/send",
+          "method": "POST",
+          "price_usd": "0.004",
+          "service_id": "inbox_send",
+          "description": "Send a message to an agent inbox (target handle in the JSON body). Sender pays per message; typed fields (OTP codes, magic links) extracted at send time."
+        },
+        {
+          "path": "/v1/inbox/status",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "inbox_status",
+          "description": "Owner status: unread count, address age, retention quota. Authenticated by inbox_key (free)."
+        }
+      ]
+    },
+    {
+      "category": "provenance",
+      "count": 8,
+      "routes": [
+        {
+          "path": "/.well-known/ddg-attestation-jwks.json",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "attestation_jwks",
+          "description": "Publish the DDG Ed25519 attestation verification key."
+        },
+        {
+          "path": "/v1/certify/run",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_certify_run",
+          "description": "Certify an opentine .tine artifact (format v2) BEFORE you pay for its output: re-derives every content-addressed step hash, checks the parent chain, rejects duplicate/dangling steps and returns an HMAC-SHA256 signed certification (certified"
+        },
+        {
+          "path": "/v1/certify/verify",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_certify_verify",
+          "description": "Free read of a certification: {cert_id} returns the stored verdict re-verified against its signature (a tampered row reads valid:false), or {statement, sig} independently re-verifies a certification statement you were given (fail-closed tam"
+        },
+        {
+          "path": "/v1/certify/verify-remote",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_certify_verify_remote",
+          "description": "Buyer-side flow: the sub-agent says its work product is at https://... -- fetch that .tine (SSRF-guarded, 10s, 512KB cap), run the full certification and optionally compare expect_sha256 (canonical content digest or exact-body digest). Retu"
+        },
+        {
+          "path": "/v1/run-proof",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "run_proof",
+          "description": "TinyFish (or any) agent run export -> signed, tamper-evident opentine .tine artifact with integrity hash + Ed25519 signature. Verifiable proof-of-execution for auditors or on-chain anchoring."
+        },
+        {
+          "path": "/v1/tine-artifacts/{artifact_id}",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "tine_artifact_get",
+          "description": "Fetch an agent-scoped signed execution envelope."
+        },
+        {
+          "path": "/v1/tine-diff-explain",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "tine_diff_explain",
+          "description": "Explain an OpenTine diff with a bounded model-generated failure analysis."
+        },
+        {
+          "path": "/v1/tine-notarize",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "tine_notarize",
+          "description": "Verify and Ed25519-notarize an OpenTine artifact."
+        }
+      ]
+    },
+    {
+      "category": "research",
+      "count": 2,
+      "routes": [
+        {
+          "path": "/v1/page-pack",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "page_pack",
+          "description": "Bulk URL-to-markdown research pack (1-25 URLs in one call). Pairs with /v1/web-search: pipe results[].url straight in for LLM synthesis."
+        },
+        {
+          "path": "/v1/research-report",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "research_report",
+          "description": "Sourced research brief: multi-engine find -> bulk read -> claim extraction -> 3-model verification verdict per claim -> signed opentine proof-of-research artifact. Accepts partner_results for pipeline collaboration."
+        }
+      ]
+    },
+    {
+      "category": "runtime",
+      "count": 2,
+      "routes": [
+        {
+          "path": "/v1/runtime/cluster",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_runtime_cluster",
+          "description": ""
+        },
+        {
+          "path": "/v1/runtime/postmortem",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_runtime_postmortem",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "category": "search",
+      "count": 5,
+      "routes": [
+        {
+          "path": "/v1/research/deep",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "research_deep",
+          "description": "Deep research on one topic: 2-3 deterministic sub-queries, multi-engine search per sub-query, top-N sources fetched (6000 chars each), then ONE synthesis pass. extractive (default, deterministic) ranks passages by topic overlap + source div"
+        },
+        {
+          "path": "/v1/research/page-pack",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "research_page_pack",
+          "description": "Fetch 1-5 URLs server-side and return readable text per page: {url, status, title, text_markdown (capped), sha256, fetched_at, error?}. 10s timeout, 64KB read cap, max 3 redirects, no cookies, scripts/styles stripped, SSRF-guarded (http/htt"
+        },
+        {
+          "path": "/v1/research/search-multi",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "research_search_multi",
+          "description": "Multi-engine research search: LLM-free query decomposition (up to max_queries variants: original, quoted-phrase, site:-free simplified, stopword-trimmed, freshness-tagged) fanned out to SearXNG (max 5 workers, 10s per request), deduped by n"
+        },
+        {
+          "path": "/v1/research/status",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "research_status",
+          "description": "Research service status: per-route prices, last-24h call counts (sqlite when DDG_RESEARCH_DB is set, memory otherwise), upstream/cache/job/limit/SSRF posture. With {job_id} it reports an async deep run as running | done (+ result) | error. "
+        },
+        {
+          "path": "/v1/web-search",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_web_search",
+          "description": "Search the web and return structured JSON results. Aggregates 20+ search engines via SearXNG."
+        }
+      ]
+    },
+    {
+      "category": "security",
+      "count": 8,
+      "routes": [
+        {
+          "path": "/v1/http-headers",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_http_headers",
+          "description": "Get HTTP response headers for a URL, including security header analysis."
+        },
+        {
+          "path": "/v1/security-audit/deep",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_security_audit_deep",
+          "description": "Premium deep security audit of agent-supplied code or MCP tool configs: 16 detector families (secrets, injection surfaces, unsafe deserialization, TLS, prompt-injection surface, tool-permission drift), evidence with line context, per-findin"
+        },
+        {
+          "path": "/v1/spend/anomaly-rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "spend_anomaly_rules",
+          "description": "Return the spend-anomaly rule names, thresholds, verdicts, and transaction-row schema."
+        },
+        {
+          "path": "/v1/spend/anomaly-scan",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "spend_anomaly_scan",
+          "description": "Signed stateless anomaly verdict over an agent transaction log: spikes, merchant concentration, overnight volume, vendor drift, burn-rate, duplicates."
+        },
+        {
+          "path": "/v1/ssl-cert-info",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_ssl_cert_info",
+          "description": "Get SSL certificate details for a hostname: issuer, expiry, SANs, fingerprint."
+        },
+        {
+          "path": "/v1/subdomain-enumerate",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_subdomain_enumerate",
+          "description": "Find subdomains via certificate transparency logs (crt.sh)."
+        },
+        {
+          "path": "/v1/threat-check",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_threat_check",
+          "description": "Check URL or wallet address reputation. Aggregates URLhaus, TLS validation, DNS, pattern analysis."
+        },
+        {
+          "path": "/v1/tls-version-check",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_tls_version_check",
+          "description": "Check which TLS versions a server supports and identify weak ciphers."
+        }
+      ]
+    },
+    {
+      "category": "status",
+      "count": 1,
+      "routes": [
+        {
+          "path": "/v1/netops/status",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_netops_status",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "category": "utility",
+      "count": 10,
+      "routes": [
+        {
+          "path": "/v1/base64-codec",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_base64_codec",
+          "description": "Encode or decode base64, with URL-safe variant support."
+        },
+        {
+          "path": "/v1/diff-text",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_diff_text",
+          "description": "Compare two text blocks and return a structured diff (unified, HTML, or JSON)."
+        },
+        {
+          "path": "/v1/fetch-as-markdown",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_fetch_as_markdown",
+          "description": "Extract clean markdown from any URL. Full JS rendering via Playwright available."
+        },
+        {
+          "path": "/v1/hash-compute",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_hash_compute",
+          "description": "Compute cryptographic hash (SHA-256, MD5, SHA-1, BLAKE2, etc.) of input text."
+        },
+        {
+          "path": "/v1/json-validate",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_json_validate",
+          "description": "Validate JSON against a JSON Schema. Returns detailed error paths."
+        },
+        {
+          "path": "/v1/qr-code",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_qr_code",
+          "description": "Generate a QR code PNG from any text/data."
+        },
+        {
+          "path": "/v1/random",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_random",
+          "description": "Generate cryptographically secure random data: strings, hex, tokens, integers."
+        },
+        {
+          "path": "/v1/schema-infer",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_schema_infer",
+          "description": "Infer JSON Schema from a JSON sample. Useful for reverse-engineering APIs."
+        },
+        {
+          "path": "/v1/timestamp",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_timestamp",
+          "description": "Get current time in multiple formats: Unix, ISO 8601, RFC 3339, human-readable."
+        },
+        {
+          "path": "/v1/uuid-generate",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_uuid_generate",
+          "description": "Generate UUIDs (v1, v3, v4, v5). For distributed agent ID generation."
+        }
+      ]
+    },
+    {
+      "category": "verification",
+      "count": 32,
+      "routes": [
+        {
+          "path": "/v1/ap2/spec",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "ap2_spec",
+          "description": "Return the machine-readable AP2 verifier specification."
+        },
+        {
+          "path": "/v1/ap2/verify",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "ap2_verify_single",
+          "description": "Verify one AP2 closed payment mandate."
+        },
+        {
+          "path": "/v1/ap2/verify-mandates",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "ap2_verify_mandates",
+          "description": "Verify paired AP2 open and closed payment mandates."
+        },
+        {
+          "path": "/v1/bounty/payout-manifest",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_bounty_payout_manifest",
+          "description": "Build signed deterministic payout instruction rows for bounty winners."
+        },
+        {
+          "path": "/v1/bounty/proof-schema",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_bounty_proof_schema",
+          "description": "Return the accepted bounty verification and manifest request shapes."
+        },
+        {
+          "path": "/v1/bounty/rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "v1_bounty_rules",
+          "description": "List bounty conformance and payout-manifest rules."
+        },
+        {
+          "path": "/v1/bounty/verify-deliverable",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_bounty_verify_deliverable",
+          "description": "Verify a bounty deliverable against deterministic conformance rules."
+        },
+        {
+          "path": "/v1/escrow/condition",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "escrow_condition",
+          "description": "Neutral escrow-condition oracle: from a deal + evidence emit a signed release|refund|extend|insufficient_evidence verdict. Never custodies funds."
+        },
+        {
+          "path": "/v1/escrow/dispute-period",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "escrow_dispute_period",
+          "description": "Escrow dispute-window clock: opened_at + period_seconds vs evaluation_time -> dispute_open|dispute_expired|insufficient_evidence. Signed, deterministic."
+        },
+        {
+          "path": "/v1/escrow/rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "escrow_rules",
+          "description": "Machine-readable escrow-condition oracle spec: escrow types, condition kinds, evidence shapes, rules and verdicts. Free."
+        },
+        {
+          "path": "/v1/evidence/anchor",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_evidence_anchor",
+          "description": "Anchor one paid-action hash pair (request/response sha256) into the merkle-batched, HMAC-signed evidence chain. Idempotent per (agent, request hash, payment ref); returns evidence_id plus a signed receipt."
+        },
+        {
+          "path": "/v1/evidence/batch",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_evidence_batch",
+          "description": "Anchor up to 100 action hash pairs in one call with per-record validation; returns evidence_ids, accepted count and per-index rejection reasons."
+        },
+        {
+          "path": "/v1/evidence/get",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_evidence_get",
+          "description": "Public read: full evidence record plus the merkle inclusion proof (leaf, sibling path, batch root, prev_root) and a one-line python recipe that recomputes the root. Free route (POST instead of the spec'd GET; see module docstring)."
+        },
+        {
+          "path": "/v1/evidence/roots",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_evidence_roots",
+          "description": "Public read: current merkle root, the last up-to-90 closed batch roots with their prev_root chain and HMAC signatures, plus the signing key id. Free route (POST instead of the spec'd GET; see module docstring)."
+        },
+        {
+          "path": "/v1/reputation/alert",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "reputation_alert",
+          "description": "Register one 7-day price-drift watch for a url ($0.01 per window) and optionally a webhook_url (https, SSRF-guarded) with an optional webhook_secret (<= 200 chars, stored HMAC-SHA256 only). An idempotent daemon thread re-probes every watche"
+        },
+        {
+          "path": "/v1/reputation/alerts",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "reputation_alerts",
+          "description": "Free read of your own drift watch: body {watch_id} -> {alerts: [{ts, kind (verdict_change|back_online|went_dark), previous?, new?, delivered}], window}. Alerts are kept to the last 100 per watch and carry no funds movement. Free in spec; th"
+        },
+        {
+          "path": "/v1/reputation/leaderboard",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "reputation_leaderboard",
+          "description": "Top sellers by ok-rate across the recorded E10 probe history -- the 'who should I buy from' discovery surface for agent commerce. Body {min_probes? (default 3), limit? (cap 50)} -> ranked sellers with grades, probe counts, payTo stability a"
+        },
+        {
+          "path": "/v1/reputation/score",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "reputation_score",
+          "description": "Aggregate E10 probe history for one seller URL into a deterministic A-F reputation grade: probe count, distinct verdict counts (ok|drift|payto_rotated|unreachable|invalid), first_seen, last_probed, payTo stability, uptime proxy (ok-rate ove"
+        },
+        {
+          "path": "/v1/resolve/outcome",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "resolve_outcome",
+          "description": "Timeout-outcome resolution: resolve + replay the outcome of an idempotency-keyed check without re-executing anything (TTL-cached verdict, same key -> same verdict). Ends double-execution and blind-retry loops after a tool-call timeout."
+        },
+        {
+          "path": "/v1/sla/breach-check",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_sla_breach_check",
+          "description": "Probe one URL ONCE right now with the shared, SSRF-guarded x402 probe engine and compare the observation against that URL's ACTIVE SLA declaration (expected_p95_ms overrides the declared threshold for a single call). Verdict ok | breach{dec"
+        },
+        {
+          "path": "/v1/sla/declare",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_sla_declare",
+          "description": "Declare an SLA for an x402 endpoint you control, in the x402-signals-aligned vocabulary (uptime_target 99|99.5|99.9, latency_p95_ms >= 50, refund_policy none|partial|full, optional price_guarantee_window_hours <= 8760). Domain provenance is"
+        },
+        {
+          "path": "/v1/sla/monitor",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_sla_monitor",
+          "description": "Register one 7-day monitoring window for a URL ($0.01 per window). An idempotent daemon thread (started on first use, 5-minute cadence, honored stop flag) re-probes every ACTIVE monitor once, records reachable + latency_ms, and prunes each "
+        },
+        {
+          "path": "/v1/sla/report",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_sla_report",
+          "description": "Aggregate one monitoring window into the numbers a paying agent needs: uptime_pct (reachable samples / samples in the window), p95_ms (nearest-rank over reachable samples, no interpolation, p95_sample_size reported), sample counts, coverage"
+        },
+        {
+          "path": "/v1/subscriptions/rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "subscriptions_rules",
+          "description": "Machine-readable subscription-status oracle spec: rules, precedence, request schema and verdicts. Free."
+        },
+        {
+          "path": "/v1/subscriptions/status",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "subscriptions_status",
+          "description": "Verify an agent-to-agent subscription or session claim: signed active|expired|revoked verdict with the evidence trail."
+        },
+        {
+          "path": "/v1/trust/check",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_trust_check",
+          "description": "Adversarial pre-flight verification of any x402 endpoint BEFORE an agent pays it: a real 402-handshake probe (GET, then POST fallback) with tolerant x402 v1/v2 envelope + optional MPP challenge parsing, diffed against the last stored probe "
+        },
+        {
+          "path": "/v1/trust/history",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_trust_history",
+          "description": "Stored probe history for one URL, newest first, windowed to the last 30 days: ts, verdict, price, payTo, network, latency_ms. Probe rows only (cache hits are not replayed as history) and never any target response body."
+        },
+        {
+          "path": "/v1/trust/watch",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_trust_watch",
+          "description": "Register a watch for one URL that lowers its probe cache TTL (2-60 minutes, default 10) so repeat /v1/trust/check calls re-probe sooner, and return a watch_id. Free ($0) per spec; the edge price floor knob is DDG_TRUST_FREE_ROUTE_PRICE (fli"
+        },
+        {
+          "path": "/v1/verify/action",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "verify_action",
+          "description": "Post-action side-effect verification: deterministically re-read a claimed real-world state (HTTP JSON endpoint fields, status code, DNS TXT) and compare to expected. Answers 'did it actually happen' independent of the acting agent's narrati"
+        },
+        {
+          "path": "/v1/verify/claim",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "verify_claim",
+          "description": "Deterministic claim-vs-source verification (CVE real? package vulnerable/exists? domain resolves? TLS cert valid? URL reachable?) against authoritative sources (NVD/CVE.org, OSV.dev, PyPI/npm registries, DNS, TLS). Boolean verdict + evidenc"
+        },
+        {
+          "path": "/v1/verify/rules",
+          "method": "GET",
+          "price_usd": "0.00",
+          "service_id": "verify_rules",
+          "description": "Machine-readable rule catalog for every check type (input shapes, evidence schema, limits). Free."
+        },
+        {
+          "path": "/v1/verify/schema-drift",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "verify_schema_drift",
+          "description": "API-contract drift probe: fetch a live OpenAPI/JSON doc (SSRF-guarded), fingerprint sorted path/method list (or caller-pinned subset), compare to the pinned fingerprint. Verdict match|drifted|unreachable + current fingerprint."
+        }
+      ]
+    },
+    {
+      "category": "visual",
+      "count": 2,
+      "routes": [
+        {
+          "path": "/v1/browser-proof",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "browser_proof",
+          "description": "Browser proof capture: a headless-Chromium screenshot artifact of a URL as a verifiable proof-of-state."
+        },
+        {
+          "path": "/v1/screenshot",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_screenshot",
+          "description": "Capture a PNG screenshot of any URL using headless Chromium."
+        }
+      ]
+    },
+    {
+      "category": "wave7",
+      "count": 5,
+      "routes": [
+        {
+          "path": "/v1/c2pa/image-info",
+          "method": "POST",
+          "price_usd": "0.001",
+          "service_id": "v1_c2pa_image_info",
+          "description": "Image fingerprint: format, dimensions, chunk/segment map, has-credential, sha256 \u2014 pure Python."
+        },
+        {
+          "path": "/v1/c2pa/sign-image",
+          "method": "POST",
+          "price_usd": "0.005",
+          "service_id": "v1_c2pa_sign_image",
+          "description": "Sign image content credentials (ddg-credential-v1, Ed25519 E22 trust root) and embed: PNG -> tEXt chunk, JPEG -> APP1 when safe else sidecar, WebP -> sidecar. Not CAI/JUMBF-interoperable (honest label"
+        },
+        {
+          "path": "/v1/c2pa/verify-image",
+          "method": "POST",
+          "price_usd": "0.001",
+          "service_id": "v1_c2pa_verify_image",
+          "description": "Verify an image credential (embedded PNG tEXt / JPEG APP1, sidecar JSON, or provided object): Ed25519 sig over canonical credential + image rehash -> sig_valid, hash_match, signed_verdict."
+        },
+        {
+          "path": "/v1/payment/mvr",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_payment_mvr",
+          "description": "SEPA ISO 20022 message validation (business-rule layer): native EPC MVR best-effort checks for pain.001 credit transfers and pain.008 direct debits \u2014 root/message-type detection, GrpHdr and PmtInf cou"
+        },
+        {
+          "path": "/v1/payment/mvr/rules",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_payment_mvr_rules",
+          "description": "Free: rule catalog + supported message types for the SEPA MVR validator (discovery)."
+        }
+      ]
+    },
+    {
+      "category": "webhooks",
+      "count": 2,
+      "routes": [
+        {
+          "path": "/v1/lint-webhook",
+          "method": "POST",
+          "price_usd": "0.01",
+          "service_id": "v1_lint_webhook",
+          "description": "Webhook replay-safety linter (spec-mode static analysis): signature header vs provider preset (stripe/github/shopify/ucp/generic), timestamp tolerance, idempotency guidance, dedupe/event-id store, ret"
+        },
+        {
+          "path": "/v1/lint-webhook/provider-checks",
+          "method": "POST",
+          "price_usd": "0.00",
+          "service_id": "v1_lint_webhook_provider_checks",
+          "description": "Free catalog of webhook provider presets (signature header names + schemes) used by /v1/lint-webhook."
+        }
+      ]
+    }
+  ],
+  "related": {
+    "/v1/verify/claim": [
+      "/v1/certify/run"
+    ],
+    "/v1/verify/action": [
+      "/v1/certify/run"
+    ],
+    "/v1/resolve/outcome": [
+      "/v1/certify/run"
+    ],
+    "/v1/escrow/condition": [
+      "/v1/verify/action",
+      "/v1/resolve/outcome"
+    ],
+    "/v1/escrow/dispute-period": [
+      "/v1/resolve/outcome"
+    ],
+    "/v1/compliance/sanctions": [
+      "/v1/402/preflight"
+    ],
+    "/v1/compliance/sanctions-delta": [
+      "/v1/compliance/sanctions"
+    ],
+    "/v1/payroll/cap-check": [
+      "/v1/payroll/ledger"
+    ],
+    "/v1/payroll/ledger": [
+      "/v1/payroll/cap-check"
+    ],
+    "/v1/markets/snapshot": [
+      "/v1/markets/spread"
+    ],
+    "/v1/markets/spread": [
+      "/v1/markets/snapshot"
+    ],
+    "/v1/bounty/verify-deliverable": [
+      "/v1/bounty/payout-manifest"
+    ],
+    "/v1/bounty/payout-manifest": [
+      "/v1/bounty/verify-deliverable"
+    ],
+    "/v1/llm/audit-bill": [
+      "/v1/llm/price-lookup"
+    ],
+    "/v1/llm/price-lookup": [
+      "/v1/llm/audit-bill"
+    ],
+    "/v1/ap2/verify-mandates": [
+      "/v1/ap2/verify"
+    ],
+    "/v1/ap2/verify": [
+      "/v1/ap2/verify-mandates"
+    ]
+  },
+  "live_chunk_endpoint": "/v1/discovery/chunk?category=<cat>&cursor=<int>&limit=<int>",
+  "hint": "Free reads; paid routes POST-only and challenge with a 402 x402 envelope at $0.01 unless marked otherwise."
+}
